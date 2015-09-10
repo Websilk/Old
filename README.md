@@ -66,7 +66,7 @@ The current version of Websilk has separated client-side functionality from serv
 
 Learn how the server pipeline works with this workflow graphic.
 
-![Workflow graphic](https://drive.google.com/file/d/0B89Hc3FWcqg2TmZ3RGQzLWd3ZGs/view?usp=sharing)
+![Workflow graphic](https://lh4.googleusercontent.com/JBySScj0LvQHsgQj65SZEztywuocQJk8kLofWgz_q5Z06hgGHu9h48pIgD2P0MQgPPasggq6=w1896-h875-rw)
 
 # Capabilities
 
