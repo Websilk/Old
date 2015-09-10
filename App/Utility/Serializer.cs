@@ -5,11 +5,11 @@ namespace Websilk.Utility
 {
     public class Serializer
     {
-        private Core R;
+        private Core S;
 
         public Serializer(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
         public object ReadObject(string str, Type objType)
@@ -19,7 +19,7 @@ namespace Websilk.Utility
 
         public byte[] WriteObject(object obj)
         {
-            return R.Util.Str.GetBytes(JsonConvert.SerializeObject(obj));
+            return S.Util.Str.GetBytes(JsonConvert.SerializeObject(obj));
         }
 
         public string WriteObjectAsString(object obj)

@@ -9,13 +9,13 @@
 
         public Inject DuplicateCell(string id, string aboveId, int duplicate)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id + " > div:last-child";
             response.inject = enumInjectTypes.after;
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             if(aboveId != "" && aboveId != "last")
             {

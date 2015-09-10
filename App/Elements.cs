@@ -14,12 +14,12 @@ namespace Websilk
     public class Elements
     {
 
-        private Core R;
+        private Core S;
         private string Path = ""; //relative path
 
         public Elements(Core WebsilkCore, string path)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
             Path = path;
         }
 
@@ -32,23 +32,23 @@ namespace Websilk
             switch (type)
             {
                 case ElementType.Button:
-                    elem = new Element.Button(R, pth + "elements/button.html", name);
+                    elem = new Element.Button(S, pth + "elements/button.html", name);
                     break;
 
                 case ElementType.List:
-                    elem = new Element.List(R, pth + "elements/list.html", name);
+                    elem = new Element.List(S, pth + "elements/list.html", name);
                     break;
 
                 case ElementType.Panel:
-                    elem = new Element.Panel(R, pth + "elements/panel.html", name);
+                    elem = new Element.Panel(S, pth + "elements/panel.html", name);
                     break;
 
                 case ElementType.Textbox:
-                    elem = new Element.Textbox(R, pth + "elements/textbox.html", name);
+                    elem = new Element.Textbox(S, pth + "elements/textbox.html", name);
                     break;
 
                 default:
-                    elem = new Element.Element(R, pth, name);
+                    elem = new Element.Element(S, pth, name);
                     break;
             }
 
@@ -61,15 +61,15 @@ namespace Websilk.Element
 {
     public class Element
     {
-        protected Core R;
+        protected Core S;
         protected Scaffold scaffold;
         public string Name = "";
         public string Folder = "";
 
         public Element(Core WebsilkCore, string path, string name = "")
         {
-            R = WebsilkCore;
-            scaffold = new Scaffold(R, path, name);
+            S = WebsilkCore;
+            scaffold = new Scaffold(S, path, name);
         }
 
         public Dictionary<string, string> Data

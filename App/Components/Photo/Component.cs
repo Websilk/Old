@@ -71,7 +71,7 @@ namespace Websilk.Components
                         //add url link if it exists
                         if (!string.IsNullOrEmpty(data[4]))
                         {
-                            string myContent = R.Util.Str.GenerateURL(data[4]);
+                            string myContent = S.Util.Str.GenerateURL(data[4]);
                             if (myContent.IndexOf("javascript:") >= 0)
                             {
                                 myContent = "javascript:\" onclick=\"" + myContent.Replace("javascript:", "");
@@ -85,7 +85,7 @@ namespace Websilk.Components
                             }
                             if(data[5] == "1")
                             {
-                                if (!string.IsNullOrEmpty(data[6]) && R.Util.Str.IsNumeric(data[6]) == false)
+                                if (!string.IsNullOrEmpty(data[6]) && S.Util.Str.IsNumeric(data[6]) == false)
                                 {
                                     htmLit += " target=\"" + data[6] + "\"";
                                 }
@@ -107,14 +107,14 @@ namespace Websilk.Components
                         }
 
                         //add photo
-                        htmLit += "<img src=\"/content/websites/" + R.Page.websiteId + "/photos/" + data[0] + "\" alt=\"" + alt + "\"";
+                        htmLit += "<img src=\"/content/websites/" + S.Page.websiteId + "/photos/" + data[0] + "\" alt=\"" + alt + "\"";
 
                         //add mouseover photo if it exists
                         if (!string.IsNullOrEmpty(data[1]))
                         {
                             double speed = 0.5;
-                            if(R.Util.Str.IsNumeric(data[8]) == true) { speed = double.Parse(data[8]); }
-                            htmLit += "class=\"absolute\" style=\"transition: opacity " + speed + "s ease-in-out;\"><img src=\"/content/websites/" + R.Page.websiteId + "/photos/" + data[1] + "\" alt=\"" + alt + "\" class=\"over\" style=\"transition: opacity " + speed + "s ease-in-out;\" />";
+                            if(S.Util.Str.IsNumeric(data[8]) == true) { speed = double.Parse(data[8]); }
+                            htmLit += "class=\"absolute\" style=\"transition: opacity " + speed + "s ease-in-out;\"><img src=\"/content/websites/" + S.Page.websiteId + "/photos/" + data[1] + "\" alt=\"" + alt + "\" class=\"over\" style=\"transition: opacity " + speed + "s ease-in-out;\" />";
                         }
                         else
                         {
@@ -150,7 +150,7 @@ namespace Websilk.Components
                         string img = path + data[10] + file;
                         int topOffset = 0;
                         string backgroundPos = "";
-                        if (R.Util.Str.IsNumeric(data[12]) == true)
+                        if (S.Util.Str.IsNumeric(data[12]) == true)
                         {
                             topOffset = -1 * int.Parse(data[12]);
                         }
@@ -158,11 +158,11 @@ namespace Websilk.Components
                         if (data[12] != "") { repeat = data[12]; }
                         if(data[11] != "") { backgroundPos = "background-position:" + data[11]; }
 
-                        htmLit = "<div id=\"divPhoto" + id + "\" style=\"background-image:url(/content/websites/" + R.Page.websiteId + "/photos/" + img + ");background-repeat:" + repeat + ";" + backgroundPos + "width:100%;height:100%;overflow:hidden;\"></div>";
+                        htmLit = "<div id=\"divPhoto" + id + "\" style=\"background-image:url(/content/websites/" + S.Page.websiteId + "/photos/" + img + ");background-repeat:" + repeat + ";" + backgroundPos + "width:100%;height:100%;overflow:hidden;\"></div>";
 
                     }
 
-                    if (!string.IsNullOrEmpty(js)) { R.Page.RegisterJS("updatephoto" + id, js); }
+                    if (!string.IsNullOrEmpty(js)) { S.Page.RegisterJS("updatephoto" + id, js); }
 
                     //finally, insert html into the literal control
                     return htmLit;

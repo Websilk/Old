@@ -18,16 +18,16 @@ namespace Websilk.Utility
 
     public class Images
     {
-        private Core R;
+        private Core S;
 
         public Images(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
         public structImage Load(string path, string filename)
         {
-            Image image = new Image(File.OpenRead(R.Server.MapPath(path + filename)));
+            Image image = new Image(File.OpenRead(S.Server.MapPath(path + filename)));
             structImage newImg = new structImage();
             newImg.bitmap = image;
             newImg.filename = filename;
@@ -39,7 +39,7 @@ namespace Websilk.Utility
 
         public void Shrink(string filename, string outfile, int width)
         {
-            FileStream fs = File.OpenRead(R.Server.MapPath(filename));
+            FileStream fs = File.OpenRead(S.Server.MapPath(filename));
             Image image = new Image(fs);
             
             //int h = height;
@@ -56,7 +56,7 @@ namespace Websilk.Utility
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                string ext = R.Util.Str.getFileExtension(filename);
+                string ext = S.Util.Str.getFileExtension(filename);
                 switch (ext)
                 {
                     case "jpg":
@@ -72,7 +72,7 @@ namespace Websilk.Utility
 
                 }
                 //save to disk
-                using (FileStream fs = new FileStream(R.Server.MapPath(filename), FileMode.Create))
+                using (FileStream fs = new FileStream(S.Server.MapPath(filename), FileMode.Create))
                 {
                     ms.Position = 0;
                     ms.WriteTo(fs);

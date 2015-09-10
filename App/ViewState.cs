@@ -14,13 +14,13 @@ namespace Websilk
     public class ViewState
     {
         [IgnoreDataMember]
-        private Core R;
+        private Core S;
         public Page Page;
 
         public void Load(Core WebsilkCore)
         {
-            R = WebsilkCore;
-            Page = R.Page;
+            S = WebsilkCore;
+            Page = S.Page;
         }
     }
 

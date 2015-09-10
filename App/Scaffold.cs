@@ -18,7 +18,7 @@ namespace Websilk
 
     public class Scaffold
     {
-        private Core R;
+        private Core S;
         public Dictionary<string, string> Data;
         public structScaffoldElement scaffold;
 
@@ -29,7 +29,7 @@ namespace Websilk
 
         public Scaffold(Core WebsilkCore, string file, string name, string[] vars = null)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
             if (vars == null)
             {
                 Data = new Dictionary<string, string>();
@@ -39,7 +39,7 @@ namespace Websilk
                 Setup(vars);
             }
 
-            if (R.Server.Scaffold.ContainsKey(file + '/' + name) == false)
+            if (S.Server.Scaffold.ContainsKey(file + '/' + name) == false)
             {
                 scaffold = new structScaffoldElement();
                 scaffold.parts = new List<structScaffold>();
@@ -47,13 +47,13 @@ namespace Websilk
 
                 //first, load file from disk or cache
                 var htm = "";
-                if (R.Server.Cache.ContainsKey(file) == false)
+                if (S.Server.Cache.ContainsKey(file) == false)
                 {
-                    htm = File.ReadAllText(R.Server.MapPath(file));
+                    htm = File.ReadAllText(S.Server.MapPath(file));
                 }
                 else
                 {
-                    htm = (string)R.Server.Cache[file];
+                    htm = (string)S.Server.Cache[file];
                 }
 
                 //next, find the group of code matching the scaffold name
@@ -127,12 +127,12 @@ namespace Websilk
                     }
                     scaffold.parts.Add(scaff);
                 }
-                if(R.isLocal == false){ R.Server.Scaffold.Add(file + '/' + name, scaffold); }
+                if(S.isLocal == false){ S.Server.Scaffold.Add(file + '/' + name, scaffold); }
             }
             else
             {
                 //get scaffold object from memory
-                scaffold = R.Server.Scaffold[file + '/' + name];
+                scaffold = S.Server.Scaffold[file + '/' + name];
             }
         }
 

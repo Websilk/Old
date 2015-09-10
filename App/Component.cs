@@ -30,7 +30,7 @@ namespace Websilk
     public class Component
     {
         [JsonIgnore]
-        protected Core R;
+        protected Core S;
         public string id = ""; //id of the component instance
         public int pageId; //the id of the instance of this component
         public int layerId; //layer this component belongs to
@@ -67,7 +67,7 @@ namespace Websilk
 
         public Component(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
             LoadDataArrays();
             DivBase = new Utility.DOM.Element("div");
             DivItem = new Utility.DOM.Element("div");
@@ -347,7 +347,7 @@ namespace Websilk
     {
 
         [JsonIgnore]
-        protected Core R;
+        protected Core S;
         [JsonIgnore]
         protected string innerHTML = "";
         [JsonIgnore]
@@ -363,7 +363,7 @@ namespace Websilk
             {
                 if (_component != null)
                     return _component;
-                _component = R.Page.GetComponentViewById(id);
+                _component = S.Page.GetComponentViewById(id);
                 return _component;
             }
         }
@@ -375,10 +375,10 @@ namespace Websilk
 
         public ComponentProperties(Core WebsilkCore, ComponentView c)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
             _component = c;
             id = Component.id;
-            scaffold = new Scaffold(R, "/app/components/" + Component.name.Replace(" ", "/") + "/properties.html", "");
+            scaffold = new Scaffold(S, "/app/components/" + Component.name.Replace(" ", "/") + "/properties.html", "");
         }
 
         public string Render()
@@ -401,7 +401,7 @@ namespace Websilk
     {
 
 
-        protected Core R;
+        protected Core S;
         public virtual int Width
         {
             get { return 100; }
@@ -409,7 +409,7 @@ namespace Websilk
 
         public void InitMenu(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
         /// <summary>

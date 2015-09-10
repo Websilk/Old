@@ -54,9 +54,9 @@
                 var a = e.data.split("|");
                 switch(a[0]){
                     case "login":
-                        for (c in R.components.cache) {
-                            if (typeof R.components.cache[c].LoginFromIframe != 'undefined') {
-                                R.components.cache[c].LoginFromIframe(a[1]); break;
+                        for (c in S.components.cache) {
+                            if (typeof S.components.cache[c].LoginFromIframe != 'undefined') {
+                                S.components.cache[c].LoginFromIframe(a[1]); break;
                             }
                         }
                         break;

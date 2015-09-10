@@ -6,7 +6,7 @@ var winPosChange = true;
 var winPosVal = null;
 
 //special functions
-function $R(id) {
+function $S(id) {
     return document.getElementById(id);
 }
 
@@ -165,7 +165,7 @@ function GetZoomFactor() {
 }
 
 function centerElement(elementId) {
-    var myElem = $R(elementId);
+    var myElem = $S(elementId);
     if (myElem) {
         var winPos = windowPos();
         var ePos = elementPos(myElem);

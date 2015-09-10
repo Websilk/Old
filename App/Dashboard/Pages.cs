@@ -11,14 +11,14 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPages()
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffold
-            Scaffold scaffold = new Scaffold(R, "/app/dashboard/pages.html", "", new string[] { "page-title", "page-list", "help" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages.html", "", new string[] { "page-title", "page-list", "help" });
             scaffold.Data["page-title"] = "";
             scaffold.Data["page-list"] = LoadPagesList();
             scaffold.Data["help"] = RenderHelpColumn("/App/Help/dashboard/pages.html");
@@ -33,11 +33,11 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadSubPages(int parentId)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup response
             response.element = ".winWebPages > .content .pages-list";
@@ -50,11 +50,11 @@ namespace Websilk.Services.Dashboard
 
         private string LoadPagesList(int parentId = 0, bool layout = true, int orderBy = -1, string viewType = "", string search = "")
         {
-            bool secureEdit = R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 4);
-            bool secureSettings = R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 3);
-            bool secureDelete = R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 2);
-            bool secureCreate = R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 1);
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return ""; }
+            bool secureEdit = S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 4);
+            bool secureSettings = S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 3);
+            bool secureDelete = S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 2);
+            bool secureCreate = S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 1);
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return ""; }
             int start = 1;
             int length = 100;
             string parentTitle = "";
@@ -62,19 +62,19 @@ namespace Websilk.Services.Dashboard
             string rootTitle = "";
             if (parentId > 0)
             {
-                SqlReader reader2 = R.Page.SqlPage.GetParentTitle(parentId, R.Page.websiteId);
+                SqlReader reader2 = S.Page.SqlPage.GetParentTitle(parentId, S.Page.websiteId);
                 if (reader2.Rows.Count > 0)
                 {
                     reader2.Read();
-                    parentTitle = R.Util.Str.GetPageTitle(reader2.Get("title"));
+                    parentTitle = S.Util.Str.GetPageTitle(reader2.Get("title"));
                     rootId = reader2.GetInt("parentid");
                     rootTitle = reader2.Get("parenttitle");
                 }
             }
 
             //get page list from database
-            SqlClasses.Dashboard SqlDash = new SqlClasses.Dashboard(R);
-            SqlReader reader = SqlDash.GetPageList(R.Page.websiteId, R.Page.ownerId, parentId, start, length, orderBy, search);
+            SqlClasses.Dashboard SqlDash = new SqlClasses.Dashboard(S);
+            SqlReader reader = SqlDash.GetPageList(S.Page.websiteId, S.Page.ownerId, parentId, start, length, orderBy, search);
             string htm = "";
             if (viewType == "treeview")
             {
@@ -116,7 +116,7 @@ namespace Websilk.Services.Dashboard
                     i = (i == 2 ? 1 : 2);
                     folderIcon = "<div class=\"left icon icon-folder\"><a href=\"javascript:\" title=\"Go back to the parent folder\">" + "<svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-folder\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
 
-                    htm.Add("<li><div class=\"row color" + i + " item\"><div class=\"column-row\">" + "<div class=\"hover-title left\" onclick=\"R.editor.pages.load(" + rootId + ",'" + rootTitle + "','down')\" style=\"cursor:pointer\">" + folderIcon + "..</div>" + "<div class=\"hover-only right\">" + options + "</div>" + "</div><div class=\"clear\"></div></div></li>");
+                    htm.Add("<li><div class=\"row color" + i + " item\"><div class=\"column-row\">" + "<div class=\"hover-title left\" onclick=\"S.editor.pages.load(" + rootId + ",'" + rootTitle + "','down')\" style=\"cursor:pointer\">" + folderIcon + "..</div>" + "<div class=\"hover-only right\">" + options + "</div>" + "</div><div class=\"clear\"></div></div></li>");
                 }
 
                 while (reader.Read() == true)
@@ -175,16 +175,16 @@ namespace Websilk.Services.Dashboard
                     }
 
                     //setup page link
-                    if (R.isLocal == true)
+                    if (S.isLocal == true)
                     {
-                        if (R.Page.websiteId > 1)
+                        if (S.Page.websiteId > 1)
                         {
                             pageLink = "/?pageid=" + pageId;
                         }
                     }
                     if (string.IsNullOrEmpty(pageLink))
                     {
-                        if (R.Page.useAJAX == true)
+                        if (S.Page.useAJAX == true)
                         {
                             pageLink = "/#" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
                         }
@@ -197,15 +197,15 @@ namespace Websilk.Services.Dashboard
                     //setup options
                     if (secureDelete == true & hasDelete == true)
                     {
-                        options += "<div class=\"right icon icon-delete\"><a href=\"javascript:\" onclick=\"R.editor.pages.remove('" + pageId + "');return false\" title=\"Permanently delete the page '" + pageTitle + "' and all of its sub-pages\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-delete\"><a href=\"javascript:\" onclick=\"S.editor.pages.remove('" + pageId + "');return false\" title=\"Permanently delete the page '" + pageTitle + "' and all of its sub-pages\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureSettings == true)
                     {
-                        options += "<div class=\"right icon icon-settings\"><a href=\"javascript:\" onclick=\"R.editor.pages.settings.show('" + pageId + "');return false\" title=\"Page Settings for '" + pageTitle + "'\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-settings\"><a href=\"javascript:\" onclick=\"S.editor.pages.settings.show('" + pageId + "');return false\" title=\"Page Settings for '" + pageTitle + "'\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureCreate == true & hasCreate == true)
                     {
-                        options += "<div class=\"right icon icon-add\"><a href=\"javascript:\" onclick=\"R.editor.pages.add.show('" + pageId + "','" + pageTitle + "');return false\" title=\"Create a new Sub-Page for '" + pageTitle + "'\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-add\"><a href=\"javascript:\" onclick=\"S.editor.pages.add.show('" + pageId + "','" + pageTitle + "');return false\" title=\"Create a new Sub-Page for '" + pageTitle + "'\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
                     }
 
                     //page link
@@ -216,7 +216,7 @@ namespace Websilk.Services.Dashboard
                     if (hasChildren > 0)
                     {
                         folderIcon += "<a href=\"javascript:\" title=\"View a list of sub-pages for '" + pageTitle + "'\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-folder\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a>";
-                        folderDiv = " onclick=\"R.editor.pages.load(" + pageId + ",'" + pageTitle + "','up')\" style=\"cursor:pointer;\"";
+                        folderDiv = " onclick=\"S.editor.pages.load(" + pageId + ",'" + pageTitle + "','up')\" style=\"cursor:pointer;\"";
                     }
                     folderIcon += "</div>";
 
@@ -233,13 +233,13 @@ namespace Websilk.Services.Dashboard
             string options = "";
             string htm = "";
             options = "<div class=\"right\">" + 
-                "<a href=\"javascript:\" onclick=\"R.editor.pages.showSearch()\" title=\"Search for pages within your website\">" + 
+                "<a href=\"javascript:\" onclick=\"S.editor.pages.showSearch()\" title=\"Search for pages within your website\">" + 
                 "<svg viewBox=\"0 0 25 25\" style=\"width:15px; height:15px;\">" + 
                 "<use xlink:href=\"#icon-search\" x=\"0\" y=\"0\" width=\"25\" height=\"25\" />" + 
                 "</svg>" + "</a>" + "</div>" + 
 
                 "<div class=\"right\" style=\"padding-right:7px;\">" + 
-                "<a href=\"javascript:\" onclick=\"R.editor.pages.add.show(0,'')\" title=\"Add a new page to the root of your website\">" + 
+                "<a href=\"javascript:\" onclick=\"S.editor.pages.add.show(0,'')\" title=\"Add a new page to the root of your website\">" + 
                 "<svg viewBox=\"0 0 15 15\" style=\"width:15px; height:15px;\">" + 
                 "<use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" />" + 
                 "</svg>" + "</a>" + "</div>";
@@ -248,7 +248,7 @@ namespace Websilk.Services.Dashboard
                 "<div class=\"hover-only right\">" + options + "</div>" + 
                 "<div class=\"clear\"></div></div></div>";
 
-            R.Page.RegisterJS("pagetitle", "R.editor.pages.tree.updateTitle();");
+            S.Page.RegisterJS("pagetitle", "S.editor.pages.tree.updateTitle();");
             return htm;
         }
 
@@ -336,16 +336,16 @@ namespace Websilk.Services.Dashboard
                     }
 
                     //setup page link
-                    if (R.isLocal == true)
+                    if (S.isLocal == true)
                     {
-                        if (R.Page.websiteId > 1)
+                        if (S.Page.websiteId > 1)
                         {
                             pageLink = "/?pageid=" + pageId;
                         }
                     }
                     if (string.IsNullOrEmpty(pageLink))
                     {
-                        if (R.Page.useAJAX == true)
+                        if (S.Page.useAJAX == true)
                         {
                             pageLink = "/#" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
                         }
@@ -358,22 +358,22 @@ namespace Websilk.Services.Dashboard
                     //setup options
                     if (secureDelete == true & hasDelete == true)
                     {
-                        options += "<div class=\"right icon icon-delete\"><a href=\"javascript:\" onclick=\"R.editor.pages.remove('" + pageId + "')\" title=\"Permanently delete this page\"><svg viewBox=\"0 0 15 15\" style=\"width:12px;\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-delete\"><a href=\"javascript:\" onclick=\"S.editor.pages.remove('" + pageId + "')\" title=\"Permanently delete this page\"><svg viewBox=\"0 0 15 15\" style=\"width:12px;\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureSettings == true)
                     {
-                        options += "<div class=\"right icon icon-settings\"><a href=\"javascript:\" onclick=\"R.editor.pages.settings.show('" + pageId + "')\" title=\"Page Settings\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-settings\"><a href=\"javascript:\" onclick=\"S.editor.pages.settings.show('" + pageId + "')\" title=\"Page Settings\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureCreate == true & hasCreate == true)
                     {
-                        options += "<div class=\"right icon icon-add\"><a href=\"javascript:\" onclick=\"R.editor.pages.add.show('" + pageId + "','" + pageTitle + "')\" title=\"Create New Sub-Page\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
+                        options += "<div class=\"right icon icon-add\"><a href=\"javascript:\" onclick=\"S.editor.pages.add.show('" + pageId + "','" + pageTitle + "')\" title=\"Create New Sub-Page\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
                     }
 
                     //setup expander
                     expander = "<div class=\"expander " + color + "\">";
                     if (hasChildren > 0)
                     {
-                        expander += "<div class=\"column right icon icon-expand\"><a href=\"javascript:\" onclick=\"R.editor.pages.expand('" + pageId + "')\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-expand\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
+                        expander += "<div class=\"column right icon icon-expand\"><a href=\"javascript:\" onclick=\"S.editor.pages.expand('" + pageId + "')\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-expand\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
                     }
                     else
                     {

@@ -17,35 +17,35 @@ namespace Websilk.Services.Components
 
         private void SetupWebRequest()
         {
-            host = R.Page.Url.host;
+            host = S.Page.Url.host;
 
             //setup scaffolding variables
-            scaffold  = new Scaffold(R, "/app/components/login/login.html", "", new string[] { "head", "action", "body", "foot", "script" });
+            scaffold  = new Scaffold(S, "/app/components/login/login.html", "", new string[] { "head", "action", "body", "foot", "script" });
 
             //get Website properties from Request.Query
-            content = R.Request.Query["s"].Split(',');
-            design = R.Request.Query["d"].Split(',');
+            content = S.Request.Query["s"].Split(',');
+            design = S.Request.Query["d"].Split(',');
             if (design.Length <= 1) { design = new string[] { "", "", "", "", "", "", "", "", "", "", "", "false", "", "", "" }; }
-            websiteId = int.Parse(R.Request.Query["w"]);
-            themeFolder = "/content/themes/" + R.Request.Query["l"] + "/";
+            websiteId = int.Parse(S.Request.Query["w"]);
+            themeFolder = "/content/themes/" + S.Request.Query["l"] + "/";
             websiteFolder = "/content/websites/" + websiteId + "/";
             scaffold.Data["head"] = "<link rel=\"Stylesheet\" type=\"text/css\" href=\"/css/websilk.css\"/>" +
                                "<link rel=\"Stylesheet\" type=\"text/css\" href=\"" + themeFolder + "style.css\"/>" +
                                "<link rel=\"Stylesheet\" type=\"text/css\" href=\"" + websiteFolder + "website.css\"/>";
 
             //set form action
-            scaffold.Data["action"] = "/websilk/Components/Login/PostForm" + R.Request.QueryString;
+            scaffold.Data["action"] = "/websilk/Components/Login/PostForm" + S.Request.QueryString;
 
             //set missing Page properties
-            R.Page.themeFolder = themeFolder;
-            R.Page.websiteId = websiteId;
-            R.Elements = new Elements(R, themeFolder);
+            S.Page.themeFolder = themeFolder;
+            S.Page.websiteId = websiteId;
+            S.Elements = new Elements(S, themeFolder);
 
 
             //setup scaffold parameters
-            scaffold.Data["script"] = "R.ajax.viewstateId = '" + R.ViewStateId + "';";
+            scaffold.Data["script"] = "S.ajax.viewstateId = '" + S.ViewStateId + "';";
 
-            if (R.isLocal == true)
+            if (S.isLocal == true)
             {
                 scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/utility/jquery-2.1.3.min.js\"></script>\n" +
                                    "<script type=\"text/javascript\" src=\"/scripts/core/global.js\"></script>\n" +
@@ -53,7 +53,7 @@ namespace Websilk.Services.Components
             }
             else
             {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + R.Version + "\"></script>\n";
+                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\"></script>\n";
             }
         }
 
@@ -64,8 +64,8 @@ namespace Websilk.Services.Components
 
             SetupWebRequest();
 
-            Element.Textbox elemTextbox = (Element.Textbox)R.Elements.Load(ElementType.Textbox, design[0]);
-            Element.Button elemButton = (Element.Button)R.Elements.Load(ElementType.Button, design[1]);
+            Element.Textbox elemTextbox = (Element.Textbox)S.Elements.Load(ElementType.Textbox, design[0]);
+            Element.Button elemButton = (Element.Button)S.Elements.Load(ElementType.Button, design[1]);
 
            //setup login form properties
             int designFieldsAlign = 1; //1=vertical, 2=horizontal
@@ -84,11 +84,11 @@ namespace Websilk.Services.Components
             //load login form settings
             if(content.Length > 4)
             {
-                if (R.Util.Str.IsNumeric(content[0]) == true) { designFieldsAlign = int.Parse(content[0]); }
-                if (R.Util.Str.IsNumeric(content[1]) == true) { designLabelAlign = int.Parse(content[1]); }
-                if (R.Util.Str.IsNumeric(content[2]) == true) { designButtonAlign = int.Parse(content[2]); }
-                if (R.Util.Str.IsNumeric(content[3]) == true) { designLabelPadding = int.Parse(content[3]); }
-                if (R.Util.Str.IsNumeric(content[4]) == true) { designFieldPadding = int.Parse(content[4]); }
+                if (S.Util.Str.IsNumeric(content[0]) == true) { designFieldsAlign = int.Parse(content[0]); }
+                if (S.Util.Str.IsNumeric(content[1]) == true) { designLabelAlign = int.Parse(content[1]); }
+                if (S.Util.Str.IsNumeric(content[2]) == true) { designButtonAlign = int.Parse(content[2]); }
+                if (S.Util.Str.IsNumeric(content[3]) == true) { designLabelPadding = int.Parse(content[3]); }
+                if (S.Util.Str.IsNumeric(content[4]) == true) { designFieldPadding = int.Parse(content[4]); }
             }
             if(content.Length > 8)
             {
@@ -99,9 +99,9 @@ namespace Websilk.Services.Components
             }
             if(content.Length > 14)
             {
-                if (R.Util.Str.IsNumeric(content[12]) == true) { designWidth = int.Parse(content[12]); }
-                if (R.Util.Str.IsNumeric(content[13]) == true) { designHeight = int.Parse(content[13]); }
-                if (R.Util.Str.IsNumeric(content[14]) == true) { designPadding = int.Parse(content[14]); }
+                if (S.Util.Str.IsNumeric(content[12]) == true) { designWidth = int.Parse(content[12]); }
+                if (S.Util.Str.IsNumeric(content[13]) == true) { designHeight = int.Parse(content[13]); }
+                if (S.Util.Str.IsNumeric(content[14]) == true) { designPadding = int.Parse(content[14]); }
             }
 
             //email label
@@ -188,7 +188,7 @@ namespace Websilk.Services.Components
             }
 
             //forgot password link
-            htm += "<div style=\"padding:7px;\"><a href=\"" + R.Request.Path + "&forgotpass\">forgot password?</a></div>";
+            htm += "<div style=\"padding:7px;\"><a href=\"" + S.Request.Path + "&forgotpass\">forgot password?</a></div>";
             htm += "</div></td>";
 
             //submit button
@@ -244,21 +244,21 @@ namespace Websilk.Services.Components
             if (Form.ContainsKey("password") == false) { return wr; }
             SetupWebRequest();
 
-            Utility.Encryption crypt = new Utility.Encryption(R);
+            Utility.Encryption crypt = new Utility.Encryption(S);
             string email = Form["email"];
             string pass = Form["password"];
             string salt = crypt.GetMD5Hash(email + "?" + pass);
-            string loginid = R.Util.Str.CreateID();
+            string loginid = S.Util.Str.CreateID();
             string host;
-            if(R.isLocal == true)
+            if(S.isLocal == true)
             {
-                host = "http://" + R.Page.Url.host;
+                host = "http://" + S.Page.Url.host;
             }else
             {
-                host = "https://" + R.Page.Url.host;
+                host = "https://" + S.Page.Url.host;
             }
-            //IHttpConnectionFeature ip = R.Context.GetFeature<IHttpConnectionFeature>();
-            R.Page.SqlPage.SaveLoginForAuth(salt, email, loginid);
+            //IHttpConnectionFeature ip = S.Context.GetFeature<IHttpConnectionFeature>();
+            S.Page.SqlPage.SaveLoginForAuth(salt, email, loginid);
             scaffold.Data["script"] += "setTimeout(function(){parent.postMessage(\"login|" + loginid + "\",\"" + host + "\");},10);";
 
             //finally, scaffold login HTML
@@ -271,7 +271,7 @@ namespace Websilk.Services.Components
         {
             //authenticate login info from parent window
             Inject result = new Inject();
-            if (R.User.LogIn(authId) == true)
+            if (S.User.LogIn(authId) == true)
             {
                 return "dashboard";
             }

@@ -7,7 +7,7 @@ namespace Websilk
     public class Panel
     {
         [JsonIgnore]
-        private Core R;
+        private Core S;
         public string Name = "";
         public string id = "";
         public int Width = 0;
@@ -35,7 +35,7 @@ namespace Websilk
 
         public Panel(Core WebsilkCore, string name = "")
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
             Name = name;
         }
 
@@ -73,9 +73,9 @@ namespace Websilk
         {
             PanelView pv = GetPanelView();
             bool addpv = true;
-            if (R.Page.PanelViews.Count > 0)
+            if (S.Page.PanelViews.Count > 0)
             {
-                foreach (PanelView p in R.Page.PanelViews)
+                foreach (PanelView p in S.Page.PanelViews)
                 {
                     if (p.Name == pv.Name)
                     {
@@ -86,7 +86,7 @@ namespace Websilk
             }
             if (addpv == true)
             {
-                R.Page.PanelViews.Add(pv);
+                S.Page.PanelViews.Add(pv);
             }
         }
 

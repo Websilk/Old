@@ -62,13 +62,13 @@ namespace Websilk
                 User = (User)Util.Serializer.ReadObject(Util.Str.GetString(Session["user"]), User.GetType());
             }
 
-            //load references to Core R
+            //load references to Core S
             Sql.Load();
             Page.Load(this);
             User.Load(this);
             if (Session["user"] == null) {
                 //initialize session (to prevent bug where session tries to initialize 
-                //within R.Unload() after the response is sent to the client)
+                //within S.Unload() after the response is sent to the client)
                 Session["user"] = Util.Serializer.WriteObject(User);
             }
 

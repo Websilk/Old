@@ -14,11 +14,11 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPhotos()
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos > .content";
@@ -32,11 +32,11 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPhotoList(int start, string folder, string search, int orderby)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos .photo-list";
@@ -58,8 +58,8 @@ namespace Websilk.Services.Dashboard
             if (fileTypes != null)
                 lstTypes = fileTypes;
 
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            SqlReader reader = sqlDash.GetPhotos(R.Page.websiteId, start, length, folder, orderby);
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            SqlReader reader = sqlDash.GetPhotos(S.Page.websiteId, start, length, folder, orderby);
             if (reader.Rows.Count > 0)
             {
                 while (reader.Read() == true)
@@ -80,7 +80,7 @@ namespace Websilk.Services.Dashboard
                             len += 1;
                             folderurl = reader.Get("foldername");
                             if (folderurl != "") { folderurl += "/"; }
-                            htm += "<div class=\"photo\"><div class=\"check hover-only\"><input type=\"checkbox\" id=\"chkPhoto" + x + "\" filename=\"" + reader.Get("filename") + "\" /></div><div class=\"tbl-cell\"><div class=\"img\"><img src=\"/content/websites/" + R.Page.websiteId + "/photos/" + folderurl + "tiny" + reader.Get("filename") + "\"/></div></div></div>" + "\n";
+                            htm += "<div class=\"photo\"><div class=\"check hover-only\"><input type=\"checkbox\" id=\"chkPhoto" + x + "\" filename=\"" + reader.Get("filename") + "\" /></div><div class=\"tbl-cell\"><div class=\"img\"><img src=\"/content/websites/" + S.Page.websiteId + "/photos/" + folderurl + "tiny" + reader.Get("filename") + "\"/></div></div></div>" + "\n";
                         }
                         x += 1;
                     }
@@ -91,19 +91,19 @@ namespace Websilk.Services.Dashboard
                 htm = "<div class=\"no-photos font-faded\">No photos have been uploaded to this folder yet. Drag & Drop photos from your hard drive to this web page to upload them.</div>";
             }
 
-            string js = "R.editor.photos.bind(); R.editor.photos.info = {start:" + (reader.Rows.Count == 0 ? 0 : start) + ", total:" + reader.Rows.Count + ", len:" + len + "};" + "R.editor.photos.listInfo(" + reader.Rows.Count + ");R.editor.photos.folders.hide();R.editor.photos.folders.change('" + folder + "');";
-            R.Page.RegisterJS("photos", js);
+            string js = "S.editor.photos.bind(); S.editor.photos.info = {start:" + (reader.Rows.Count == 0 ? 0 : start) + ", total:" + reader.Rows.Count + ", len:" + len + "};" + "S.editor.photos.listInfo(" + reader.Rows.Count + ");S.editor.photos.folders.hide();S.editor.photos.folders.change('" + folder + "');";
+            S.Page.RegisterJS("photos", js);
 
             return htm;
         }
 
         public Inject LoadFolders(string type)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos .folder-list";
@@ -117,19 +117,19 @@ namespace Websilk.Services.Dashboard
 
         public Inject AddFolder(string name)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos .folder-list";
 
             //execute SQL
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            sqlDash.AddPhotoFolder(R.Page.websiteId, name);
-            R.Page.RegisterJS("addfolder", "R.editor.photos.folders.hideAdd();");
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            sqlDash.AddPhotoFolder(S.Page.websiteId, name);
+            S.Page.RegisterJS("addfolder", "S.editor.photos.folders.hideAdd();");
 
             //finally, scaffold Websilk platform HTML
             response.html = GetFolders();
@@ -140,31 +140,31 @@ namespace Websilk.Services.Dashboard
 
         public Inject MoveTo(string folder, string files)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos .photo-list";
 
             //get list of files from database
             string[] filelist = files.Split(',');
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            SqlReader reader = sqlDash.GetPhotos(R.Page.websiteId, filelist);
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            SqlReader reader = sqlDash.GetPhotos(S.Page.websiteId, filelist);
             
             //move files on disk into target folder
             if(reader.Rows.Count > 0)
             {
                 string oldfolder = ""; string newfolder = folder; string newname = "";
                 string[] sizes = new string[] { "", "xl", "lg", "med", "sm", "tiny", "icon" };
-                string path = "/wwwroot/content/websites/" + R.Page.websiteId + "/photos/";
+                string path = "/wwwroot/content/websites/" + S.Page.websiteId + "/photos/";
                 if (newfolder != "") { newfolder += "/"; }
-                if(Directory.Exists(R.Server.MapPath(path + newfolder)) == false)
+                if(Directory.Exists(S.Server.MapPath(path + newfolder)) == false)
                 {
                     //create target folder if it doesn't exist
-                    Directory.CreateDirectory(R.Server.MapPath(path + newfolder));
+                    Directory.CreateDirectory(S.Server.MapPath(path + newfolder));
                 }
                 while (reader.Read() == true)
                 {
@@ -174,13 +174,13 @@ namespace Websilk.Services.Dashboard
                     if(oldfolder != "") { oldfolder += "/"; }
                     for(var x = 0; x < sizes.Length; x++)
                     {
-                        if(R.Server.MapPath("/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname) !=
-                              R.Server.MapPath("/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + newfolder + sizes[x] + newname))
+                        if(S.Server.MapPath("/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname) !=
+                              S.Server.MapPath("/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + newfolder + sizes[x] + newname))
                         {
-                            if (File.Exists(R.Server.MapPath("/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname)) == true)
+                            if (File.Exists(S.Server.MapPath("/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname)) == true)
                             {
-                                File.Move(R.Server.MapPath("/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname),
-                                  R.Server.MapPath("/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + newfolder + sizes[x] + newname));
+                                File.Move(S.Server.MapPath("/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + oldfolder + sizes[x] + newname),
+                                  S.Server.MapPath("/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + newfolder + sizes[x] + newname));
                             }
                         }
                     }
@@ -188,7 +188,7 @@ namespace Websilk.Services.Dashboard
             }
 
             //execute SQL
-            sqlDash.MovePhotos(R.Page.websiteId, filelist, folder);
+            sqlDash.MovePhotos(S.Page.websiteId, filelist, folder);
 
             //finally, get a new list of photos
             response.html = GetPhotos(1, 100, folder);
@@ -199,18 +199,18 @@ namespace Websilk.Services.Dashboard
 
         public Inject Remove(string files)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = "";
 
             //execute SQL
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            sqlDash.DeletePhotos(R.Page.websiteId, files.Split(','));
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            sqlDash.DeletePhotos(S.Page.websiteId, files.Split(','));
 
             //finally, scaffold Websilk platform HTML
             response.html = "";
@@ -221,18 +221,18 @@ namespace Websilk.Services.Dashboard
 
         public Inject RemoveFolder(string folder)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/photos", 0) == false) { return response; }
 
             //setup response
             response.element = ".winPhotos .folder-list";
 
             //execute SQL
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            sqlDash.DeletePhotoFolder(R.Page.websiteId, folder);
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            sqlDash.DeletePhotoFolder(S.Page.websiteId, folder);
 
             //finally, scaffold Websilk platform HTML
             response.html = GetFolders();
@@ -246,8 +246,8 @@ namespace Websilk.Services.Dashboard
             string htm = "";
             int i = 2;
             int e = 0;
-            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-            SqlReader reader = sqlDash.GetPhotoFolders(R.Page.websiteId);
+            SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+            SqlReader reader = sqlDash.GetPhotoFolders(S.Page.websiteId);
             htm += "<div class=\"folder-column\">";
             htm += "<div class=\"row color1\"><div class=\"column-row item\">[All Photos]</div></div>";
             htm += "<div class=\"row color2\"><div class=\"column-row item\">[Unorganized Photos]</div></div>";
@@ -270,11 +270,11 @@ namespace Websilk.Services.Dashboard
             htm += "</div>";
             if (loadType == "move")
             {
-                R.Page.RegisterJS("photos", "R.editor.photos.folders.bindForMove();");
+                S.Page.RegisterJS("photos", "S.editor.photos.folders.bindForMove();");
             }
             else
             {
-                R.Page.RegisterJS("photos", "R.editor.photos.folders.bind();");
+                S.Page.RegisterJS("photos", "S.editor.photos.folders.bind();");
             }
 
             return htm;
@@ -285,35 +285,35 @@ namespace Websilk.Services.Dashboard
             WebRequest wr = new WebRequest();
             if(Files.Count > 0)
             {
-                string folder = R.Request.Query["folder"];
+                string folder = S.Request.Query["folder"];
                 if (folder == null) { folder = ""; }
                 if(folder != "") { folder += "/"; }
-                string path = "/wwwroot/content/websites/" + R.Page.websiteId + "/photos/" + folder;
+                string path = "/wwwroot/content/websites/" + S.Page.websiteId + "/photos/" + folder;
                 folder = folder.Replace("/", "");
                 string ext = ""; string name = ""; string filename = ""; string filenew = ""; bool generated = false;
-                Utility.Images image = new Utility.Images(R);
-                SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
+                Utility.Images image = new Utility.Images(S);
+                SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
 
                 foreach (IFormFile file in Files)
                 {
-                    filename = R.Util.Str.replaceAll(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'), "", 
+                    filename = S.Util.Str.replaceAll(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'), "", 
                         new string[] { "-", "_", "!", "@", "#", "$", "%", "&", "*", "+", "=", ",", "?", " " });
 
-                    name = R.Util.Str.CreateID(7).ToLower();
-                    ext = R.Util.Str.getFileExtension(filename).ToLower();
+                    name = S.Util.Str.CreateID(7).ToLower();
+                    ext = S.Util.Str.getFileExtension(filename).ToLower();
                     generated = false;
 
                     switch (ext)
                     {
                         case "jpg": case "jpeg": case "png": case "gif":
-                            if (!Directory.Exists(R.Server.MapPath(path))) {
+                            if (!Directory.Exists(S.Server.MapPath(path))) {
                                 //create directory
-                                Directory.CreateDirectory(R.Server.MapPath(path));
+                                Directory.CreateDirectory(S.Server.MapPath(path));
                             }
 
                             //save original photo to disk
                             filenew = name + "." + ext;
-                            file.SaveAs(R.Server.MapPath(path + filenew));
+                            file.SaveAs(S.Server.MapPath(path + filenew));
 
                             if(ext != "gif") {
                                 // create 7 image sizes: [original (max 4096)], xl (1920), lg (800), med (400), sm (200), tiny (100), icon (50)
@@ -324,7 +324,7 @@ namespace Websilk.Services.Dashboard
                                 }
                                 catch (Exception ex)
                                 {
-                                    R.Page.RegisterJS("err", "alert('Error: " + ex.Message.Replace("'", "\\'") + ");");
+                                    S.Page.RegisterJS("err", "alert('Error: " + ex.Message.Replace("'", "\\'") + ");");
                                 }
 
                             }else { generated = true; }
@@ -335,7 +335,7 @@ namespace Websilk.Services.Dashboard
                                 Utility.structImage photo = image.Load(path, filenew);
 
                                 //save photo to database
-                                sqlDash.AddPhoto(R.Page.websiteId, folder, filenew, filename, photo.width, photo.height);
+                                sqlDash.AddPhoto(S.Page.websiteId, folder, filenew, filename, photo.width, photo.height);
                             }
                             break;
                     }
@@ -347,7 +347,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject Save(string folder)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             return LoadPhotoList(1, folder, "", 1);
         }
     }

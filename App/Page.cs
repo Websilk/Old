@@ -11,7 +11,7 @@ namespace Websilk
     {
         #region "Properties"
         [JsonIgnore]
-        private Core R;
+        private Core S;
 
         //Global Variables
         public bool useAJAX = true;
@@ -125,8 +125,8 @@ namespace Websilk
 
         public void Load(Core WebsilkCore)
         {
-            R = WebsilkCore;
-            SqlPage = (SqlClasses.Page)R.Sql.Class["Page"];
+            S = WebsilkCore;
+            SqlPage = (SqlClasses.Page)S.Sql.Class["Page"];
         }
         #endregion
 
@@ -140,7 +140,7 @@ namespace Websilk
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             Url.hash = "";
-            string path = R.Request.Path.ToString().ToLower().Replace(" ", "+");
+            string path = S.Request.Path.ToString().ToLower().Replace(" ", "+");
             string[] arr = null;
 
             if(path != "")
@@ -156,7 +156,7 @@ namespace Websilk
                 Url.path = "home";
             }
 
-            Url.host = R.Request.Host.ToString();
+            Url.host = S.Request.Host.ToString();
             int start = 0;
             start = Url.host.IndexOf("//");
             if (start >= 0)
@@ -189,11 +189,11 @@ namespace Websilk
 
         public void GetPageId(bool skipDomain = false)
         {
-            string domain = R.Util.Str.GetDomainName(R.Request.Host.ToString());
-            string pid = R.Request.Query["pageid"];
+            string domain = S.Util.Str.GetDomainName(S.Request.Host.ToString());
+            string pid = S.Request.Query["pageid"];
             if (!String.IsNullOrEmpty(pid))
             {
-                pageId = int.Parse(R.Request.Query["pageid"].ToString());
+                pageId = int.Parse(S.Request.Query["pageid"].ToString());
                 return;
             }
             if(skipDomain == false)
@@ -208,7 +208,7 @@ namespace Websilk
             {
                 string Domain = "";
                 string subDomain = "";
-                string[] domains = R.Util.Str.GetDomainParts(domainName);
+                string[] domains = S.Util.Str.GetDomainParts(domainName);
                 Domain = domains[1];
                 subDomain = domains[0];
                 if (string.IsNullOrEmpty(Domain)) {Domain = domainName; }
@@ -252,7 +252,7 @@ namespace Websilk
 
                     }
                 }
-                if (R.Util.IsEmpty(pid) == false && R.Util.Str.IsNumeric(pid))
+                if (S.Util.IsEmpty(pid) == false && S.Util.Str.IsNumeric(pid))
                 {
                     return (int)pid;
                 }else {
@@ -267,7 +267,7 @@ namespace Websilk
             {
                 string Domain = "";
                 string subDomain = "";
-                string[] domains = R.Util.Str.GetDomainParts(domainName);
+                string[] domains = S.Util.Str.GetDomainParts(domainName);
                 Domain = domains[1];
                 subDomain = domains[0];
                 if (string.IsNullOrEmpty(Domain)) { Domain = domainName; }
@@ -360,7 +360,7 @@ namespace Websilk
 
                 websitePageAccessDenied = reader.GetInt("pagedenied");
                 websitePage404 = reader.GetInt("page404");
-                pageDescription = R.Sql.Decode(reader.Get("description"));
+                pageDescription = S.Sql.Decode(reader.Get("description"));
                 //websiteTrial = reader.GetBool("statustype");
                 googleWebPropertyId = reader.Get("googlewebpropertyid");
                 //LoadBackground(reader.Get("pagebackground"])); //page
@@ -378,7 +378,7 @@ namespace Websilk
                 pageCss = reader.Get("css");
 
                 string favIcon = reader.Get("icon");
-                if (R.isWebService == true)
+                if (S.isWebService == true)
                 {
                     if (favIcon != pageFavIcon)
                     {
@@ -395,8 +395,8 @@ namespace Websilk
                 {
                     pageFacebook = "<meta id=\"metafbimg\" property=\"og:image\" content=\"" + Url.host + reader.Get("photo") + "\" />";
                 }
-                pageFacebook += "<meta id=\"metafbtitle\" property=\"og:title\" content=\"" + R.Util.Str.GetPageTitle(pageTitle) + "\" />" +
-                                "<meta id=\"metafbsite\" property=\"og:site_name\" content=\"" + R.Util.Str.GetWebsiteTitle(pageTitle) + "\" />";
+                pageFacebook += "<meta id=\"metafbtitle\" property=\"og:title\" content=\"" + S.Util.Str.GetPageTitle(pageTitle) + "\" />" +
+                                "<meta id=\"metafbsite\" property=\"og:site_name\" content=\"" + S.Util.Str.GetWebsiteTitle(pageTitle) + "\" />";
             }
 
             if (pageId <= 0)
@@ -410,10 +410,10 @@ namespace Websilk
                 //finished loading page information, so check for security & core changes made from info
                 if (demoId > 0)
                 {
-                    if (demoId == pageId && R.Request.QueryString.ToString().IndexOf("?demo") >= 0)
+                    if (demoId == pageId && S.Request.QueryString.ToString().IndexOf("?demo") >= 0)
                     {
                         isDemo = true;
-                        R.User.viewerId = ownerId;
+                        S.User.viewerId = ownerId;
                         isEditable = true;
                     }
                     else
@@ -423,7 +423,7 @@ namespace Websilk
                     }
 
                 }
-                else if (R.Request.QueryString.ToString().IndexOf("?demo") >= 0)
+                else if (S.Request.QueryString.ToString().IndexOf("?demo") >= 0)
                 {
                     //no demo was launched from WebsilkScript, 
                     //so check to see if this website is a template website 
@@ -431,7 +431,7 @@ namespace Websilk
                     if (websiteType == 2)
                     {
                         isDemo = true;
-                        R.User.viewerId = ownerId;
+                        S.User.viewerId = ownerId;
                         isEditable = true;
                         isTemplate = true;
                     }
@@ -448,11 +448,11 @@ namespace Websilk
                 }
                 else
                 {
-                    if (R.User.userId > 0)
+                    if (S.User.userId > 0)
                     {
                         //user is logged in, check security for page editing
-                        R.User.viewerId = R.User.userId;
-                        if (R.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4))
+                        S.User.viewerId = S.User.userId;
+                        if (S.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4))
                         {
                             isEditable = true;
                         }
@@ -463,18 +463,18 @@ namespace Websilk
                 if (isBot == true) { isEditable = false; }
 
 
-                if (!string.IsNullOrEmpty(R.Request.Query["a"]) & R.User.viewerId < 1)
+                if (!string.IsNullOrEmpty(S.Request.Query["a"]) & S.User.viewerId < 1)
                 {
                     //authenticate login for taking a screenshot
-                    if (R.Page.SqlPage.AuthLoginForScreenshot(R.Request.Query["a"], websiteId, (R.Request.Query["ak"] == "0" ? 0 : 1)) == "pass")
+                    if (S.Page.SqlPage.AuthLoginForScreenshot(S.Request.Query["a"], websiteId, (S.Request.Query["ak"] == "0" ? 0 : 1)) == "pass")
                     {
-                        R.User.viewerId = ownerId;
-                        R.User.userId = ownerId;
+                        S.User.viewerId = ownerId;
+                        S.User.userId = ownerId;
                         RegisterJS("authjs2", "var evscreenshot = 1;");
                     }
                 }
 
-                if (pageSecurity == 1 && (ownerId != R.User.viewerId || isDemo == true))
+                if (pageSecurity == 1 && (ownerId != S.User.viewerId || isDemo == true))
                 {
                     //don't allow anyone but the website owner to view this page
 
@@ -488,19 +488,19 @@ namespace Websilk
                 if (themeFolder == "")
                 {
                     //load website theme from request query string
-                    if (!string.IsNullOrEmpty(R.Request.Query["lid"]))
+                    if (!string.IsNullOrEmpty(S.Request.Query["lid"]))
                     {
                         //LoadThemeIdFromQuery();
                     }
                     themeFolder = "/content/themes/" + themeName + "/";
-                    if (R.isFirstLoad == true)
+                    if (S.isFirstLoad == true)
                     {
                         LoadTheme();
                     }
                 }
                 else
                 {
-                    if (oldThemeId != themeId && R.isFirstLoad == false)
+                    if (oldThemeId != themeId && S.isFirstLoad == false)
                     {
                         themeFolder = "/content/themes/" + themeName + "/";
                     }
@@ -528,17 +528,17 @@ namespace Websilk
             if (themeFolder == prevThemeFolder) { return; }
             prevThemeFolder = themeFolder;
 
-            R.Elements = new Elements(R, themeFolder);
+            S.Elements = new Elements(S, themeFolder);
 
-            if (R.isFirstLoad == true)
+            if (S.isFirstLoad == true)
             {
                 //load CSS for theme
-                R.App.scaffold.Data["theme-css"] = themeFolder + "style.css?v=" + R.Version;
+                S.App.scaffold.Data["theme-css"] = themeFolder + "style.css?v=" + S.Version;
             }
             else
             {
                 //load CSS via javascript instead
-                RegisterJS("cssfile", "$('#themeCss').href = '" + themeFolder + "style.css?v=" + R.Version + "';");
+                RegisterJS("cssfile", "$('#themeCss').href = '" + themeFolder + "style.css?v=" + S.Version + "';");
             }
 
             int[] start = new int[3];
@@ -546,24 +546,24 @@ namespace Websilk
             string fileWebsite = "";
             string headWebsite = "";
             string footWebsite = "";
-            string urlDefaultHtm = R.Server.path(themeFolder + "theme.html");
-            string urlWebsiteHtm = R.Server.path("/content/websites/" + websiteId + "/website.html");
+            string urlDefaultHtm = S.Server.path(themeFolder + "theme.html");
+            string urlWebsiteHtm = S.Server.path("/content/websites/" + websiteId + "/website.html");
 
             //get theme HTML
-            if (R.Server.Cache.ContainsKey(themeFolder + "theme.html") == true)
+            if (S.Server.Cache.ContainsKey(themeFolder + "theme.html") == true)
             {
-                fileHtml = R.Server.Cache[themeFolder + "theme.html"].ToString();
+                fileHtml = S.Server.Cache[themeFolder + "theme.html"].ToString();
             }
             else
             {
                 fileHtml = File.ReadAllText(urlDefaultHtm);
-                R.Server.Cache[themeFolder + "theme.html"] = fileHtml;
+                S.Server.Cache[themeFolder + "theme.html"] = fileHtml;
             }
 
             //get website HTML
-            if (R.Server.Cache.ContainsKey("/content/websites/" + websiteId + "/website.html") == true)
+            if (S.Server.Cache.ContainsKey("/content/websites/" + websiteId + "/website.html") == true)
             {
-                fileWebsite = R.Server.Cache["/content/websites/" + websiteId + "/website.html"].ToString();
+                fileWebsite = S.Server.Cache["/content/websites/" + websiteId + "/website.html"].ToString();
             }
             else
             {
@@ -571,7 +571,7 @@ namespace Websilk
                 {
                     fileWebsite = File.ReadAllText(urlWebsiteHtm);
                 }
-                R.Server.Cache["/content/websites/" + websiteId + "/website.html"] = fileWebsite;
+                S.Server.Cache["/content/websites/" + websiteId + "/website.html"] = fileWebsite;
             }
             if (!string.IsNullOrEmpty(fileWebsite))
             {
@@ -604,7 +604,7 @@ namespace Websilk
                         start[2] = start[1] + 2;
 
                         //create new panel
-                        Panel newPanel = new Panel(R);
+                        Panel newPanel = new Panel(S);
 
                         string name = fileHtml.Substring(start[0] + 2, start[1] - (start[0] + 2));
                         newPanel.Name = name;
@@ -661,42 +661,42 @@ namespace Websilk
             }
             else
             {
-                if (File.Exists(R.Server.path(pageFilePath)) == false & File.Exists(R.Server.path(pFolder + "page.xml")) == true)
+                if (File.Exists(S.Server.path(pageFilePath)) == false & File.Exists(S.Server.path(pFolder + "page.xml")) == true)
                 {
-                    File.Copy(R.Server.path(pFolder + "page.xml"), R.Server.path(pageFilePath));
+                    File.Copy(S.Server.path(pFolder + "page.xml"), S.Server.path(pageFilePath));
                 }
 
 
-                if (ownerId == R.User.userId | R.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == true)
+                if (ownerId == S.User.userId | S.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == true)
                 {
                     //attempt to load the unpublished version of this page
-                    if (R.Server.Cache.ContainsKey(pFolder + pageName + "_edit.xml"))
+                    if (S.Server.Cache.ContainsKey(pFolder + pageName + "_edit.xml"))
                     {
                         //load from memory
-                        myXmlPage =(XmlDocument)R.Server.Cache[pFolder + pageName + "_edit.xml"];
+                        myXmlPage =(XmlDocument)S.Server.Cache[pFolder + pageName + "_edit.xml"];
                     }
                     else
                     {
-                        if (File.Exists(R.Server.path(pFolder + pageName + "_edit.xml")) == true)
+                        if (File.Exists(S.Server.path(pFolder + pageName + "_edit.xml")) == true)
                         {
                             //load from disc
-                            myXmlPage.LoadXml(File.ReadAllText(R.Server.path(pFolder + pageName + "_edit.xml")));
-                            R.Server.Cache[pFolder + pageName + "_edit.xml"] = myXmlPage;
+                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + pageName + "_edit.xml")));
+                            S.Server.Cache[pFolder + pageName + "_edit.xml"] = myXmlPage;
                         }
                         else
                         {
-                            if (R.Server.Cache.ContainsKey(pageFilePath))
+                            if (S.Server.Cache.ContainsKey(pageFilePath))
                             {
                                 //load from memory
-                                myXmlPage =(XmlDocument)R.Server.Cache[pageFilePath];
+                                myXmlPage =(XmlDocument)S.Server.Cache[pageFilePath];
                             }
                             else
                             {
                                 //load from disc
-                                if (File.Exists(R.Server.path(pageFilePath)) == true)
+                                if (File.Exists(S.Server.path(pageFilePath)) == true)
                                 {
-                                    myXmlPage.LoadXml(File.ReadAllText(R.Server.path(pageFilePath)));
-                                    R.Server.Cache[pageFilePath] = myXmlPage;
+                                    myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pageFilePath)));
+                                    S.Server.Cache[pageFilePath] = myXmlPage;
                                 }
 
                             }
@@ -705,27 +705,27 @@ namespace Websilk
                 }
                 else
                 {
-                    if (R.Server.Cache.ContainsKey(pageFilePath))
+                    if (S.Server.Cache.ContainsKey(pageFilePath))
                     {
                         //load from memory
-                        myXmlPage = (XmlDocument)R.Server.Cache[pageFilePath];
+                        myXmlPage = (XmlDocument)S.Server.Cache[pageFilePath];
                     }
                     else
                     {
                         //load from disc
-                        if (File.Exists(R.Server.path(pageFilePath)) == false)
+                        if (File.Exists(S.Server.path(pageFilePath)) == false)
                         {
                             //create new page
                             myXmlPage.LoadXml("<theme></theme>");
-                            FileStream fs = new FileStream(R.Server.path(pageFilePath), FileMode.CreateNew);
+                            FileStream fs = new FileStream(S.Server.path(pageFilePath), FileMode.CreateNew);
                             myXmlPage.Save(fs);
                         }
                         else
                         {
-                            myXmlPage.LoadXml(File.ReadAllText(R.Server.path(pageFilePath)));
+                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pageFilePath)));
                         }
 
-                        R.Server.Cache[pageFilePath] = myXmlPage;
+                        S.Server.Cache[pageFilePath] = myXmlPage;
                     }
                 }
             }
@@ -739,10 +739,10 @@ namespace Websilk
             if (pid <= 0) { return; }
             if (string.IsNullOrEmpty(pname)) { return; }
 
-            if (pageUsersOnly == 1 & R.User.userId > 1 & ptype == 1)
+            if (pageUsersOnly == 1 & S.User.userId > 1 & ptype == 1)
             {
                 //check to see if this user is a user of the web site
-                if (R.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == false)
+                if (S.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == false)
                 {
                     //user doesn't have permission
                     LoadPage("Access Denied");
@@ -758,9 +758,9 @@ namespace Websilk
             
             if (ptype == 2)
             {
-                if (!string.IsNullOrEmpty(R.Request.Query["noload"]))
+                if (!string.IsNullOrEmpty(S.Request.Query["noload"]))
                 {
-                    string[] nl = R.Request.Query["noload"].ToLower().Split('\"');
+                    string[] nl = S.Request.Query["noload"].ToLower().Split('\"');
                     for (int x = 0; x <= nl.Length - 1; x++)
                     {
                         //don't load this content layer, since the querystring says not to
@@ -782,7 +782,7 @@ namespace Websilk
                 }
             }
 
-            if (ptype == 1 & R.isWebService == true)
+            if (ptype == 1 & S.isWebService == true)
             {
                 //setup page request for web service
                 PageRequest = new PageRequest();
@@ -794,14 +794,14 @@ namespace Websilk
             string pFolder = pageFile.Replace("page.xml", "");
             if (ptype == 1)
             {
-                string pt = R.Util.Str.GetPageTitle(pageTitle).Replace("-", " ");
-                string wt = R.Util.Str.GetWebsiteTitle(pageTitle);
+                string pt = S.Util.Str.GetPageTitle(pageTitle).Replace("-", " ");
+                string wt = S.Util.Str.GetWebsiteTitle(pageTitle);
                 pageId = pid;
                 pageFolder = pFolder;
                 pageTitle = wt + " - " + pt;
                 Url.path = pt.Trim().ToLower();
-                myJs += "R.page.title = \"" + pt.ToLower() + "\"; R.page.id=" + pageId + ";";
-                myJs += "R.website.title = \"" + wt.ToLower() + "\"; R.website.id=" + websiteId + ";";
+                myJs += "S.page.title = \"" + pt.ToLower() + "\"; S.page.id=" + pageId + ";";
+                myJs += "S.website.title = \"" + wt.ToLower() + "\"; S.website.id=" + websiteId + ";";
                 myJs += "$('#divPageLoad').hide();_docLoaded=true;";
                 //hide page loading div
                 string newTitle = pageTitle;
@@ -809,13 +809,13 @@ namespace Websilk
                 {
                     newTitle = pageEditorTitle + pageTitle + pageEditorTitleEnd;
                 }
-                if (R.isWebService == true)
+                if (S.isWebService == true)
                 {
                     PageRequest.pageTitle = pageTitle;
                 }
                 else
                 {
-                    R.App.scaffold.Data["title"] = pageTitle;
+                    S.App.scaffold.Data["title"] = pageTitle;
                 }
 
             }
@@ -826,9 +826,9 @@ namespace Websilk
             {
                 if (isEditorLoaded == false)
                 {
-                    if (R.isWebService == true)
+                    if (S.isWebService == true)
                     {
-                        Editor editor = new Editor(R);
+                        Editor editor = new Editor(S);
                         string[] result = editor.LoadEditor();
                         PageRequest.editor = result[0];
                         PageRequest.js += result[1];
@@ -862,13 +862,13 @@ namespace Websilk
                 {
                     myCSS = nodeCSS.FirstChild.InnerText + "\n";
 
-                    if (R.isWebService == true)
+                    if (S.isWebService == true)
                     {
                         PageRequest.css += myCSS;
                     }
                     else
                     {
-                        R.App.scaffold.Data["custom-css"] = myCSS;
+                        S.App.scaffold.Data["custom-css"] = myCSS;
                     }
 
                 }
@@ -880,7 +880,7 @@ namespace Websilk
                     //ClearUndoRedo()
                 }
 
-                if (R.isFirstLoad == true) {
+                if (S.isFirstLoad == true) {
                     
                 }
                 else
@@ -890,7 +890,7 @@ namespace Websilk
             }
 
             //reset JS layers cache
-            myJs += "R.layers.cache = [];R.layers.add(" + pid + ",'" + pageTitle.Split(new char[] { '-', ' ', '\"' })[1] + "'," + ptype + ");";
+            myJs += "S.layers.cache = [];S.layers.add(" + pid + ",'" + pageTitle.Split(new char[] { '-', ' ', '\"' })[1] + "'," + ptype + ");";
 
             //////////////////////////////////////////////////////
             //add page to the list of layers
@@ -900,7 +900,7 @@ namespace Websilk
                 if (string.IsNullOrEmpty(pname) & ptype == 2 & isEditable == true)
                 {
                     //get the lost layer name
-                    newtitle = R.Sql.ExecuteScalar("SELECT title from pageinterfaces WHERE interfaceid=" + pid).ToString().Split(new char[] { '-', ' ', '\"' })[1];
+                    newtitle = S.Sql.ExecuteScalar("SELECT title from pageinterfaces WHERE interfaceid=" + pid).ToString().Split(new char[] { '-', ' ', '\"' })[1];
                 }
                 else if (!string.IsNullOrEmpty(pname) & ptype == 2)
                 {
@@ -935,10 +935,10 @@ namespace Websilk
                                     doesExist = true;
                             }
                         }
-                        newtitle = R.Util.Str.Capitalize(myLayers[i].Attributes["name"].Value.Replace("-", " "));
+                        newtitle = S.Util.Str.Capitalize(myLayers[i].Attributes["name"].Value.Replace("-", " "));
 
                         //add layer to JS layers cache
-                        myJs += "R.layers.add(" + intId + ",'" + newtitle + "',2);";
+                        myJs += "S.layers.add(" + intId + ",'" + newtitle + "',2);";
 
                         if (doesExist == false)
                         {
@@ -969,7 +969,7 @@ namespace Websilk
             if (ptype == 2)
             {
                 //add interface to the log
-                //R.Log.AddInterface();
+                //S.Log.AddInterface();
             }
 
             ////////////////////////////////////////////////////
@@ -1000,7 +1000,7 @@ namespace Websilk
 
             //////////////////////////////////////////////////////
             //update the Editor
-            if (ptype == 1 & R.isWebService == false)
+            if (ptype == 1 & S.isWebService == false)
             {
                 if (string.IsNullOrEmpty(Url.hash))
                 {
@@ -1008,14 +1008,14 @@ namespace Websilk
                     if (eh == "home")
                         eh = "";
                     if (!string.IsNullOrEmpty(Url.hash))
-                        myJs += "R.hash.last = '" + eh + "';";
+                        myJs += "S.hash.last = '" + eh + "';";
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(Url.hash))
-                        myJs += "R.hash.last = '" + Url.hash.Replace(" ", "-").ToLower() + "';";
+                        myJs += "S.hash.last = '" + Url.hash.Replace(" ", "-").ToLower() + "';";
                 }
-                myJs += "R.editor.selectedLayerId = '" + pageId + "', R.page.useAjax=" + useAJAX.ToString().ToLower();
+                myJs += "S.editor.selectedLayerId = '" + pageId + "', S.page.useAjax=" + useAJAX.ToString().ToLower();
             }
 
 
@@ -1057,7 +1057,7 @@ namespace Websilk
         protected void LoadPageComponents(XmlNode panelXml, int panelIndex, XmlDocument myXmlPage, string pageFile, int ptype, int panelType, int pid)
         {
             if (panelXml == null){ return; }
-            string panelName = R.Util.Xml.GetAttribute("name", panelXml);
+            string panelName = S.Util.Xml.GetAttribute("name", panelXml);
 
             //get panel object that will load the list of components from xml
             Panel myPanel;
@@ -1096,7 +1096,7 @@ namespace Websilk
                     }
                     else
                     {
-                        id = R.Util.Str.CreateID();
+                        id = S.Util.Str.CreateID();
                     }
 
                     //z-index
@@ -1118,7 +1118,7 @@ namespace Websilk
                     comp = LoadComponent(compName, content, design, id, myPanel, wf, zIndex, pid, ptype, false , position, css);
                     if(comp != null)
                     {
-                        if (R.isWebService == true & comp != null)
+                        if (S.isWebService == true & comp != null)
                         {
                             PageComponent newC = new PageComponent();
                             newC.id = comp.id;
@@ -1146,11 +1146,11 @@ namespace Websilk
             if (myPanel == null){return null;}
 
             //load component from class
-            string cFolder = R.Util.Str.Capitalize(componentId.Replace("-", "/"));
+            string cFolder = S.Util.Str.Capitalize(componentId.Replace("-", "/"));
             string className = "Websilk.Components." + cFolder.Replace("/",".");
             Type type = Type.GetType(className, false, true);
             if(type == null) { return null; }
-            Component component = (Component)Activator.CreateInstance(type, new object[] { R });
+            Component component = (Component)Activator.CreateInstance(type, new object[] { S });
             if (component == null) { return null; }
             string css = "";
             string newCss = customCss;
@@ -1158,13 +1158,13 @@ namespace Websilk
 
             if (string.IsNullOrEmpty(id))
             {
-                id = R.Util.Str.CreateID();
+                id = S.Util.Str.CreateID();
             }
 
             if (duplicateId != "")
             {
                 //duplicate existing component
-                ComponentView viewDup = R.Page.GetComponentViewById(duplicateId);
+                ComponentView viewDup = S.Page.GetComponentViewById(duplicateId);
                 if(viewDup == null) { return null; }
                 component.LoadFromComponentView(viewDup);
                 component.id = id;
@@ -1268,7 +1268,7 @@ namespace Websilk
             }
 
             RegisterJS("compload" + id,
-                "R.components.add('" +
+                "S.components.add('" +
                         id + "', '" +
                         componentId + "', '" +
                         newPos + "', '" +
@@ -1286,44 +1286,44 @@ namespace Websilk
             string jsname = "compjs-";
             if (CheckJSOnceIfLoaded(jsname + cFolder) == false)
             {
-                if (R.Server.Cache.ContainsKey(jsname + cFolder) == true & R.isLocal == false) //only cache if on live server
+                if (S.Server.Cache.ContainsKey(jsname + cFolder) == true & S.isLocal == false) //only cache if on live server
                 {
                     //load from cache
-                    R.Page.RegisterJSonce(jsname + cFolder, R.Server.Cache[jsname + cFolder].ToString());
+                    S.Page.RegisterJSonce(jsname + cFolder, S.Server.Cache[jsname + cFolder].ToString());
                 }
                 else
                 {
                     //load from file
-                    string jsp = File.ReadAllText(R.Server.path("/app/components/" + cFolder + "/component.js"));
-                    R.Page.RegisterJSonce(jsname + cFolder, jsp);
-                    if (R.isLocal == false)
+                    string jsp = File.ReadAllText(S.Server.path("/app/components/" + cFolder + "/component.js"));
+                    S.Page.RegisterJSonce(jsname + cFolder, jsp);
+                    if (S.isLocal == false)
                     {
                         //save to cache
-                        R.Server.Cache[jsname + cFolder] = jsp;
+                        S.Server.Cache[jsname + cFolder] = jsp;
                     }
                 }
             }
 
-            if(R.Page.isEditable == true)
+            if(S.Page.isEditable == true)
             {
                 //load editor.js once
                 jsname = "compeditorjs-";
                 if (CheckJSOnceIfLoaded(jsname + cFolder) == false)
                 {
-                    if (R.Server.Cache.ContainsKey(jsname + cFolder) == true & R.isLocal == false) //only cache if on live server
+                    if (S.Server.Cache.ContainsKey(jsname + cFolder) == true & S.isLocal == false) //only cache if on live server
                     {
                         //load from cache
-                        R.Page.RegisterJSonce(jsname + cFolder, R.Server.Cache[jsname + cFolder].ToString());
+                        S.Page.RegisterJSonce(jsname + cFolder, S.Server.Cache[jsname + cFolder].ToString());
                     }
                     else
                     {
                         //load from file
-                        string jsp = File.ReadAllText(R.Server.path("/app/components/" + cFolder + "/editor.js"));
-                        R.Page.RegisterJSonce(jsname + cFolder, jsp);
-                        if (R.isLocal == false)
+                        string jsp = File.ReadAllText(S.Server.path("/app/components/" + cFolder + "/editor.js"));
+                        S.Page.RegisterJSonce(jsname + cFolder, jsp);
+                        if (S.isLocal == false)
                         {
                             //save to cache
-                            R.Server.Cache[jsname + cFolder] = jsp;
+                            S.Server.Cache[jsname + cFolder] = jsp;
                         }
                     }
                 }
@@ -1354,7 +1354,7 @@ namespace Websilk
             string className = "Websilk.Components." + view.name.Replace("-", ".");
             Type type = Type.GetType(className, false, true);
             if (type == null) { return null; }
-            Component component = (Component)Activator.CreateInstance(type, new object[] { R });
+            Component component = (Component)Activator.CreateInstance(type, new object[] { S });
             component.LoadFromComponentView(view);
             component.LoadDataArrays();
             component.Load();
@@ -1501,7 +1501,7 @@ namespace Websilk
         public String Render()
         {
             //finish loading all panels
-            if (bodyPanels != null & R.isWebService == false)
+            if (bodyPanels != null & S.isWebService == false)
             {
                 if (bodyPanels.Count > 0)
                 {
@@ -1518,7 +1518,7 @@ namespace Websilk
                 themeHtml = rgx.Replace(themeHtml, "");
             }
 
-            if (R.isWebService == true & PageRequest != null)
+            if (S.isWebService == true & PageRequest != null)
             {
                 //render all components that have been loaded
                 List<PageComponent> remove = new List<PageComponent>();
@@ -1526,7 +1526,7 @@ namespace Websilk
                 {
                     if(comp.Component.rendered == false)
                     {
-                        comp.html = R.Util.Str.CleanHtml(comp.Component.Render());
+                        comp.html = S.Util.Str.CleanHtml(comp.Component.Render());
                     }else
                     {
                         remove.Add(comp);
@@ -1541,14 +1541,14 @@ namespace Websilk
                 }
 
                 //render Javascript
-                if (R.Page.postJScode != null)
+                if (S.Page.postJScode != null)
                 {
-                    R.Page.postJS += string.Join("\n", R.Page.postJScode) + R.Page.postJSLast;
+                    S.Page.postJS += string.Join("\n", S.Page.postJScode) + S.Page.postJSLast;
                 }
-                PageRequest.js += R.Page.postJS;
+                PageRequest.js += S.Page.postJS;
 
                 //render CSS
-                PageRequest.css += string.Join("\n", R.Page.postCSS);
+                PageRequest.css += string.Join("\n", S.Page.postCSS);
             }
             return themeHtml;
         }
@@ -1570,7 +1570,7 @@ namespace Websilk
             bool added = false;
 
             //check security first
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return; }
 
             //go through each layer & save components to XML
             foreach(Layer layer in Layers)
@@ -1584,7 +1584,7 @@ namespace Websilk
                     if(panel.PageId == layer.Id || panel.PageId == 0)
                     {
                         nodePanel = xml.CreateElement("panel");
-                        R.Util.Xml.SetAttribute("name", panel.Name, nodePanel, xml);
+                        S.Util.Xml.SetAttribute("name", panel.Name, nodePanel, xml);
                         added = false;
 
                         //save each component that belongs to this panel
@@ -1595,9 +1595,9 @@ namespace Websilk
                                 added = true;
                                 //component
                                 nodeComponent = xml.CreateElement("component");
-                                R.Util.Xml.SetAttribute("name", c.name.ToLower(), nodeComponent, xml);
-                                R.Util.Xml.SetAttribute("id", c.id, nodeComponent, xml);
-                                R.Util.Xml.SetAttribute("index", c.index.ToString(), nodeComponent, xml);
+                                S.Util.Xml.SetAttribute("name", c.name.ToLower(), nodeComponent, xml);
+                                S.Util.Xml.SetAttribute("id", c.id, nodeComponent, xml);
+                                S.Util.Xml.SetAttribute("index", c.index.ToString(), nodeComponent, xml);
 
                                 //position
                                 nodePosition = xml.CreateElement("position");
@@ -1641,8 +1641,8 @@ namespace Websilk
                         if(pageLayer.Id != pageId)
                         {
                             nodeLayer = xml.CreateElement("layer");
-                            R.Util.Xml.SetAttribute("id", pageLayer.Id.ToString(), nodeLayer, xml);
-                            R.Util.Xml.SetAttribute("name", pageLayer.Title, nodeLayer, xml);
+                            S.Util.Xml.SetAttribute("id", pageLayer.Id.ToString(), nodeLayer, xml);
+                            S.Util.Xml.SetAttribute("name", pageLayer.Title, nodeLayer, xml);
                             nodeLayers.AppendChild(nodeLayer);
                         }
                     }
@@ -1667,23 +1667,23 @@ namespace Websilk
                 }
 
                 //save xml to memory
-                if (R.Server.Cache.ContainsKey(pagePath + pageName + "_edit.xml") == false)
+                if (S.Server.Cache.ContainsKey(pagePath + pageName + "_edit.xml") == false)
                 {
-                    R.Server.Cache.Add(pagePath + pageName + "_edit.xml", xml);
+                    S.Server.Cache.Add(pagePath + pageName + "_edit.xml", xml);
                 }
                 else
                 {
-                    R.Server.Cache[pagePath + pageName + "_edit.xml"] = xml;
+                    S.Server.Cache[pagePath + pageName + "_edit.xml"] = xml;
                 }
 
                 //save xml to disk
                 if (saveToDisk == true)
                 {
-                    if (Directory.Exists(R.Server.MapPath(pagePath)) == false)
+                    if (Directory.Exists(S.Server.MapPath(pagePath)) == false)
                     {
-                        Directory.CreateDirectory(R.Server.MapPath(pagePath));
+                        Directory.CreateDirectory(S.Server.MapPath(pagePath));
                     }
-                    FileStream fs = new FileStream(R.Server.MapPath(pagePath + pageName + "_edit.xml"), FileMode.Create);
+                    FileStream fs = new FileStream(S.Server.MapPath(pagePath + pageName + "_edit.xml"), FileMode.Create);
                     xml.Save(fs);
                     fs.Flush();
                     fs.Dispose();
@@ -1717,7 +1717,7 @@ namespace Websilk
                 {
                     if (pv.Name == name | pv.ClassName == name)
                     {
-                        Panel panel = new Panel(R);
+                        Panel panel = new Panel(S);
                         panel.LoadFromPanelView(pv);
                         return panel;
                     }
@@ -1734,7 +1734,7 @@ namespace Websilk
                 }
             }
 
-            return new Panel(R);
+            return new Panel(S);
         }
         #endregion
 
@@ -1819,7 +1819,7 @@ namespace Websilk
         {
             if (myLayers == null)
                 return;
-            if (R.isWebService == true)
+            if (S.isWebService == true)
             {
                 GetAllComponents();
                 if (ComponentViews.Count == 0)
@@ -1853,7 +1853,7 @@ namespace Websilk
                 {
                     if (pageids.Contains(ComponentViews[x].pageId) == false)
                     {
-                        if (R.isWebService == true)
+                        if (S.isWebService == true)
                             PageRequest.remove.Add(ComponentViews[x].id);
                         comps.Add(x);
                     }
@@ -1905,7 +1905,7 @@ namespace Websilk
         /// <summary>
         /// <para>Adds your Javascript code to a variable that generates a javascript block at the bottom of the page on Page_Websilk, 
         /// either directly on the page, or at the end of an AJAX postback response</para>
-        /// <para>No duplicate names are allowed per page or AJAX R.Request.Query, which protects Websilk from generating duplicate Javascript code on the page</para>
+        /// <para>No duplicate names are allowed per page or AJAX S.Request.Query, which protects Websilk from generating duplicate Javascript code on the page</para>
         /// </summary>
         /// <param name="name"></param>
         /// <param name="js"></param>

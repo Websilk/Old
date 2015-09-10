@@ -31,7 +31,7 @@ namespace Websilk.Components
         {
             get
             {
-                return "R.components.calls.duplicatePanelCell";
+                return "S.components.calls.duplicatePanelCell";
             }
         }
 
@@ -74,10 +74,10 @@ namespace Websilk.Components
             for (int x = 0; x < data.Length; x++)
             {
                 panelData = data[x].Split(',');
-                Websilk.Panel newPanel = new Websilk.Panel(R);
+                Websilk.Panel newPanel = new Websilk.Panel(S);
                 newPanel.Name = id + panelData[0].Replace(" ","");
                 newPanel.id = "panel" + newPanel.Name.Replace(" ", "");
-                R.Page.AddPanel(newPanel);
+                S.Page.AddPanel(newPanel);
                 myPanels.Add(newPanel);
 
                 //add panel view to list
@@ -100,7 +100,7 @@ namespace Websilk.Components
                 for (int x = 0; x < data.Length; x++)
                 {
                     panelData = data[x].Split(',');
-                    myPanels.Add(R.Page.GetPanelByName(id + panelData[0].Replace(" ", "")));
+                    myPanels.Add(S.Page.GetPanelByName(id + panelData[0].Replace(" ", "")));
                 }
             }
             for (int x = 0; x < myPanels.Count; x++)
@@ -122,14 +122,14 @@ namespace Websilk.Components
                 //add skin to panel
                 if(panelDesign != panelData[1] || elemPanel == null)
                 {
-                    elemPanel = (Element.Panel)R.Elements.Load(ElementType.Panel, panelData[1]);
+                    elemPanel = (Element.Panel)S.Elements.Load(ElementType.Panel, panelData[1]);
                 }
                 elemPanel.Render(myPanels[x]);
 
                 //render each panel
                 panels.Add(myPanels[x].Render());
             }
-            if(panelCss != "") { R.Page.RegisterCSS("panel" + id, panelCss); }
+            if(panelCss != "") { S.Page.RegisterCSS("panel" + id, panelCss); }
             DivItem.innerHTML = headHtml + string.Join("\n", panels.ToArray()) + footHtml;
             return base.Render();
         }

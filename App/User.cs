@@ -8,7 +8,7 @@ namespace Websilk
     public class User
     {
         [JsonIgnore]
-        public Core R;
+        public Core S;
 
         public struct structSecurity
         {
@@ -43,14 +43,14 @@ namespace Websilk
 
         public void Load(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
 
         public bool LogIn(string authId)
         {
-            //IHttpConnectionFeature ip = R.Context.GetFeature<IHttpConnectionFeature>();
-            SqlReader reader = R.Page.SqlPage.AuthLogin(authId);
+            //IHttpConnectionFeature ip = S.Context.GetFeature<IHttpConnectionFeature>();
+            SqlReader reader = S.Page.SqlPage.AuthLogin(authId);
             if (reader.Rows.Count > 0)
             {
                 reader.Read();
@@ -64,7 +64,7 @@ namespace Websilk
                 viewerId = userId;
 
                 //get all security for this user (for all sites the user belongs to)
-                SqlReader reader2 = R.Page.SqlPage.GetUserSecurity(userId);
+                SqlReader reader2 = S.Page.SqlPage.GetUserSecurity(userId);
                 List<int> sites = new List<int>();
                 if (reader2.Rows.Count > 0)
                 {
@@ -79,10 +79,10 @@ namespace Websilk
                     GetSecurityForWebsite(s, userId);
                 }
 
-                if (R.Page.ownerId == userId)
+                if (S.Page.ownerId == userId)
                 {
                     //add full control security (of this website) for the user
-                    reader2 = R.Page.SqlPage.GetUserSecurtyForWebsitesOwned(userId);
+                    reader2 = S.Page.SqlPage.GetUserSecurtyForWebsitesOwned(userId);
                     if (reader2.Rows.Count > 0)
                     {
                         while (reader2.Read() != false)
@@ -93,20 +93,20 @@ namespace Websilk
 
                     foreach (int s in sites)
                     {
-                        R.User.AddSecurity(s, "full", User.enumSecurity.readwrite);
+                        S.User.AddSecurity(s, "full", User.enumSecurity.readwrite);
                     }
 
                     //check for Websilk Platform administrator
                     switch (userId)
                     {
                         case 1:
-                            R.User.AddSecurity(0, "full", User.enumSecurity.readwrite);
+                            S.User.AddSecurity(0, "full", User.enumSecurity.readwrite);
                             break;
                     }
                 }
 
                 //update database
-                R.Page.SqlPage.SaveLoginTime(userId);
+                S.Page.SqlPage.SaveLoginTime(userId);
                 return true;
             }
             else
@@ -128,9 +128,9 @@ namespace Websilk
             defaultPageId = 0;
             security = new List<structSecurity>();
             websiteSecurity = new List<WebsiteSecurity>();
-            R.Page.isEditable = false;
-            R.Page.isDemo = false;
-            R.Page.isEditorLoaded = false;
+            S.Page.isEditable = false;
+            S.Page.isDemo = false;
+            S.Page.isEditorLoaded = false;
         }
 
         public void AddSecurity(int websiteId, string feature, enumSecurity securityLevel)
@@ -192,7 +192,7 @@ namespace Websilk
 
         public void GetSecurityForWebsite(int websiteId, int userId)
         {
-            SqlReader reader = R.Page.SqlPage.GetUserSecurityForWebsite(websiteId, userId);
+            SqlReader reader = S.Page.SqlPage.GetUserSecurityForWebsite(websiteId, userId);
             if (reader.Rows.Count > 0)
             {
                 while (reader.Read() != false)
@@ -276,7 +276,7 @@ namespace Websilk
             if (ownerId == 0)
             {
                 //get ownerId
-                ownerId = myUser.R.Page.SqlPage.GetUserSecurtyOwnerForWebsite(websiteId);
+                ownerId = myUser.S.Page.SqlPage.GetUserSecurtyOwnerForWebsite(websiteId);
             }
             if (ownerId == myUser.userId & nofull == false)
                 return true;

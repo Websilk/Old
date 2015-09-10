@@ -11,9 +11,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetComponentsList(int category, int start, int length)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetComponents @start=" +start + ", @length=" + length + ", @category=" + category));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetComponents @start=" +start + ", @length=" + length + ", @category=" + category));
             }
             return reader;
         }
@@ -21,9 +21,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetComponentCategories()
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetComponentCategories @ownerId=" + R.Page.ownerId + ", @websiteId=" + R.Page.websiteId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetComponentCategories @ownerId=" + S.Page.ownerId + ", @websiteId=" + S.Page.websiteId));
             }
             return reader;
             //

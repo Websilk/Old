@@ -1,12 +1,12 @@
 /// Websilk Platform : view.js ///
 /// <reference path="global.js" />
-var R = {
+var S = {
     init:function(ajax, viewstateid, title){
-        R.page.useAjax = ajax;
-        R.ajax.viewstateId = viewstateid;
-        R.hash.last = title;
-        R.viewport.getLevel();
-        R.hash.start();
+        S.page.useAjax = ajax;
+        S.ajax.viewstateId = viewstateid;
+        S.hash.last = title;
+        S.viewport.getLevel();
+        S.hash.start();
     },
 
     window: {
@@ -37,14 +37,14 @@ var R = {
                     this.w = document.documentElement.clientWidth;
                     this.h = document.documentElement.clientHeight;
                 }
-                if (R.browser.isNS) {
+                if (S.browser.isNS) {
                     this.w = window.innerWidth;
                     this.h = window.innerHeight;
                 }
 
                 var bod = $('.body')[0];
                 if(bod != null){
-                    this.absolute.w = R.elem.width(bod);
+                    this.absolute.w = S.elem.width(bod);
                     this.absolute.h = this.h;
                 }
                 return this;
@@ -60,14 +60,14 @@ var R = {
 
         getLevel: function () {
             var w = $('.webpage').width();
-            for (x = 0; x < R.viewport.levels.length; x++) {
-                if (w <= R.viewport.levels[x]) {
+            for (x = 0; x < S.viewport.levels.length; x++) {
+                if (w <= S.viewport.levels[x]) {
                     var changed = false;
-                    if (R.viewport.level != x) { changed = true; }
-                    R.viewport.level = x;
+                    if (S.viewport.level != x) { changed = true; }
+                    S.viewport.level = x;
                     if (changed == true) {
                         var wp = $(document.body);
-                        var size = R.viewport.levelNames[x];
+                        var size = S.viewport.levelNames[x];
                         if (wp.hasClass(size) == false) { wp.removeClass('cell mobile tablet desktop hd screen').addClass(size + ' screen'); }
                     }
                     return changed;
@@ -76,7 +76,7 @@ var R = {
         },
 
         resize: function (width) {
-            if (R.editor.enabled == false) { return; }
+            if (S.editor.enabled == false) { return; }
             var webpage = $('.webpage');
             if (webpage.css('maxWidth') == '' || webpage.css('maxWidth') == 'none') {
                 webpage.css({ 'maxWidth': webpage.width() });
@@ -84,45 +84,45 @@ var R = {
             webpage.stop().animate({ maxWidth: width }, {
                 duration: this.speed * 1000,
                 progress: function () {
-                    if (R.viewport.getLevel() == true) {
-                        R.viewport.levelChanged(R.viewport.level);
+                    if (S.viewport.getLevel() == true) {
+                        S.viewport.levelChanged(S.viewport.level);
                     }
-                    R.events.doc.resize.trigger();
+                    S.events.doc.resize.trigger();
                 },
                 complete: function () {
-                    R.events.doc.resize.trigger();
-                    R.viewport.getLevel();
-                    if (R.viewport.isChanging == true) {
-                        R.viewport.isChanging = false;
-                        if (R.editor.enabled == true) { R.editor.components.disabled = false; }
-                        R.viewport.levelChanged(R.viewport.level);
+                    S.events.doc.resize.trigger();
+                    S.viewport.getLevel();
+                    if (S.viewport.isChanging == true) {
+                        S.viewport.isChanging = false;
+                        if (S.editor.enabled == true) { S.editor.components.disabled = false; }
+                        S.viewport.levelChanged(S.viewport.level);
                     } else {
-                        if (R.editor.enabled == true) { R.editor.components.resizeSelectBox(); }
+                        if (S.editor.enabled == true) { S.editor.components.resizeSelectBox(); }
                     }
                 }
             });
         },
 
         view: function (level) {
-            if (R.editor.enabled == false) { return; }
+            if (S.editor.enabled == false) { return; }
             //hide selected components
-            R.editor.components.hideSelect();
-            R.editor.components.disabled = true;
+            S.editor.components.hideSelect();
+            S.editor.components.disabled = true;
             switch (level) {
                 case 4: //HD
-                    R.viewport.resize(1920); break;
+                    S.viewport.resize(1920); break;
 
                 default: //all other screen sizes
-                    R.viewport.resize(R.viewport.levels[level]); break;
+                    S.viewport.resize(S.viewport.levels[level]); break;
             }
-            R.viewport.isChanging = false;
-            R.viewport.levelChanged(level)
-            R.viewport.isChanging = true;
+            S.viewport.isChanging = false;
+            S.viewport.levelChanged(level)
+            S.viewport.isChanging = true;
         },
 
         levelChanged: function (level) {
-            if (R.viewport.isChanging == true) { return; }
-            R.viewport.sizeIndex = level;
+            if (S.viewport.isChanging == true) { return; }
+            S.viewport.sizeIndex = level;
             var screen = 'HD', ext = 'hd';
             switch (level) {
                 case 4: //HD
@@ -145,25 +145,25 @@ var R = {
         },
 
         nextLevel: function () {
-            if (R.editor.enabled == false) { return; }
-            R.viewport.speed = 2;
-            var sizeIndex = R.viewport.sizeIndex;
+            if (S.editor.enabled == false) { return; }
+            S.viewport.speed = 2;
+            var sizeIndex = S.viewport.sizeIndex;
             if (sizeIndex == -1) {
-                sizeIndex = R.viewport.level;
+                sizeIndex = S.viewport.level;
             }
             var next = sizeIndex > 0 ? sizeIndex - 1 : 4;
-            R.viewport.view(next);
+            S.viewport.view(next);
         },
 
         previousLevel: function () {
-            if (R.editor.enabled == false) { return; }
-            R.viewport.speed = 2;
-            var sizeIndex = R.viewport.sizeIndex;
+            if (S.editor.enabled == false) { return; }
+            S.viewport.speed = 2;
+            var sizeIndex = S.viewport.sizeIndex;
             if (sizeIndex == -1) {
-                sizeIndex = R.viewport.level;
+                sizeIndex = S.viewport.level;
             }
             var prev = sizeIndex < 4 ? sizeIndex + 1 : 0;
-            R.viewport.view(prev);
+            S.viewport.view(prev);
         },
 
         getLevelOrder: function () {
@@ -235,8 +235,8 @@ var R = {
         },
 
         fromEvent: function(event){
-            if (R.browser.isIE) { return window.event.srcElement;
-            } else if (R.browser.isNS) { return event.target; }
+            if (S.browser.isIE) { return window.event.srcElement;
+            } else if (S.browser.isNS) { return event.target; }
             return null;
         },
 
@@ -294,9 +294,9 @@ var R = {
 
         get: function () {
             if (this.items.length == 0) {
-                var p = R.selectors.cache[7], pos;
+                var p = S.selectors.cache[7], pos;
                 for (x = 0; x < p.length; x++) {
-                    pos = R.elem.offset(p[x]);
+                    pos = S.elem.offset(p[x]);
                     this.items[p[x].id] = { p: p[x], x: pos.x, y: pos.y, w: pos.w, h: pos.h };
                 }
             }
@@ -320,7 +320,7 @@ var R = {
             var keep, z;
             for (x in this.cache) {
                 keep = false; z = -1
-                if ($R('c' + this.cache[x].id) != null) { keep = true; }
+                if ($S('c' + this.cache[x].id) != null) { keep = true; }
                 if (keep == false) {
                     z = this.cache.indexOf(x);
                     if (z > -1) { this.cache.splice(z, 1); }
@@ -335,13 +335,13 @@ var R = {
 
         doc: {
             load: function () {
-                R.browser.get();
+                S.browser.get();
             },
 
             ready: function () {
-                //setTimeout(function () { R.events.render.trigger(1); }, 300);
-                //setTimeout(function () { R.events.render.trigger(1); }, 700);
-                R.events.doc.resize.trigger();
+                //setTimeout(function () { S.events.render.trigger(1); }, 300);
+                //setTimeout(function () { S.events.render.trigger(1); }, 700);
+                S.events.doc.resize.trigger();
             },
 
             click: {
@@ -411,14 +411,14 @@ var R = {
                     if (this.timer.started == false) { return; }
                     this.last.scrollx = window.scrollX;
                     this.last.scrolly = window.scrollY;
-                    R.window.scrollx = this.last.scrollx;
-                    R.window.scrolly = this.last.scrolly;
+                    S.window.scrollx = this.last.scrollx;
+                    S.window.scrolly = this.last.scrolly;
                     this.callback.execute('onGo');
 
                     if (new Date() - this.timer.date > this.timer.timeout) {
                         this.stop();
                     } else {
-                        this.timer.callback = setTimeout(function () { R.events.doc.scroll.go(); }, 1000 / this.timer.fps)
+                        this.timer.callback = setTimeout(function () { S.events.doc.scroll.go(); }, 1000 / this.timer.fps)
                     }
                 },
 
@@ -427,8 +427,8 @@ var R = {
                     this.timer.started = false;
                     this.last.scrollx = window.scrollX;
                     this.last.scrolly = window.scrollY;
-                    R.window.scrollx = this.last.scrollx;
-                    R.window.scrolly = this.last.scrolly;
+                    S.window.scrollx = this.last.scrollx;
+                    S.window.scrolly = this.last.scrolly;
                     this.callback.execute('onStop');
                 },
 
@@ -483,7 +483,7 @@ var R = {
 
                 trigger: function () {
                     this.timer.date = new Date();
-                    if (this.timer.started == false) { this.start(); R.window.changed = true; R.window.pos();}
+                    if (this.timer.started == false) { this.start(); S.window.changed = true; S.window.pos();}
                 },
 
                 start: function () {
@@ -495,13 +495,13 @@ var R = {
                 },
 
                 go: function () {
-                    R.window.changed = true; R.window.pos();
+                    S.window.changed = true; S.window.pos();
                     if (this.timer.started == false) { return; }
 
                     if (new Date() - this.timer.date > this.timer.timeout) {
                         this.stop();
                     } else {
-                        this.timer.callback = setTimeout(function () { R.events.doc.resize.go(); }, 1000 / this.timer.fps)
+                        this.timer.callback = setTimeout(function () { S.events.doc.resize.go(); }, 1000 / this.timer.fps)
                     }
                 },
 
@@ -575,24 +575,24 @@ var R = {
             start: function () {
                 this.loaded = false;
                 $(document.body).addClass('wait');
-                clearTimeout(R.hash.timer);
+                clearTimeout(S.hash.timer);
 
             },
 
             complete: function () {
-                R.events.ajax.loaded = true;
+                S.events.ajax.loaded = true;
                 $(document.body).removeClass('wait');
-                R.window.changed = true;
-                R.hash.isChanging = false;
-                R.hash.checked = 0;
-                R.hash.watch();
-                R.events.images.load();
+                S.window.changed = true;
+                S.hash.isChanging = false;
+                S.hash.checked = 0;
+                S.hash.watch();
+                S.events.images.load();
             },
 
             error: function (status, err) {
-                R.events.ajax.loaded = true;
+                S.events.ajax.loaded = true;
                 $(document.body).removeClass('wait');
-                R.hash.isChanging = false; R.hash.checked = 0; R.hash.watch();
+                S.hash.isChanging = false; S.hash.checked = 0; S.hash.watch();
             },
 
             callback: {
@@ -668,7 +668,7 @@ var R = {
         images: {
             load: function () {
                 imgs = $('img[src!=""]');
-                if (!imgs.length) { R.events.images.complete(); return; }
+                if (!imgs.length) { S.events.images.complete(); return; }
                 var df = [];
                 imgs.each(function () {
                     var dfnew = $.Deferred();
@@ -677,12 +677,12 @@ var R = {
                     img.onload = function () { dfnew.resolve(); }
                     img.src = this.src;
                 });
-                $.when.apply($, df).done(R.events.images.complete);
+                $.when.apply($, df).done(S.events.images.complete);
             },
 
             complete: function () {
-                //R.events.render.init();
-                R.events.doc.resize.trigger();
+                //S.events.render.init();
+                S.events.doc.resize.trigger();
             }
         }
     },
@@ -693,27 +693,27 @@ var R = {
 
         post: function (url, data, callback) {
             this.expire = new Date();
-            R.events.ajax.start();
-            data.viewstateId = R.ajax.viewstateId;
+            S.events.ajax.start();
+            data.viewstateId = S.ajax.viewstateId;
             var options = {
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: "json",
                 url: url,
                 contentType: "text/plain; charset=utf-8",
-                success: function (d) { R.ajax.runQueue(); R.events.ajax.complete(d); callback(d); },
-                error: function (xhr, status, err) { R.events.ajax.error(status, err); R.ajax.runQueue(); }
+                success: function (d) { S.ajax.runQueue(); S.events.ajax.complete(d); callback(d); },
+                error: function (xhr, status, err) { S.events.ajax.error(status, err); S.ajax.runQueue(); }
             }
-            R.ajax.queue.push(options);
-            if (R.ajax.queue.length == 1) {
+            S.ajax.queue.push(options);
+            if (S.ajax.queue.length == 1) {
                 $.ajax(options);
             }
         },
 
         runQueue:function(){
-            R.ajax.queue.shift();
-            if (R.ajax.queue.length > 0) {
-                $.ajax(R.ajax.queue[0]);
+            S.ajax.queue.shift();
+            if (S.ajax.queue.length > 0) {
+                $.ajax(S.ajax.queue[0]);
             }
         },
 
@@ -741,7 +741,7 @@ var R = {
 
                     //add any CSS to the page
                     if (data.d.css != null && data.d.css != '') {
-                        R.css.add(data.d.cssid, data.d.css);
+                        S.css.add(data.d.cssid, data.d.css);
                     }
 
                     //finally, execute callback javascript
@@ -751,19 +751,19 @@ var R = {
                     }
                 }
 
-                //R.events.render.trigger();
-                R.events.doc.resize.trigger();
+                //S.events.render.trigger();
+                S.events.doc.resize.trigger();
             }
         },
 
         keepAlive: function () {
             if (typeof isNotKeepAlive != "undefined") { return; }
             var options = {save:''};
-            if (R.editor) {
-                if (R.editor.save) {
-                    if (R.editor.save.cache.length > 0){
-                        options.save = JSON.stringify(R.editor.save.cache);
-                        R.editor.save.cache = [];
+            if (S.editor) {
+                if (S.editor.save) {
+                    if (S.editor.save.cache.length > 0){
+                        options.save = JSON.stringify(S.editor.save.cache);
+                        S.editor.save.cache = [];
                         $('.editor .toolbar .savepage').addClass('saving');
                     }
                 }
@@ -773,16 +773,16 @@ var R = {
             if (((new Date() - this.expire) / 1000) > 180 || options.save != '') {
                 this.expire = new Date();
                 this.post("/websilk/App/KeepAlive", options, function (data) {
-                    if (R.editor) {
+                    if (S.editor) {
                         $('.editor .toolbar .savepage').removeClass('saving').addClass('nosave');
                     }
                     if (data.d == "lost") {
                         //session lost, execute javascript
-                        R.lostSession();
+                        S.lostSession();
                     }
                 });
             }
-            this.timerKeep = setTimeout(function () { R.ajax.keepAlive(); }, 180000);
+            this.timerKeep = setTimeout(function () { S.ajax.keepAlive(); }, 180000);
         }
     },
 
@@ -810,10 +810,10 @@ var R = {
         last: '', timer: null, started:null, isChanging: false,
 
         start: function () {
-            if (R.page.title != "") {
-                R.hash.started = new Date();
-                R.hash.update();
-                setTimeout(function () { R.hash.watch(); }, 500);
+            if (S.page.title != "") {
+                S.hash.started = new Date();
+                S.hash.update();
+                setTimeout(function () { S.hash.watch(); }, 500);
             }
         },
 
@@ -829,17 +829,17 @@ var R = {
             var newhash = "";
             var arrInj = inject.split("+");
             var start = new Array();
-            var evTitle = R.page.title.replace(/\s/g, "-");
+            var evTitle = S.page.title.replace(/\s/g, "-");
             if (arrInj.length > 1) {
-                if (R.hash.last != "") {
-                    start[0] = R.hash.last.indexOf("/" + arrInj[0]);
+                if (S.hash.last != "") {
+                    start[0] = S.hash.last.indexOf("/" + arrInj[0]);
                     if (start[0] > -1) {
                         //app is in hash, check to see if command is in app hash
-                        start[1] = R.hash.last.substr(start[0] + 1).indexOf("/");
-                        newhash = R.hash.last.substr(0, start[0] + 1) + inject;
-                        if (start[1] > -1) { newhash += R.hash.last.substr(start[0] + 1 + start[1]); }
+                        start[1] = S.hash.last.substr(start[0] + 1).indexOf("/");
+                        newhash = S.hash.last.substr(0, start[0] + 1) + inject;
+                        if (start[1] > -1) { newhash += S.hash.last.substr(start[0] + 1 + start[1]); }
                     } else {
-                        newhash = R.hash.last + "/" + inject;
+                        newhash = S.hash.last + "/" + inject;
                     }
                 } else { newhash = evTitle + "/" + inject; }
             } else {
@@ -848,7 +848,7 @@ var R = {
             if (obj.getAttribute("replace") == "true") {
                 newhash = evTitle + "/" + inject;
             }
-            if (R.page.useAjax == false) {
+            if (S.page.useAjax == false) {
                 newhash = newhash.replace(/\+/g, "/").replace(/:/g, "+");
                 //add query string to url
                 newhash = "?h=" + newhash;
@@ -896,28 +896,28 @@ var R = {
 
         watch: function() {
             //check to see if the hash has changed every 0.5 seconds
-            if (R.page.useAjax == false) { return;}
+            if (S.page.useAjax == false) { return;}
             var hash = location.hash.toLowerCase().replace('#', '');
-            clearTimeout(R.hash.timer); R.hash.timer = null;
-            if (location.hash.replace("#", "").toLowerCase() != R.hash.last.toLowerCase() && R.page.title != "") {
+            clearTimeout(S.hash.timer); S.hash.timer = null;
+            if (location.hash.replace("#", "").toLowerCase() != S.hash.last.toLowerCase() && S.page.title != "") {
                 //hash has changed
                 
-                if (location.hash.replace("#", "").toLowerCase() != '' && (new Date() - R.hash.started / 1000) > 3) {
-                    R.hash.change(); return;
+                if (location.hash.replace("#", "").toLowerCase() != '' && (new Date() - S.hash.started / 1000) > 3) {
+                    S.hash.change(); return;
                 }
 
-            } else if (location.hash == "" && R.hash.last != "" && R.page.title != "") {
-                R.hash.change(); return;
+            } else if (location.hash == "" && S.hash.last != "" && S.page.title != "") {
+                S.hash.change(); return;
 
-            } else if (R.page.title == "") {
-                R.hash.change(); return;
+            } else if (S.page.title == "") {
+                S.hash.change(); return;
                 return;
             }
-            R.hash.timer = setTimeout(function () { R.hash.watch(); }, 500);
+            S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
         },
 
         post: function (url) {
-            if (R.page.useAjax == true) {
+            if (S.page.useAjax == true) {
                 location.hash = '#'+url;
             } else {
                 location.href = '/'+url
@@ -926,30 +926,30 @@ var R = {
 
         ghost:function(url) {
             //changes the URL hash while bypassing an AJAX request
-            if (R.page.useAjax == false) { return; }
-            R.hash.last = url;
+            if (S.page.useAjax == false) { return; }
+            S.hash.last = url;
             location.hash = url;
         },
 
         change: function () {
-            if (R.page.useAjax == false) { return; }
+            if (S.page.useAjax == false) { return; }
             var hash = location.hash.toLowerCase().replace('#', '');
             if (this.last.toLowerCase() == 'home' && hash == '') {
-                R.hash.timer = setTimeout(function () { R.hash.watch(); }, 500);
+                S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
                 return;
             }
 
-            clearTimeout(R.hash.timer);
+            clearTimeout(S.hash.timer);
             
             //check for special hash words that would override the server-side method
-            var words = R.hash.special.words;
+            var words = S.hash.special.words;
             for (x = 0; x < words.length; x++) {
                 if (hash.indexOf(words[x].word) == 0) {
-                    R.hash.update();//updates all href links on the page with new hash
+                    S.hash.update();//updates all href links on the page with new hash
                     words[x].callback(hash);
-                    R.events.hash.callback.execute(); //run registered callbacks
-                    R.hash.last = hash;
-                    R.hash.timer = setTimeout(function () { R.hash.watch(); }, 500);
+                    S.events.hash.callback.execute(); //run registered callbacks
+                    S.hash.last = hash;
+                    S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
                     return;
                 }
             }
@@ -957,13 +957,13 @@ var R = {
             
 
             //no special hash words found, continue with server-side method
-            R.hash.isChanging = true;
+            S.hash.isChanging = true;
             var arrNhash = hash.split("/");
             var finalhash = "";
-            if (R.hash.last != "") {
+            if (S.hash.last != "") {
                 var changed = "";
                 var isChanged = true;
-                var arrHash = R.hash.last.split("/");
+                var arrHash = S.hash.last.split("/");
                 var arrNhashCmd, arrHashCmd;
                 for (x = 0; x < arrNhash.length; x++) {//search new hash
                     isChanged = true;
@@ -987,12 +987,12 @@ var R = {
                 finalhash = arrNhash[0];
             }
             //remove page title if the page is already loaded
-            if (finalhash.indexOf(R.page.title) == 1) { finalhash = finalhash.substr(R.page.title.length + 2); }
+            if (finalhash.indexOf(S.page.title) == 1) { finalhash = finalhash.substr(S.page.title.length + 2); }
             finalhash = finalhash.replace("#", "");
-            R.hash.last = hash;
-            R.hash.update();//updates all href links on the page with new hash
-            //R.events.render.disabled = true;
-            R.ajax.post('/websilk/App/Hash', { url: finalhash }, R.hash.callback);
+            S.hash.last = hash;
+            S.hash.update();//updates all href links on the page with new hash
+            //S.events.render.disabled = true;
+            S.ajax.post('/websilk/App/Hash', { url: finalhash }, S.hash.callback);
         },
 
         callback: function (data) {
@@ -1005,7 +1005,7 @@ var R = {
                 for (x = 0; x < data.d.remove.length; x++) {
                     $('#c' + data.d.remove[x]).remove();
                 }
-                R.components.cleanup();
+                S.components.cleanup();
 
                 //remove any duplicate components
                 for (x = 0; x < data.d.components.length; x++) {
@@ -1043,16 +1043,16 @@ var R = {
                 }
 
                 //reset the rendering engine
-                //R.events.render.init();
-                R.events.doc.resize.trigger();
+                //S.events.render.init();
+                S.events.doc.resize.trigger();
 
                 //add CSS to page
                 if (data.d.css != null && data.d.css != '') {
-                    R.css.add('pageRequest' + R.page.id, data.d.css);
+                    S.css.add('pageRequest' + S.page.id, data.d.css);
                 }
 
                 //run registered callbacks
-                R.events.hash.callback.execute();
+                S.events.hash.callback.execute();
             }
         },
 
@@ -1060,7 +1060,7 @@ var R = {
             //reset all a href links
             var arra = $("a[hash]");
             for (var x = 0; x < arra.length; x++) {
-                R.hash.inject(arra[x], arra[x].getAttribute("hash"));
+                S.hash.inject(arra[x], arra[x].getAttribute("hash"));
             }
         },
 
@@ -1092,9 +1092,9 @@ var R = {
             words: [],
 
             add: function (word, callback) {
-                var words = R.hash.special.words;
+                var words = S.hash.special.words;
                 for (x = 0; x < words.length; x++) {if (words[x].word == word) { return false;}}
-                R.hash.special.words.push({ word: word, callback: callback });
+                S.hash.special.words.push({ word: word, callback: callback });
             }
         }
     },
@@ -1151,26 +1151,26 @@ var R = {
     }
 }
 
-R.util = {}
+S.util = {}
 
 //setup jQuery //////////////////////////////////////////////////////////////////////////////////////
 $.ajaxSetup({ 'cache': true });
 
 //pseudo-selector "above"
 $.expr[':'].above = function (obj, index, meta, stack) {
-    return R.elem.top(obj) < meta[3];
+    return S.elem.top(obj) < meta[3];
 }
 
 // Window Events ////////////////////////////////////////////////////////////////////////////////////'
-$(document).on('ready', function () { R.events.doc.ready(); });
-$(document.body).on('click', function (e) { R.events.doc.click.trigger(e.target); });
-$(window).on('resize', function () { R.events.doc.resize.trigger();});
-$(window).on('scroll', function () { R.events.doc.scroll.trigger(); });
-$('iframe').load(function () { R.events.iframe.loaded(); });
+$(document).on('ready', function () { S.events.doc.ready(); });
+$(document.body).on('click', function (e) { S.events.doc.click.trigger(e.target); });
+$(window).on('resize', function () { S.events.doc.resize.trigger();});
+$(window).on('scroll', function () { S.events.doc.scroll.trigger(); });
+$('iframe').load(function () { S.events.iframe.loaded(); });
 
 
 // start timers /////////////////////////////////////////////////////////////////////////////////
 if (typeof document.getElementsByClassName('component') != 'undefined') {
-    R.events.doc.load();
-    setTimeout(function () { R.ajax.keepAlive(); }, 3000);
+    S.events.doc.load();
+    setTimeout(function () { S.ajax.keepAlive(); }, 3000);
 }

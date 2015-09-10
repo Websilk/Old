@@ -10,20 +10,20 @@ namespace Websilk.Services.Dashboard
 
         public Inject Load()
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
             
             //setup response
             response.element = ".winDashboardInterface > .content";
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(R, "/app/dashboard/interface.html", "", 
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/interface.html", "", 
                 new string[] { "website-title", "apps-list", "menu-pages", "menu-photos",
                 "menu-analytics", "menu-users", "menu-apps", "menu-settings"});
-            scaffold.Data["website-title"] = R.Page.websiteTitle;
+            scaffold.Data["website-title"] = S.Page.websiteTitle;
 
             //check security
-            //if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == true) { }
+            //if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == true) { }
             scaffold.Data["menu-pages"] = "true";
             scaffold.Data["menu-photos"] = "true";
             scaffold.Data["menu-analytics"] = "true";

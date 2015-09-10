@@ -7,7 +7,7 @@ namespace Websilk
 {
     public class Sql
     {
-        private Core R;
+        private Core S;
         private SqlConnection conn = new SqlConnection();
         private SqlCommand cmd = new SqlCommand();
         public SqlDataReader reader;
@@ -18,19 +18,19 @@ namespace Websilk
         #region "SqlServer Engine"
         public Sql(Core WebsilkCore)
         {
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
         public void Load()
         {
-            Class.Add("Page", new SqlClasses.Page(R));
-            Class.Add("Editor", new SqlClasses.Page(R));
+            Class.Add("Page", new SqlClasses.Page(S));
+            Class.Add("Editor", new SqlClasses.Page(S));
         }
 
         private void Start()
         {
             if (_started == true) { return; }
-            var config = new Configuration().AddJsonFile(R.Server.MapPath("config.json")).AddEnvironmentVariables();
+            var config = new Configuration().AddJsonFile(S.Server.MapPath("config.json")).AddEnvironmentVariables();
             string active = config.Get("Data:Active");
 
             switch (active)
@@ -93,7 +93,7 @@ namespace Websilk
         public int GetInt(string key)
         {
             string s = Get(key);
-            if (R.Util.Str.IsNumeric(s)) { 
+            if (S.Util.Str.IsNumeric(s)) { 
             return int.Parse(reader[key].ToString());
             }
             return 0;
@@ -102,7 +102,7 @@ namespace Websilk
         public Int64 GetInt64(string key)
         {
             string s = Get(key);
-            if (R.Util.Str.IsNumeric(s))
+            if (S.Util.Str.IsNumeric(s))
             {
                 return Int64.Parse(s);
             }
@@ -242,13 +242,13 @@ namespace Websilk
 
     public class SqlMethods
     {
-        protected Core R;
+        protected Core S;
         protected enumSqlDataTypes dataType;
 
         public SqlMethods(Core WebsilkCore)
         {
-            R = WebsilkCore;
-            dataType = R.Sql.dataType;
+            S = WebsilkCore;
+            dataType = S.Sql.dataType;
         }
     }
 }

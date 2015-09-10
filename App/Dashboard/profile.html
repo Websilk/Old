@@ -1,5 +1,5 @@
 ﻿<div class="menu-list">
-    <div class="item color1" onclick="R.editor.window.load('Account','Editor/Account/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="item color1" onclick="S.editor.window.load('Account','Editor/Account/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
         <div class="icon">
             <svg viewBox="0 0 15 15">
                 <use xlink:href="#icon-account" x="0" y="0" width="15" height="15" />
@@ -10,7 +10,7 @@
         </div>
     </div>
     {{websites}}
-    <div class="item color2" onclick="R.editor.window.load('Websites','Editor/Websites/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="item color2" onclick="S.editor.window.load('Websites','Editor/Websites/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
         <div class="icon">
             <svg viewBox="0 0 15 15">
                 <use xlink:href="#icon-websites" x="0" y="0" width="15" height="15" />
@@ -22,7 +22,7 @@
     </div>
     {{/websites}}
     {{admin}}
-    <div class="item color1" onclick="R.editor.window.load('Admin','Editor/Admin/Admin', {}, {title:'Websilk Administration', x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="item color1" onclick="S.editor.window.load('Admin','Editor/Admin/Admin', {}, {title:'Websilk Administration', x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
         <div class="icon">
             <svg viewBox="0 0 15 15">
                 <use xlink:href="#icon-admin" x="0" y="0" width="15" height="15" />
@@ -33,7 +33,7 @@
         </div>
     </div>
     {{/admin}}
-    <div class="item color2" onclick="R.hash.ghost('home');R.ajax.post('Core/LogOut',{},R.hash.callback)">
+    <div class="item color2" onclick="S.hash.ghost('home');S.ajax.post('Core/LogOut',{},S.hash.callback)">
         <div class="icon">
             <svg viewBox="0 0 15 15">
                 <use xlink:href="#icon-logout" x="0" y="0" width="15" height="15" />

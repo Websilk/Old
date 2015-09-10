@@ -26,11 +26,11 @@ namespace Websilk.Components.Properties
                 string[] paths = data[0].Split('/');
                 if(paths.Length == 2)
                 {
-                    photo = "/content/websites/" + R.Page.websiteId + "/photos/" + paths[0] + "/" + "tiny" + paths[1];
+                    photo = "/content/websites/" + S.Page.websiteId + "/photos/" + paths[0] + "/" + "tiny" + paths[1];
                 }
                 else
                 {
-                    photo = "/content/websites/" + R.Page.websiteId + "/photos/" + "tiny" + data[0];
+                    photo = "/content/websites/" + S.Page.websiteId + "/photos/" + "tiny" + data[0];
                 }
             }
 
@@ -40,11 +40,11 @@ namespace Websilk.Components.Properties
                 "$('#propsLstTarget').val('" + (data[5] == "1" ? "_blank" : "") + "');" +
                 "$('#propsTxtWindowName').val('" + data[6] + "');" +
                 "$('#propsTxtAlt').val('" + data[7] + "');" +
-                "R.editor.components.properties.current.load();";
+                "S.editor.components.properties.current.load();";
 
             if(data[1] == "") { js += "$('.winProperties .remove-hover-photo').hide();"; }
 
-            R.Page.RegisterJS("photoprops", js);
+            S.Page.RegisterJS("photoprops", js);
 
             scaffold.Setup(new string[] { "preview-photo", "helpicon-hover", "helpicon-link", "helpicon-alt", "helpicon-window" });
             Data["preview-photo"] = photo;

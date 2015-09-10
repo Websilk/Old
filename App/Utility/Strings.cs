@@ -7,10 +7,10 @@ namespace Websilk.Utility
 {
     public class Str
     {
-        private Core R;
+        private Core S;
 
         public Str(Core WebsilkCore){
-            R = WebsilkCore;
+            S = WebsilkCore;
         }
 
         #region "Conversion"
@@ -158,8 +158,8 @@ namespace Websilk.Utility
             string RegExStr = "<[^>]*>";
             if (includeBR == true)
                 RegExStr = "(\\<)(?!br(\\s|\\/|\\>))(.*?\\>)";
-            Regex R = new Regex(RegExStr);
-            return R.Replace(str, "");
+            Regex S = new Regex(RegExStr);
+            return S.Replace(str, "");
         }
 
         public string MinifyJS(string js)
@@ -285,7 +285,7 @@ namespace Websilk.Utility
         {
             //creates a string of the URL link within the Websilk web page that may include a hash
             //first, replace partial hash with new hash if there are duplicate hash objects
-            string[] arrHash = R.Page.Url.pathAndHash.Split('\"');
+            string[] arrHash = S.Page.Url.pathAndHash.Split('\"');
             string[] arrNew = null;
             if (!string.IsNullOrEmpty(hash))
                 arrNew = hash.Split('\"');
@@ -313,7 +313,7 @@ namespace Websilk.Utility
             }
 
             //create compiled hash
-            if (!string.IsNullOrEmpty(R.Page.Url.pathAndHash))
+            if (!string.IsNullOrEmpty(S.Page.Url.pathAndHash))
             {
                 for (int x = 0; x <= arrHash.Length - 1; x++)
                 {
@@ -326,7 +326,7 @@ namespace Websilk.Utility
                 }
             }
 
-            if (R.Page.useAJAX == false & R.Page.isEditable == false)
+            if (S.Page.useAJAX == false & S.Page.isEditable == false)
             {
                 //create url
                 if (Right(newPage, 1) != "/" & !string.IsNullOrEmpty(newPage))
@@ -339,11 +339,11 @@ namespace Websilk.Utility
                     newHash = newHash.Replace("//", "/");
                     if (newHash.Trim() == "/")
                         newHash = "";
-                    return R.Page.Url.host + newPage + newHash;
+                    return S.Page.Url.host + newPage + newHash;
                 }
                 else
                 {
-                    return R.Page.Url.host + R.Page.Url.path + newPage + finalHash + newHash;
+                    return S.Page.Url.host + S.Page.Url.path + newPage + finalHash + newHash;
                 }
             }
             else
@@ -359,9 +359,9 @@ namespace Websilk.Utility
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(R.Page.Url.pathAndHash))
+                    if (!string.IsNullOrEmpty(S.Page.Url.pathAndHash))
                     {
-                        return "#" + R.Page.Url.pathAndHash + "/" + hash;
+                        return "#" + S.Page.Url.pathAndHash + "/" + hash;
                     }
                     else
                     {
@@ -376,7 +376,7 @@ namespace Websilk.Utility
         {
             //creates a string of the URL link within the Websilk web page that may include a hash
             string href = "";
-            if (R.Page.useAJAX == false & R.Page.isEditable == false)
+            if (S.Page.useAJAX == false & S.Page.isEditable == false)
             {
                 href += "<a href=\"" + GenerateLinkAsString(hash, page, replacehash) + "\"";
                 if (!string.IsNullOrEmpty(cssClass))
@@ -421,9 +421,9 @@ namespace Websilk.Utility
             //inject Websilk Script
             if (myUrl.IndexOf("#s=") >= 0 | myUrl.IndexOf("#v=") >= 0)
             {
-                //R.LoadWebsilkScript();
+                //S.LoadWebsilkScript();
                 //make sure the websilk script class is loaded
-                //myUrl = R.Script.ParseHtmlString(myUrl, myContainer.id)
+                //myUrl = S.Script.ParseHtmlString(myUrl, myContainer.id)
             }
             return myUrl;
         }
@@ -473,7 +473,7 @@ namespace Websilk.Utility
                 case 13:
                     return "th";
                 default:
-                    switch (int.Parse(R.Util.Str.Right(digit.ToString(), 1)))
+                    switch (int.Parse(S.Util.Str.Right(digit.ToString(), 1)))
                     {
                         case 1:
                             return "st";
@@ -530,7 +530,7 @@ namespace Websilk.Utility
         public bool IsNumeric(object str)
         {
             double retNum;
-            if (R.Util.IsEmpty(str) == false)
+            if (S.Util.IsEmpty(str) == false)
             {
                 return Double.TryParse(str.ToString(), out retNum);
             }

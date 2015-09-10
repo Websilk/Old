@@ -13,12 +13,12 @@ namespace Websilk.Services
         {
             WebRequest wr = new WebRequest();
 
-            Scaffold scaffold = new Scaffold(R, "/app/debug/debug.html", "", new string[] { "body" });
-            string jsonVs = R.Util.Str.GetString(R.Session["viewstates"]);
-            string jsonUser = R.Util.Serializer.WriteObjectAsString(R.User);
-            ViewStates vss = (ViewStates)R.Util.Serializer.ReadObject(jsonVs, Type.GetType("Websilk.ViewStates"));
+            Scaffold scaffold = new Scaffold(S, "/app/debug/debug.html", "", new string[] { "body" });
+            string jsonVs = S.Util.Str.GetString(S.Session["viewstates"]);
+            string jsonUser = S.Util.Serializer.WriteObjectAsString(S.User);
+            ViewStates vss = (ViewStates)S.Util.Serializer.ReadObject(jsonVs, Type.GetType("Websilk.ViewStates"));
             List<string> body = new List<string>();
-            double totalLen = R.Session["viewstates"].Length;
+            double totalLen = S.Session["viewstates"].Length;
             double len = 0;
 
             body.Add("<h1>User (" + (jsonUser.Length * 2) + " bytes)</h1>" + jsonUser);
@@ -26,10 +26,10 @@ namespace Websilk.Services
 
             foreach(structViewStateInfo item in vss.Views)
             {
-                ViewState vssItem = (ViewState)R.Util.Serializer.ReadObject(R.Util.Str.GetString(R.Session["viewstate-" + item.id]), Type.GetType("Websilk.ViewState"));
-                len = R.Session["viewstate-" + item.id].Length;
+                ViewState vssItem = (ViewState)S.Util.Serializer.ReadObject(S.Util.Str.GetString(S.Session["viewstate-" + item.id]), Type.GetType("Websilk.ViewState"));
+                len = S.Session["viewstate-" + item.id].Length;
                 totalLen += len;
-                body.Add("<h1>Viewstate \"" + item.id + "\" (" + len.ToString("N0") + " bytes)</h1>" + R.Util.Serializer.WriteObjectAsString(vssItem));
+                body.Add("<h1>Viewstate \"" + item.id + "\" (" + len.ToString("N0") + " bytes)</h1>" + S.Util.Serializer.WriteObjectAsString(vssItem));
                 
             }
 

@@ -13,19 +13,19 @@ namespace Websilk.Services
 
         public PageRequest LoadPage(string title)
         {
-            if (R.isSessionLost() == true) { return lostPageRequest(); } //check session
+            if (S.isSessionLost() == true) { return lostPageRequest(); } //check session
 
-            R.Page.Url.path = title.Replace("-", " ");
-            R.Page.pageTitle = R.Util.Str.GetWebsiteTitle(R.Page.pageTitle) + " - " + title;
-            R.Page.GetPageId();
-            R.Page.LoadPageFromId(R.Page.pageId);
-            R.Page.Render();
-            return R.Page.PageRequest;
+            S.Page.Url.path = title.Replace("-", " ");
+            S.Page.pageTitle = S.Util.Str.GetWebsiteTitle(S.Page.pageTitle) + " - " + title;
+            S.Page.GetPageId();
+            S.Page.LoadPageFromId(S.Page.pageId);
+            S.Page.Render();
+            return S.Page.PageRequest;
         }
 
         public PageRequest Hash(string url)
         {
-            if(R.isSessionLost() == true) { return lostPageRequest(); } //check session
+            if(S.isSessionLost() == true) { return lostPageRequest(); } //check session
             Console.WriteLine("Parse Hash: " + url);
             return ParseHash(url);
         }
@@ -36,39 +36,39 @@ namespace Websilk.Services
             {
                 //load current page with no url
                 string pageName = "Home";
-                if (url.IndexOf("dashboard") == 0 & R.User.userId < 1) { pageName = "Login"; }
-                R.Page.PageRequest = new PageRequest();
-                R.Page.Url.path = "";
-                if ((R.Page.isEditorLoaded == false & url.IndexOf("dashboard") == 0) | url.IndexOf("dashboard") < 0)
+                if (url.IndexOf("dashboard") == 0 & S.User.userId < 1) { pageName = "Login"; }
+                S.Page.PageRequest = new PageRequest();
+                S.Page.Url.path = "";
+                if ((S.Page.isEditorLoaded == false & url.IndexOf("dashboard") == 0) | url.IndexOf("dashboard") < 0)
                 {
-                    R.Page.Url.path = pageName.ToLower().Replace("-", " ");
-                    R.Page.pageTitle = R.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + pageName.Replace("-", " ");
-                    R.Page.GetPageId();
-                    R.Page.LoadPageFromId(R.Page.pageId);
+                    S.Page.Url.path = pageName.ToLower().Replace("-", " ");
+                    S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + pageName.Replace("-", " ");
+                    S.Page.GetPageId();
+                    S.Page.LoadPageFromId(S.Page.pageId);
                 }
 
                 if (url.IndexOf("dashboard") == 0)
                 {
-                    R.Page.RegisterJS("dashhash", "setTimeout(function(){if(R.editor.dashboard){R.editor.dashboard.show();}},1000);");
+                    S.Page.RegisterJS("dashhash", "setTimeout(function(){if(S.editor.dashboard){S.editor.dashboard.show();}},1000);");
                 }
-                R.Page.Render();
+                S.Page.Render();
                 Console.WriteLine("Load page from no url");
-                return R.Page.PageRequest;
+                return S.Page.PageRequest;
             }
 
             string[] arrHash = url.Split('\"');
-            int oldPageId = R.Page.pageId;
+            int oldPageId = S.Page.pageId;
 
             if (arrHash[0].IndexOf("+") < 0)
             {
                 //found page with no query in url
-                R.Page.Url.path = arrHash[0].Replace("-", " ");
-                R.Page.pageTitle = R.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + arrHash[0].Replace("-", " ");
-                R.Page.GetPageId();
-                R.Page.LoadPageFromId(R.Page.pageId);
-                R.Page.Render();
-                Console.WriteLine("Load page: " + R.Page.pageTitle);
-                return R.Page.PageRequest;
+                S.Page.Url.path = arrHash[0].Replace("-", " ");
+                S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + arrHash[0].Replace("-", " ");
+                S.Page.GetPageId();
+                S.Page.LoadPageFromId(S.Page.pageId);
+                S.Page.Render();
+                Console.WriteLine("Load page: " + S.Page.pageTitle);
+                return S.Page.PageRequest;
             }
 
             return new PageRequest();
@@ -76,7 +76,7 @@ namespace Websilk.Services
 
         public string KeepAlive(string save = "")
         {
-            if (R.isSessionLost() == true) { return "lost"; } //check session
+            if (S.isSessionLost() == true) { return "lost"; } //check session
 
             if (!string.IsNullOrEmpty(save))
             { 
@@ -103,19 +103,19 @@ namespace Websilk.Services
                     id = (string)item["id"];
                     type = (string)item["type"];
                     //find componentView match
-                    for (int x = 0; x < R.Page.ComponentViews.Count; x++)
+                    for (int x = 0; x < S.Page.ComponentViews.Count; x++)
                     {
-                        if (R.Page.ComponentViews[x].id == id) { index = x; break; }
+                        if (S.Page.ComponentViews[x].id == id) { index = x; break; }
                     }
                     switch (type)
                     {
                         case "position":
                             //update position data for a component
-                            R.Page.ComponentViews[index].positionField = (string)item["data"];
+                            S.Page.ComponentViews[index].positionField = (string)item["data"];
                             break;
                         case "data":
                             //update data field for a component
-                            R.Page.ComponentViews[index].dataField = (string)item["data"];
+                            S.Page.ComponentViews[index].dataField = (string)item["data"];
                             break;
                         case "arrangement":
                             //rearrange components within a panel
@@ -126,14 +126,14 @@ namespace Websilk.Services
                                 comps.Add(comp);
                             }
                             int step = 0;
-                            for(var i = 0; i < R.Page.ComponentViews.Count; i++)
+                            for(var i = 0; i < S.Page.ComponentViews.Count; i++)
                             {
                                 if (step == 0)
                                 { 
                                     //find first matching component
                                     for (var e = 0; e < comps.Count; e++)
                                     {
-                                        if (comps[e] == R.Page.ComponentViews[i].id)
+                                        if (comps[e] == S.Page.ComponentViews[i].id)
                                         {
                                             step = 1;
                                             break;
@@ -142,7 +142,7 @@ namespace Websilk.Services
                                     if (step == 0)
                                     {
                                         //add view to new array
-                                        views.Add(R.Page.ComponentViews[i]);
+                                        views.Add(S.Page.ComponentViews[i]);
                                     }
                                 }
 
@@ -151,11 +151,11 @@ namespace Websilk.Services
                                     //find matching component views and add to new array
                                     for (var e = 0; e < comps.Count; e++)
                                     {
-                                        for (var u = 0; u < R.Page.ComponentViews.Count; u++)
+                                        for (var u = 0; u < S.Page.ComponentViews.Count; u++)
                                         {
-                                            if (R.Page.ComponentViews[u].id == comps[e])
+                                            if (S.Page.ComponentViews[u].id == comps[e])
                                             {
-                                                views.Add(R.Page.ComponentViews[u]);
+                                                views.Add(S.Page.ComponentViews[u]);
                                                 break;
                                             }
                                         }
@@ -169,7 +169,7 @@ namespace Websilk.Services
                                     matched = false;
                                     for (var e = 0; e < comps.Count; e++)
                                     {
-                                        if (comps[e] == R.Page.ComponentViews[i].id)
+                                        if (comps[e] == S.Page.ComponentViews[i].id)
                                         {
                                             matched = true;
                                             break;
@@ -177,19 +177,19 @@ namespace Websilk.Services
                                     }
                                     if (matched == false)
                                     {
-                                        views.Add(R.Page.ComponentViews[i]);
+                                        views.Add(S.Page.ComponentViews[i]);
                                     }
                                 }
                                 
                             }
 
-                            R.Page.ComponentViews = views;
+                            S.Page.ComponentViews = views;
                             break;
                     }
                 }
 
                 //save page
-                R.Page.Save(true);
+                S.Page.Save(true);
             }
         }
     }

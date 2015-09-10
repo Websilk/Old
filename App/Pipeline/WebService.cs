@@ -10,7 +10,7 @@ namespace Websilk.Pipeline
 {
     public class WebService
     {
-        Core R;
+        Core S;
 
         public WebService(Server server, HttpContext context, string[] paths, IFormCollection form = null)
         {
@@ -96,20 +96,20 @@ namespace Websilk.Pipeline
                 viewstate = context.Request.Query["v"];
             }
 
-            R = new Core(server, context, viewstate, "service");
-            R.Page.GetPageUrl();
+            S = new Core(server, context, viewstate, "service");
+            S.Page.GetPageUrl();
 
             //load service class from URL path
             string className = "Websilk.Services." + paths[1];
             string methodName = paths[2];
             if(paths.Length == 4) { className += "." + paths[2]; methodName = paths[3]; }
             Type type =Type.GetType(className);
-            Service service = (Service)Activator.CreateInstance(type, new object[] { R, paths });
+            Service service = (Service)Activator.CreateInstance(type, new object[] { S, paths });
 
             if (dataType == 1)
             {
                 //form post data
-                string[] items = R.Server.UrlDecode(data).Split('&');
+                string[] items = S.Server.UrlDecode(data).Split('&');
                 string[] item;
                 for(int x = 0; x < items.Length; x++)
                 {
@@ -151,7 +151,7 @@ namespace Websilk.Pipeline
 
             //finally, unload the Websilk Core:
             //close SQL connection, save ViewState, save User info
-            R.Unload();
+            S.Unload();
         }
 
         private static bool IsNumeric(string s)

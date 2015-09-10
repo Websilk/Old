@@ -2,7 +2,7 @@
 {
     public class Util
     {
-        private Core R;
+        private Core S;
 
         public Str Str;
         public Xml Xml;
@@ -10,10 +10,10 @@
 
         public Util(Core WebsilkCore)
         {
-            R = WebsilkCore;
-            Str = new Str(R);
+            S = WebsilkCore;
+            Str = new Str(S);
             Xml = new Xml();
-            Serializer = new Serializer(R);
+            Serializer = new Serializer(S);
         }
 
         #region "Validation"
@@ -30,7 +30,7 @@
         #region "Information"
         public string GetBrowserType()
         {
-            string browser = R.Request.Headers["User-Agent"].ToLower();
+            string browser = S.Request.Headers["User-Agent"].ToLower();
             int major = 11;
             int minor = 0;
             if (browser.IndexOf("chrome") >= 0)

@@ -13,7 +13,7 @@ namespace Websilk.SqlClasses
         {
             int pageid = 0;
             if (dataType == enumSqlDataTypes.SqlClient) {
-                pageid = (int)R.Sql.ExecuteScalar("SELECT p.pageid FROM websitedomains w LEFT JOIN pages p ON p.pageid=(SELECT w2.pagehome FROM websites w2 WHERE w2.websiteid=w.websiteid) WHERE w.domain = '" + Domain + "' AND p.deleted=0");
+                pageid = (int)S.Sql.ExecuteScalar("SELECT p.pageid FROM websitedomains w LEFT JOIN pages p ON p.pageid=(SELECT w2.pagehome FROM websites w2 WHERE w2.websiteid=w.websiteid) WHERE w.domain = '" + Domain + "' AND p.deleted=0");
             }
             return pageid;
         }
@@ -23,7 +23,7 @@ namespace Websilk.SqlClasses
             int pageid = 0;
             if (dataType == enumSqlDataTypes.SqlClient)
             {
-                pageid = (int)R.Sql.ExecuteScalar("SELECT p.pageid FROM websitesubdomains w LEFT JOIN pages p ON p.pageid=(SELECT w2.pagehome FROM websites w2 WHERE w2.websiteid=w.websiteid) WHERE w.domain = '" + domain + "' AND w.subdomain='" + subDomain + "' AND p.deleted <> 1");
+                pageid = (int)S.Sql.ExecuteScalar("SELECT p.pageid FROM websitesubdomains w LEFT JOIN pages p ON p.pageid=(SELECT w2.pagehome FROM websites w2 WHERE w2.websiteid=w.websiteid) WHERE w.domain = '" + domain + "' AND w.subdomain='" + subDomain + "' AND p.deleted <> 1");
             }
             return pageid;
         }
@@ -33,7 +33,7 @@ namespace Websilk.SqlClasses
             int pageid = 0;
             if (dataType == enumSqlDataTypes.SqlClient)
             {
-                pageid = (int)R.Sql.ExecuteScalar("EXEC GetPageIdFromDomainAndTitle @domainname='" + domain + "', @pagetitle='" + title + "'");
+                pageid = (int)S.Sql.ExecuteScalar("EXEC GetPageIdFromDomainAndTitle @domainname='" + domain + "', @pagetitle='" + title + "'");
             }
             return pageid;
         }
@@ -43,7 +43,7 @@ namespace Websilk.SqlClasses
             int pageid = 0;
             if (dataType == enumSqlDataTypes.SqlClient)
             {
-                pageid = (int)R.Sql.ExecuteScalar("EXEC GetPageIdFromSubDomainAndTitle @domainname='" + domain + "', @subdomain='" + subDomain + "', @pagetitle='" + title + "'");
+                pageid = (int)S.Sql.ExecuteScalar("EXEC GetPageIdFromSubDomainAndTitle @domainname='" + domain + "', @subdomain='" + subDomain + "', @pagetitle='" + title + "'");
             }
             return pageid;
         }
@@ -53,9 +53,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetPageInfoFromDomain(string domain)
         {
             SqlReader reader = new SqlReader();
-            if(R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if(S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetPageInfoFromDomain @domain='" + domain + "'"));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetPageInfoFromDomain @domain='" + domain + "'"));
             }
             return reader;
         }
@@ -63,9 +63,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetPageInfoFromDomainAndTitle(string domain, string title)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("GetPageInfoFromDomainAndTitle @domain='" + domain + "', @title='" + title + "'"));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("GetPageInfoFromDomainAndTitle @domain='" + domain + "', @title='" + title + "'"));
             }
             return reader;
         }
@@ -73,9 +73,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetPageInfoFromSubDomain(string domain, string subDomain)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetPageInfoFromSubDomain @domain = '" + domain + "', @subdomain='" + subDomain + "'"));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetPageInfoFromSubDomain @domain = '" + domain + "', @subdomain='" + subDomain + "'"));
             }
             return reader;
         }
@@ -83,9 +83,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetPageInfoFromSubDomainAndTitle(string domain, string subDomain, string title)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetPageInfoFromSubDomainAndTitle @domain='" + domain + "', @subdomain='" + subDomain + "', @title='" + title + "'"));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetPageInfoFromSubDomainAndTitle @domain='" + domain + "', @subdomain='" + subDomain + "', @title='" + title + "'"));
             }
             return reader;
         }
@@ -93,9 +93,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetPageInfoFromPageId(int pageId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetPageInfoFromPageId @pageId=" + pageId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetPageInfoFromPageId @pageId=" + pageId));
             }
             return reader;
         }
@@ -103,9 +103,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetParentTitle(int parentId, int websiteId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("SELECT p.title, p.parentid, r.title AS parenttitle FROM pages p LEFT JOIN pages r ON r.pageid=p.parentid WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT p.title, p.parentid, r.title AS parenttitle FROM pages p LEFT JOIN pages r ON r.pageid=p.parentid WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
             }
             return reader;
         }
@@ -113,9 +113,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetParentInfo(int pageId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("SELECT TOP 1 p2.title AS parenttitle, p.title, p.security, p.description FROM pages p LEFT JOIN pages p2 ON p2.pageid=p.parentid WHERE p.pageid=" + pageId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT TOP 1 p2.title AS parenttitle, p.title, p.security, p.description FROM pages p LEFT JOIN pages p2 ON p2.pageid=p.parentid WHERE p.pageid=" + pageId));
             }
             return reader;
             //
@@ -125,17 +125,17 @@ namespace Websilk.SqlClasses
         #region "Login"
         public void SaveLoginForAuth(string salt, string email, string loginId)
         {
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                R.Sql.ExecuteNonQuery("EXEC savelogin @hash='" + salt + "', @email='" + email + "', @loginid='" + loginId + "'");
+                S.Sql.ExecuteNonQuery("EXEC savelogin @hash='" + salt + "', @email='" + email + "', @loginid='" + loginId + "'");
             }
         }
 
         public string AuthLoginForScreenshot(string auth, int websiteId, int kill)
         {
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                return (string)R.Sql.ExecuteScalar("EXEC authenticateScreenshot @auth='" + auth + "', @websiteid=" + websiteId + ",@kill=" + (kill == 0 ? "0" : "1"));
+                return (string)S.Sql.ExecuteScalar("EXEC authenticateScreenshot @auth='" + auth + "', @websiteid=" + websiteId + ",@kill=" + (kill == 0 ? "0" : "1"));
                 //should return "pass"
             }
             return "";
@@ -144,9 +144,9 @@ namespace Websilk.SqlClasses
         public SqlReader AuthLogin(string auth)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC authenticatelogin @loginid='" + auth + "'"));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC authenticatelogin @loginid='" + auth + "'"));
             }
             return reader;
             
@@ -154,7 +154,7 @@ namespace Websilk.SqlClasses
 
         public void SaveLoginTime(int userId)
         {
-            R.Sql.ExecuteNonQuery("UPDATE users SET lastlogin='" + DateTime.Now + "' WHERE userid=" + userId);
+            S.Sql.ExecuteNonQuery("UPDATE users SET lastlogin='" + DateTime.Now + "' WHERE userid=" + userId);
         }
 
         #endregion
@@ -163,9 +163,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetUserSecurity(int userId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("SELECT DISTINCT websiteid FROM websitesecurity WHERE userid=" + userId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT DISTINCT websiteid FROM websitesecurity WHERE userid=" + userId));
             }
             return reader;
         }
@@ -173,9 +173,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetUserSecurityForWebsite(int websiteId, int userId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("EXEC GetSecurityForWebsite @websiteid=" + websiteId + ", @userid=" + userId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("EXEC GetSecurityForWebsite @websiteid=" + websiteId + ", @userid=" + userId));
             }
             return reader;
         }
@@ -183,9 +183,9 @@ namespace Websilk.SqlClasses
         public SqlReader GetUserSecurtyForWebsitesOwned(int userId)
         {
             SqlReader reader = new SqlReader();
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(R.Sql.ExecuteReader("SELECT websiteid FROM websites WHERE ownerid=" + userId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT websiteid FROM websites WHERE ownerid=" + userId));
             }
             return reader;
         }
@@ -193,9 +193,9 @@ namespace Websilk.SqlClasses
         public int GetUserSecurtyOwnerForWebsite(int websiteId)
         {
             int owner = 0;
-            if (R.Sql.dataType == enumSqlDataTypes.SqlClient)
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                owner = (int)R.Sql.ExecuteScalar("SELECT ownerid FROM websites WHERE websiteid=" + websiteId);
+                owner = (int)S.Sql.ExecuteScalar("SELECT ownerid FROM websites WHERE websiteid=" + websiteId);
             }
             return owner;
         }

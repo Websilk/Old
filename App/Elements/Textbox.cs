@@ -59,8 +59,8 @@ namespace Websilk.Element
                 {
                     //add label input
                     divclass = " haslabel";
-                    labelinput = "<input type=\"" + type + "\"" + styling + " class=\"islabel " + classes + "\" value=\"" + label + "\" onfocus=\"R.elements.textbox.focus(this)\">";
-                    onblur = " onblur=\"R.elements.textbox.blur(this)\"";
+                    labelinput = "<input type=\"" + type + "\"" + styling + " class=\"islabel " + classes + "\" value=\"" + label + "\" onfocus=\"S.elements.textbox.focus(this)\">";
+                    onblur = " onblur=\"S.elements.textbox.blur(this)\"";
                 }
                 htm = "<div class=\"textbox" + divclass + "\">" +
                     "<input type=\"" + type + "\" id=\"txt" + id + "\" name=\"" + id + "\"" + styling + " class=\"" + classes + "\"" + val + onblur + "/>" +

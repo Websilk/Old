@@ -9,17 +9,17 @@
 
         public Inject UpdatePhoto(string id, string photo, int type)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;
             string js = "";
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             
-            ComponentView view = R.Page.GetComponentViewById(id);
+            ComponentView view = S.Page.GetComponentViewById(id);
             if(view != null)
             {
                 //update component data field
@@ -33,8 +33,8 @@
                 }
 
                 //get photo info
-                SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(R);
-                SqlReader reader = sqlDash.GetPhoto(R.Page.websiteId, photo);
+                SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
+                SqlReader reader = sqlDash.GetPhoto(S.Page.websiteId, photo);
                 if(reader.Rows.Count > 0)
                 {
                     reader.Read();
@@ -48,7 +48,7 @@
                 {
                     //default photo
                     data[0] = folder + photo;
-                    js += "$('#propsPreviewPhoto > img')[0].src = '/content/websites/" + R.Page.websiteId + "/photos/" + folder + "tiny" + photo + "';";
+                    js += "$('#propsPreviewPhoto > img')[0].src = '/content/websites/" + S.Page.websiteId + "/photos/" + folder + "tiny" + photo + "';";
 
                     //update component position settings to use new photo width & height
                     string[] position = view.positionField.Split('|');
@@ -65,8 +65,8 @@
                         }
                     }
                     view.positionField = string.Join("|", position);
-                    js += "R.components.cache['c" + view.id + "'].position = ['" + position[0] + "','" + position[1] + "','" + position[2] + "','" + position[3] + "','" + position[4] + "'];" +
-                          "R.editor.components.loadPositionCss($R('c" + view.id + "'));";
+                    js += "S.components.cache['c" + view.id + "'].position = ['" + position[0] + "','" + position[1] + "','" + position[2] + "','" + position[3] + "','" + position[4] + "'];" +
+                          "S.editor.components.loadPositionCss($S('c" + view.id + "'));";
                 }
                 else
                 {
@@ -75,11 +75,11 @@
                     js += "$('.winProperties .remove-hover-photo').show();";
                 }
 
-                if(js != "") { R.Page.RegisterJS("changephoto", js); }
+                if(js != "") { S.Page.RegisterJS("changephoto", js); }
 
                 //re-render component
                 view.dataField = string.Join("|", data);
-                Component comp = R.Page.LoadComponentFromView(view);
+                Component comp = S.Page.LoadComponentFromView(view);
                 comp.Render();
                 //return inner HTML instead of fully rendered component
                 response.html = comp.DivItem.innerHTML;
@@ -95,16 +95,16 @@
 
         public Inject SaveProperties(string id, string url, string alt, string target, string win)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
 
-            ComponentView view = R.Page.GetComponentViewById(id);
+            ComponentView view = S.Page.GetComponentViewById(id);
             if (view != null)
             {
                 //update component data field
@@ -115,15 +115,15 @@
                 {
                     data = view.dataField.Split('|');
                 }
-                data[4] = R.Util.Str.CleanInput(url);
+                data[4] = S.Util.Str.CleanInput(url);
                 if(target != "") { data[5] = "1"; }
                 else { data[5] = ""; }
-                data[6] = R.Util.Str.CleanInput(win);
-                data[7] = R.Util.Str.CleanInput(alt);
+                data[6] = S.Util.Str.CleanInput(win);
+                data[7] = S.Util.Str.CleanInput(alt);
 
                 //re-render component
                 view.dataField = string.Join("|", data);
-                Component comp = R.Page.LoadComponentFromView(view);
+                Component comp = S.Page.LoadComponentFromView(view);
                 comp.Render();
                 //return inner HTML instead of fully rendered component
                 response.html = comp.DivItem.innerHTML;
@@ -139,16 +139,16 @@
 
         public Inject RemoveHover(string id)
         {
-            if (R.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost() == true) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;
 
             //check security
-            if (R.User.Website(R.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
 
-            ComponentView view = R.Page.GetComponentViewById(id);
+            ComponentView view = S.Page.GetComponentViewById(id);
             if (view != null)
             {
                 //update component data field
@@ -163,7 +163,7 @@
 
                 //re-render component
                 view.dataField = string.Join("|", data);
-                Component comp = R.Page.LoadComponentFromView(view);
+                Component comp = S.Page.LoadComponentFromView(view);
                 comp.Render();
                 //return inner HTML instead of fully rendered component
                 response.html = comp.DivItem.innerHTML;

@@ -53,13 +53,13 @@ namespace Websilk
 
     public class Service
     {
-        protected Core R;
+        protected Core S;
         protected string[] Paths;
         public Dictionary<string, string> Form = new Dictionary<string, string>();
         public IFormFileCollection Files;
 
         public Service(Core WebsilkCore, string[] paths) {
-            R = WebsilkCore;
+            S = WebsilkCore;
             Paths = paths;
         }
 
@@ -75,7 +75,7 @@ namespace Websilk
         {
             //if session is lost, reload the page
             structResponse response = new structResponse();
-            response.js = "R.lostSession();";
+            response.js = "S.lostSession();";
             return response;
         }
 
@@ -83,7 +83,7 @@ namespace Websilk
         {
             //if session is lost, reload the page
             Inject response = new Inject();
-            response.js = "R.lostSession();";
+            response.js = "S.lostSession();";
             return response;
         }
 
@@ -91,24 +91,24 @@ namespace Websilk
         {
             //if session is lost, reload the page
             PageRequest response = new PageRequest();
-            response.js = "R.lostSession();";
+            response.js = "S.lostSession();";
             return response;
         }
 
         protected string CompileJs()
         {
-            if (R.Page.postJScode != null)
+            if (S.Page.postJScode != null)
             {
-                R.Page.postJS += string.Join("\n", R.Page.postJScode) + R.Page.postJSLast;
+                S.Page.postJS += string.Join("\n", S.Page.postJScode) + S.Page.postJSLast;
             }
-            return R.Page.postJS;
+            return S.Page.postJS;
         }
 
         protected string CompileCss()
         {
-            if (R.Page.postCSS != null)
+            if (S.Page.postCSS != null)
             {
-                return string.Join("\n", R.Page.postCSS);
+                return string.Join("\n", S.Page.postCSS);
             }
             return "";
         }
@@ -116,19 +116,19 @@ namespace Websilk
         protected void SaveEnable()
         {
             //forces client-side to add save point
-            R.Page.RegisterJS("savepoint", "R.editor.save.add('','','');");
+            S.Page.RegisterJS("savepoint", "S.editor.save.add('','','');");
         }
 
         protected string RenderHelpColumn(string filename)
         {
-            if(R.Server.Cache.ContainsKey(filename) == false || R.isLocal == true)
+            if(S.Server.Cache.ContainsKey(filename) == false || S.isLocal == true)
             {
-                string htm = "<div class=\"column-help dashboard-only\"><div>" + File.ReadAllText(R.Server.MapPath(filename)) + "</div></div>";
-                R.Server.Cache[filename] = htm;
+                string htm = "<div class=\"column-help dashboard-only\"><div>" + File.ReadAllText(S.Server.MapPath(filename)) + "</div></div>";
+                S.Server.Cache[filename] = htm;
                 return htm;
             }else
             {
-                return (string)R.Server.Cache[filename];
+                return (string)S.Server.Cache[filename];
             }
 
         }
