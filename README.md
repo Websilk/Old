@@ -1,5 +1,5 @@
 # Websilk
-A powerful website CMS platform for Windows, Linux, &amp; MacOSX, built with Microsoft ASP.net 5 vNext.
+A powerful web development platform for Windows, Linux, &amp; MacOSX, built with Microsoft ASP.net 5 vNext.
 
 ### ASP.net 5 & DNX
 Microsoft has released ASP.net 5 vNext as an open source project on GitHub. This new framework can run across multiple platforms, natively on Windows, including Linux & Mac OSX with the help of Mono, in Docker containers, on Azure, and pretty much everywhere.
