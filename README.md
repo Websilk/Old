@@ -60,4 +60,4 @@ The platform works (for the most part). Users can log into the dashboard, create
 
 Learn how the server pipeline works with this workflow graphic.
 
-![Workflow graphic](https://lh4.googleusercontent.com/JBySScj0LvQHsgQj65SZEztywuocQJk8kLofWgz_q5Z06hgGHu9h48pIgD2P0MQgPPasggq6=w1896-h875-rw)
+![Workflow graphic](https://lh3.googleusercontent.com/cTHiinVEzOstnCPfRbXIn_zAk3WVzRMVI4UrT5TCMAhiedp6anrrRoL3PXRiBje4rFfjAyySd_YI7kw=w1896-h875-rw)
