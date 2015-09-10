@@ -1,0 +1,29 @@
+﻿<div class="row color1">
+    <div class="column-label"></div>
+    <div class="column-input label" id="newpage-url">{{url}}</div>
+</div>
+<div class="row color2">
+    <div class="column-label">Title</div>
+    <div class="column-input"><input type="text" id="newPageTitle" class="long" onkeyup="R.editor.pages.add.typeTitle(e)" /></div>
+</div>
+<div class="row color1">
+    <div class="column-label">Description</div>
+    <div class="column-input"><textarea type="text" id="newPageDescription" rows="7"></textarea></div>
+</div>
+<div class="row color2">
+    <div class="column-row"><input type="checkbox" id="newPageSecure" /><label for="newPageSecure">Private web page</label></div>
+</div>
+{{data-page}}
+    <div class="row color2">
+        <div class="column-row">
+            <input type="checkbox" id="newPageData" />
+            <label for="newPageData">Data page for "{{data-pagename}}"</label>
+        </div>
+    </div>
+{{/data-page}}
+
+<div class="message-error" id="newPageError" style="display:none;"></div>
+
+<div class="buttons">
+    <div class="button" onclick="R.editor.pages.add.submit()">Create</div>
+</div>

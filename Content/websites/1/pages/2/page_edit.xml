@@ -1,0 +1,169 @@
+<layout>
+  <panel name="body">
+    <component name="textbox" id="yjy" index="1">
+      <position><![CDATA[||c,0,0,t,0,,882,px,20,auto,50px 20px 20px 20px|c,0,0,t,0,,250,px,20,auto,50px 20px 20px 20px|c,0,0,t,auto,,480,px,20,auto,50px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>We're here to help you.</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="login" id="ah2" index="2">
+      <position><![CDATA[||c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,auto,,280,px,200,px,20px 20px 20px 20px]]></position>
+      <css><![CDATA[||||]]></css>
+      <content><![CDATA[1|2|1|2|10|100%|100px|Log In|23|206|104|0|450|300|10]]></content>
+      <design><![CDATA[textbox|button|||]]></design>
+    </component>
+    <component name="textbox" id="bZq" index="3">
+      <position><![CDATA[c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,0,,188,px,40,px,50px 0px 20px 50px|c,0,0,t,0,,300,px,40,px,50px 0px 50px 50px|c,0,0,t,auto,,292,px,40,px,80px 50px 50px 50px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>Please log into your account or sign up.&nbsp;</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="panel" id="xdB" index="4">
+      <position><![CDATA[|||c,0,1,t,0,,988,px,1189,auto,50px 0px 0px 0px|c,0,1,t,auto,,1259,px,1233,auto,50px 0px 0px 0px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="panel" id="rnu" index="5">
+      <position><![CDATA[|||c,0,1,t,0,,988,px,1189,auto,50px 0px 0px 0px|c,0,1,t,auto,,1259,px,1233,auto,50px 0px 0px 0px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="Bet" index="6">
+      <position><![CDATA[c,0,0,t,auto,,328,px,247,px,20px 20px 20px 20px|c,0,0,t,0,,648,px,652,auto,20px 20px 20px 20px|||c,0,0,t,auto,,254,px,247,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Office/vnekzbt.jpg||800|800|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="aqa" index="7">
+      <position><![CDATA[c,0,0,t,auto,,1047,px,1176,auto,20px 20px 20px 20px|c,0,0,t,0,,1047,px,1176,auto,20px 20px 20px 20px|||c,0,0,t,0,,225,px,258,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[ajkndrn.jpg||1047|1176|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="pVj" index="8">
+      <position><![CDATA[c,0,0,t,auto,,500,px,500,auto,20px 20px 20px 20px|c,0,0,t,0,,662,px,664,auto,20px 20px 20px 20px|||c,0,0,t,0,,254,px,258,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Anime/tqrrzgf.jpg||500|500|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="gxg" index="9">
+      <position><![CDATA[c,0,0,t,auto,,600,px,877,auto,20px 20px 20px 20px|c,0,0,t,0,,662,px,969,auto,20px 20px 20px 20px|||c,0,0,t,0,,174,px,258,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Anime/erfvacw.jpg||600|877|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="LRO" index="10">
+      <position><![CDATA[c,0,0,t,auto,,960,px,732,auto,20px 20px 20px 20px|c,0,0,t,0,,960,px,732,auto,20px 20px 20px 20px|||c,0,0,t,0,,334,px,259,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Anime/sfdfdcg.jpg||960|732|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="xdBPanel">
+    <component name="textbox" id="dUt" index="1">
+      <position><![CDATA[||||c,0,1,t,auto,,200,px,17,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>God is great!</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="oAa" index="2">
+      <position><![CDATA[||||c,0,0,t,-1,,1030,px,174,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<p style="margin-bottom: 1em; border-width: 0px; border-style: initial; clear: both; color: rgb(34, 34, 34); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 19.5px; text-align: left; background-color: rgb(255, 255, 255);">Console.Write will not work in ASP.NET as it is called using the browser. Use Response.Write instead.</p><p style="margin-bottom: 1em; border-width: 0px; border-style: initial; clear: both; color: rgb(34, 34, 34); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 19.5px; text-align: left; background-color: rgb(255, 255, 255);">See Stack Overflow question&nbsp;<em style="margin: 0px; padding: 0px; border: 0px;"><a href="http://stackoverflow.com/questions/137660" style="margin: 0px; padding: 0px; border: 0px; text-decoration: none; cursor: pointer; color: rgb(12, 101, 165);">Where does Console.WriteLine go in ASP.NET?</a></em>.</p><p style="margin-bottom: 1em; border-width: 0px; border-style: initial; clear: both; color: rgb(34, 34, 34); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 19.5px; text-align: left; background-color: rgb(255, 255, 255);">If you want to write something to Output window during debugging, you can use</p><pre class="lang-cs prettyprint prettyprinted" style="margin-bottom: 1em; padding: 5px; border-width: 0px; border-style: initial; font-size: 13px; overflow: auto; width: auto; max-height: 600px; font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, sans-serif; color: rgb(57, 51, 24); word-wrap: normal; text-align: left; background-color: rgb(238, 238, 238);"><code style="margin: 0px; padding: 0px; border: 0px; font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, sans-serif; white-space: inherit;"><span class="typ" style="border-width: 0px; border-style: initial; color: rgb(43, 145, 175);">System</span><span class="pun" style="border-width: 0px; border-style: initial; color: rgb(0, 0, 0);">.</span><span class="typ" style="border-width: 0px; border-style: initial; color: rgb(43, 145, 175);">Diagnostics</span><span class="pun" style="border-width: 0px; border-style: initial; color: rgb(0, 0, 0);">.</span><span class="typ" style="border-width: 0px; border-style: initial; color: rgb(43, 145, 175);">Debug</span><span class="pun" style="border-width: 0px; border-style: initial; color: rgb(0, 0, 0);">.</span><span class="typ" style="border-width: 0px; border-style: initial; color: rgb(43, 145, 175);">WriteLine</span><span class="pun" style="border-width: 0px; border-style: initial; color: rgb(0, 0, 0);">(</span><span class="str" style="border-width: 0px; border-style: initial; color: rgb(128, 0, 0);">"SomeText"</span><span class="pun" style="border-width: 0px; border-style: initial; color: rgb(0, 0, 0);">);</span></code></pre><p style="margin-bottom: 1em; border-width: 0px; border-style: initial; clear: both; color: rgb(34, 34, 34); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 19.5px; text-align: left; background-color: rgb(255, 255, 255);">but this will work only during debug. This is almost incredible. Don't know why I can't click within the contentEditable frame using Firefox though...<br></p>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="panel" id="wAo" index="3">
+      <position><![CDATA[||||c,0,1,t,0,,1180,px,213,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="wZv" index="4">
+      <position><![CDATA[||c,0,0,t,0,,414,px,380,auto,20px 20px 20px 20px||c,0,0,t,0,,472,px,380,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div class="_5pbx userContent" data-ft="{&quot;tn&quot;:&quot;K&quot;}" id="js_e" style="font-size: 14px; line-height: 1.38; overflow: hidden;"><p style="display: inline;"><a class="profileLink" href="https://www.facebook.com/Google" data-hovercard="/ajax/hovercard/page.php?id=104958162837" aria-owns="js_n" aria-haspopup="true" aria-describedby="js_o" id="js_p" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none;">Google</a>&nbsp;is now helping to finally kill Flash</p><div class=""></div></div><div><div data-ft="{&quot;tn&quot;:&quot;H&quot;}"><div class="mtm" style="margin-top: 10px;"><div id="u_ps_jsonp_5_0_5" class="_6m2 _1zpr clearfix _dcs _4_w4 _59ap" data-ft="{&quot;tn&quot;:&quot;H&quot;}" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 0px 1.5px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 1px; position: relative; overflow: hidden; z-index: 0; zoom: 1; background-color: rgb(255, 255, 255);"><div class="clearfix _2r3x" style="zoom: 1;"><div class="lfloat _ohe" style="float: left; width: 470px;"><span class="_3m6-"><div class="_6ks" style="line-height: 0; position: relative; z-index: 1;"><a href="http://tnw.me/ul7sBOX" target="_blank" rel="nofollow" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none;"><div class="_6l- __c_" style="position: relative;"><div class="uiScaledImageContainer _6m5 fbStoryAttachmentImage" style="height: 246px; width: 470px; position: relative; overflow: hidden; background-position: 50% 50%; background-repeat: no-repeat;"><img class="scaledImageFitWidth img" src="https://external-sea1-1.xx.fbcdn.net/safe_image.php?d=AQD-we3kfIot3Deh&amp;w=470&amp;h=246&amp;url=http%3A%2F%2Fcdn1.tnwcdn.com%2Fwp-content%2Fblogs.dir%2F1%2Ffiles%2F2015%2F09%2FRIP_flash.jpg&amp;cfs=1&amp;upscale=1" alt="" width="470" height="246" style="border-width: 0px; border-style: initial; vertical-align: bottom; height: auto; min-height: 100%; position: relative; width: 470px;"></div></div></a></div><div class="_3ekx"><div class="_6m3" style="font-size: 12px; height: auto; margin: 10px 12px; position: relative; max-height: 100px; color: rgb(20, 24, 35); font-family: helvetica, arial, sans-serif; line-height: 16.0799999237061px; text-align: left;"><div class="mbs _6m6" style="font-family: Georgia, 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 18px; line-height: 22px; margin-bottom: 5px; max-height: 110px; overflow: hidden; word-wrap: break-word; transition: color 0.1s ease-in-out;"><a href="http://l.facebook.com/l.php?u=http%3A%2F%2Ftnw.me%2Ful7sBOX&amp;h=UAQEPuHYw&amp;s=1" rel="nofollow" target="_blank" style="color: rgb(20, 24, 35); cursor: pointer; text-decoration: none; transition: color 0.1s ease-in-out;">Adobe Flash just took another step towards death, thanks to Google</a></div><div class="_59tj" style="padding-top: 9px; position: relative;"><div class="_6lz _6mb ellipsis" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: rgb(145, 151, 163); font-size: 11px; line-height: 11px; text-transform: uppercase;">TNW.ME<span class="phs" style="padding-left: 5px; padding-right: 5px;">|</span>BY&nbsp;<a class="profileLink _2iv2" href="https://www.facebook.com/Ow3n.Williams" data-hovercard="/ajax/hovercard/user.php?id=744702405&amp;type=article_author_in_shared_link" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none; position: relative; z-index: 5;">OWEN WILLIAMS</a></div><div><br></div><div class="_5tc6" style="color: rgb(145, 151, 163); margin-top: 5px;"></div></div></div></div></span></div></div></div></div></div></div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="FDi" index="5">
+      <position><![CDATA[|c,0,0,t,0,,392,px,374,auto,20px 20px 20px 20px|c,0,0,t,0,,384,px,374,auto,20px 20px 20px 20px|c,0,0,t,0,,420,px,374,auto,20px 20px 20px 20px|c,0,0,t,auto,,480,px,374,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div class="_5pbx userContent" data-ft="{&quot;tn&quot;:&quot;K&quot;}" style="font-size: 14px; line-height: 1.38; overflow: hidden;"><p style="display: inline;"><a class="profileLink" href="https://www.facebook.com/Google" data-hovercard="/ajax/hovercard/page.php?id=104958162837" aria-owns="js_n" aria-haspopup="true" aria-describedby="js_o" id="js_y" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none;">Google</a>&nbsp;has unveiled its new logo.</p><div class=""></div></div><div><div data-ft="{&quot;tn&quot;:&quot;H&quot;}"><div class="mtm" style="margin-top: 10px;"><div id="u_jsonp_6_6" class="_6m2 _1zpr clearfix _dcs _4_w4 _59ap" data-ft="{&quot;tn&quot;:&quot;H&quot;}" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 0px 1.5px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 1px; position: relative; overflow: hidden; z-index: 0; zoom: 1; background-color: rgb(255, 255, 255);"><div class="clearfix _2r3x" style="zoom: 1;"><div class="lfloat _ohe" style="float: left; width: 470px;"><span class="_3m6-"><div class="_6ks" style="line-height: 0; position: relative; z-index: 1;"><a href="http://thenextweb.com/2015/09/01/hello-google/" target="_blank" rel="nofollow" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none;"><div class="_6l- __c_" style="position: relative;"><div class="uiScaledImageContainer _6m5 fbStoryAttachmentImage" style="height: 246px; width: 470px; position: relative; overflow: hidden; background-position: 50% 50%; background-repeat: no-repeat;"><img class="scaledImageFitWidth img" src="https://fbexternal-a.akamaihd.net/safe_image.php?d=AQDfAiibG7Qkxzzv&amp;w=470&amp;h=246&amp;url=https%3A%2F%2Fscontent-lhr3-1.xx.fbcdn.net%2Fhphotos-xlf1%2Fv%2Ft1.0-9%2F11988576_10153571630668523_1004473167206829383_n.png%3Foh%3D48e61b1c78d64834dea54543fa5a66d7%26oe%3D56832B6E&amp;cfs=1&amp;upscale=1" alt="" width="470" height="246" style="border-width: 0px; border-style: initial; vertical-align: bottom; height: auto; min-height: 100%; position: relative; width: 470px;"></div></div></a></div><div class="_3ekx"><div class="_6m3" style="font-size: 12px; height: auto; margin: 10px 12px; position: relative; max-height: 100px; color: rgb(20, 24, 35); font-family: helvetica, arial, sans-serif; line-height: 16.0799999237061px; text-align: left;"><div class="mbs _6m6" style="font-family: Georgia, 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 18px; line-height: 22px; margin-bottom: 5px; max-height: 110px; overflow: hidden; word-wrap: break-word; transition: color 0.1s ease-in-out;"><a href="http://l.facebook.com/l.php?u=http%3A%2F%2Fthenextweb.com%2F2015%2F09%2F01%2Fhello-google%2F&amp;h=vAQGnjKXz&amp;s=1" rel="nofollow" target="_blank" style="color: rgb(20, 24, 35); cursor: pointer; text-decoration: none; transition: color 0.1s ease-in-out;">Google has a new logo, seriously</a></div><div class="_6m7" style="line-height: 16px; max-height: 80px; overflow: hidden;">Yep. It's all changing. Same colors, new logo.</div><div class="_59tj" style="padding-top: 9px; position: relative;"><div class="_6lz _6mb ellipsis" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: rgb(145, 151, 163); font-size: 11px; line-height: 11px; text-transform: uppercase;">THENEXTWEB.COM<span class="phs" style="padding-left: 5px; padding-right: 5px;">|</span>BY&nbsp;<a class="profileLink _2iv2" href="https://www.facebook.com/micwright" data-hovercard="/ajax/hovercard/user.php?id=36901815&amp;type=article_author_in_shared_link" style="color: rgb(59, 89, 152); cursor: pointer; text-decoration: none; position: relative; z-index: 5;">MIC WRIGHT</a></div><div><br></div><div class="_5tc6" style="color: rgb(145, 151, 163); margin-top: 5px;"></div></div></div></div></span></div></div></div></div></div></div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="wAoPanel">
+    <component name="textbox" id="kBv" index="1">
+      <position><![CDATA[|||c,0,0,null,auto,,728,px,63,auto,20px 20px 20px 20px|c,0,0,null,0,,748,px,63,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<table align="center" border="1" cellpadding="5" cellspacing="0" style="font-family: Verdana, Helvetica, sans-serif; background-color: rgb(255, 255, 255);"><tbody><tr style="color: white; background-color: navy;"><th>Format Description</th><th>Code Snippet</th><th>Output</th></tr><tr><td style="font-size: 9pt;">Abbreviated month name, day and year</td><td style="font-size: 9pt; font-family: monospace; white-space: nowrap;">DateTime.Now.ToString("MMM d, yyyy")</td><td style="font-size: 9pt; text-align: right;">Nov 8, 2010</td></tr><tr style="background-color: rgb(221, 221, 221);"><td style="font-size: 9pt;">Day of the week name plus month name and day of month</td><td style="font-size: 9pt; font-family: monospace; white-space: nowrap;">DateTime.Now.ToString("dddd, MMMM d")</td><td style="font-size: 9pt; text-align: right;">Monday, November 8</td></tr><tr><td style="font-size: 9pt;">Month/Day/Year, using exactly two digits for each</td><td style="font-size: 9pt; font-family: monospace; white-space: nowrap;">DateTime.Now.ToString("MM/dd/yy")</td><td style="font-size: 9pt; text-align: right;">11/08/10</td></tr></tbody></table>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="panel" id="nbQ" index="2">
+      <position><![CDATA[|||c,0,0,null,auto,,868,px,104,auto,20px 20px 20px 20px|c,0,0,null,auto,,1108,px,320,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="nbQPanel">
+    <component name="textbox" id="YId" index="1">
+      <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>Websilk is so completely optimized, all of the fat has been trimmed, and so I have made Websilk into a truly fearsome competitor to WordPress. That is very cool.</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="panel" id="dlz" index="2">
+      <position><![CDATA[||c,0,0,t,0,,596,px,343,auto,20px 20px 20px 20px||c,0,0,t,auto,,1040,px,116,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="YzE" index="3">
+      <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>There can be only one (in the CMS wars).</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel">
+    <component name="photo" id="BLo" index="1">
+      <position><![CDATA[|c,0,0,t,0,,176,px,180,auto,20px 20px 20px 20px|c,0,0,t,0,,130,px,134,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/gvnyekz.png|Icons/qhvices.png|256|256|http://www.google.com/chrome|1|_blank|Get Chrome right now!|||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="xZl" index="2">
+      <position><![CDATA[c,0,0,t,auto,,186,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,184,px,188,auto,20px 20px 20px 20px|c,0,0,t,0,,118,px,122,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/OmGCJHr.png||200|200|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="xay" index="3">
+      <position><![CDATA[|c,0,0,t,auto,,160,px,162,auto,20px 20px 20px 20px|c,0,0,t,0,,124,px,127,auto,20px 20px 20px 20px||c,0,0,t,0,,90,px,94,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/VOTerUt.png||1063|1052|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="uFN" index="4">
+      <position><![CDATA[|c,0,0,t,auto,,170,px,172,auto,20px 20px 20px 20px|c,0,0,t,0,,124,px,127,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/VOTerUt.png||1063|1052|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="lIJ" index="5">
+      <position><![CDATA[|c,0,0,t,auto,,174,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,132,px,136,auto,20px 20px 20px 20px||c,0,0,t,0,,96,px,100,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/OmGCJHr.png||200|200|||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="photo" id="SGV" index="6">
+      <position><![CDATA[c,0,0,t,auto,,174,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,170,px,174,auto,20px 20px 20px 20px|c,0,0,t,0,,120,px,124,auto,20px 20px 20px 20px||c,0,0,t,0,,90,px,94,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Icons/gvnyekz.png|Icons/qhvices.png|256|256|http://www.google.com/chrome|1|_blank|Get Chrome right now!|||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <layers />
+</layout>

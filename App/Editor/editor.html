@@ -1,0 +1,288 @@
+﻿<div class="editor">
+    <div class="toolbar" style="display:none;">
+        <div class="logo">
+            <a href="http://www.websilk.com" target="_blank">
+                <svg viewBox="0 0 136 26">
+                    <use xlink:href="#icon-logo" x="0" y="0" width="136" height="26"></use>
+                </svg>
+            </a>
+        </div>
+        <div class="menu">
+            <div class="plus">
+                <a href="javascript:" onclick="R.editor.window.load('Components','Editor/Components', {}, {x:0,y:0,w:142,h:100, title:'Components', postOnce:true})">
+                    <svg viewBox="0 0 25 25">
+                        <use xlink:href="#icon-plus" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="options">
+                <a href="javascript:" onclick="R.editor.window.load('Options','Editor/Options', {}, {w:240, h:300, target:'.editor .toolbar .menu .options', align: 'bottom-center', arrow:true, spacing: 10, toolbar: false, autoHide:true, popup:true, postOnce:true})">
+                    <svg viewBox="0 0 25 25">
+                        <use xlink:href="#icon-options" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="grid">
+                <a href="javascript:" onclick="R.editor.window.load('Dashboard','Editor/Dashboard', {}, {w:250, h:300, target:'.editor .toolbar .menu .grid', align: 'bottom-center', arrow:true, spacing: 10, toolbar: false, autoHide:true, popup:true, postOnce:'pageid'})">
+                    <svg viewBox="0 0 25 25">
+                        <use xlink:href="#icon-grid" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="screens">
+                <a href="javascript:" onclick="R.viewport.nextLevel();" oncontextmenu="R.viewport.previousLevel();return false;">
+                    <svg viewBox="0 0 33 25">
+                        <use xlink:href="#icon-screenhd" x="0" y="0" width="33" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="search">
+                <a href="javascript:" onclick="R.editor.window.load('Support','Editor/Support', {}, {x:0, align:'center',y:0,w:400,h:400, spacing:50, postOnce:true, title:'Support Center'})">
+                    <svg viewBox="0 0 25 25">
+                        <use xlink:href="#icon-search" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="rightside">
+            <div class="savepage nosave">
+                <a href="javascript:" onclick="R.editor.save.click()">
+                    <svg viewBox="0 0 25 25" style="width:25px; height:25px;">
+                        <use xlink:href="#icon-save" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="profile">
+                <div class="photo">
+                    <a href="javascript:" onclick="R.editor.window.load('Profile','Editor/Profile', {}, {w:100, h:50, target:'.editor .toolbar .rightside .photo', align: 'bottom-center', arrow:true, spacing: 10, toolbar: false, autoHide:true, popup:true, postOnce:true, noDashboard:true})">
+                        {{photo}}
+                    </a>
+                </div>
+            </div>
+            <div class="close">
+                <a href="javascript:" onclick="R.editor.hide()">
+                    <svg viewBox="0 0 15 15" style="width:15px; height:15px;">
+                        <use xlink:href="#icon-close" x="0" y="0" width="36" height="36"></use>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="windows"></div>
+
+    <div class="tab">
+        <a href="javascript:" onclick="R.editor.show()">
+            <svg viewBox="0 0 20 20" style="width:20px; height:20px;">
+                <use xlink:href="#icon-options" x="0" y="0" width="20" height="20"></use>
+            </svg>
+        </a>
+    </div>
+
+</div>
+
+<div class="tools" style="display:none;">
+    <div class="borders"></div>
+    <div class="component-select interface" style="display:none;" onmousedown="R.editor.components.drag.start(event)">
+        <div class="resize-bar resize-side resize-top"></div>
+        <div class="resize-bar resize-corner resize-top-right"></div>
+        <div class="resize-bar resize-corner resize-right-top"></div>
+        <div class="resize-bar resize-side resize-right"></div>
+        <div class="resize-bar resize-corner resize-right-bottom"></div>
+        <div class="resize-bar resize-corner resize-bottom-right"></div>
+        <div class="resize-bar resize-side resize-bottom"></div>
+        <div class="resize-bar resize-corner resize-bottom-left"></div>
+        <div class="resize-bar resize-corner resize-left-bottom"></div>
+        <div class="resize-bar resize-side resize-left"></div>
+        <div class="resize-bar resize-corner resize-left-top"></div>
+        <div class="resize-bar resize-corner resize-top-left"></div>
+        <div class="arrow-down">
+            <div class="icon-arrow-down">
+                <svg viewBox="0 0 16 5">
+                    <use xlink:href="#icon-arrow-down" x="0" y="0" width="16" height="5"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="menu">
+            <div class="item menu-options for-all" onclick="R.editor.components.properties.show()">
+                <div class="icon-options">
+                    <svg viewBox="0 0 25 25">
+                        <use xlink:href="#icon-options" x="0" y="0" width="25" height="25"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="item menu-position for-all" onclick=" R.editor.components.menu.show('position')">
+                <div class="icon-position">
+                    <svg viewBox="0 0 22 19">
+                        <use xlink:href="#icon-position" x="0" y="0" width="22" height="19"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="item menu-layer for-all" onclick="R.editor.components.menu.show('layer')">
+                <div class="icon-layer">
+                    <svg viewBox="0 0 18 18">
+                        <use xlink:href="#icon-layers" x="0" y="0" width="18" height="18"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="item menu-style for-all" style="display:none;" onclick="R.editor.components.menu.show('style')">
+                <div class="icon-style">
+                    <svg viewBox="0 0 17 17">
+                        <use xlink:href="#icon-style" x="0" y="0" width="17" height="17"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="item menu-close for-all" onclick="R.editor.components.menu.remove()">
+                <div class="icon-close">
+                    <svg viewBox="0 0 20 20">
+                        <use xlink:href="#icon-close" x="0" y="0" width="36" height="36"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="properties" style="display:none">
+            <div class="box">
+                <div class="row" id="divPropsPosScreen" style="display:none;">
+                    <div class="column-row">
+                    </div>
+                </div>
+                <div class="section-position" style="width:200px;">
+                    <div class="row color1 column-title">Position</div>
+
+                    <div class="row color1">
+                        <div class="column-label">Align X</div>
+                        <div class="column-input">
+                            <select id="lstPropsAlignX" onchange="R.editor.components.menu.save.position()">
+                                <option value="l">Left</option>
+                                <option value="c">Center</option>
+                                <option value="r">Right</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row color2">
+                        <div class="column-label">Align Y</div>
+                        <div class="column-input">
+                            <select id="lstPropsAlignY" onchange="R.editor.components.menu.save.position()">
+                                <option value="t">Top</option>
+                                <option value="f">Fixed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row color2" id="alignYfixed" style="display:none;">
+                        <div class="column-label">Fixed</div>
+                        <div class="column-input">
+                            <select id="lstPropsFixed" onchange="R.editor.components.menu.save.position()">
+                                <option value="t">Top</option>
+                                <option value="m">Middle</option>
+                                <option value="b">Bottom</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row color1">
+                        <div class="column-label">Width</div>
+                        <div class="column-input">
+                            <select id="lstPropsPosWidth" onchange="R.editor.components.menu.save.position()">
+                                <option value="px">Pixels</option>
+                                <option value="%">Percent</option>
+                                <option value="win">Window</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row color2">
+                        <div class="column-label">Height</div>
+                        <div class="column-input">
+                            <select id="lstPropsPosHeight" onchange="R.editor.components.menu.save.position()">
+                                <option value="auto">Auto</option>
+                                <option value="px">Pixels</option>
+                                <option value="win">Window</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row color1">
+                        <div class="column-label"></div>
+                        <div class="column-input">
+                            <input type="checkbox" id="chkPropsAlignXNewline" name="chkPropsAlignXNewline" onclick="R.editor.components.menu.save.position()" />
+                            <label for="chkPropsAlignXNewline">Force New Line</label>
+                        </div>
+                    </div>
+
+                    <div class="row color2">
+                        <div class="column-label">Padding</div>
+                        <div class="column-input label" id="divPropsPadding"><a href="javascript:" onclick="R.editor.components.menu.show('padding')">0px 0px 0px 0px</a></div>
+                    </div>
+
+
+                </div>
+
+                <div class="section-padding" style="width:200px;">
+                    <div class="row color1 column-title">Padding</div>
+                    <div class="row color1">
+                        <div class="column-label">Top</div>
+                        <div class="column-input">
+                            <input type="text" id="txtPosPadTop" onkeyup="R.editor.components.menu.save.position()" />px
+                        </div>
+                    </div>
+                    <div class="row color2">
+                        <div class="column-label">Right</div>
+                        <div class="column-input">
+                            <input type="text" id="txtPosPadRight" onkeyup="R.editor.components.menu.save.position()" />px
+                        </div>
+                    </div>
+                    <div class="row color1">
+                        <div class="column-label">Bottom</div>
+                        <div class="column-input">
+                            <input type="text" id="txtPosPadBottom" onkeyup="R.editor.components.menu.save.position()" />px
+                        </div>
+                    </div>
+                    <div class="row color2">
+                        <div class="column-label">Left</div>
+                        <div class="column-input">
+                            <input type="text" id="txtPosPadLeft" onkeyup="R.editor.components.menu.save.position()" />px
+                        </div>
+                    </div>
+                    <div class="row color1">
+                        <div class="column-label"></div>
+                        <div class="column-input label" id="divPropsPaddingBack"><a href="javascript:" onclick="R.editor.components.menu.show('position')">&lt; Back to Position</a></div>
+                    </div>
+                </div>
+
+                <div class="section-layer">
+                    <div class="row color1 column-title">Layer</div>
+                </div>
+
+                <div class="section-css">
+                    <div class="row color1 column-title">Custom CSS</div>
+                </div>
+
+                <div class="section-style">
+                    <div class="row color1 column-title">Styling</div>
+                </div>
+            </div>
+            <div class="barrier">&nbsp;</div>
+        </div>
+        <div class="quickmenu"></div>
+        <div class="addons">
+            <div class="absolute">
+                <div class="relative btn-duplicate for-all" onclick="R.editor.components.duplicate(R.editor.components.hovered)">
+                    <div class="label bg"><span>Panel</span><div class="arrow-right"></div></div>
+                    <div class="submenu">
+                        <div class="item">
+                            <div class="icon-add-content">
+                                <svg viewBox="0 0 22 22" style="display:inline-block; width:22px; height:22px; padding:2px 2px 0px 8px;">
+                                    <use xlink:href="#icon-addsmall" x="0" y="0" width="22" height="22"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<layout>
+  <panel name="body">
+    <component name="login" id="ah2">
+	  <css><![CDATA[||||]]></css>
+      <position><![CDATA[||||c,0,,t,0,,450,px,190,px,50px 0px 0px 0px]]></position>
+      <content><![CDATA[1|2|1|2|10|100%|100px|Log In|23|206|104|0|450|300|10]]></content>
+      <design><![CDATA[textbox|button|||]]></design>
+    </component>
+  </panel>
+  <layers>
+  </layers>
+  <CSS><![CDATA[]]></CSS>
+</layout>

@@ -1,0 +1,10 @@
+﻿{
+  "data": {
+    "active": "SqlServerTrusted",
+    "SqlServerDev": "server=.\\SQL2012; database=WebsilkDev; user=WebsilkDev; password=development",
+    "SqlServerTrusted": "server=.\\SQL2012; database=WebsilkDev; Trusted_Connection=true",
+    "PostgreSql": "Host=localhost; Database=WebsilkDev; Username=WebsilkDev; Password=development"
+  },
+
+  "platform": "windows"
+}

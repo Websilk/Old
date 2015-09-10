@@ -1,0 +1,28 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    {{head}}
+    <style type="text/css">
+        body {
+            background-color: transparent !important;
+            background-image: none !important;
+            overflow: hidden;
+            padding: 0px !important;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginform" method="post" action="{{action}}">
+        <div style="padding:10px;" class="webpage">
+            {{body}}
+            <input type="submit" style="position:absolute; left:-1000px;" />
+        </div>
+    </form>
+    {{foot}}
+    <script type="text/javascript">
+        {{script}}
+    </script>
+</body>
+</html>

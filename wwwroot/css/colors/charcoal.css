@@ -1,0 +1,3737 @@
+.webpage > .grid-leftside {
+  background-color: #272727;
+}
+.webpage > .grid-rightside {
+  background-color: #272727;
+}
+.editor .toolbar {
+  background-color: #272727;
+}
+.editor .saving a:link use {
+  color: #58ff00 !important;
+}
+.editor .saving a:hover use {
+  color: #58ff00 !important;
+}
+.editor .saving a:active use {
+  color: #58ff00 !important;
+}
+.editor .saving a:visited use {
+  color: #58ff00 !important;
+}
+.editor .nosave a {
+  cursor: default;
+}
+.editor .nosave a:link use {
+  color: #ffffff !important;
+}
+.editor .nosave a:hover use {
+  color: #ffffff !important;
+}
+.editor .nosave a:active use {
+  color: #ffffff !important;
+}
+.editor .nosave a:visited use {
+  color: #ffffff !important;
+}
+.editor .bg {
+  background-color: #272727;
+}
+.editor .tab {
+  color: #ffffff;
+  background-color: #272727;
+}
+.editor .font-faded {
+  color: #aaaaaa;
+}
+.editor a:link use {
+  color: #ffffff;
+}
+.editor a:hover use {
+  color: #33ffcc;
+}
+.editor a:active use {
+  color: #00ffcc;
+}
+.editor a:visited use {
+  color: #ffffff;
+}
+.interface {
+  background-color: #272727;
+  color: #e0e0e0;
+}
+.interface .grip {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.interface .title {
+  color: #aaaaaa;
+}
+.interface .close a:hover {
+  color: #cc0000 !important;
+}
+.interface.arrow-top:after {
+  border-bottom-color: #272727;
+}
+.interface .section-info {
+  background-color: #202020;
+}
+.interface .row.header {
+  background-color: #202020;
+}
+.interface .top-menu,
+.interface .side-menu {
+  background-color: #2a2a2a;
+}
+.interface .tabs .item {
+  color: #aaaaaa;
+  background-color: #2a2a2a;
+}
+.interface .tabs .item:hover {
+  color: #e0e0e0;
+  background-color: #3b3b3b;
+}
+.interface .tabs .item.selected {
+  color: #e0e0e0;
+  border-bottom: 2px solid #00eeb6;
+}
+.interface .top-menu .tabs .item {
+  color: #aaaaaa;
+  background-color: #2a2a2a;
+}
+.interface .top-menu .tabs .item:hover {
+  color: #e0e0e0;
+  background-color: #3b3b3b;
+}
+.interface .top-menu .tabs .item.selected {
+  color: #e0e0e0;
+  border-bottom: 2px solid #00eeb6;
+}
+.interface .help-info {
+  color: #e0e0e0;
+  background-color: #1a1a1a;
+}
+.interface .column-help > div {
+  color: #9ee3c3;
+  background-color: #1a1a1a;
+}
+.interface .column-help > div:after {
+  border-right-color: #1a1a1a;
+}
+.interface .column-help .row.color:hover {
+  color: #89eebf;
+  background-color: #131313;
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.color1 {
+  background-color: #272727;
+}
+.interface div.color1 > .column-label,
+.interface div.color1 .column-icon {
+  color: rgba(224, 224, 224, 0.7);
+  background-color: #2f2f2f;
+  border-bottom: 1px solid #2a2a2a;
+}
+.interface div.color1 > .column,
+.interface div.color1 > .column-input,
+.interface div.color1 > .empty,
+.interface div.color1 .column-button {
+  background-color: #272727;
+  border-bottom: 1px solid #222222;
+}
+.interface tr.color1 td {
+  background-color: #2f2f2f;
+  border-bottom: 1px solid #2a2a2a;
+}
+.interface .row.color1:hover {
+  background-color: #263039;
+}
+.interface .row.color1:hover > .column-label,
+.interface .row.color1:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #24384a;
+  border-bottom: 1px solid #1f3040;
+}
+.interface .row.color1:hover > .column,
+.interface .row.color1:hover > .column-input,
+.interface .row.color1:hover > .empty,
+.interface .row.color1:hover .column-button {
+  background-color: #263039;
+  border-bottom: 1px solid #202830;
+}
+.interface .row:hover > div.color1 {
+  background-color: #263039;
+}
+.interface .row:hover > div.color1 > .column-label,
+.interface .row:hover > div.color1 .column-icon {
+  color: #e0e0e0;
+  background-color: #24384a;
+  border-bottom: 1px solid #1f3040;
+}
+.interface .row:hover > div.color1 > .column,
+.interface .row:hover > div.color1 > .column-input,
+.interface .row:hover > div.color1 > .empty,
+.interface .row:hover > div.color1 .column-button {
+  background-color: #263039;
+  border-bottom: 1px solid #202830;
+}
+.interface tr.color1:hover td {
+  background-color: #263039;
+  border-bottom: 1px solid #222b33;
+}
+.interface tr.color1:hover td:hover {
+  background-color: #24384a;
+  border-bottom: 1px solid #213344;
+}
+.interface .color1 input,
+.interface .color1 textarea,
+.interface .color1 select {
+  color: rgba(224, 224, 224, 0.9);
+  background-color: #414141;
+}
+.interface .color1:hover input,
+.interface .color1:hover textarea,
+.interface .color1:hover select {
+  color: #e0e0e0;
+  background-color: #414141;
+}
+.interface .color1 input:focus,
+.interface .color1 textarea:focus,
+.interface .color1 select:focus {
+  background-color: #555555;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.color2 {
+  background-color: #242424;
+}
+.interface div.color2 > .column-label,
+.interface div.color2 .column-icon {
+  color: rgba(224, 224, 224, 0.7);
+  background-color: #2c2c2c;
+  border-bottom: 1px solid #272727;
+}
+.interface div.color2 > .column,
+.interface div.color2 > .column-input,
+.interface div.color2 > .empty,
+.interface div.color2 .column-button {
+  background-color: #242424;
+  border-bottom: 1px solid #1f1f1f;
+}
+.interface tr.color2 td {
+  background-color: #2c2c2c;
+  border-bottom: 1px solid #272727;
+}
+.interface .row.color2:hover {
+  background-color: #263039;
+}
+.interface .row.color2:hover > .column-label,
+.interface .row.color2:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #24384a;
+  border-bottom: 1px solid #1f3040;
+}
+.interface .row.color2:hover > .column,
+.interface .row.color2:hover > .column-input,
+.interface .row.color2:hover > .empty,
+.interface .row.color2:hover .column-button {
+  background-color: #263039;
+  border-bottom: 1px solid #202830;
+}
+.interface .row:hover > div.color2 {
+  background-color: #263039;
+}
+.interface .row:hover > div.color2 > .column-label,
+.interface .row:hover > div.color2 .column-icon {
+  color: #e0e0e0;
+  background-color: #24384a;
+  border-bottom: 1px solid #1f3040;
+}
+.interface .row:hover > div.color2 > .column,
+.interface .row:hover > div.color2 > .column-input,
+.interface .row:hover > div.color2 > .empty,
+.interface .row:hover > div.color2 .column-button {
+  background-color: #263039;
+  border-bottom: 1px solid #202830;
+}
+.interface tr.color2:hover td {
+  background-color: #263039;
+  border-bottom: 1px solid #222b33;
+}
+.interface tr.color2:hover td:hover {
+  background-color: #24384a;
+  border-bottom: 1px solid #213344;
+}
+.interface .color2 input,
+.interface .color2 textarea,
+.interface .color2 select {
+  color: rgba(224, 224, 224, 0.9);
+  background-color: #3e3e3e;
+}
+.interface .color2:hover input,
+.interface .color2:hover textarea,
+.interface .color2:hover select {
+  color: #e0e0e0;
+  background-color: #3e3e3e;
+}
+.interface .color2 input:focus,
+.interface .color2 textarea:focus,
+.interface .color2 select:focus {
+  background-color: #525252;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface.component-select {
+  color: #ffffff;
+}
+.interface.component-select a:link {
+  color: #00eeb6;
+}
+.interface.component-select a:hover {
+  color: #00ffc3;
+}
+.interface.component-select a:active {
+  color: #00ffc3;
+}
+.interface.component-select a:visited {
+  color: #00eeb6;
+}
+.interface.component-select a:link use {
+  color: #ffffff;
+}
+.interface.component-select a:hover use {
+  color: #33ffcc;
+}
+.interface.component-select a:active use {
+  color: #00ffcc;
+}
+.interface.component-select a:visited use {
+  color: #ffffff;
+}
+.interface.component-select div.color1 {
+  background-color: #252525;
+}
+.interface.component-select div.color1 > .column-label,
+.interface.component-select div.color1 .column-icon {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #282828;
+}
+.interface.component-select div.color1 > .column,
+.interface.component-select div.color1 > .column-input,
+.interface.component-select div.color1 > .empty,
+.interface.component-select div.color1 .column-button {
+  background-color: #252525;
+  border-bottom: 1px solid #202020;
+}
+.interface.component-select tr.color1 td {
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #282828;
+}
+.interface.component-select .row.color1:hover {
+  background-color: #000000;
+}
+.interface.component-select .row.color1:hover > .column-label,
+.interface.component-select .row.color1:hover .column-icon {
+  color: #ffffff;
+  background-color: #090707;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row.color1:hover > .column,
+.interface.component-select .row.color1:hover > .column-input,
+.interface.component-select .row.color1:hover > .empty,
+.interface.component-select .row.color1:hover .column-button {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row:hover > div.color1 {
+  background-color: #000000;
+}
+.interface.component-select .row:hover > div.color1 > .column-label,
+.interface.component-select .row:hover > div.color1 .column-icon {
+  color: #ffffff;
+  background-color: #090707;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row:hover > div.color1 > .column,
+.interface.component-select .row:hover > div.color1 > .column-input,
+.interface.component-select .row:hover > div.color1 > .empty,
+.interface.component-select .row:hover > div.color1 .column-button {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select tr.color1:hover td {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select tr.color1:hover td:hover {
+  background-color: #090707;
+  border-bottom: 1px solid #030202;
+}
+.interface.component-select .color1 input,
+.interface.component-select .color1 textarea,
+.interface.component-select .color1 select {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: #3f3f3f;
+}
+.interface.component-select .color1:hover input,
+.interface.component-select .color1:hover textarea,
+.interface.component-select .color1:hover select {
+  color: #ffffff;
+  background-color: #3f3f3f;
+}
+.interface.component-select .color1 input:focus,
+.interface.component-select .color1 textarea:focus,
+.interface.component-select .color1 select:focus {
+  background-color: #535353;
+}
+.interface.component-select .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.component-select .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface.component-select .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.component-select .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface.component-select {
+  color: #ffffff;
+}
+.interface.component-select a:link {
+  color: #00eeb6;
+}
+.interface.component-select a:hover {
+  color: #00ffc3;
+}
+.interface.component-select a:active {
+  color: #00ffc3;
+}
+.interface.component-select a:visited {
+  color: #00eeb6;
+}
+.interface.component-select a:link use {
+  color: #ffffff;
+}
+.interface.component-select a:hover use {
+  color: #33ffcc;
+}
+.interface.component-select a:active use {
+  color: #00ffcc;
+}
+.interface.component-select a:visited use {
+  color: #ffffff;
+}
+.interface.component-select div.color2 {
+  background-color: #252525;
+}
+.interface.component-select div.color2 > .column-label,
+.interface.component-select div.color2 .column-icon {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #282828;
+}
+.interface.component-select div.color2 > .column,
+.interface.component-select div.color2 > .column-input,
+.interface.component-select div.color2 > .empty,
+.interface.component-select div.color2 .column-button {
+  background-color: #252525;
+  border-bottom: 1px solid #202020;
+}
+.interface.component-select tr.color2 td {
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #282828;
+}
+.interface.component-select .row.color2:hover {
+  background-color: #000000;
+}
+.interface.component-select .row.color2:hover > .column-label,
+.interface.component-select .row.color2:hover .column-icon {
+  color: #ffffff;
+  background-color: #090707;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row.color2:hover > .column,
+.interface.component-select .row.color2:hover > .column-input,
+.interface.component-select .row.color2:hover > .empty,
+.interface.component-select .row.color2:hover .column-button {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row:hover > div.color2 {
+  background-color: #000000;
+}
+.interface.component-select .row:hover > div.color2 > .column-label,
+.interface.component-select .row:hover > div.color2 .column-icon {
+  color: #ffffff;
+  background-color: #090707;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select .row:hover > div.color2 > .column,
+.interface.component-select .row:hover > div.color2 > .column-input,
+.interface.component-select .row:hover > div.color2 > .empty,
+.interface.component-select .row:hover > div.color2 .column-button {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select tr.color2:hover td {
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+.interface.component-select tr.color2:hover td:hover {
+  background-color: #090707;
+  border-bottom: 1px solid #030202;
+}
+.interface.component-select .color2 input,
+.interface.component-select .color2 textarea,
+.interface.component-select .color2 select {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: #3f3f3f;
+}
+.interface.component-select .color2:hover input,
+.interface.component-select .color2:hover textarea,
+.interface.component-select .color2:hover select {
+  color: #ffffff;
+  background-color: #3f3f3f;
+}
+.interface.component-select .color2 input:focus,
+.interface.component-select .color2 textarea:focus,
+.interface.component-select .color2 select:focus {
+  background-color: #535353;
+}
+.interface.component-select .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.component-select .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface.component-select .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.component-select .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface.component-select.forpanel {
+  color: #ffffff;
+}
+.interface.component-select.forpanel a:link {
+  color: #00eeb6;
+}
+.interface.component-select.forpanel a:hover {
+  color: #00ffc3;
+}
+.interface.component-select.forpanel a:active {
+  color: #00ffc3;
+}
+.interface.component-select.forpanel a:visited {
+  color: #00eeb6;
+}
+.interface.component-select.forpanel a:link use {
+  color: #ffffff;
+}
+.interface.component-select.forpanel a:hover use {
+  color: #33ffcc;
+}
+.interface.component-select.forpanel a:active use {
+  color: #00ffcc;
+}
+.interface.component-select.forpanel a:visited use {
+  color: #ffffff;
+}
+.interface.component-select.forpanel div.color1 {
+  background-color: #3aa39d;
+}
+.interface.component-select.forpanel div.color1 > .column-label,
+.interface.component-select.forpanel div.color1 .column-icon {
+  color: #ffffff;
+  background-color: #3eaea8;
+  border-bottom: 1px solid #3ba7a1;
+}
+.interface.component-select.forpanel div.color1 > .column,
+.interface.component-select.forpanel div.color1 > .column-input,
+.interface.component-select.forpanel div.color1 > .empty,
+.interface.component-select.forpanel div.color1 .column-button {
+  background-color: #3aa39d;
+  border-bottom: 1px solid #379b96;
+}
+.interface.component-select.forpanel tr.color1 td {
+  background-color: #3eaea8;
+  border-bottom: 1px solid #3ba7a1;
+}
+.interface.component-select.forpanel .row.color1:hover {
+  background-color: #3daba6;
+}
+.interface.component-select.forpanel .row.color1:hover > .column-label,
+.interface.component-select.forpanel .row.color1:hover .column-icon {
+  color: #ffffff;
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #29b0aa;
+}
+.interface.component-select.forpanel .row.color1:hover > .column,
+.interface.component-select.forpanel .row.color1:hover > .column-input,
+.interface.component-select.forpanel .row.color1:hover > .empty,
+.interface.component-select.forpanel .row.color1:hover .column-button {
+  background-color: #3daba6;
+  border-bottom: 1px solid #39a09b;
+}
+.interface.component-select.forpanel .row:hover > div.color1 {
+  background-color: #3daba6;
+}
+.interface.component-select.forpanel .row:hover > div.color1 > .column-label,
+.interface.component-select.forpanel .row:hover > div.color1 .column-icon {
+  color: #ffffff;
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #29b0aa;
+}
+.interface.component-select.forpanel .row:hover > div.color1 > .column,
+.interface.component-select.forpanel .row:hover > div.color1 > .column-input,
+.interface.component-select.forpanel .row:hover > div.color1 > .empty,
+.interface.component-select.forpanel .row:hover > div.color1 .column-button {
+  background-color: #3daba6;
+  border-bottom: 1px solid #39a09b;
+}
+.interface.component-select.forpanel tr.color1:hover td {
+  background-color: #3daba6;
+  border-bottom: 1px solid #3aa39f;
+}
+.interface.component-select.forpanel tr.color1:hover td:hover {
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #2ab4ae;
+}
+.interface.component-select.forpanel .color1 input,
+.interface.component-select.forpanel .color1 textarea,
+.interface.component-select.forpanel .color1 select {
+  color: #ffffff;
+  background-color: #4fc1ba;
+}
+.interface.component-select.forpanel .color1:hover input,
+.interface.component-select.forpanel .color1:hover textarea,
+.interface.component-select.forpanel .color1:hover select {
+  color: #ffffff;
+  background-color: #4fc1ba;
+}
+.interface.component-select.forpanel .color1 input:focus,
+.interface.component-select.forpanel .color1 textarea:focus,
+.interface.component-select.forpanel .color1 select:focus {
+  background-color: #6ecbc6;
+}
+.interface.component-select.forpanel .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select.forpanel .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select.forpanel .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select.forpanel .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select.forpanel .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.component-select.forpanel .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface.component-select.forpanel .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.component-select.forpanel .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface.component-select.forpanel {
+  color: #ffffff;
+}
+.interface.component-select.forpanel a:link {
+  color: #00eeb6;
+}
+.interface.component-select.forpanel a:hover {
+  color: #00ffc3;
+}
+.interface.component-select.forpanel a:active {
+  color: #00ffc3;
+}
+.interface.component-select.forpanel a:visited {
+  color: #00eeb6;
+}
+.interface.component-select.forpanel a:link use {
+  color: #ffffff;
+}
+.interface.component-select.forpanel a:hover use {
+  color: #33ffcc;
+}
+.interface.component-select.forpanel a:active use {
+  color: #00ffcc;
+}
+.interface.component-select.forpanel a:visited use {
+  color: #ffffff;
+}
+.interface.component-select.forpanel div.color2 {
+  background-color: #3aa39d;
+}
+.interface.component-select.forpanel div.color2 > .column-label,
+.interface.component-select.forpanel div.color2 .column-icon {
+  color: #ffffff;
+  background-color: #3eaea8;
+  border-bottom: 1px solid #3ba7a1;
+}
+.interface.component-select.forpanel div.color2 > .column,
+.interface.component-select.forpanel div.color2 > .column-input,
+.interface.component-select.forpanel div.color2 > .empty,
+.interface.component-select.forpanel div.color2 .column-button {
+  background-color: #3aa39d;
+  border-bottom: 1px solid #379b96;
+}
+.interface.component-select.forpanel tr.color2 td {
+  background-color: #3eaea8;
+  border-bottom: 1px solid #3ba7a1;
+}
+.interface.component-select.forpanel .row.color2:hover {
+  background-color: #3daba6;
+}
+.interface.component-select.forpanel .row.color2:hover > .column-label,
+.interface.component-select.forpanel .row.color2:hover .column-icon {
+  color: #ffffff;
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #29b0aa;
+}
+.interface.component-select.forpanel .row.color2:hover > .column,
+.interface.component-select.forpanel .row.color2:hover > .column-input,
+.interface.component-select.forpanel .row.color2:hover > .empty,
+.interface.component-select.forpanel .row.color2:hover .column-button {
+  background-color: #3daba6;
+  border-bottom: 1px solid #39a09b;
+}
+.interface.component-select.forpanel .row:hover > div.color2 {
+  background-color: #3daba6;
+}
+.interface.component-select.forpanel .row:hover > div.color2 > .column-label,
+.interface.component-select.forpanel .row:hover > div.color2 .column-icon {
+  color: #ffffff;
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #29b0aa;
+}
+.interface.component-select.forpanel .row:hover > div.color2 > .column,
+.interface.component-select.forpanel .row:hover > div.color2 > .column-input,
+.interface.component-select.forpanel .row:hover > div.color2 > .empty,
+.interface.component-select.forpanel .row:hover > div.color2 .column-button {
+  background-color: #3daba6;
+  border-bottom: 1px solid #39a09b;
+}
+.interface.component-select.forpanel tr.color2:hover td {
+  background-color: #3daba6;
+  border-bottom: 1px solid #3aa39f;
+}
+.interface.component-select.forpanel tr.color2:hover td:hover {
+  background-color: #2cbcb6;
+  border-bottom: 1px solid #2ab4ae;
+}
+.interface.component-select.forpanel .color2 input,
+.interface.component-select.forpanel .color2 textarea,
+.interface.component-select.forpanel .color2 select {
+  color: #ffffff;
+  background-color: #4fc1ba;
+}
+.interface.component-select.forpanel .color2:hover input,
+.interface.component-select.forpanel .color2:hover textarea,
+.interface.component-select.forpanel .color2:hover select {
+  color: #ffffff;
+  background-color: #4fc1ba;
+}
+.interface.component-select.forpanel .color2 input:focus,
+.interface.component-select.forpanel .color2 textarea:focus,
+.interface.component-select.forpanel .color2 select:focus {
+  background-color: #6ecbc6;
+}
+.interface.component-select.forpanel .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select.forpanel .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select.forpanel .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.component-select.forpanel .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface.component-select.forpanel .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.component-select.forpanel .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface.component-select.forpanel .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.component-select.forpanel .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.purple {
+  background-color: #410e4e;
+}
+.interface div.purple > .column-label,
+.interface div.purple .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #4b105b;
+  border-bottom: 1px solid #440f53;
+}
+.interface div.purple > .column,
+.interface div.purple > .column-input,
+.interface div.purple > .empty,
+.interface div.purple .column-button {
+  background-color: #410e4e;
+  border-bottom: 1px solid #390c46;
+}
+.interface tr.purple td {
+  background-color: #4b105b;
+  border-bottom: 1px solid #440f53;
+}
+.interface .row.purple:hover {
+  background-color: #410c50;
+}
+.interface .row.purple:hover > .column-label,
+.interface .row.purple:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #4d0660;
+  border-bottom: 1px solid #410552;
+}
+.interface .row.purple:hover > .column,
+.interface .row.purple:hover > .column-input,
+.interface .row.purple:hover > .empty,
+.interface .row.purple:hover .column-button {
+  background-color: #410c50;
+  border-bottom: 1px solid #360a42;
+}
+.interface .row:hover > div.purple {
+  background-color: #410c50;
+}
+.interface .row:hover > div.purple > .column-label,
+.interface .row:hover > div.purple .column-icon {
+  color: #e0e0e0;
+  background-color: #4d0660;
+  border-bottom: 1px solid #410552;
+}
+.interface .row:hover > div.purple > .column,
+.interface .row:hover > div.purple > .column-input,
+.interface .row:hover > div.purple > .empty,
+.interface .row:hover > div.purple .column-button {
+  background-color: #410c50;
+  border-bottom: 1px solid #360a42;
+}
+.interface tr.purple:hover td {
+  background-color: #410c50;
+  border-bottom: 1px solid #3a0b47;
+}
+.interface tr.purple:hover td:hover {
+  background-color: #4d0660;
+  border-bottom: 1px solid #450656;
+}
+.interface .purple input,
+.interface .purple textarea,
+.interface .purple select {
+  color: #e0e0e0;
+  background-color: #64157a;
+}
+.interface .purple:hover input,
+.interface .purple:hover textarea,
+.interface .purple:hover select {
+  color: #e0e0e0;
+  background-color: #64157a;
+}
+.interface .purple input:focus,
+.interface .purple textarea:focus,
+.interface .purple select:focus {
+  background-color: #811c9c;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.blue {
+  background-color: #0b1c41;
+}
+.interface div.blue > .column-label,
+.interface div.blue .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #0e214e;
+  border-bottom: 1px solid #0c1e45;
+}
+.interface div.blue > .column,
+.interface div.blue > .column-input,
+.interface div.blue > .empty,
+.interface div.blue .column-button {
+  background-color: #0b1c41;
+  border-bottom: 1px solid #0a1838;
+}
+.interface tr.blue td {
+  background-color: #0e214e;
+  border-bottom: 1px solid #0c1e45;
+}
+.interface .row.blue:hover {
+  background-color: #0a1b42;
+}
+.interface .row.blue:hover > .column-label,
+.interface .row.blue:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #051c51;
+  border-bottom: 1px solid #041743;
+}
+.interface .row.blue:hover > .column,
+.interface .row.blue:hover > .column-input,
+.interface .row.blue:hover > .empty,
+.interface .row.blue:hover .column-button {
+  background-color: #0a1b42;
+  border-bottom: 1px solid #081635;
+}
+.interface .row:hover > div.blue {
+  background-color: #0a1b42;
+}
+.interface .row:hover > div.blue > .column-label,
+.interface .row:hover > div.blue .column-icon {
+  color: #e0e0e0;
+  background-color: #051c51;
+  border-bottom: 1px solid #041743;
+}
+.interface .row:hover > div.blue > .column,
+.interface .row:hover > div.blue > .column-input,
+.interface .row:hover > div.blue > .empty,
+.interface .row:hover > div.blue .column-button {
+  background-color: #0a1b42;
+  border-bottom: 1px solid #081635;
+}
+.interface tr.blue:hover td {
+  background-color: #0a1b42;
+  border-bottom: 1px solid #091839;
+}
+.interface tr.blue:hover td:hover {
+  background-color: #051c51;
+  border-bottom: 1px solid #051947;
+}
+.interface .blue input,
+.interface .blue textarea,
+.interface .blue select {
+  color: #e0e0e0;
+  background-color: #132e6c;
+}
+.interface .blue:hover input,
+.interface .blue:hover textarea,
+.interface .blue:hover select {
+  color: #e0e0e0;
+  background-color: #132e6c;
+}
+.interface .blue input:focus,
+.interface .blue textarea:focus,
+.interface .blue select:focus {
+  background-color: #193d8f;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.turqoise {
+  background-color: #0c4442;
+}
+.interface div.turqoise > .column-label,
+.interface div.turqoise .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #0e514f;
+  border-bottom: 1px solid #0d4847;
+}
+.interface div.turqoise > .column,
+.interface div.turqoise > .column-input,
+.interface div.turqoise > .empty,
+.interface div.turqoise .column-button {
+  background-color: #0c4442;
+  border-bottom: 1px solid #0a3b3a;
+}
+.interface tr.turqoise td {
+  background-color: #0e514f;
+  border-bottom: 1px solid #0d4847;
+}
+.interface .row.turqoise:hover {
+  background-color: #074947;
+}
+.interface .row.turqoise:hover > .column-label,
+.interface .row.turqoise:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #015957;
+  border-bottom: 1px solid #014a48;
+}
+.interface .row.turqoise:hover > .column,
+.interface .row.turqoise:hover > .column-input,
+.interface .row.turqoise:hover > .empty,
+.interface .row.turqoise:hover .column-button {
+  background-color: #074947;
+  border-bottom: 1px solid #053b3a;
+}
+.interface .row:hover > div.turqoise {
+  background-color: #074947;
+}
+.interface .row:hover > div.turqoise > .column-label,
+.interface .row:hover > div.turqoise .column-icon {
+  color: #e0e0e0;
+  background-color: #015957;
+  border-bottom: 1px solid #014a48;
+}
+.interface .row:hover > div.turqoise > .column,
+.interface .row:hover > div.turqoise > .column-input,
+.interface .row:hover > div.turqoise > .empty,
+.interface .row:hover > div.turqoise .column-button {
+  background-color: #074947;
+  border-bottom: 1px solid #053b3a;
+}
+.interface tr.turqoise:hover td {
+  background-color: #074947;
+  border-bottom: 1px solid #06403e;
+}
+.interface tr.turqoise:hover td:hover {
+  background-color: #015957;
+  border-bottom: 1px solid #014f4d;
+}
+.interface .turqoise input,
+.interface .turqoise textarea,
+.interface .turqoise select {
+  color: #e0e0e0;
+  background-color: #146f6d;
+}
+.interface .turqoise:hover input,
+.interface .turqoise:hover textarea,
+.interface .turqoise:hover select {
+  color: #e0e0e0;
+  background-color: #146f6d;
+}
+.interface .turqoise input:focus,
+.interface .turqoise textarea:focus,
+.interface .turqoise select:focus {
+  background-color: #1a928e;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.green {
+  background-color: #0b3c1a;
+}
+.interface div.green > .column-label,
+.interface div.green .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #0d491f;
+  border-bottom: 1px solid #0b411c;
+}
+.interface div.green > .column,
+.interface div.green > .column-input,
+.interface div.green > .empty,
+.interface div.green .column-button {
+  background-color: #0b3c1a;
+  border-bottom: 1px solid #093416;
+}
+.interface tr.green td {
+  background-color: #0d491f;
+  border-bottom: 1px solid #0b411c;
+}
+.interface .row.green:hover {
+  background-color: #0a3d19;
+}
+.interface .row.green:hover > .column-label,
+.interface .row.green:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #054c1b;
+  border-bottom: 1px solid #043e16;
+}
+.interface .row.green:hover > .column,
+.interface .row.green:hover > .column-input,
+.interface .row.green:hover > .empty,
+.interface .row.green:hover .column-button {
+  background-color: #0a3d19;
+  border-bottom: 1px solid #083014;
+}
+.interface .row:hover > div.green {
+  background-color: #0a3d19;
+}
+.interface .row:hover > div.green > .column-label,
+.interface .row:hover > div.green .column-icon {
+  color: #e0e0e0;
+  background-color: #054c1b;
+  border-bottom: 1px solid #043e16;
+}
+.interface .row:hover > div.green > .column,
+.interface .row:hover > div.green > .column-input,
+.interface .row:hover > div.green > .empty,
+.interface .row:hover > div.green .column-button {
+  background-color: #0a3d19;
+  border-bottom: 1px solid #083014;
+}
+.interface tr.green:hover td {
+  background-color: #0a3d19;
+  border-bottom: 1px solid #083516;
+}
+.interface tr.green:hover td:hover {
+  background-color: #054c1b;
+  border-bottom: 1px solid #044317;
+}
+.interface .green input,
+.interface .green textarea,
+.interface .green select {
+  color: #e0e0e0;
+  background-color: #12682c;
+}
+.interface .green:hover input,
+.interface .green:hover textarea,
+.interface .green:hover select {
+  color: #e0e0e0;
+  background-color: #12682c;
+}
+.interface .green input:focus,
+.interface .green textarea:focus,
+.interface .green select:focus {
+  background-color: #188a3b;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.yellow {
+  background-color: #574e0f;
+}
+.interface div.yellow > .column-label,
+.interface div.yellow .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #645a12;
+  border-bottom: 1px solid #5b5210;
+}
+.interface div.yellow > .column,
+.interface div.yellow > .column-input,
+.interface div.yellow > .empty,
+.interface div.yellow .column-button {
+  background-color: #574e0f;
+  border-bottom: 1px solid #4e460e;
+}
+.interface tr.yellow td {
+  background-color: #645a12;
+  border-bottom: 1px solid #5b5210;
+}
+.interface .row.yellow:hover {
+  background-color: #5b510b;
+}
+.interface .row.yellow:hover > .column-label,
+.interface .row.yellow:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #6c6004;
+  border-bottom: 1px solid #5e5303;
+}
+.interface .row.yellow:hover > .column,
+.interface .row.yellow:hover > .column-input,
+.interface .row.yellow:hover > .empty,
+.interface .row.yellow:hover .column-button {
+  background-color: #5b510b;
+  border-bottom: 1px solid #4d450a;
+}
+.interface .row:hover > div.yellow {
+  background-color: #5b510b;
+}
+.interface .row:hover > div.yellow > .column-label,
+.interface .row:hover > div.yellow .column-icon {
+  color: #e0e0e0;
+  background-color: #6c6004;
+  border-bottom: 1px solid #5e5303;
+}
+.interface .row:hover > div.yellow > .column,
+.interface .row:hover > div.yellow > .column-input,
+.interface .row:hover > div.yellow > .empty,
+.interface .row:hover > div.yellow .column-button {
+  background-color: #5b510b;
+  border-bottom: 1px solid #4d450a;
+}
+.interface tr.yellow:hover td {
+  background-color: #5b510b;
+  border-bottom: 1px solid #52490a;
+}
+.interface tr.yellow:hover td:hover {
+  background-color: #6c6004;
+  border-bottom: 1px solid #625704;
+}
+.interface .yellow input,
+.interface .yellow textarea,
+.interface .yellow select {
+  color: #e0e0e0;
+  background-color: #827517;
+}
+.interface .yellow:hover input,
+.interface .yellow:hover textarea,
+.interface .yellow:hover select {
+  color: #e0e0e0;
+  background-color: #827517;
+}
+.interface .yellow input:focus,
+.interface .yellow textarea:focus,
+.interface .yellow select:focus {
+  background-color: #a5941d;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.orange {
+  background-color: #57330f;
+}
+.interface div.orange > .column-label,
+.interface div.orange .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #643a12;
+  border-bottom: 1px solid #5b3510;
+}
+.interface div.orange > .column,
+.interface div.orange > .column-input,
+.interface div.orange > .empty,
+.interface div.orange .column-button {
+  background-color: #57330f;
+  border-bottom: 1px solid #4e2e0e;
+}
+.interface tr.orange td {
+  background-color: #643a12;
+  border-bottom: 1px solid #5b3510;
+}
+.interface .row.orange:hover {
+  background-color: #5a330c;
+}
+.interface .row.orange:hover > .column-label,
+.interface .row.orange:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #6b3705;
+  border-bottom: 1px solid #5d3004;
+}
+.interface .row.orange:hover > .column,
+.interface .row.orange:hover > .column-input,
+.interface .row.orange:hover > .empty,
+.interface .row.orange:hover .column-button {
+  background-color: #5a330c;
+  border-bottom: 1px solid #4c2b0a;
+}
+.interface .row:hover > div.orange {
+  background-color: #5a330c;
+}
+.interface .row:hover > div.orange > .column-label,
+.interface .row:hover > div.orange .column-icon {
+  color: #e0e0e0;
+  background-color: #6b3705;
+  border-bottom: 1px solid #5d3004;
+}
+.interface .row:hover > div.orange > .column,
+.interface .row:hover > div.orange > .column-input,
+.interface .row:hover > div.orange > .empty,
+.interface .row:hover > div.orange .column-button {
+  background-color: #5a330c;
+  border-bottom: 1px solid #4c2b0a;
+}
+.interface tr.orange:hover td {
+  background-color: #5a330c;
+  border-bottom: 1px solid #512d0b;
+}
+.interface tr.orange:hover td:hover {
+  background-color: #6b3705;
+  border-bottom: 1px solid #613205;
+}
+.interface .orange input,
+.interface .orange textarea,
+.interface .orange select {
+  color: #e0e0e0;
+  background-color: #824c17;
+}
+.interface .orange:hover input,
+.interface .orange:hover textarea,
+.interface .orange:hover select {
+  color: #e0e0e0;
+  background-color: #824c17;
+}
+.interface .orange input:focus,
+.interface .orange textarea:focus,
+.interface .orange select:focus {
+  background-color: #a5601d;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface a:link {
+  color: #00eeb6;
+}
+.interface a:hover {
+  color: #00ffc3;
+}
+.interface a:active {
+  color: #00ffc3;
+}
+.interface a:visited {
+  color: #00eeb6;
+}
+.interface a:link use {
+  color: #ffffff;
+}
+.interface a:hover use {
+  color: #33ffcc;
+}
+.interface a:active use {
+  color: #00ffcc;
+}
+.interface a:visited use {
+  color: #ffffff;
+}
+.interface div.red {
+  background-color: #570f0f;
+}
+.interface div.red > .column-label,
+.interface div.red .column-icon {
+  color: rgba(224, 224, 224, 0.8);
+  background-color: #641212;
+  border-bottom: 1px solid #5b1010;
+}
+.interface div.red > .column,
+.interface div.red > .column-input,
+.interface div.red > .empty,
+.interface div.red .column-button {
+  background-color: #570f0f;
+  border-bottom: 1px solid #4e0e0e;
+}
+.interface tr.red td {
+  background-color: #641212;
+  border-bottom: 1px solid #5b1010;
+}
+.interface .row.red:hover {
+  background-color: #580e0e;
+}
+.interface .row.red:hover > .column-label,
+.interface .row.red:hover .column-icon {
+  color: #e0e0e0;
+  background-color: #690707;
+  border-bottom: 1px solid #5b0606;
+}
+.interface .row.red:hover > .column,
+.interface .row.red:hover > .column-input,
+.interface .row.red:hover > .empty,
+.interface .row.red:hover .column-button {
+  background-color: #580e0e;
+  border-bottom: 1px solid #4b0c0c;
+}
+.interface .row:hover > div.red {
+  background-color: #580e0e;
+}
+.interface .row:hover > div.red > .column-label,
+.interface .row:hover > div.red .column-icon {
+  color: #e0e0e0;
+  background-color: #690707;
+  border-bottom: 1px solid #5b0606;
+}
+.interface .row:hover > div.red > .column,
+.interface .row:hover > div.red > .column-input,
+.interface .row:hover > div.red > .empty,
+.interface .row:hover > div.red .column-button {
+  background-color: #580e0e;
+  border-bottom: 1px solid #4b0c0c;
+}
+.interface tr.red:hover td {
+  background-color: #580e0e;
+  border-bottom: 1px solid #4f0c0c;
+}
+.interface tr.red:hover td:hover {
+  background-color: #690707;
+  border-bottom: 1px solid #600606;
+}
+.interface .red input,
+.interface .red textarea,
+.interface .red select {
+  color: #e0e0e0;
+  background-color: #821717;
+}
+.interface .red:hover input,
+.interface .red:hover textarea,
+.interface .red:hover select {
+  color: #e0e0e0;
+  background-color: #821717;
+}
+.interface .red input:focus,
+.interface .red textarea:focus,
+.interface .red select:focus {
+  background-color: #a51d1d;
+}
+.interface .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface .button.apply:hover {
+  color: #ffffff;
+  background-color: #00dfaa;
+}
+.interface .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface .button.cancel:hover {
+  color: #56978c;
+  background-color: #919191;
+}
+.interface .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+.interface.dashboard {
+  background-color: #e3e3e3;
+  color: #444444;
+}
+.interface.dashboard .grip {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.interface.dashboard .title {
+  color: #aaaaaa;
+}
+.interface.dashboard .close a:hover {
+  color: #cc0000 !important;
+}
+.interface.dashboard.arrow-top:after {
+  border-bottom-color: #e3e3e3;
+}
+.interface.dashboard .section-info {
+  background-color: #d6d6d6;
+}
+.interface.dashboard .row.header {
+  background-color: #d6d6d6;
+}
+.interface.dashboard .top-menu,
+.interface.dashboard .side-menu {
+  background-color: #dfdfdf;
+}
+.interface.dashboard .tabs .item {
+  color: #999999;
+  background-color: #dfdfdf;
+}
+.interface.dashboard .tabs .item:hover {
+  color: #444444;
+  background-color: #f7f7f7;
+}
+.interface.dashboard .tabs .item.selected {
+  color: #444444;
+  border-bottom: 2px solid #00eeb6;
+}
+.interface.dashboard .top-menu .tabs .item {
+  color: #999999;
+  background-color: #dfdfdf;
+}
+.interface.dashboard .top-menu .tabs .item:hover {
+  color: #444444;
+  background-color: #f7f7f7;
+}
+.interface.dashboard .top-menu .tabs .item.selected {
+  color: #444444;
+  border-bottom: 2px solid #00eeb6;
+}
+.interface.dashboard .help-info {
+  color: #444444;
+  background-color: #d6d6d6;
+}
+.interface.dashboard .column-help > div {
+  color: #329392;
+  background-color: #d6d6d6;
+}
+.interface.dashboard .column-help > div:after {
+  border-right-color: #d6d6d6;
+}
+.interface.dashboard .column-help .row.color:hover {
+  color: #1d9e9d;
+  background-color: #cfcfcf;
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.color1 {
+  background-color: #e3e3e3;
+}
+.interface.dashboard div.color1 > .column-label,
+.interface.dashboard div.color1 .column-icon {
+  color: rgba(68, 68, 68, 0.7);
+  background-color: #ebebeb;
+  border-bottom: 1px solid #e6e6e6;
+}
+.interface.dashboard div.color1 > .column,
+.interface.dashboard div.color1 > .column-input,
+.interface.dashboard div.color1 > .empty,
+.interface.dashboard div.color1 .column-button {
+  background-color: #e3e3e3;
+  border-bottom: 1px solid #dedede;
+}
+.interface.dashboard tr.color1 td {
+  background-color: #ebebeb;
+  border-bottom: 1px solid #e6e6e6;
+}
+.interface.dashboard .row.color1:hover {
+  background-color: #abd3d1;
+}
+.interface.dashboard .row.color1:hover > .column-label,
+.interface.dashboard .row.color1:hover .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface.dashboard .row.color1:hover > .column,
+.interface.dashboard .row.color1:hover > .column-input,
+.interface.dashboard .row.color1:hover > .empty,
+.interface.dashboard .row.color1:hover .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface.dashboard .row:hover > div.color1 {
+  background-color: #abd3d1;
+}
+.interface.dashboard .row:hover > div.color1 > .column-label,
+.interface.dashboard .row:hover > div.color1 .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface.dashboard .row:hover > div.color1 > .column,
+.interface.dashboard .row:hover > div.color1 > .column-input,
+.interface.dashboard .row:hover > div.color1 > .empty,
+.interface.dashboard .row:hover > div.color1 .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface.dashboard tr.color1:hover td {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a4cfcd;
+}
+.interface.dashboard tr.color1:hover td:hover {
+  background-color: #ade1de;
+  border-bottom: 1px solid #a5dedb;
+}
+.interface.dashboard .color1 input,
+.interface.dashboard .color1 textarea,
+.interface.dashboard .color1 select {
+  color: rgba(68, 68, 68, 0.9);
+  background-color: #cacaca;
+}
+.interface.dashboard .color1:hover input,
+.interface.dashboard .color1:hover textarea,
+.interface.dashboard .color1:hover select {
+  color: #444444;
+  background-color: #cacaca;
+}
+.interface.dashboard .color1 input:focus,
+.interface.dashboard .color1 textarea:focus,
+.interface.dashboard .color1 select:focus {
+  background-color: #b5b5b5;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.color2 {
+  background-color: #e0e0e0;
+}
+.interface.dashboard div.color2 > .column-label,
+.interface.dashboard div.color2 .column-icon {
+  color: rgba(68, 68, 68, 0.7);
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #e3e3e3;
+}
+.interface.dashboard div.color2 > .column,
+.interface.dashboard div.color2 > .column-input,
+.interface.dashboard div.color2 > .empty,
+.interface.dashboard div.color2 .column-button {
+  background-color: #e0e0e0;
+  border-bottom: 1px solid #dbdbdb;
+}
+.interface.dashboard tr.color2 td {
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #e3e3e3;
+}
+.interface.dashboard .row.color2:hover {
+  background-color: #abd3d1;
+}
+.interface.dashboard .row.color2:hover > .column-label,
+.interface.dashboard .row.color2:hover .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface.dashboard .row.color2:hover > .column,
+.interface.dashboard .row.color2:hover > .column-input,
+.interface.dashboard .row.color2:hover > .empty,
+.interface.dashboard .row.color2:hover .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface.dashboard .row:hover > div.color2 {
+  background-color: #abd3d1;
+}
+.interface.dashboard .row:hover > div.color2 > .column-label,
+.interface.dashboard .row:hover > div.color2 .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface.dashboard .row:hover > div.color2 > .column,
+.interface.dashboard .row:hover > div.color2 > .column-input,
+.interface.dashboard .row:hover > div.color2 > .empty,
+.interface.dashboard .row:hover > div.color2 .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface.dashboard tr.color2:hover td {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a4cfcd;
+}
+.interface.dashboard tr.color2:hover td:hover {
+  background-color: #ade1de;
+  border-bottom: 1px solid #a5dedb;
+}
+.interface.dashboard .color2 input,
+.interface.dashboard .color2 textarea,
+.interface.dashboard .color2 select {
+  color: rgba(68, 68, 68, 0.9);
+  background-color: #c7c7c7;
+}
+.interface.dashboard .color2:hover input,
+.interface.dashboard .color2:hover textarea,
+.interface.dashboard .color2:hover select {
+  color: #444444;
+  background-color: #c7c7c7;
+}
+.interface.dashboard .color2 input:focus,
+.interface.dashboard .color2 textarea:focus,
+.interface.dashboard .color2 select:focus {
+  background-color: #b3b3b3;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.purple {
+  background-color: #e9d1f0;
+}
+.interface.dashboard div.purple > .column-label,
+.interface.dashboard div.purple .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #efddf4;
+  border-bottom: 1px solid #ebd5f1;
+}
+.interface.dashboard div.purple > .column,
+.interface.dashboard div.purple > .column-input,
+.interface.dashboard div.purple > .empty,
+.interface.dashboard div.purple .column-button {
+  background-color: #e9d1f0;
+  border-bottom: 1px solid #e6caed;
+}
+.interface.dashboard tr.purple td {
+  background-color: #efddf4;
+  border-bottom: 1px solid #ebd5f1;
+}
+.interface.dashboard .row.purple:hover {
+  background-color: #d7abe3;
+}
+.interface.dashboard .row.purple:hover > .column-label,
+.interface.dashboard .row.purple:hover .column-icon {
+  color: #444444;
+  background-color: #dfabed;
+  border-bottom: 1px solid #da9eeb;
+}
+.interface.dashboard .row.purple:hover > .column,
+.interface.dashboard .row.purple:hover > .column-input,
+.interface.dashboard .row.purple:hover > .empty,
+.interface.dashboard .row.purple:hover .column-button {
+  background-color: #d7abe3;
+  border-bottom: 1px solid #d2a0df;
+}
+.interface.dashboard .row:hover > div.purple {
+  background-color: #d7abe3;
+}
+.interface.dashboard .row:hover > div.purple > .column-label,
+.interface.dashboard .row:hover > div.purple .column-icon {
+  color: #444444;
+  background-color: #dfabed;
+  border-bottom: 1px solid #da9eeb;
+}
+.interface.dashboard .row:hover > div.purple > .column,
+.interface.dashboard .row:hover > div.purple > .column-input,
+.interface.dashboard .row:hover > div.purple > .empty,
+.interface.dashboard .row:hover > div.purple .column-button {
+  background-color: #d7abe3;
+  border-bottom: 1px solid #d2a0df;
+}
+.interface.dashboard tr.purple:hover td {
+  background-color: #d7abe3;
+  border-bottom: 1px solid #d3a3e0;
+}
+.interface.dashboard tr.purple:hover td:hover {
+  background-color: #dfabed;
+  border-bottom: 1px solid #dca3eb;
+}
+.interface.dashboard .purple input,
+.interface.dashboard .purple textarea,
+.interface.dashboard .purple select {
+  color: #444444;
+  background-color: #d7abe3;
+}
+.interface.dashboard .purple:hover input,
+.interface.dashboard .purple:hover textarea,
+.interface.dashboard .purple:hover select {
+  color: #444444;
+  background-color: #d7abe3;
+}
+.interface.dashboard .purple input:focus,
+.interface.dashboard .purple textarea:focus,
+.interface.dashboard .purple select:focus {
+  background-color: #c98cd9;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.blue {
+  background-color: #c5d1ec;
+}
+.interface.dashboard div.blue > .column-label,
+.interface.dashboard div.blue .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #d1daf0;
+  border-bottom: 1px solid #c9d4ed;
+}
+.interface.dashboard div.blue > .column,
+.interface.dashboard div.blue > .column-input,
+.interface.dashboard div.blue > .empty,
+.interface.dashboard div.blue .column-button {
+  background-color: #c5d1ec;
+  border-bottom: 1px solid #becbe9;
+}
+.interface.dashboard tr.blue td {
+  background-color: #d1daf0;
+  border-bottom: 1px solid #c9d4ed;
+}
+.interface.dashboard .row.blue:hover {
+  background-color: #9fb3df;
+}
+.interface.dashboard .row.blue:hover > .column-label,
+.interface.dashboard .row.blue:hover .column-icon {
+  color: #444444;
+  background-color: #9eb5ea;
+  border-bottom: 1px solid #91ace8;
+}
+.interface.dashboard .row.blue:hover > .column,
+.interface.dashboard .row.blue:hover > .column-input,
+.interface.dashboard .row.blue:hover > .empty,
+.interface.dashboard .row.blue:hover .column-button {
+  background-color: #9fb3df;
+  border-bottom: 1px solid #94a9db;
+}
+.interface.dashboard .row:hover > div.blue {
+  background-color: #9fb3df;
+}
+.interface.dashboard .row:hover > div.blue > .column-label,
+.interface.dashboard .row:hover > div.blue .column-icon {
+  color: #444444;
+  background-color: #9eb5ea;
+  border-bottom: 1px solid #91ace8;
+}
+.interface.dashboard .row:hover > div.blue > .column,
+.interface.dashboard .row:hover > div.blue > .column-input,
+.interface.dashboard .row:hover > div.blue > .empty,
+.interface.dashboard .row:hover > div.blue .column-button {
+  background-color: #9fb3df;
+  border-bottom: 1px solid #94a9db;
+}
+.interface.dashboard tr.blue:hover td {
+  background-color: #9fb3df;
+  border-bottom: 1px solid #97acdc;
+}
+.interface.dashboard tr.blue:hover td:hover {
+  background-color: #9eb5ea;
+  border-bottom: 1px solid #95afe9;
+}
+.interface.dashboard .blue input,
+.interface.dashboard .blue textarea,
+.interface.dashboard .blue select {
+  color: #444444;
+  background-color: #9fb3df;
+}
+.interface.dashboard .blue:hover input,
+.interface.dashboard .blue:hover textarea,
+.interface.dashboard .blue:hover select {
+  color: #444444;
+  background-color: #9fb3df;
+}
+.interface.dashboard .blue input:focus,
+.interface.dashboard .blue textarea:focus,
+.interface.dashboard .blue select:focus {
+  background-color: #809ad5;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.turqoise {
+  background-color: #c8edec;
+}
+.interface.dashboard div.turqoise > .column-label,
+.interface.dashboard div.turqoise .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #d4f1f0;
+  border-bottom: 1px solid #cceeed;
+}
+.interface.dashboard div.turqoise > .column,
+.interface.dashboard div.turqoise > .column-input,
+.interface.dashboard div.turqoise > .empty,
+.interface.dashboard div.turqoise .column-button {
+  background-color: #c8edec;
+  border-bottom: 1px solid #c1eae9;
+}
+.interface.dashboard tr.turqoise td {
+  background-color: #d4f1f0;
+  border-bottom: 1px solid #cceeed;
+}
+.interface.dashboard .row.turqoise:hover {
+  background-color: #a2e0de;
+}
+.interface.dashboard .row.turqoise:hover > .column-label,
+.interface.dashboard .row.turqoise:hover .column-icon {
+  color: #444444;
+  background-color: #a1ebe9;
+  border-bottom: 1px solid #94e8e6;
+}
+.interface.dashboard .row.turqoise:hover > .column,
+.interface.dashboard .row.turqoise:hover > .column-input,
+.interface.dashboard .row.turqoise:hover > .empty,
+.interface.dashboard .row.turqoise:hover .column-button {
+  background-color: #a2e0de;
+  border-bottom: 1px solid #97dcda;
+}
+.interface.dashboard .row:hover > div.turqoise {
+  background-color: #a2e0de;
+}
+.interface.dashboard .row:hover > div.turqoise > .column-label,
+.interface.dashboard .row:hover > div.turqoise .column-icon {
+  color: #444444;
+  background-color: #a1ebe9;
+  border-bottom: 1px solid #94e8e6;
+}
+.interface.dashboard .row:hover > div.turqoise > .column,
+.interface.dashboard .row:hover > div.turqoise > .column-input,
+.interface.dashboard .row:hover > div.turqoise > .empty,
+.interface.dashboard .row:hover > div.turqoise .column-button {
+  background-color: #a2e0de;
+  border-bottom: 1px solid #97dcda;
+}
+.interface.dashboard tr.turqoise:hover td {
+  background-color: #a2e0de;
+  border-bottom: 1px solid #9adddb;
+}
+.interface.dashboard tr.turqoise:hover td:hover {
+  background-color: #a1ebe9;
+  border-bottom: 1px solid #99e9e7;
+}
+.interface.dashboard .turqoise input,
+.interface.dashboard .turqoise textarea,
+.interface.dashboard .turqoise select {
+  color: #444444;
+  background-color: #a2e0de;
+}
+.interface.dashboard .turqoise:hover input,
+.interface.dashboard .turqoise:hover textarea,
+.interface.dashboard .turqoise:hover select {
+  color: #444444;
+  background-color: #a2e0de;
+}
+.interface.dashboard .turqoise input:focus,
+.interface.dashboard .turqoise textarea:focus,
+.interface.dashboard .turqoise select:focus {
+  background-color: #83d6d3;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.green {
+  background-color: #c1ebce;
+}
+.interface.dashboard div.green > .column-label,
+.interface.dashboard div.green .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #cdeed7;
+  border-bottom: 1px solid #c5ecd1;
+}
+.interface.dashboard div.green > .column,
+.interface.dashboard div.green > .column-input,
+.interface.dashboard div.green > .empty,
+.interface.dashboard div.green .column-button {
+  background-color: #c1ebce;
+  border-bottom: 1px solid #bae8c8;
+}
+.interface.dashboard tr.green td {
+  background-color: #cdeed7;
+  border-bottom: 1px solid #c5ecd1;
+}
+.interface.dashboard .row.green:hover {
+  background-color: #9bdeaf;
+}
+.interface.dashboard .row.green:hover > .column-label,
+.interface.dashboard .row.green:hover .column-icon {
+  color: #444444;
+  background-color: #9aeab2;
+  border-bottom: 1px solid #8de7a8;
+}
+.interface.dashboard .row.green:hover > .column,
+.interface.dashboard .row.green:hover > .column-input,
+.interface.dashboard .row.green:hover > .empty,
+.interface.dashboard .row.green:hover .column-button {
+  background-color: #9bdeaf;
+  border-bottom: 1px solid #90daa6;
+}
+.interface.dashboard .row:hover > div.green {
+  background-color: #9bdeaf;
+}
+.interface.dashboard .row:hover > div.green > .column-label,
+.interface.dashboard .row:hover > div.green .column-icon {
+  color: #444444;
+  background-color: #9aeab2;
+  border-bottom: 1px solid #8de7a8;
+}
+.interface.dashboard .row:hover > div.green > .column,
+.interface.dashboard .row:hover > div.green > .column-input,
+.interface.dashboard .row:hover > div.green > .empty,
+.interface.dashboard .row:hover > div.green .column-button {
+  background-color: #9bdeaf;
+  border-bottom: 1px solid #90daa6;
+}
+.interface.dashboard tr.green:hover td {
+  background-color: #9bdeaf;
+  border-bottom: 1px solid #94dba9;
+}
+.interface.dashboard tr.green:hover td:hover {
+  background-color: #9aeab2;
+  border-bottom: 1px solid #91e8ac;
+}
+.interface.dashboard .green input,
+.interface.dashboard .green textarea,
+.interface.dashboard .green select {
+  color: #444444;
+  background-color: #9bdeaf;
+}
+.interface.dashboard .green:hover input,
+.interface.dashboard .green:hover textarea,
+.interface.dashboard .green:hover select {
+  color: #444444;
+  background-color: #9bdeaf;
+}
+.interface.dashboard .green input:focus,
+.interface.dashboard .green textarea:focus,
+.interface.dashboard .green select:focus {
+  background-color: #7dd497;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.yellow {
+  background-color: #f2efd9;
+}
+.interface.dashboard div.yellow > .column-label,
+.interface.dashboard div.yellow .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #f6f4e4;
+  border-bottom: 1px solid #f4f1dd;
+}
+.interface.dashboard div.yellow > .column,
+.interface.dashboard div.yellow > .column-input,
+.interface.dashboard div.yellow > .empty,
+.interface.dashboard div.yellow .column-button {
+  background-color: #f2efd9;
+  border-bottom: 1px solid #f0ecd1;
+}
+.interface.dashboard tr.yellow td {
+  background-color: #f6f4e4;
+  border-bottom: 1px solid #f4f1dd;
+}
+.interface.dashboard .row.yellow:hover {
+  background-color: #e6dfb3;
+}
+.interface.dashboard .row.yellow:hover > .column-label,
+.interface.dashboard .row.yellow:hover .column-icon {
+  color: #444444;
+  background-color: #efe8b3;
+  border-bottom: 1px solid #ece4a7;
+}
+.interface.dashboard .row.yellow:hover > .column,
+.interface.dashboard .row.yellow:hover > .column-input,
+.interface.dashboard .row.yellow:hover > .empty,
+.interface.dashboard .row.yellow:hover .column-button {
+  background-color: #e6dfb3;
+  border-bottom: 1px solid #e2dba7;
+}
+.interface.dashboard .row:hover > div.yellow {
+  background-color: #e6dfb3;
+}
+.interface.dashboard .row:hover > div.yellow > .column-label,
+.interface.dashboard .row:hover > div.yellow .column-icon {
+  color: #444444;
+  background-color: #efe8b3;
+  border-bottom: 1px solid #ece4a7;
+}
+.interface.dashboard .row:hover > div.yellow > .column,
+.interface.dashboard .row:hover > div.yellow > .column-input,
+.interface.dashboard .row:hover > div.yellow > .empty,
+.interface.dashboard .row:hover > div.yellow .column-button {
+  background-color: #e6dfb3;
+  border-bottom: 1px solid #e2dba7;
+}
+.interface.dashboard tr.yellow:hover td {
+  background-color: #e6dfb3;
+  border-bottom: 1px solid #e3dcab;
+}
+.interface.dashboard tr.yellow:hover td:hover {
+  background-color: #efe8b3;
+  border-bottom: 1px solid #ede5ab;
+}
+.interface.dashboard .yellow input,
+.interface.dashboard .yellow textarea,
+.interface.dashboard .yellow select {
+  color: #444444;
+  background-color: #e5dfb3;
+}
+.interface.dashboard .yellow:hover input,
+.interface.dashboard .yellow:hover textarea,
+.interface.dashboard .yellow:hover select {
+  color: #444444;
+  background-color: #e5dfb3;
+}
+.interface.dashboard .yellow input:focus,
+.interface.dashboard .yellow textarea:focus,
+.interface.dashboard .yellow select:focus {
+  background-color: #dbd394;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.orange {
+  background-color: #f2e5d9;
+}
+.interface.dashboard div.orange > .column-label,
+.interface.dashboard div.orange .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #f6ede4;
+  border-bottom: 1px solid #f4e8dd;
+}
+.interface.dashboard div.orange > .column,
+.interface.dashboard div.orange > .column-input,
+.interface.dashboard div.orange > .empty,
+.interface.dashboard div.orange .column-button {
+  background-color: #f2e5d9;
+  border-bottom: 1px solid #f0e0d1;
+}
+.interface.dashboard tr.orange td {
+  background-color: #f6ede4;
+  border-bottom: 1px solid #f4e8dd;
+}
+.interface.dashboard .row.orange:hover {
+  background-color: #e6ccb3;
+}
+.interface.dashboard .row.orange:hover > .column-label,
+.interface.dashboard .row.orange:hover .column-icon {
+  color: #444444;
+  background-color: #efd1b3;
+  border-bottom: 1px solid #ecc9a7;
+}
+.interface.dashboard .row.orange:hover > .column,
+.interface.dashboard .row.orange:hover > .column-input,
+.interface.dashboard .row.orange:hover > .empty,
+.interface.dashboard .row.orange:hover .column-button {
+  background-color: #e6ccb3;
+  border-bottom: 1px solid #e2c4a7;
+}
+.interface.dashboard .row:hover > div.orange {
+  background-color: #e6ccb3;
+}
+.interface.dashboard .row:hover > div.orange > .column-label,
+.interface.dashboard .row:hover > div.orange .column-icon {
+  color: #444444;
+  background-color: #efd1b3;
+  border-bottom: 1px solid #ecc9a7;
+}
+.interface.dashboard .row:hover > div.orange > .column,
+.interface.dashboard .row:hover > div.orange > .column-input,
+.interface.dashboard .row:hover > div.orange > .empty,
+.interface.dashboard .row:hover > div.orange .column-button {
+  background-color: #e6ccb3;
+  border-bottom: 1px solid #e2c4a7;
+}
+.interface.dashboard tr.orange:hover td {
+  background-color: #e6ccb3;
+  border-bottom: 1px solid #e3c7ab;
+}
+.interface.dashboard tr.orange:hover td:hover {
+  background-color: #efd1b3;
+  border-bottom: 1px solid #edccab;
+}
+.interface.dashboard .orange input,
+.interface.dashboard .orange textarea,
+.interface.dashboard .orange select {
+  color: #444444;
+  background-color: #e5ccb3;
+}
+.interface.dashboard .orange:hover input,
+.interface.dashboard .orange:hover textarea,
+.interface.dashboard .orange:hover select {
+  color: #444444;
+  background-color: #e5ccb3;
+}
+.interface.dashboard .orange input:focus,
+.interface.dashboard .orange textarea:focus,
+.interface.dashboard .orange select:focus {
+  background-color: #dbb794;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface.dashboard a:link {
+  color: #0093ca;
+}
+.interface.dashboard a:hover {
+  color: #00bbc2;
+}
+.interface.dashboard a:active {
+  color: #00bbc2;
+}
+.interface.dashboard a:visited {
+  color: #0093ca;
+}
+.interface.dashboard a:link use {
+  color: #444444;
+}
+.interface.dashboard a:hover use {
+  color: #ff8b35;
+}
+.interface.dashboard a:active use {
+  color: #ff8b35;
+}
+.interface.dashboard a:visited use {
+  color: #444444;
+}
+.interface.dashboard div.red {
+  background-color: #f2d9d9;
+}
+.interface.dashboard div.red > .column-label,
+.interface.dashboard div.red .column-icon {
+  color: rgba(68, 68, 68, 0.8);
+  background-color: #f6e4e4;
+  border-bottom: 1px solid #f4dddd;
+}
+.interface.dashboard div.red > .column,
+.interface.dashboard div.red > .column-input,
+.interface.dashboard div.red > .empty,
+.interface.dashboard div.red .column-button {
+  background-color: #f2d9d9;
+  border-bottom: 1px solid #f0d1d1;
+}
+.interface.dashboard tr.red td {
+  background-color: #f6e4e4;
+  border-bottom: 1px solid #f4dddd;
+}
+.interface.dashboard .row.red:hover {
+  background-color: #e6b3b3;
+}
+.interface.dashboard .row.red:hover > .column-label,
+.interface.dashboard .row.red:hover .column-icon {
+  color: #444444;
+  background-color: #efb3b3;
+  border-bottom: 1px solid #eca7a7;
+}
+.interface.dashboard .row.red:hover > .column,
+.interface.dashboard .row.red:hover > .column-input,
+.interface.dashboard .row.red:hover > .empty,
+.interface.dashboard .row.red:hover .column-button {
+  background-color: #e6b3b3;
+  border-bottom: 1px solid #e2a7a7;
+}
+.interface.dashboard .row:hover > div.red {
+  background-color: #e6b3b3;
+}
+.interface.dashboard .row:hover > div.red > .column-label,
+.interface.dashboard .row:hover > div.red .column-icon {
+  color: #444444;
+  background-color: #efb3b3;
+  border-bottom: 1px solid #eca7a7;
+}
+.interface.dashboard .row:hover > div.red > .column,
+.interface.dashboard .row:hover > div.red > .column-input,
+.interface.dashboard .row:hover > div.red > .empty,
+.interface.dashboard .row:hover > div.red .column-button {
+  background-color: #e6b3b3;
+  border-bottom: 1px solid #e2a7a7;
+}
+.interface.dashboard tr.red:hover td {
+  background-color: #e6b3b3;
+  border-bottom: 1px solid #e3abab;
+}
+.interface.dashboard tr.red:hover td:hover {
+  background-color: #efb3b3;
+  border-bottom: 1px solid #edabab;
+}
+.interface.dashboard .red input,
+.interface.dashboard .red textarea,
+.interface.dashboard .red select {
+  color: #444444;
+  background-color: #e5b3b3;
+}
+.interface.dashboard .red:hover input,
+.interface.dashboard .red:hover textarea,
+.interface.dashboard .red:hover select {
+  color: #444444;
+  background-color: #e5b3b3;
+}
+.interface.dashboard .red input:focus,
+.interface.dashboard .red textarea:focus,
+.interface.dashboard .red select:focus {
+  background-color: #db9494;
+}
+.interface.dashboard .button {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.apply {
+  color: #ffffff;
+  background-color: #00ac83;
+}
+.interface.dashboard .button.apply:hover {
+  color: #ffffff;
+  background-color: #00795c;
+}
+.interface.dashboard .button.cancel {
+  color: #56978c;
+  background-color: #777777;
+}
+.interface.dashboard .button.cancel:hover {
+  color: #56978c;
+  background-color: #5e5e5e;
+}
+.interface.dashboard .button.outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.interface.dashboard .button.outline:hover {
+  color: #ffffff;
+  border-color: rgba(230, 230, 230, 0.7);
+}
+.interface .dash-menu {
+  background-color: #50606b;
+  color: #ffffff;
+}
+.interface .dash-menu .grip {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.interface .dash-menu .title {
+  color: #aaaaaa;
+}
+.interface .dash-menu .close a:hover {
+  color: #cc0000 !important;
+}
+.interface .dash-menu.arrow-top:after {
+  border-bottom-color: #50606b;
+}
+.interface .dash-menu .section-info {
+  background-color: #46545e;
+}
+.interface .dash-menu .row.header {
+  background-color: #46545e;
+}
+.interface .dash-menu .top-menu,
+.interface .dash-menu .side-menu {
+  background-color: #2a2a2a;
+}
+.interface .dash-menu .tabs .item {
+  color: #9bc9dc;
+  background-color: #2a2a2a;
+}
+.interface .dash-menu .tabs .item:hover {
+  color: #ffffff;
+  background-color: #617582;
+}
+.interface .dash-menu .tabs .item.selected {
+  color: #ffffff;
+  border-bottom: 2px solid #263b4e;
+}
+.interface .dash-menu .top-menu .tabs .item {
+  color: #9bc9dc;
+  background-color: #2a2a2a;
+}
+.interface .dash-menu .top-menu .tabs .item:hover {
+  color: #ffffff;
+  background-color: #617582;
+}
+.interface .dash-menu .top-menu .tabs .item.selected {
+  color: #ffffff;
+  border-bottom: 2px solid #263b4e;
+}
+.interface .dash-menu .help-info {
+  color: #ffffff;
+  background-color: #45535c;
+}
+.interface .dash-menu .column-help > div {
+  color: #9ee3c3;
+  background-color: #45535c;
+}
+.interface .dash-menu .column-help > div:after {
+  border-right-color: #45535c;
+}
+.interface .dash-menu .column-help .row.color:hover {
+  color: #89eebf;
+  background-color: #3f4b54;
+}
+.interface .dash-menu a:link {
+  color: #ffffff;
+}
+.interface .dash-menu a:hover {
+  color: #ffffff;
+}
+.interface .dash-menu a:active {
+  color: #ffffff;
+}
+.interface .dash-menu a:visited {
+  color: #ffffff;
+}
+.interface .dash-menu a:link use {
+  color: #ffffff;
+}
+.interface .dash-menu a:hover use {
+  color: #33ffcc;
+}
+.interface .dash-menu a:active use {
+  color: #00ffcc;
+}
+.interface .dash-menu a:visited use {
+  color: #ffffff;
+}
+.interface .dash-menu div.color1 {
+  background-color: #50606b;
+}
+.interface .dash-menu div.color1 > .column-label,
+.interface .dash-menu div.color1 .column-icon {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: #576874;
+  border-bottom: 1px solid #52636e;
+}
+.interface .dash-menu div.color1 > .column,
+.interface .dash-menu div.color1 > .column-input,
+.interface .dash-menu div.color1 > .empty,
+.interface .dash-menu div.color1 .column-button {
+  background-color: #50606b;
+  border-bottom: 1px solid #4c5b65;
+}
+.interface .dash-menu tr.color1 td {
+  background-color: #576874;
+  border-bottom: 1px solid #52636e;
+}
+.interface .dash-menu .row.color1:hover {
+  background-color: #4b6874;
+}
+.interface .dash-menu .row.color1:hover > .column-label,
+.interface .dash-menu .row.color1:hover .column-icon {
+  color: #ffffff;
+  background-color: #42778d;
+  border-bottom: 1px solid #3d6e82;
+}
+.interface .dash-menu .row.color1:hover > .column,
+.interface .dash-menu .row.color1:hover > .column-input,
+.interface .dash-menu .row.color1:hover > .empty,
+.interface .dash-menu .row.color1:hover .column-button {
+  background-color: #4b6874;
+  border-bottom: 1px solid #45606b;
+}
+.interface .dash-menu .row:hover > div.color1 {
+  background-color: #4b6874;
+}
+.interface .dash-menu .row:hover > div.color1 > .column-label,
+.interface .dash-menu .row:hover > div.color1 .column-icon {
+  color: #ffffff;
+  background-color: #42778d;
+  border-bottom: 1px solid #3d6e82;
+}
+.interface .dash-menu .row:hover > div.color1 > .column,
+.interface .dash-menu .row:hover > div.color1 > .column-input,
+.interface .dash-menu .row:hover > div.color1 > .empty,
+.interface .dash-menu .row:hover > div.color1 .column-button {
+  background-color: #4b6874;
+  border-bottom: 1px solid #45606b;
+}
+.interface .dash-menu tr.color1:hover td {
+  background-color: #4b6874;
+  border-bottom: 1px solid #47626e;
+}
+.interface .dash-menu tr.color1:hover td:hover {
+  background-color: #42778d;
+  border-bottom: 1px solid #3e7186;
+}
+.interface .dash-menu a:link {
+  color: #ffffff;
+}
+.interface .dash-menu a:hover {
+  color: #ffffff;
+}
+.interface .dash-menu a:active {
+  color: #ffffff;
+}
+.interface .dash-menu a:visited {
+  color: #ffffff;
+}
+.interface .dash-menu a:link use {
+  color: #ffffff;
+}
+.interface .dash-menu a:hover use {
+  color: #33ffcc;
+}
+.interface .dash-menu a:active use {
+  color: #00ffcc;
+}
+.interface .dash-menu a:visited use {
+  color: #ffffff;
+}
+.interface .dash-menu div.color2 {
+  background-color: #4e5d68;
+}
+.interface .dash-menu div.color2 > .column-label,
+.interface .dash-menu div.color2 .column-icon {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: #546571;
+  border-bottom: 1px solid #50606b;
+}
+.interface .dash-menu div.color2 > .column,
+.interface .dash-menu div.color2 > .column-input,
+.interface .dash-menu div.color2 > .empty,
+.interface .dash-menu div.color2 .column-button {
+  background-color: #4e5d68;
+  border-bottom: 1px solid #495862;
+}
+.interface .dash-menu tr.color2 td {
+  background-color: #546571;
+  border-bottom: 1px solid #50606b;
+}
+.interface .dash-menu .row.color2:hover {
+  background-color: #4b6874;
+}
+.interface .dash-menu .row.color2:hover > .column-label,
+.interface .dash-menu .row.color2:hover .column-icon {
+  color: #ffffff;
+  background-color: #42778d;
+  border-bottom: 1px solid #3d6e82;
+}
+.interface .dash-menu .row.color2:hover > .column,
+.interface .dash-menu .row.color2:hover > .column-input,
+.interface .dash-menu .row.color2:hover > .empty,
+.interface .dash-menu .row.color2:hover .column-button {
+  background-color: #4b6874;
+  border-bottom: 1px solid #45606b;
+}
+.interface .dash-menu .row:hover > div.color2 {
+  background-color: #4b6874;
+}
+.interface .dash-menu .row:hover > div.color2 > .column-label,
+.interface .dash-menu .row:hover > div.color2 .column-icon {
+  color: #ffffff;
+  background-color: #42778d;
+  border-bottom: 1px solid #3d6e82;
+}
+.interface .dash-menu .row:hover > div.color2 > .column,
+.interface .dash-menu .row:hover > div.color2 > .column-input,
+.interface .dash-menu .row:hover > div.color2 > .empty,
+.interface .dash-menu .row:hover > div.color2 .column-button {
+  background-color: #4b6874;
+  border-bottom: 1px solid #45606b;
+}
+.interface .dash-menu tr.color2:hover td {
+  background-color: #4b6874;
+  border-bottom: 1px solid #47626e;
+}
+.interface .dash-menu tr.color2:hover td:hover {
+  background-color: #42778d;
+  border-bottom: 1px solid #3e7186;
+}
+.interface .dash-box {
+  background-color: #e3e3e3;
+  color: #444444;
+}
+.interface .dash-box .grip {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.interface .dash-box .title {
+  color: #aaaaaa;
+}
+.interface .dash-box .close a:hover {
+  color: #cc0000 !important;
+}
+.interface .dash-box.arrow-top:after {
+  border-bottom-color: #e3e3e3;
+}
+.interface .dash-box .section-info {
+  background-color: #d6d6d6;
+}
+.interface .dash-box .row.header {
+  background-color: #d6d6d6;
+}
+.interface .dash-box .top-menu,
+.interface .dash-box .side-menu {
+  background-color: #dfdfdf;
+}
+.interface .dash-box .tabs .item {
+  color: #999999;
+  background-color: #dfdfdf;
+}
+.interface .dash-box .tabs .item:hover {
+  color: #444444;
+  background-color: #f7f7f7;
+}
+.interface .dash-box .tabs .item.selected {
+  color: #444444;
+  border-bottom: 2px solid #00a8e0;
+}
+.interface .dash-box .top-menu .tabs .item {
+  color: #999999;
+  background-color: #dfdfdf;
+}
+.interface .dash-box .top-menu .tabs .item:hover {
+  color: #444444;
+  background-color: #f7f7f7;
+}
+.interface .dash-box .top-menu .tabs .item.selected {
+  color: #444444;
+  border-bottom: 2px solid #00a8e0;
+}
+.interface .dash-box .help-info {
+  color: #444444;
+  background-color: #d6d6d6;
+}
+.interface .dash-box .column-help > div {
+  color: #329392;
+  background-color: #d6d6d6;
+}
+.interface .dash-box .column-help > div:after {
+  border-right-color: #d6d6d6;
+}
+.interface .dash-box .column-help .row.color:hover {
+  color: #1d9e9d;
+  background-color: #cfcfcf;
+}
+.interface .dash-box a:link {
+  color: #00eeb6;
+}
+.interface .dash-box a:hover {
+  color: #00ffc3;
+}
+.interface .dash-box a:active {
+  color: #00ffc3;
+}
+.interface .dash-box a:visited {
+  color: #00eeb6;
+}
+.interface .dash-box a:link use {
+  color: #444444;
+}
+.interface .dash-box a:hover use {
+  color: #ff8b35;
+}
+.interface .dash-box a:active use {
+  color: #ff8b35;
+}
+.interface .dash-box a:visited use {
+  color: #444444;
+}
+.interface .dash-box div.color1 {
+  background-color: #e3e3e3;
+}
+.interface .dash-box div.color1 > .column-label,
+.interface .dash-box div.color1 .column-icon {
+  color: rgba(68, 68, 68, 0.7);
+  background-color: #ebebeb;
+  border-bottom: 1px solid #e6e6e6;
+}
+.interface .dash-box div.color1 > .column,
+.interface .dash-box div.color1 > .column-input,
+.interface .dash-box div.color1 > .empty,
+.interface .dash-box div.color1 .column-button {
+  background-color: #e3e3e3;
+  border-bottom: 1px solid #dedede;
+}
+.interface .dash-box tr.color1 td {
+  background-color: #ebebeb;
+  border-bottom: 1px solid #e6e6e6;
+}
+.interface .dash-box .row.color1:hover {
+  background-color: #abd3d1;
+}
+.interface .dash-box .row.color1:hover > .column-label,
+.interface .dash-box .row.color1:hover .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface .dash-box .row.color1:hover > .column,
+.interface .dash-box .row.color1:hover > .column-input,
+.interface .dash-box .row.color1:hover > .empty,
+.interface .dash-box .row.color1:hover .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface .dash-box .row:hover > div.color1 {
+  background-color: #abd3d1;
+}
+.interface .dash-box .row:hover > div.color1 > .column-label,
+.interface .dash-box .row:hover > div.color1 .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface .dash-box .row:hover > div.color1 > .column,
+.interface .dash-box .row:hover > div.color1 > .column-input,
+.interface .dash-box .row:hover > div.color1 > .empty,
+.interface .dash-box .row:hover > div.color1 .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface .dash-box tr.color1:hover td {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a4cfcd;
+}
+.interface .dash-box tr.color1:hover td:hover {
+  background-color: #ade1de;
+  border-bottom: 1px solid #a5dedb;
+}
+.interface .dash-box a:link {
+  color: #00eeb6;
+}
+.interface .dash-box a:hover {
+  color: #00ffc3;
+}
+.interface .dash-box a:active {
+  color: #00ffc3;
+}
+.interface .dash-box a:visited {
+  color: #00eeb6;
+}
+.interface .dash-box a:link use {
+  color: #444444;
+}
+.interface .dash-box a:hover use {
+  color: #ff8b35;
+}
+.interface .dash-box a:active use {
+  color: #ff8b35;
+}
+.interface .dash-box a:visited use {
+  color: #444444;
+}
+.interface .dash-box div.color2 {
+  background-color: #e0e0e0;
+}
+.interface .dash-box div.color2 > .column-label,
+.interface .dash-box div.color2 .column-icon {
+  color: rgba(68, 68, 68, 0.7);
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #e3e3e3;
+}
+.interface .dash-box div.color2 > .column,
+.interface .dash-box div.color2 > .column-input,
+.interface .dash-box div.color2 > .empty,
+.interface .dash-box div.color2 .column-button {
+  background-color: #e0e0e0;
+  border-bottom: 1px solid #dbdbdb;
+}
+.interface .dash-box tr.color2 td {
+  background-color: #e8e8e8;
+  border-bottom: 1px solid #e3e3e3;
+}
+.interface .dash-box .row.color2:hover {
+  background-color: #abd3d1;
+}
+.interface .dash-box .row.color2:hover > .column-label,
+.interface .dash-box .row.color2:hover .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface .dash-box .row.color2:hover > .column,
+.interface .dash-box .row.color2:hover > .column-input,
+.interface .dash-box .row.color2:hover > .empty,
+.interface .dash-box .row.color2:hover .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface .dash-box .row:hover > div.color2 {
+  background-color: #abd3d1;
+}
+.interface .dash-box .row:hover > div.color2 > .column-label,
+.interface .dash-box .row:hover > div.color2 .column-icon {
+  color: #444444;
+  background-color: #ade1de;
+  border-bottom: 1px solid #a1ddda;
+}
+.interface .dash-box .row:hover > div.color2 > .column,
+.interface .dash-box .row:hover > div.color2 > .column-input,
+.interface .dash-box .row:hover > div.color2 > .empty,
+.interface .dash-box .row:hover > div.color2 .column-button {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a1cecc;
+}
+.interface .dash-box tr.color2:hover td {
+  background-color: #abd3d1;
+  border-bottom: 1px solid #a4cfcd;
+}
+.interface .dash-box tr.color2:hover td:hover {
+  background-color: #ade1de;
+  border-bottom: 1px solid #a5dedb;
+}
+.component-select {
+  color: #dddddd;
+  background-color: rgba(37, 37, 37, 0.3);
+}
+.component-select .resize-side {
+  background-color: #252525;
+}
+.component-select .resize-corner {
+  background-color: #252525;
+}
+.component-select .arrow-down {
+  background-color: #252525;
+  color: #dddddd;
+}
+.component-select .arrow-down:hover {
+  background-color: #000000;
+  color: #33ffcc;
+}
+.component-select .arrow-top:after {
+  border-bottom-color: #252525;
+}
+.component-select .arrow-right:after {
+  border-left-color: #252525;
+}
+.component-select .menu .item,
+.component-select .submenu .item {
+  background-color: #252525;
+  color: #dddddd;
+}
+.component-select .menu > .item:hover,
+.component-select .submenu > .item:hover {
+  background-color: #000000;
+}
+.component-select .menu .item .item:hover,
+.component-select .submenu .item .item:hover {
+  background-color: #000000;
+}
+.component-select .menu > .item:hover > div > svg,
+.component-select .submenu > .item:hover > div > svg {
+  color: #33ffcc !important;
+}
+.component-select .menu .item .item:hover > div > svg,
+.component-select .submenu .item .item:hover > div > svg {
+  color: #33ffcc !important;
+}
+.component-select .submenu,
+.component-select .bg {
+  background-color: #252525;
+}
+.component-select .properties > .box {
+  background-color: #252525;
+}
+.component-select .quickmenu-item {
+  background-color: #252525;
+}
+.component-select.forpanel {
+  color: #ffffff;
+  background-color: rgba(58, 163, 157, 0.3);
+}
+.component-select.forpanel a:link {
+  color: #81fe70;
+}
+.component-select.forpanel a:hover {
+  color: #81fe70;
+}
+.component-select.forpanel a:active {
+  color: #81fe70;
+}
+.component-select.forpanel a:visited {
+  color: #81fe70;
+}
+.component-select.forpanel .resize-side {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .resize-corner {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .arrow-down {
+  background-color: #3aa39d;
+  color: #ffffff;
+}
+.component-select.forpanel .arrow-down:hover {
+  background-color: #3aa39d;
+  color: #81fe70;
+}
+.component-select.forpanel .arrow-top:after {
+  border-bottom-color: #3aa39d;
+}
+.component-select.forpanel .arrow-right:after {
+  border-left-color: #3aa39d;
+}
+.component-select.forpanel .menu .item,
+.component-select.forpanel .submenu .item {
+  background-color: #3aa39d;
+  color: #ffffff;
+}
+.component-select.forpanel .menu > .item:hover,
+.component-select.forpanel .submenu > .item:hover {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .menu .item .item:hover,
+.component-select.forpanel .submenu .item .item:hover {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .menu > .item:hover > div > svg,
+.component-select.forpanel .submenu > .item:hover > div > svg {
+  color: #81fe70 !important;
+}
+.component-select.forpanel .menu .item .item:hover > div > svg,
+.component-select.forpanel .submenu .item .item:hover > div > svg {
+  color: #81fe70 !important;
+}
+.component-select.forpanel .submenu,
+.component-select.forpanel .bg {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .properties > .box {
+  background-color: #3aa39d;
+}
+.component-select.forpanel .quickmenu-item {
+  background-color: #3aa39d;
+}
+.tools .texteditor-toolbar,
+.tools .texteditor-btnselect {
+  background-color: #272727;
+}
+.tools .texteditor-toolbar a:link use,
+.tools .texteditor-btnselect a:link use {
+  color: #ffffff;
+}
+.tools .texteditor-toolbar a:hover use,
+.tools .texteditor-btnselect a:hover use {
+  color: #33ffcc;
+}
+.tools .texteditor-toolbar a:active use,
+.tools .texteditor-btnselect a:active use {
+  color: #00ffcc;
+}
+.tools .texteditor-toolbar a:visited use,
+.tools .texteditor-btnselect a:visited use {
+  color: #ffffff;
+}
+body.dashboard {
+  background-color: #e3e3e3;
+}

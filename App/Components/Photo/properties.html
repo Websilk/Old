@@ -1,0 +1,62 @@
+﻿<div class="props-pages clear">
+    <div class="page-1">
+        <div class="row color1">
+            <div class="column-label">Photo</div>
+            <div class="column-input label">
+                <a href="javascript:" onclick="R.editor.photos.dialog.selectPhoto(null, null, 'for your component', R.editor.components.properties.current.photo.update)">Choose A Photo</a>
+                <div class="right">
+                    <div id="propsPreviewPhoto" class="relative" style="margin-top:-52px;">
+                        <img style="max-height:75px; max-width:75px;" src="{{preview-photo}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row color2">
+            <div class="column-label">Hover</div>
+            <div class="column-input label">
+                <a href="javascript:" onclick="R.editor.photos.dialog.selectPhoto(null, null, 'when hovering over your component', R.editor.components.properties.current.photoHover.update)">Choose A Photo</a>&nbsp;
+                {{helpicon-hover}}
+                <div class="right hover-only remove-hover-photo" style="padding-right:7px;"><a href="javascript:" onclick="R.editor.components.properties.current.photoHover.remove()">Remove</a></div>
+            </div>
+        </div>
+        <div class="row empty"></div>
+
+        <div class="row color1">
+            <div class="column-label">Link</div>
+            <div class="column-input">
+                <input type="text" id="propsTxtLink" style="width:250px;" value="http://" />
+                {{helpicon-link}}
+                &nbsp;
+                <a href="javascript:" onclick="" title="Browse web pages that belong to this website">Browse</a>
+            </div>
+        </div>
+        <div class="row color2">
+            <div class="column-label">Alt Text</div>
+            <div class="column-input">
+                <input type="text" id="propsTxtAlt" style="width:250px;" />
+                {{helpicon-alt}}
+            </div>
+        </div>
+
+        <div class="row color1">
+            <div class="column-label">Target</div>
+            <div class="column-input">
+                <select id="propsLstTarget" onchange="R.editor.components.properties.current.changeTarget()">
+                    <option value="">Current Window</option>
+                    <option value="_blank">New Window</option>
+                </select>
+            </div>
+        </div>
+        <div class="row color2 props-window-name" style="display:none;">
+            <div class="column-label">Window</div>
+            <div class="column-input">
+                <input type="text" id="propsTxtWindowName" style="width:100px;" value="_blank" />
+                {{helpicon-window}}
+            </div>
+        </div>
+    </div>
+
+    <div class="page-2">
+
+    </div>
+</div>

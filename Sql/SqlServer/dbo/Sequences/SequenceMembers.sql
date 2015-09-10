@@ -1,0 +1,6 @@
+﻿CREATE SEQUENCE [dbo].[SequenceUsers]
+    AS BIGINT
+    START WITH 5
+    INCREMENT BY 1
+    NO CACHE;
+
