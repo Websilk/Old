@@ -1,9 +1,5 @@
 # Websilk
-A powerful website CMS platform for Windows, Linux, &amp; MacOSX, built with Microsoft ASP.net 5 vNext.
-
-[![Websilk](http://www.websilk.com/content/websites/1/media/oahjoffjrx.png)](http://www.youtube.com/watch?v=2cqB4oXiDMk)
-
-watch demo video @ http://www.youtube.com/watch?v=2cqB4oXiDMk
+A powerful web development platform for Windows, Linux, &amp; MacOSX, built with Microsoft ASP.net 5 vNext.
 
 ### ASP.net 5 & DNX
 Microsoft has released ASP.net 5 vNext as an open source project on GitHub. This new framework can run across multiple platforms, natively on Windows, including Linux & Mac OSX with the help of Mono, in Docker containers, on Azure, and pretty much everywhere.
@@ -70,7 +66,7 @@ The current version of Websilk has separated client-side functionality from serv
 
 Learn how the server pipeline works with this workflow graphic.
 
-![Workflow graphic](http://www.websilk.com/content/websites/1/media/wshbbbdebf.jpg)
+![Workflow graphic](https://lh4.googleusercontent.com/JBySScj0LvQHsgQj65SZEztywuocQJk8kLofWgz_q5Z06hgGHu9h48pIgD2P0MQgPPasggq6=w1896-h875-rw)
 
 # Capabilities
 
