@@ -60,4 +60,4 @@ The platform works (for the most part). Users can log into the dashboard, create
 
 Learn how the server pipeline works with this workflow graphic.
 
-![Workflow graphic](https://lh3.googleusercontent.com/cTHiinVEzOstnCPfRbXIn_zAk3WVzRMVI4UrT5TCMAhiedp6anrrRoL3PXRiBje4rFfjAyySd_YI7kw=w1896-h875-rw)
+![Workflow graphic](https://www.dropbox.com/s/n13i8sby3zkqneg/Websilk%20ASPnet5.png?raw=1)
