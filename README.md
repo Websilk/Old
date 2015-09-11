@@ -41,12 +41,12 @@ Websilk is (almost) running on Linux using Oracle Virtualbox within Windows 7. A
 2. from Vagrant project folder, execute command `vagrant up`, which will provision a new Virtualbox machine.
 3. Wait for Linux to boot up, then execute command `vagrant ssh` to log into Linux (Ubuntu/Trusty64)
 4. execute command `sudo apt-get install libunwind8`
-5. Fix Nuget's default feed URL, execute commands `cd ~/.dnx/dnvm` and `sudo pico dnvm.sh`, then replace the following line in the config file
+5. Install ASP.net vNext for Linux https://github.com/aspnet/Home/blob/dev/GettingStartedDeb.md
+6. Setup active DNVM installation, execute commands `dnvm install latest -a websilk -arch x64 -r coreclr` and `dnvm use websilk`.
+7. Fix Nuget's default feed URL, execute commands `cd ~/.dnx/dnvm` and `sudo pico dnvm.sh`, then replace the following line in the config file
 
     _DNVM_DEFAULT_FEED="https://www.myget.org/F/aspnetvnext/api/v2"
     
-6. Install ASP.net vNext for Linux https://github.com/aspnet/Home/blob/dev/GettingStartedDeb.md
-7. Setup active DNVM installation, execute commands `dnvm install latest -a websilk -arch x64 -r coreclr` and `dnvm use websilk`.
 8. Restore the ASP.net vNext dependencies for Websilk, execute commands `cd /var/www/websilk` and `dnu restore`.
 9. Start the Kestrel web server, `dnx . kestrel`.
 10. Open your web browser in Windows and navigate to `http://192.168.7.7` to view the home page of Websilk.
