@@ -1,5 +1,5 @@
 # Websilk
-A powerful web development platform for Windows, Linux, &amp; MacOSX, built with Microsoft ASP.net 5 vNext.
+A powerful web development platform built with ASP.net 5
 
 ### ASP.net 5 & DNX
 Microsoft has released ASP.net 5 vNext as an open source project on GitHub. This new framework can run across multiple platforms, natively on Windows, including Linux & Mac OSX with the help of Mono, in Docker containers, on Azure, and pretty much everywhere.
@@ -41,12 +41,12 @@ Websilk is (almost) running on Linux using Oracle Virtualbox within Windows 7. A
 2. from Vagrant project folder, execute command `vagrant up`, which will provision a new Virtualbox machine.
 3. Wait for Linux to boot up, then execute command `vagrant ssh` to log into Linux (Ubuntu/Trusty64)
 4. execute command `sudo apt-get install libunwind8`
-5. Fix Nuget's default feed URL, execute commands `cd ~/.dnx/dnvm` and `sudo pico dnvm.sh`, then replace the following line in the config file
+5. Install ASP.net vNext for Linux https://github.com/aspnet/Home/blob/dev/GettingStartedDeb.md
+6. Setup active DNVM installation, execute commands `dnvm install latest -a websilk -arch x64 -r coreclr` and `dnvm use websilk`.
+7. Fix Nuget's default feed URL, execute commands `cd ~/.dnx/dnvm` and `sudo pico dnvm.sh`, then replace the following line in the config file
 
     _DNVM_DEFAULT_FEED="https://www.myget.org/F/aspnetvnext/api/v2"
     
-6. Install ASP.net vNext for Linux https://github.com/aspnet/Home/blob/dev/GettingStartedDeb.md
-7. Setup active DNVM installation, execute commands `dnvm install latest -a websilk -arch x64 -r coreclr` and `dnvm use websilk`.
 8. Restore the ASP.net vNext dependencies for Websilk, execute commands `cd /var/www/websilk` and `dnu restore`.
 9. Start the Kestrel web server, `dnx . kestrel`.
 10. Open your web browser in Windows and navigate to `http://192.168.7.7` to view the home page of Websilk.
@@ -56,40 +56,8 @@ Websilk is (almost) running on Linux using Oracle Virtualbox within Windows 7. A
 
 ###Current State of the Websilk Platform
 
-The screenshot above is the current Websilk `Page Editor` (built in VS 2013 with jQuery & ASMX web services), displaying the `Inline Text Editor` wrapped around a group of text on a web page.
-
-The live version @ www.websilk.com was built using .net AJAX & Update Panels, which was a failed experiment. 70% of version 1 (ASP.net 4.0 VS 2010) functionality has been ported into version 2 (ASP.net 4.5 VS 2013 web services), and so I am porting version 2 to ASP.net 5 vNext for Visual Studio 2015 RC. 
-
-This repo contains the cross-platform version of Websilk using ASP.net 5 vNext, and contains its own web server pipeline, replacing the traditional IIS pipeline. Startup.cs is called by Microsoft's Kestrel web server, starts listening for requests, and sends requests down a simple pipeline.
-
-The current version of Websilk has separated client-side functionality from server-side completely, so you could theoretically port the C# code to Node.js, Perl, or Erlang. 
+The platform works (for the most part). Users can log into the dashboard, create new web pages, drag & drop photos, panels, & text onto the page, save pages, and upload photos.
 
 Learn how the server pipeline works with this workflow graphic.
 
-![Workflow graphic](https://lh4.googleusercontent.com/JBySScj0LvQHsgQj65SZEztywuocQJk8kLofWgz_q5Z06hgGHu9h48pIgD2P0MQgPPasggq6=w1896-h875-rw)
-
-# Capabilities
-
-### Drag & Drop Content
- * Use `components` such as Text, Photos, Videos, Menus, Panels, Comments, Music, Lists, Buttons, Maps, & Rating (e.g. 5 star rating) to build your web pages with.
- * Drag & drop `components` directly onto your web pages from a simple `page editor` toolbar that loads above the web page.
-
-### Dashboard
- * Manage all websites from a `dashboard`, which can be displayed in fullscreen-mode, or as a small drop-down menu within the `page editor` for quick access while creating content on your web pages.
- * Manage a heirarchy of web pages just like you would a file system.
- * Upload & organize photos into folders to use on your web pages. 
- * Develop & install `applications` to extend the funcationality of your website.
- 
-### Mirrored Content 
- * Share `layers` of content (a set of components) across multiple web pages, such as the header & footer of your website.
-
-### Responsive Grids & Slideshows
-Use a powerful `Panel` component, capable of handling content in many structured & responsive ways. Simply drag & drop a `Panel` component onto the page, then drag & drop components into the Panel's `cell` to start. Add a background color or image to the cell. Add more `cells` to your Panel, then drag & drop more components into those cells. Now you can organize the Panel cells into a `grid` of columns & rows. You can also make the grid act like a pinterest board, where each column is independantly stacked. 
-Also, the Panel component can act like a `slideshow` instead of a grid, displaying each `cell` as a slide within the slideshow. 
-
- * A powerful `List` component. Create an HTML template for a `list item`, then import data into your List component like a spreadsheet. For example, the data could be a list of products (name, description, price). For each row or product in the speadsheet, the List component will generate a `list item` from the HTML template, replacing variables in the template with your data. Now you have a pretty list of products on your web page. You can organize your `list items` just like Panel component `cells`, as a grid with rows & columns, a stacked grid, or slideshow.
-
-### Page Templates
- * Use Page Templates to create new web pages that come bundled with an interface when generated. For example, whenever you'd like to create a new entry for your blog, Websilk will duplicate the `page template` for the `blog` page to create a new `sub-page` for your blog entry. When you open the new sub-page, you'll see that it looks exactly like the `page template`, so you can quickly start writing content for the new blog entry instead of spending time setting up a new web page.
-
- * Data templates. Just like page templates, except instead of duplicating a page template for your new `sub-page`, the `page template` loads inside of the `sub-page`. Instead of adding new content to the `sub-page`, you can only edit what is already there. All of the components on the web page are managed by the `page template` only, which you can edit outside of your `sub-pages`. If you move or alter a component within the `page template`, it will affect all `sub-pages` that load content from the `page-template`. The `sub-page simply` overrides any changes to the content, such as text changes, photos, button links, or videos.
+![Workflow graphic](https://www.dropbox.com/s/n13i8sby3zkqneg/Websilk%20ASPnet5.png?raw=1)
