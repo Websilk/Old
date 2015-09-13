@@ -244,6 +244,19 @@ var S = {
             var p = $(elem).parents('.ispanel');
             if (p.length > 0) { return p[0]; }
             return null;
+        },
+
+        panelCell: function (inner) {
+            //get panel from inner-panel (cell)
+            var cls = inner.className.split(' ');
+            var parentId = "";
+            for (i = 0; i < cls.length; i++) {
+                if (cls[i].indexOf('innerpanel') == 0) {
+                    parentId = 'panel' + cls[i].replace('innerpanel', '');
+                    if ($('#' + parentId).hasClass('istheme') == true) { return null; }
+                    return $S(parentId);
+                }
+            }
         }
 
     },

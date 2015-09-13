@@ -17,6 +17,10 @@ namespace Websilk.Components.Properties
         {
             //file|hover-file|orig-width|orig-height|url|new-window|window-name|alt-text|speed (0 - 8)
             //use-bg|bg-size|bg-position|use-tile|use-parallax|parallax-speed|parallax-offset (9 - 15)
+            if(Component.dataField == "")
+            {
+                Component.dataField = "|||||||||||||||";
+            }
 
             string[] data = Component.dataField.Split('|');
             if(data.Length == 0) { return; }

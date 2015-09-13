@@ -674,7 +674,8 @@ S.editor = {
     },
 
     components: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        selected: null, hovered: null, selbox: $('.tools > .component-select'), disabled: false,
+        selected: null, hovered: null, hideTimer: null,
+        selbox: $('.tools > .component-select'), disabled: false,
         posStart: { x: 0, y: 0, w: 0, h: 0 },
 
         //events
@@ -682,7 +683,7 @@ S.editor = {
         dragNew: {
             item: {
                 elem: null, pos: { x: 0, y: 0, w: 0, h: 0 }, curPos:{ x: 0, y: 0},
-                cursorStart: { x: 0, y: 0 }, cursor: { x: 0, y: 0 }
+                cursorStart: { x: 0, y: 0 }, cursor: { x: 0, y: 0 }, winPos: null
             },
             timer: null, hasStarted: false, painting: false, moved: false,
             target: null, panel: null, above: null,
@@ -714,6 +715,7 @@ S.editor = {
                     x: mPos.x + win.scrollx,
                     y: mPos.y + win.scrolly
                 };
+                S.editor.components.dragNew.item.wPos = S.elem.pos($('.winComponents')[0]);
 
                 //get positions of panels
                 S.panels.get();
@@ -747,18 +749,27 @@ S.editor = {
             },
 
             go: function (e) {
-                if (S.editor.components.dragNew.painting == false) {
-                    S.editor.components.dragNew.started();
+                var parent = S.editor.components.dragNew;
+                if (parent.painting == false) {
+                    parent.started();
                 }
                 S.editor.components.dragNew.item.cursor.x = e.pageX;
                 S.editor.components.dragNew.item.cursor.y = e.pageY;
+
+                var mDiff = {
+                    x: (parent.item.cursor.x - parent.item.cursorStart.x),
+                    y: (parent.item.cursor.y - parent.item.cursorStart.y)
+                };
+                var x = parent.item.pos.x + mDiff.x + parent.item.wPos.x,
+                    y = parent.item.pos.y + mDiff.y + parent.item.cursorStart.scrolly + parent.item.wPos.y;
+                $(parent.target).css({ left: x, top: y });
             },
 
             paint: function () {
                 var mDiff = {
                     x: (this.item.cursor.x - this.item.cursorStart.x),
                     y: (this.item.cursor.y - this.item.cursorStart.y)
-                }, wPos = S.elem.pos($('.winComponents')[0]);
+                }, wPos = this.item.wPos;
                 var x = this.item.pos.x + mDiff.x + wPos.x,
                     y = this.item.pos.y + mDiff.y + this.item.cursorStart.scrolly + wPos.y;
 
@@ -766,7 +777,7 @@ S.editor = {
                     this.item.curPos = { x: x, y: y, w:this.item.pos.w };
 
                     if (mDiff.x != 0 || mDiff.y != 0) { this.moved = true; }
-                    $(this.target).css({ left: x, top: y });
+                    
 
                     //find nearest panel 
                     var offset = { x: x + this.item.cursorStart.offset.x, y: y + this.item.cursorStart.offset.y }
@@ -857,7 +868,7 @@ S.editor = {
 
 
                 if (this.hasStarted == true) {
-                    setTimeout(function () { S.editor.components.dragNew.paint(); }, 33);
+                    setTimeout(function () { S.editor.components.dragNew.paint(); }, 100);
                 }
             },
 
@@ -885,7 +896,7 @@ S.editor = {
                     var aboveId = '';
                     //get id of component to drop component above
                     if (d.above != null) {
-                        if (d.above == 1) {
+                        if (d.above == 1 || d.above == 2) {
                             aboveId = 'last';
                         } else {
                             aboveId = d.above.id.substr(1);
@@ -1354,10 +1365,12 @@ S.editor = {
             if (S.editor.components.disabled == true) { return; }
             S.editor.components.menu.hideAll();
             $('.component-select .properties').hide();
-            var c = this, selectType = '', isalsopanel = false;
-            if (S.editor.components.hovered != null) { $('.tools > .component-select').stop(); }
+            var c = this, selectType = '', isalsopanel = false, sel = S.editor.components.selected;
+            if (S.editor.components.hovered != null) {
+                $('.tools > .component-select').stop();
+            }
             if (typeof arguments[0].id != 'undefined') { c = arguments[0]; }
-            if (c == S.editor.components.selected) { return; }
+            if (c == sel) { return; }
 
             //reset any attributes or styles
             $('.tools > .component-select').removeClass('isalsopanel');
@@ -1365,22 +1378,24 @@ S.editor = {
             //check if hovered element is inner panel cell
             if (c.id == 'inner') {
                 //cancel if hovered element is not a panel cell from a panel component
-                if (c.className.indexOf('innerpanel') > -1) { return; }
+                var p = S.elem.panelCell(c);
+                if (p == null) { return;}
+                var parentId = p.id;
                 //check if there is a selected element
-                if (S.editor.components.selected != null) {
+                if (sel != null) {
                     //check if hovered element is inside selected element
-                    if (S.editor.components.selected.id != 'inner') {
-                        if ($('#' + S.editor.components.selected.id + ' .' + c.className.replace(' ', '.')).length == 0) {
-                            if ($(S.editor.components.selected).parents('.ispanel').find(c).length == 0) {
+                    if (sel.id != 'inner') {
+                        if ($('#' + sel.id + ' .' + c.className.replace(' ', '.')).length == 0) {
+                            if ($(sel).parents('.ispanel').find(c).length == 0) {
                                 //cancel if selected element 
                                 return;
                             }
                         }
                     }
                     //check if hovered panel cell element has siblings
-                    if ($(c).parents('.grid-container').length > 0) {
+                    if ($('#' + parentId).parent().hasClass('arrange-grid') == true) {
                         //cancel if panel cell has no siblings
-                        if($($(c).parents('.grid-container')[0]).find('.panel-grid').length == 1){return;}
+                        if (p.parentNode.children.length == 1) { return; }
                     } else {
                         //no grid, no need for showing panel cell
                         return;
@@ -1390,36 +1405,29 @@ S.editor = {
             }
 
             //check selected element
-            if (S.editor.components.selected != null) {
-                if (S.editor.components.selected.id == 'inner') {
+            if (sel != null) {
+                if (sel.id == 'inner') {
                     if (c.id != 'inner') {
-                        //check if selected element is in same panel as hovered element
-                        if ($(c).parents('.ispanel:not(.islayout)').length > 0) {
-                            if ($(S.editor.components.selected).parents('.ispanel:not(.islayout)')[0] == $(c).parents('.ispanel:not(.islayout)')[0]) {
-                                if ($($(S.editor.components.selected).parents('.ispanel:not(.islayout)')[0]).find('#' + c.id).length == 0) { return; }
-                            }
-                        } else {
-                            //check if hovered element is a panel
-                            if ($(c).hasClass('type-panel') == true) {
-                                if ($(S.editor.components.selected).parents('.type-panel')[0] == c) {
-                                    return;
-                                }
-                            } else {
+                        //check if hovered element is a panel
+                        if ($(c).hasClass('type-panel') == true) {
+                            if ($(sel).closest('.type-panel')[0] == c) {
+                                if (arguments[0].stopPropagation) { arguments[0].stopPropagation(); }
                                 return;
                             }
                         }
                         
                     }
                 } else if (c.id != 'inner') {
-                    if ($(S.editor.components.selected).parents('#' + c.id).length > 0) { return; }
+                    if ($(sel).parents('#' + c.id).length > 0) { return; }
                 } else if(c.id == 'inner') {
-                    if ($(c).find(S.editor.components.selected).length > 0) { return; }
+                    if ($(c).find(sel).length > 0) { return; }
                 }
             }
 
-            if (S.editor.components.selected != c) {
+
+            if (sel != c) {
                 //setup & show component select
-                if (S.editor.components.selected == null) {
+                if (sel == null) {
                     var p = $(c).parents('.component.type-panel');
                     if (p.length > 0) {
                         S.editor.components.selected = p[0];
@@ -1440,13 +1448,19 @@ S.editor = {
                 //update component select class for color change
                 if ($(c).hasClass('type-panel') == true) {
                     //check if hovered panel cell element has siblings
-                    if ($(c).find('.grid-container').length > 0) {
-                        //cancel if panel cell has no siblings
-                        if ($($(c).find('.grid-container')[0]).find('.panel-grid').length == 1) { selectType = 'cell'; }
+                    if ($(c).hasClass('arrange-grid') == true) {
+                        selectType = 'cell';
+                        if ($('#' + c.id + ' > .item-cell').length == 1) {
+                            isalsopanel = true;
+                        }
                     } else {
                         //no grid, no need for showing panel cell
                         selectType = 'cell';
-                        $('.tools > .component-select').addClass('isalsopanel');
+                        isalsopanel = true;
+                    }
+                } else if ($(c).hasClass('item-cell') == true) {
+                    selectType = 'cell';
+                    if (c.parentNode.children.Length == 1) {
                         isalsopanel = true;
                     }
                 }
@@ -1456,6 +1470,7 @@ S.editor = {
                     if (isalsopanel == false) {
                         $('.tools > .component-select .arrow-down').hide();
                     } else {
+                        $('.tools > .component-select').addClass('isalsopanel');
                         $('.tools > .component-select .arrow-down').show();
                     }
 
@@ -1478,17 +1493,34 @@ S.editor = {
                 S.editor.components.callback.execute('onHover', S.editor.components.hovered);
                 
             } 
-            $('.tools > .component-select').css({ opacity: 1 });
+            $('.tools > .component-select').css({ opacity: 1 }).off('mouseleave').on('mouseleave',null, S.editor.components.hovered, S.editor.components.mouseLeave);
 
             //load menu
             S.editor.components.menu.load();
-            
+
+            //cancel leave timer
+            clearTimeout(S.editor.components.hideTimer);
         },
 
         mouseLeave: function (e) {
             if (S.editor.enabled == false) { return; }
             if (S.editor.components.disabled == true) { return; }
-                S.editor.components.hideSelect('leave');
+
+            if (e.data == S.editor.components.hovered) {
+                
+                //fix for IE ---------
+                var hide = true;
+                if (e.relatedTarget) {
+                    if (e.relatedTarget.tagName == 'path') { hide = false; }
+                }
+                // end fix for IE ----
+                if (hide == true) {
+                    S.editor.components.hideTimer = setTimeout(function () {
+                        S.editor.components.hideSelect('leave');
+                    }, 300);
+                }
+            }
+            
         },
 
         click: function (target, type) {
@@ -1776,14 +1808,20 @@ S.editor = {
                         }
                     }
 
+                    
+                    $('.component-select .btn-duplicate').show();
+
                     //hide duplicate button
                     var c = S.editor.components.hovered;
                     var comp = S.components.cache[c.id];
-                    if (comp.limit > 0) {
-                        if ($('.component.type-' + comp.type).length >= comp.limit) {
-                            $('.component-select .btn-duplicate').hide();
+                    if (comp != null) {
+                        if (comp.limit > 0) {
+                            if ($('.component.type-' + comp.type).length >= comp.limit) {
+                                $('.component-select .btn-duplicate').hide();
+                            }
                         }
-                    } else { $('.component-select .btn-duplicate').show(); }
+                    }
+                    
                 },
             },
 
@@ -1966,7 +2004,7 @@ S.editor = {
                                 var inner = $(components[c]).parents('#inner')[0];
                                 iPos = S.elem.offset(inner);
                                 
-                                var gridpanel = $(inner).parents('.panel-grid');
+                                var gridpanel = $(inner).parents('.item-cell');
                                 if (gridpanel.length > 0) {
                                     iPos = S.elem.offset(gridpanel[0]);
                                     cPos.x += iPos.x;
@@ -2031,9 +2069,10 @@ S.editor = {
         },
 
         hideSelect: function () {
-            
             var type = arguments[0] || '';
-            if (type == 'leave') { S.editor.components.hovered = null; }
+            if (type == 'leave') {
+                S.editor.components.hovered = null;
+            }
             var sel = S.editor.components.selected;
             if (sel == null) {
                 if (type == '' || type == 'leave') {
@@ -2051,7 +2090,6 @@ S.editor = {
                         break;
                 }
             }
-            
             $('.tools > .component-select').hide();
             $('.component-select .menu .item').css({ paddingRight: 0 });
             return;
@@ -2151,7 +2189,13 @@ S.editor = {
                     top: cPos.h - 62
                 });
             }
-            var type = S.components.cache[this.hovered.id].label;
+
+            var comp = S.components.cache[this.hovered.id];
+            var type = 'cell';
+            if (comp != null) {
+                type = S.components.cache[this.hovered.id].label;
+            }
+            
             var label = type;
             if (type == 'panel') { label = 'cell'; }
             label = label.replace('-', ' ');//S.util.str.Capitalize(label.replace('-',' '));
@@ -2448,6 +2492,9 @@ S.editor = {
         duplicate: function (c) {
             //send request to server for new component
             var comp = S.components.cache[c.id];
+            var hascomp = (comp != null) ? true : false;
+            var compType = 'panel';
+            var execCustom = false;
             var panel = S.elem.panel(c);
             var pid = panel.id.substr(5);
             var selector = '#' + panel.id + ' .inner' + panel.id
@@ -2459,12 +2506,32 @@ S.editor = {
             } else {
                 aboveId = next.id.substr(1);
             }
-            if (comp.duplicate != null) {
-                //execute custom duplicate command
-                comp.duplicate(c);
+
+            if (hascomp == true) {
+                compType = comp.type;
+                if (comp.duplicate != null) {
+                    //execute custom duplicate command
+                    execCustom = true;
+                    comp.duplicate(c);
+                    return;
+                }
             } else {
+                //duplicate panel cell
+                
+                var p = S.elem.panelCell(c);
+                if (p != null) {
+                    comp = S.components.cache[p.parentNode.id];
+                    if (comp != null) {
+                        execCustom = true;
+                        comp.duplicate(c);
+                        return;
+                    }
+                }
+            }
+
+            if(execCustom == false){
                 //duplicate component
-                var options = { componentId: comp.type, panelId: pid, selector: selector, aboveId: aboveId, duplicate: c.id.substr(1) };
+                var options = { componentId: compType, panelId: pid, selector: selector, aboveId: aboveId, duplicate: c.id.substr(1) };
                 //first, send an AJAX request to save page changes
                 S.editor.save.click(function () {
                     //then duplicate component
@@ -3004,7 +3071,7 @@ S.editor = {
             $('.winLayers .layers-list').off('.row', 'mouseenter mouseleave');
             var layers = S.layers.cache, comps = S.components.cache,
                 htm = '', i = [2, 2, 2, 2, 2], pageId, p, p2, rowTitle = '', rowColor = 'blue', hasSubs = false, img, itemId,
-                panels = $('.ispanel:not(.islayout)'), laypanels = $('.ispanel.islayout'), comps, comps2, comp, classes;
+                panels = $('.ispanel:not(.istheme)'), laypanels = $('.ispanel.istheme'), comps, comps2, comp, classes;
             for (l = 0; l < layers.length; l++) {
                 //load each layer ///////////////////////////////////////////////////////////////////////////////////////////////
                 i[0] = i[0] == 2 ? 1 : 2;
@@ -3021,7 +3088,7 @@ S.editor = {
                 for (s = 0; s < laypanels.length; s++) {
                     //load each web page panel //////////////////////////////////////////////////////////////////////////////////
                     p = $(laypanels[s]);
-                    comps = p.find('.component').filter(function (index, elem) { if ($(elem).parents('.ispanel:not(.islayout)').length > 0) { return false; } return true;});
+                    comps = p.find('.component').filter(function (index, elem) { if ($(elem).parents('.ispanel:not(.istheme)').length > 0) { return false; } return true;});
                     hasSubs = false;
                     //make sure there are components within this panel that belong to the current layer
                     for (c = 0; c < comps.length; c++) {
@@ -3075,7 +3142,7 @@ S.editor = {
                                 for (s2 = 0; s2 < panels.length; s2++) {
                                     //load each component panel cell /////////////////////////////////////////////////////////////////////
                                     p2 = $(panels[s2]);
-                                    if (p2.hasClass('islayout') == false) {
+                                    if (p2.hasClass('istheme') == false) {
                                         //make sure this panel belongs to the current web page panel                                    
 
                                         hasSubs = false;
@@ -4290,7 +4357,6 @@ S.events.hash.callback.add($('.editor')[0], null, S.editor.events.hash.change);
 $('.webpage').delegate('.component', 'mouseenter', S.editor.components.mouseEnter);
 $('.webpage').delegate('.inner-panel', 'mouseenter', S.editor.components.mouseEnter);
 $('.component-select').delegate('.resize-bar', 'mousedown', S.editor.components.resize.start);
-$('.component-select').hoverIntent({ over: function () { }, out: S.editor.components.mouseLeave, sensitivity: 100, interval: 1, timeout: 333 });
 $('.component-select .btn-duplicate > .submenu').hoverIntent({
     over: function () { $('.component-select .btn-duplicate .label').show(); },
     out: function () { $('.component-select .btn-duplicate .label').hide(); },

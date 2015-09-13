@@ -57,9 +57,7 @@ namespace Websilk
         
         private string _header = "";
         private string _footer = "";
-
-        [JsonIgnore]
-        public Utility.DOM.Element DivBase;
+        
         [JsonIgnore]
         public Utility.DOM.Element DivItem;
         [JsonIgnore]
@@ -69,7 +67,6 @@ namespace Websilk
         {
             S = WebsilkCore;
             LoadDataArrays();
-            DivBase = new Utility.DOM.Element("div");
             DivItem = new Utility.DOM.Element("div");
         }
 
@@ -82,19 +79,10 @@ namespace Websilk
         {
             if(rendered == true) { return _header + DivItem.Render() + _footer; }
             string classes = "component id-" + id + " type-" + name.ToLower().Replace(" ", "").Replace("/", "-");
-            if (DivItem.Attributes.ContainsKey("class") == true)
-            {
-                DivItem.Attributes["class"] += " " + classes;
-            }
-            else
-            {
-                DivItem.Attributes["class"] = classes;
-            }
-
-            DivBase.Attributes["class"] = classes;
+            DivItem.Classes.Insert(0,classes);
+            
             DivItem.id = "c" + id;
             DivItem.Style["z-index"] = (index + 100).ToString();
-            //DivBase.innerHTML = DivItem.Render();
             rendered = true;
             return _header + DivItem.Render() + _footer;
 

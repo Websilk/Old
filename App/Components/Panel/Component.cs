@@ -74,64 +74,108 @@ namespace Websilk.Components
             for (int x = 0; x < data.Length; x++)
             {
                 panelData = data[x].Split(',');
-                Websilk.Panel newPanel = new Websilk.Panel(S);
-                newPanel.Name = id + panelData[0].Replace(" ","");
-                newPanel.id = "panel" + newPanel.Name.Replace(" ", "");
-                S.Page.AddPanel(newPanel);
-                myPanels.Add(newPanel);
-
-                //add panel view to list
-                newPanel.AddPanelView();
+                AddPanel(panelData[0]);
             }
         }
 
-        public override string Render()
+        public void GetPanelList()
         {
-            List<string> panels = new List<string>();
-            //data = name,design,css|name,design,css|etc...
             string[] panelData;
-            string panelCss = "";
-            string panelDesign = "!";
-            Element.Panel elemPanel = null;
-
-            if(myPanels.Count == 0)
+            if (myPanels.Count == 0)
             {
-                //get list of panel instances
+                //get list of panel instances if they weren't added yet
                 for (int x = 0; x < data.Length; x++)
                 {
                     panelData = data[x].Split(',');
                     myPanels.Add(S.Page.GetPanelByName(id + panelData[0].Replace(" ", "")));
                 }
             }
+        }
+
+        public void AddPanel(string name)
+        {
+            //adds instance of a panel to the page
+            Websilk.Panel newPanel = new Websilk.Panel(S);
+            newPanel.name = id + name.Replace(" ", "");
+            newPanel.id = "panel" + newPanel.name.Replace(" ", "");
+            S.Page.AddPanel(newPanel);
+            myPanels.Add(newPanel);
+
+            //add panel view to list
+            newPanel.AddPanelView();
+        }
+
+        public override string Render()
+        {
+            List<string> panels = new List<string>();
+            //data = name,design,css|name,design,css|etc...
+
             for (int x = 0; x < myPanels.Count; x++)
             {
-                //get panel CSS from design
-                if (data.Length > x)
-                {
-                    panelData = data[x].Split(',');
-                }
-                else
-                {
-                    panelData = new string[] { "", "", "" };
-                }
-                if(panelData[1] != "") {
-                    //add CSS styling to panel inner div
-                    panelCss += ".inner" + myPanels[x].Name + "{" + panelData[2] + "}\n";
-                }
-                    
-                //add skin to panel
-                if(panelDesign != panelData[1] || elemPanel == null)
-                {
-                    elemPanel = (Element.Panel)S.Elements.Load(ElementType.Panel, panelData[1]);
-                }
-                elemPanel.Render(myPanels[x]);
-
                 //render each panel
-                panels.Add(myPanels[x].Render());
+                panels.Add(RenderPanel(x));
             }
-            if(panelCss != "") { S.Page.RegisterCSS("panel" + id, panelCss); }
+
+            enumArrangement arrangement = enumArrangement.grid;
+            switch (arrangement)
+            {
+                case enumArrangement.grid:
+                    DivItem.Classes.Add("arrange-grid");
+                    break;
+
+                case enumArrangement.vertical:
+                    DivItem.Classes.Add("arrange-vertical");
+                    break;
+
+                case enumArrangement.slideshow:
+                    DivItem.Classes.Add("arrange-slideshow");
+                    break;
+
+                case enumArrangement.book:
+                    DivItem.Classes.Add("arrange-book");
+                    break;
+
+            }
+
             DivItem.innerHTML = headHtml + string.Join("\n", panels.ToArray()) + footHtml;
             return base.Render();
+        }
+
+        public string RenderPanel(int index)
+        {
+            string[] panelData;
+            string panelCss = "";
+            string panelDesign = "!";
+            Element.Panel elemPanel = null;
+
+            GetPanelList();
+
+            //get panel CSS from design
+            if (data.Length > index)
+            {
+                panelData = data[index].Split(',');
+            }
+            else
+            {
+                panelData = new string[] { "", "", "" };
+            }
+            if (panelData[1] != "")
+            {
+                //add CSS styling to panel inner div
+                panelCss += ".inner" + myPanels[index].name + "{" + panelData[2] + "}\n";
+            }
+
+            //add skin to panel
+            if (panelDesign != panelData[1] || elemPanel == null)
+            {
+                elemPanel = (Element.Panel)S.Elements.Load(ElementType.Panel, panelData[1]);
+            }
+
+            //add arrangement type to panel
+            myPanels[index].arrangement = 0;
+            elemPanel.Render(myPanels[index]);
+            if (panelCss != "") { S.Page.RegisterCSS("panel" + id + "_" + index, panelCss); }
+            return myPanels[index].Render();
         }
     }
 }

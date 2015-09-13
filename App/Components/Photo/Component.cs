@@ -58,6 +58,8 @@ namespace Websilk.Components
                     LoadDataArrays();
                     if(data.Length == 0) { data = new string[15]; }
 
+                    if(data[0] == "") { return "<img src=\"/components/photo/icon.png\" border=\"0\" style=\"width:100%;\">"; }
+
                     bool useBg = false;
                     string alt = "";
                     string htmLit = "";

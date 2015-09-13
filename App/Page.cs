@@ -607,13 +607,13 @@ namespace Websilk
                         Panel newPanel = new Panel(S);
 
                         string name = fileHtml.Substring(start[0] + 2, start[1] - (start[0] + 2));
-                        newPanel.Name = name;
-                        newPanel.id = "panel" + newPanel.Name.Replace(" ", "");
+                        newPanel.name = name;
+                        newPanel.id = "panel" + newPanel.name.Replace(" ", "");
 
                         //add attributes to the panel
                         newPanel.isPartOfTheme = true;
 
-                        if (newPanel.Name.ToLower() == "body")
+                        if (newPanel.name.ToLower() == "body")
                         {
                             //create loading body div
                             htm += "<div class=\"absolute\" style=\"width:100%;\"><div class=\"relative\" id=\"divPageLoad\" style=\"width:100%;\"><div class=\"div-max-width\" style=\"width:250px; margin:0px auto; padding:100px 0px;\">";
@@ -621,7 +621,7 @@ namespace Websilk
                             htm += "<div style=\"clear:both;\"></div></div></div></div>";
                         }
 
-                        htm += "{{panel-" + newPanel.Name.ToLower().Replace(" ", "") + "}}";
+                        htm += "{{panel-" + newPanel.name.ToLower().Replace(" ", "") + "}}";
 
                         themeHtm.Add(htm);
 
@@ -1180,7 +1180,7 @@ namespace Websilk
                 component.cssField = newCss;
 
                 //set up component properties
-                component.panelId = myPanel.Name;
+                component.panelId = myPanel.name;
                 component.index = cIndex;
                 component.layerId = pageid;
                 component.pageId = pageid;
@@ -1217,6 +1217,7 @@ namespace Websilk
                     component.defaultWidth + "," + component.defaultWidthType + "," + 
                     component.defaultHeight + "," + component.defaultHeightType + "," +
                     "20px 20px 20px 20px";
+                component.positionField = newPos;
             }
 
             if (!string.IsNullOrEmpty(newPos))
@@ -1507,8 +1508,8 @@ namespace Websilk
                 {
                     for (int x = 0; x <= bodyPanels.Count - 1; x++)
                     {
-                        if(themeHtml.IndexOf("{{panel-" + bodyPanels[x].Name.ToLower().Replace(" ", "") + "}}") < 0) { break; }
-                        themeHtml = themeHtml.Replace("{{panel-" + bodyPanels[x].Name.ToLower().Replace(" ","") + "}}",bodyPanels[x].Render());
+                        if(themeHtml.IndexOf("{{panel-" + bodyPanels[x].name.ToLower().Replace(" ", "") + "}}") < 0) { break; }
+                        themeHtml = themeHtml.Replace("{{panel-" + bodyPanels[x].name.ToLower().Replace(" ","") + "}}",bodyPanels[x].Render());
                     }
                 }
             }
@@ -1581,16 +1582,16 @@ namespace Websilk
                 //save each panel that belongs to this layer
                 foreach(PanelView panel in PanelViews)
                 {
-                    if(panel.PageId == layer.Id || panel.PageId == 0)
+                    if(panel.pageId == layer.Id || panel.pageId == 0)
                     {
                         nodePanel = xml.CreateElement("panel");
-                        S.Util.Xml.SetAttribute("name", panel.Name, nodePanel, xml);
+                        S.Util.Xml.SetAttribute("name", panel.name, nodePanel, xml);
                         added = false;
 
                         //save each component that belongs to this panel
                         foreach(ComponentView c in ComponentViews)
                         {
-                            if(c.panelId == panel.Name && c.pageId == layer.Id)
+                            if(c.panelId == panel.name && c.pageId == layer.Id)
                             {
                                 added = true;
                                 //component
@@ -1715,7 +1716,7 @@ namespace Websilk
             {
                 foreach (PanelView pv in PanelViews)
                 {
-                    if (pv.Name == name | pv.ClassName == name)
+                    if (pv.name == name | pv.className == name)
                     {
                         Panel panel = new Panel(S);
                         panel.LoadFromPanelView(pv);
@@ -1729,7 +1730,7 @@ namespace Websilk
             {
                 for (int x = 0; x <= bodyPanels.Count - 1; x++)
                 {
-                    if (bodyPanels[x].Name == name)
+                    if (bodyPanels[x].name == name)
                         return bodyPanels[x];
                 }
             }
@@ -1862,7 +1863,7 @@ namespace Websilk
                 //build list of panels to remove
                 for (int x = 0; x <= PanelViews.Count - 1; x++)
                 {
-                    if (pageids.Contains(PanelViews[x].PageId) == false)
+                    if (pageids.Contains(PanelViews[x].pageId) == false)
                         panels.Add(x);
                 }
 

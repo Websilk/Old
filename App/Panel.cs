@@ -4,18 +4,24 @@ using Newtonsoft.Json;
 
 namespace Websilk
 {
+    public enum enumArrangement
+    {
+        grid = 0,
+        vertical = 1,
+        slideshow = 2,
+        book = 3
+    }
+
     public class Panel
     {
         [JsonIgnore]
         private Core S;
-        public string Name = "";
+        public string name = "";
         public string id = "";
-        public int Width = 0;
-        public int Height = 0;
-        public int ResizeType = 0;
-        public int HeightType = 0;
-        public int PageId = 0;
+        public int pageId = 0;
         public bool isPartOfTheme = false;
+        public enumArrangement arrangement = 0;
+
         [JsonIgnore]
         public List<Component> Components = new List<Component>();
 
@@ -33,10 +39,10 @@ namespace Websilk
         [JsonIgnore]
         public Utility.DOM.Element inner = new Utility.DOM.Element("div");
 
-        public Panel(Core WebsilkCore, string name = "")
+        public Panel(Core WebsilkCore, string Name = "")
         {
             S = WebsilkCore;
-            Name = name;
+            name = Name;
         }
 
         public string Render()
@@ -44,10 +50,6 @@ namespace Websilk
             string htm = "";
             inner.id = "inner";
             inner.Classes.Add("inner-panel inner" + id);
-            if (Width > 0) { inner.Style.Add("width", Width.ToString() + "px");}
-            if (Height > 0) { inner.Style.Add("height", Height.ToString() + "px");}
-            inner.Attributes.Add("resizeh",HeightType.ToString());
-            inner.Attributes.Add("resize",ResizeType.ToString());
             if (Overflow == true) { inner.Style.Add("overflow", "hidden");}
 
             List<string> comps = new List<string>();
@@ -60,7 +62,28 @@ namespace Websilk
                               (isEmpty == true ? "" : string.Join("\n",comps.ToArray())) + 
                               InnerFoot;
 
-            htm = StackHead + "<div id=\"" + id + "\" class=\"panel" + Name + " ispanel" + (isPartOfTheme == true ? " istheme" : "") + "\">" +
+            var classes = "";
+            switch (arrangement)
+            {
+                case enumArrangement.grid:
+                    classes += " item-cell";
+                    break;
+
+                case enumArrangement.vertical:
+                    classes += " item-cell";
+                    break;
+
+                case enumArrangement.slideshow:
+                    classes += " item-slide";
+                    break;
+
+                case enumArrangement.book:
+                    classes += " item-page";
+                    break;
+
+            }
+
+            htm = StackHead + "<div id=\"" + id + "\" class=\"panel" + name + " ispanel" + (isPartOfTheme == true ? " istheme" : "") + classes + "\">" +
                   DesignHead + inner.Render() + DesignFoot + "</div>" + StackFoot;
 
             return htm;
@@ -77,7 +100,7 @@ namespace Websilk
             {
                 foreach (PanelView p in S.Page.PanelViews)
                 {
-                    if (p.Name == pv.Name)
+                    if (p.name == pv.name)
                     {
                         addpv = false;
                         break;
@@ -151,30 +174,6 @@ namespace Websilk
             inner.Style.Add("padding", padding);
         }
 
-        public void setWidthAndHeight(int w, string h = "")
-        {
-            if (w == 0 & (string.IsNullOrEmpty(h) | h == "0") == true)
-            {
-                //remove width & height from style
-                Width = 0;
-                Height = 0;
-
-            }
-            else
-            {
-                if (w >= 0)
-                    Width = w;
-                if (!string.IsNullOrEmpty(h))
-                {
-                    Height = int.Parse(h);
-                }
-                else
-                {
-                    Height = 0;
-                }
-            }
-        }
-
         public virtual bool Overflow
         {
             get { return _overflow; }
@@ -184,36 +183,34 @@ namespace Websilk
         public PanelView GetPanelView()
         {
             PanelView pv = new PanelView();
-            pv.Name = Name;
+            pv.name = name;
             pv.id = id;
-            pv.ClassName = inner.id;
+            pv.pageId = pageId;
             pv.isPartOfTheme = isPartOfTheme;
-            pv.Components = Components;
-            pv.PageId = PageId;
-            pv.Height = Height;
+            pv.arrangement = arrangement;
+            pv.className = inner.id;
+
             return pv;
         }
 
         public void LoadFromPanelView(PanelView pv)
         {
-            Name = pv.Name;
+            name = pv.name;
             id = pv.id;
+            pageId = pv.pageId;
             isPartOfTheme = pv.isPartOfTheme;
-            Components = pv.Components;
-            PageId = pv.PageId;
+            arrangement = pv.arrangement;
         }
 
     }
 
     public class PanelView
     {
-        public string Name = "";
+        public string name = "";
         public string id = "";
-        public string ClassName = "";
+        public int pageId = 0;
         public bool isPartOfTheme = false;
-        public int PageId = 0;
-        public int Height = 0;
-        [JsonIgnore]
-        public List<Component> Components = new List<Component>();
+        public enumArrangement arrangement = 0;
+        public string className = "";
     }
 }
