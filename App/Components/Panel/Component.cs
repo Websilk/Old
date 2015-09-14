@@ -92,14 +92,21 @@ namespace Websilk.Components
             }
         }
 
-        public void AddPanel(string name)
+        public void AddPanel(string name, int index = -1)
         {
             //adds instance of a panel to the page
             Websilk.Panel newPanel = new Websilk.Panel(S);
             newPanel.name = id + name.Replace(" ", "");
             newPanel.id = "panel" + newPanel.name.Replace(" ", "");
             S.Page.AddPanel(newPanel);
-            myPanels.Add(newPanel);
+            if (index == -1)
+            {
+                myPanels.Add(newPanel);
+            }
+            else
+            {
+                myPanels.Insert(index, newPanel);
+            }
 
             //add panel view to list
             newPanel.AddPanelView();
@@ -109,7 +116,13 @@ namespace Websilk.Components
         {
             List<string> panels = new List<string>();
             //data = name,design,css|name,design,css|etc...
+            if(myPanels.Count > 1)
+            {
+                if(myPanels.Count > 1)
+                {
 
+                }
+            }
             for (int x = 0; x < myPanels.Count; x++)
             {
                 //render each panel

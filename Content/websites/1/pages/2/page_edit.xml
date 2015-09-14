@@ -117,7 +117,7 @@
     <component name="panel" id="dlz" index="2">
       <position><![CDATA[||c,0,0,t,0,,596,px,343,auto,20px 20px 20px 20px||c,0,0,t,auto,,1040,px,116,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[Panel,panel,|Panel 2,panel,|Panel 3,panel,|Panel 4,panel,|Panel 5,panel,|Panel 6,panel,]]></content>
+      <content><![CDATA[Panel,panel,|Panel 2,panel,|Panel 8,panel,|Panel 11,panel,|Panel 3,panel,|Panel 10,panel,|Panel 9,panel,|Panel 7,panel,|Panel 4,panel,|Panel 5,panel,|Panel 6,panel,]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="textbox" id="YzE" index="3">
@@ -170,6 +170,22 @@
       <position><![CDATA[||||c,0,,t,0,,1920,px,1080,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
       <content><![CDATA[ojbtxys.png||1920|1080||||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel8">
+    <component name="photo" id="FAA" index="1">
+      <position><![CDATA[||||c,0,,t,0,,960,px,732,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Anime/sfdfdcg.jpg||960|732||||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel11">
+    <component name="photo" id="DYZ" index="1">
+      <position><![CDATA[||||c,0,,t,0,,1280,px,720,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[tksayme.jpg||1280|720||||||||||||]]></content>
       <design><![CDATA[]]></design>
     </component>
   </panel>

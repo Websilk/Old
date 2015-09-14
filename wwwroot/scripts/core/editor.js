@@ -904,7 +904,8 @@ S.editor = {
                     }
 
                     //send request to server for new component
-                    var options = { componentId: cid, panelId: pid, selector: selector, aboveId: aboveId, duplicate:'' };
+                    var options = { componentId: cid, panelId: pid, selector: selector, aboveId: aboveId, duplicate: '' };
+                    console.log(options);
                     S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
 
                 } else if (d.moved == false) {
@@ -1422,6 +1423,9 @@ S.editor = {
                 } else if(c.id == 'inner') {
                     if ($(c).find(sel).length > 0) { return; }
                 }
+
+                //cancel if selected element is a child of hovered element
+                if ($(c).find(sel).length > 0) { return;}
             }
 
 
@@ -1517,7 +1521,7 @@ S.editor = {
                 if (hide == true) {
                     S.editor.components.hideTimer = setTimeout(function () {
                         S.editor.components.hideSelect('leave');
-                    }, 300);
+                    }, 10);
                 }
             }
             

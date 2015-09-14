@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Websilk.Services.Components
 {
@@ -69,13 +70,15 @@ namespace Websilk.Services.Components
                     panel.GetPanelList();
 
                     //add new panel cell instance to panel component
-                    view.dataField += "|" + newName + "," + panelData[1] + "," + panelData[2];
+                    List<string> ls = data.ToList();
+                    ls.Insert(duplicate + 1, newName + "," + panelData[1] + "," + panelData[2]);
+                    view.dataField = string.Join("|", ls.ToArray());
                     panel.dataField = view.dataField;
                     panel.LoadDataArrays();
-                    panel.AddPanel(newName);
+                    panel.AddPanel(newName, duplicate + 1);
 
                     //render panel cell instance
-                    response.html = panel.RenderPanel(data.Length);
+                    response.html = panel.RenderPanel(duplicate + 1);
 
                 }
             }
