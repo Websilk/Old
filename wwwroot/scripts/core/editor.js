@@ -16,8 +16,13 @@ S.editor = {
         setTimeout(function () { S.editor.photos.dropzone.init(); }, 100);
 
         //init component select custom menus
-        S.editor.components.menu.items.addRule('cell', '.for-all');
+        S.editor.components.menu.items.addRule('cell', '.menu-position, .menu-layer');
         S.editor.components.menu.items.addRule('textbox', '.menu-options');
+        htm = '<div style="width:17px; height:17px;">' +
+              '<svg viewBox="0 0 17 17" style="width:17px; height:17px; padding-top:5px;"><use xlink:href="#icon-panelgrid" x="0" y="0" width="17" height="17"></use></svg>' +
+              '</div>';
+        S.editor.components.menu.items.add('panel', 'arrangement', htm, 3, ' S.editor.components.menu.show("arrangement")');
+        S.editor.components.menu.items.add('cell', 'arrangement', htm, 3, ' S.editor.components.menu.show("arrangement")');
 
         //show editor
         if (arguments[0] === true) {
@@ -905,7 +910,6 @@ S.editor = {
 
                     //send request to server for new component
                     var options = { componentId: cid, panelId: pid, selector: selector, aboveId: aboveId, duplicate: '' };
-                    console.log(options);
                     S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
 
                 } else if (d.moved == false) {
@@ -1373,12 +1377,10 @@ S.editor = {
             if (typeof arguments[0].id != 'undefined') { c = arguments[0]; }
             if (c == sel) { return; }
 
-            //reset any attributes or styles
-            $('.tools > .component-select').removeClass('isalsopanel');
-
             //check if hovered element is inner panel cell
             if (c.id == 'inner') {
                 //cancel if hovered element is not a panel cell from a panel component
+                if (sel == null) { return;}
                 var p = S.elem.panelCell(c);
                 if (p == null) { return;}
                 var parentId = p.id;
@@ -1396,7 +1398,7 @@ S.editor = {
                     //check if hovered panel cell element has siblings
                     if ($('#' + parentId).parent().hasClass('arrange-grid') == true) {
                         //cancel if panel cell has no siblings
-                        if (p.parentNode.children.length == 1) { return; }
+                        if ($('#' + p.parentNode.id + ' > .ispanel').length == 1) { return; }
                     } else {
                         //no grid, no need for showing panel cell
                         return;
@@ -1449,22 +1451,20 @@ S.editor = {
 
                 S.editor.components.resizeSelectBox();
 
+                //remove all special classes
+                $('.tools > .component-select').removeClass('isalsopanel isalsocell');
+
                 //update component select class for color change
                 if ($(c).hasClass('type-panel') == true) {
                     //check if hovered panel cell element has siblings
-                    if ($(c).hasClass('arrange-grid') == true) {
-                        selectType = 'cell';
-                        if ($('#' + c.id + ' > .item-cell').length == 1) {
-                            isalsopanel = true;
-                        }
-                    } else {
-                        //no grid, no need for showing panel cell
-                        selectType = 'cell';
-                        isalsopanel = true;
-                    }
-                } else if ($(c).hasClass('item-cell') == true) {
                     selectType = 'cell';
-                    if (c.parentNode.children.Length == 1) {
+                    isalsopanel = true;
+                } else if ($(c).hasClass('inner-panel') == true) {
+                    selectType = 'cell';
+                    var p = S.elem.panelCell(c);
+                    if (p == null) { return; }
+                    p = p.parentNode;
+                    if ($('#' + p.id + ' > .ispanel').Length == 1) {
                         isalsopanel = true;
                     }
                 }
@@ -1472,6 +1472,7 @@ S.editor = {
                 if (selectType == 'cell') {
                     $('.tools > .component-select').addClass('forpanel');
                     if (isalsopanel == false) {
+                        $('.tools > .component-select').addClass('isalsocell');
                         $('.tools > .component-select .arrow-down').hide();
                     } else {
                         $('.tools > .component-select').addClass('isalsopanel');
@@ -1693,9 +1694,10 @@ S.editor = {
 
             show: function (tab) {
                 var p = $('.component-select .properties');
-                if ($('.component-select .section-' + tab)[0].style.display != 'none' && p[0].style.display != 'none' && arguments[1] == null) { this.hide(tab); return; }
+                if ($('.component-select .section-' + tab)[0].style.display != 'none' && p[0].style.display != 'none' && arguments[1] == null) {
+                    this.hideAll(); return;
+                }
                 this.hideAll();
-                $('.component-select .section-position, .component-select .section-layer, .component-select .section-style, .component-select .section-padding, .component-select .section-css').hide();
                 $('.component-select .section-' + tab).show();
                 p.css({ opacity: 0, width:'' }).show();
                 var cPos = S.elem.pos(S.editor.components.hovered), pPos = S.elem.offset(p[0]), 
@@ -1720,32 +1722,10 @@ S.editor = {
                 this.load();
             },
 
-            hide: function (tab) {
-                
-                var p = $('.component-select .properties');
-                if ($('.component-select .section-' + tab)[0].style.display == 'none' || p[0].style.display == 'none') { return; }
-                var cPos = S.elem.pos(S.editor.components.hovered), pPos = S.elem.offset(p[0]),
-                    mPos = S.elem.offset($('.component-select .menu')[0]), options = S.editor.components.resize.options;
-                var pos = { x: mPos.x + 43, y: 0 }
-                p.hide();
-                if (options.inner.right == true) {
-                    //display window inside component select next to menu
-                    $('.component-select .menu .item:has(.icon-' + tab + ')').css({ left: 0, paddingLeft: 0 });
-                } else {
-                    if (mPos.x + 43 + pPos.w >= S.window.w) {
-                        //display window inside component select next to resize bar
-                    } else {
-                        //display window outside component next to menu
-                        $('.component-select .menu .item:has(.icon-' + tab + ')').css({ paddingRight: 0 });
-                    }
-
-                }
-            },
-
             hideAll: function () {
-                S.editor.components.menu.hide('position');
-                S.editor.components.menu.hide('layer');
-                S.editor.components.menu.hide('style');
+                $('.component-select .properties > .box > div').hide();
+                $('.component-select .properties').hide();
+                $('.component-select .menu .item').css({ left: 0, paddingLeft: 0, paddingRight: 0 });
             },
 
             items: {
@@ -1954,11 +1934,23 @@ S.editor = {
             },
 
             remove: function () {
-                var itemid = S.editor.components.hovered.id.substr(1);
-                S.editor.components.hovered.parentNode.removeChild(S.editor.components.hovered);
-                S.editor.components.hideSelect();
-                S.ajax.post('/websilk/Editor/RemoveComponent', { componentId: itemid }, S.ajax.callback.inject);
-                S.editor.save.add('', '', '');
+                var comps = S.editor.components;
+                var id = comps.hovered.id;
+                if (id == 'inner') {
+                    //remove panel cell
+                    var p = S.elem.panelCell(comps.hovered);
+                    var pid = p.id.substr(5);
+                    id = p.parentNode.id.substr(1);
+                    p.parentNode.removeChild(p);
+                    comps.hideSelect();
+                    S.ajax.post('/websilk/Components/Panel/RemoveCell', { id: id, panelId: pid }, S.ajax.callback.inject);
+                } else {
+                    //remove component
+                    comps.hovered.parentNode.removeChild(comps.hovered);
+                    comps.hideSelect();
+                    S.ajax.post('/websilk/Editor/RemoveComponent', { componentId: id.substr(1) }, S.ajax.callback.inject);
+                }
+                
             },
         },
 
@@ -2195,13 +2187,13 @@ S.editor = {
             }
 
             var comp = S.components.cache[this.hovered.id];
-            var type = 'cell';
+            var type = 'Panel Cell';
             if (comp != null) {
                 type = S.components.cache[this.hovered.id].label;
             }
             
             var label = type;
-            if (type == 'panel') { label = 'cell'; }
+            if (type == 'panel') { label = 'Panel Cell'; }
             label = label.replace('-', ' ');//S.util.str.Capitalize(label.replace('-',' '));
             $('.component-select .btn-duplicate .label span')[0].innerHTML = 'Add a ' + label;
 

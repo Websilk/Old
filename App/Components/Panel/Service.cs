@@ -87,5 +87,51 @@ namespace Websilk.Services.Components
             response.js = CompileJs();
             return response;
         }
+
+        public Inject RemoveCell(string id, string panelId)
+        {
+            if (S.isSessionLost() == true) { return lostInject(); }
+            Inject response = new Inject();
+            response.element = "#c" + id + " > div:last-child";
+            response.inject = enumInjectTypes.after;
+
+            //check security
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
+
+            //get panel view
+            ComponentView view = S.Page.GetComponentViewById(id);
+            if (view != null)
+            {
+                //data = name,design,css|name,design,css|etc...
+                string[] data = view.dataField.Split('|');
+                string pName = panelId.Replace(id, "");
+                for(int x = 0; x < data.Length; x++)
+                {
+                    if (data[x].Replace(" ","").IndexOf(pName + ",") == 0) {
+                        //found name
+                        List<string> ls = data.ToList();
+                        ls.RemoveAt(x);
+                        data = ls.ToArray();
+                        view.dataField = string.Join("|", data);
+                        break;
+                    }
+                }
+
+                for(int x = 0; x < S.Page.PanelViews.Count; x++)
+                {
+                    if(S.Page.PanelViews[x].name.Replace(" ","") == pName)
+                    {
+                        S.Page.PanelViews.RemoveAt(x);
+                        break;
+                    }
+                }
+
+            }
+
+            SaveEnable(); //allow page to save
+            response.js = CompileJs();
+            return response;
+        }
+
     }
 }

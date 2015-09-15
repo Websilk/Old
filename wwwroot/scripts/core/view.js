@@ -702,7 +702,7 @@ var S = {
 
     ajax: {
         //class used to make simple web service posts to the server
-        viewstateId:'', expire:new Date(), queue:[], timerKeep: null,
+        viewstateId:'', expire:new Date(), queue:[], timerKeep: null, keeping: true,
 
         post: function (url, data, callback) {
             this.expire = new Date();
@@ -771,6 +771,7 @@ var S = {
 
         keepAlive: function () {
             if (typeof isNotKeepAlive != "undefined") { return; }
+            clearTimeout(this.timerKeep);
             var options = {save:''};
             if (S.editor) {
                 if (S.editor.save) {
@@ -783,19 +784,18 @@ var S = {
                 
             }
 
-            if (((new Date() - this.expire) / 1000) > 180 || options.save != '') {
+            if (((new Date() - this.expire) / 1000) >= 180 || options.save.length > 0) {
                 this.expire = new Date();
                 this.post("/websilk/App/KeepAlive", options, function (data) {
                     if (S.editor) {
                         $('.editor .toolbar .savepage').removeClass('saving').addClass('nosave');
                     }
                     if (data.d == "lost") {
-                        //session lost, execute javascript
                         S.lostSession();
                     }
                 });
             }
-            this.timerKeep = setTimeout(function () { S.ajax.keepAlive(); }, 180000);
+            this.timerKeep = setTimeout(function () {S.ajax.keepAlive();}, 180000);
         }
     },
 
@@ -1185,5 +1185,5 @@ $('iframe').load(function () { S.events.iframe.loaded(); });
 // start timers /////////////////////////////////////////////////////////////////////////////////
 if (typeof document.getElementsByClassName('component') != 'undefined') {
     S.events.doc.load();
-    setTimeout(function () { S.ajax.keepAlive(); }, 3000);
+    setTimeout(function () { S.ajax.keepAlive(); }, 100);
 }

@@ -305,6 +305,8 @@ namespace Websilk.Services
                 }
             }
 
+            SaveEnable();
+            response.js = CompileJs();
             return response;
         }
 

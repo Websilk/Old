@@ -43,7 +43,7 @@ namespace Websilk.Services.Components
 
 
             //setup scaffold parameters
-            scaffold.Data["script"] = "S.ajax.viewstateId = '" + S.ViewStateId + "';";
+            scaffold.Data["script"] = "isNotKeepAlive=1;S.ajax.viewstateId = '" + S.ViewStateId + "';";
 
             if (S.isLocal == true)
             {

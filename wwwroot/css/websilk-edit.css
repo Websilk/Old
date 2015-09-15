@@ -423,10 +423,7 @@ body > .tools{position:absolute; height:0px; width:0px; z-index:3000; font-famil
 .component-select .resize-left, .component-select .resize-right{cursor:ew-resize;}
 .component-select .resize-left-top, .component-select .resize-top-left, .component-select .resize-right-bottom, .component-select .resize-bottom-right{cursor:nwse-resize;}
 .component-select .resize-top-right, .component-select .resize-right-top, .component-select .resize-bottom-left, .component-select .resize-left-bottom{cursor:nesw-resize;}
-.component-select.forpanel .resize-top, .component-select.forpanel .resize-bottom{cursor:default;}
-.component-select.forpanel .resize-left, .component-select.forpanel .resize-right{cursor:default;}
-.component-select.forpanel .resize-left-top, .component-select.forpanel .resize-top-left, .component-select.forpanel .resize-right-bottom, .component-select.forpanel .resize-bottom-right{cursor:default;}
-.component-select.forpanel .resize-top-right, .component-select.forpanel .resize-right-top, .component-select.forpanel .resize-bottom-left, .component-select.forpanel .resize-left-bottom{cursor:default;}
+.component-select.forpanel.isalsocell .resize-bar{cursor:default;}
 .component-select.isalsopanel .resize-top, .component-select.isalsopanel .resize-bottom{cursor:ns-resize;}
 .component-select.isalsopanel .resize-left, .component-select.isalsopanel .resize-right{cursor:ew-resize;}
 .component-select.isalsopanel .resize-left-top, .component-select.isalsopanel .resize-top-left, .component-select.isalsopanel .resize-right-bottom, .component-select.isalsopanel .resize-bottom-right{cursor:nwse-resize;}
