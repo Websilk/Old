@@ -23,51 +23,64 @@ namespace Websilk.Services
             return S.Page.PageRequest;
         }
 
-        public PageRequest Hash(string url)
+        public PageRequest Url(string url)
         {
             if(S.isSessionLost() == true) { return lostPageRequest(); } //check session
-            Console.WriteLine("Parse Hash: " + url);
-            return ParseHash(url);
+            Console.WriteLine("Parse Url: " + url);
+            return ParseUrl(url);
         }
 
-        private PageRequest ParseHash(string url, bool again = false)
+        private PageRequest ParseUrl(string url, bool again = false)
         {
-             if (string.IsNullOrEmpty(url) | url.IndexOf("dashboard") == 0)
+             if (string.IsNullOrEmpty(url) | url.ToLower().IndexOf("dashboard") == 0)
             {
                 //load current page with no url
                 string pageName = "Home";
-                if (url.IndexOf("dashboard") == 0 & S.User.userId < 1) { pageName = "Login"; }
+                if (url.ToLower().IndexOf("dashboard") == 0 & S.User.userId < 1) { pageName = "Login"; }
                 S.Page.PageRequest = new PageRequest();
                 S.Page.Url.path = "";
-                if ((S.Page.isEditorLoaded == false & url.IndexOf("dashboard") == 0) | url.IndexOf("dashboard") < 0)
+                if ((S.Page.isEditorLoaded == false & url.ToLower().IndexOf("dashboard") == 0) | url.ToLower().IndexOf("dashboard") < 0)
                 {
                     S.Page.Url.path = pageName.ToLower().Replace("-", " ");
                     S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + pageName.Replace("-", " ");
                     S.Page.GetPageId();
                     S.Page.LoadPageFromId(S.Page.pageId);
                 }
-
-                if (url.IndexOf("dashboard") == 0)
+                S.Page.PageRequest.url = url;
+                if (url.ToLower().IndexOf("dashboard") == 0)
                 {
-                    S.Page.RegisterJS("dashhash", "setTimeout(function(){if(S.editor.dashboard){S.editor.dashboard.show();}},1000);");
+                    S.Page.RegisterJS("dashload", "setTimeout(function(){if(S.editor.dashboard){S.editor.dashboard.show('" + url + "');}},1000);");
+                    S.Page.PageRequest.pageTitle = S.Page.websiteTitle + " - Dashboard";
                 }
                 S.Page.Render();
                 Console.WriteLine("Load page from no url");
                 return S.Page.PageRequest;
             }
 
-            string[] arrHash = url.Split('\"');
+            string[] arrUrl = url.Split('\"');
             int oldPageId = S.Page.pageId;
 
-            if (arrHash[0].IndexOf("+") < 0)
+            if (arrUrl[0].IndexOf("+") < 0)
             {
                 //found page with no query in url
-                S.Page.Url.path = arrHash[0].Replace("-", " ");
-                S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + arrHash[0].Replace("-", " ");
+                S.Page.Url.path = arrUrl[0].Replace("-", " ");
+                S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + arrUrl[0].Replace("-", " ");
                 S.Page.GetPageId();
                 S.Page.LoadPageFromId(S.Page.pageId);
                 S.Page.Render();
                 Console.WriteLine("Load page: " + S.Page.pageTitle);
+                if(S.Page.PageRequest == null)
+                {
+                    S.Page.PageRequest = new PageRequest();
+                    S.Page.PageRequest.components = new List<PageComponent>();
+                    S.Page.PageRequest.css = "";
+                    S.Page.PageRequest.editor = "";
+                    S.Page.PageRequest.js = "";
+                    S.Page.PageRequest.pageTitle = "";
+                    S.Page.PageRequest.url = "";
+
+                }
+                S.Page.PageRequest.url = url;
                 return S.Page.PageRequest;
             }
 

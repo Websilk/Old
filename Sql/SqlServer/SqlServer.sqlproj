@@ -178,6 +178,7 @@
     <Build Include="dbo\Stored Procedures\GetPhoto.sql" />
     <Build Include="dbo\Stored Procedures\GetComponents.sql" />
     <Build Include="dbo\Stored Procedures\GetComponentCategories.sql" />
+    <Build Include="dbo\Stored Procedures\GetPageInfoFromDomainAndTitle.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac">

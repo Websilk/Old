@@ -1,0 +1,11 @@
+<layout>
+  <panel name="body">
+    <component name="textbox" id="BWA" index="1">
+      <position><![CDATA[||||c,0,,t,0,,200,px,200,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>The contact page!</div><div><br></div><div>555-555-5555</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <layers />
+</layout>

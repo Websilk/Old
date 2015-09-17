@@ -3,7 +3,7 @@
 /// <reference path="core/view.js" />
 
 S.editor = {
-    enabled:false,
+    enabled: false,
 
     load: function () {
         var htm = '';
@@ -28,9 +28,6 @@ S.editor = {
         if (arguments[0] === true) {
             this.show();
         }
-
-        //show dashboard
-        if (location.hash.indexOf('dashboard') > -1) { $('.webpage, .window, .editor > .tab').hide(); setTimeout(function () { S.editor.dashboard.show(); }, 100); }
     },
 
     hide: function () {
@@ -46,7 +43,7 @@ S.editor = {
     },
 
     show: function (dashboard) {
-        if (S.editor.dashboard.visible == true) { return;}
+        if (S.editor.dashboard.visible == true) { return; }
         $('.editor > .toolbar, .editor > .windows, .tools').show();
         $('.editor > .tab').hide();
         $('.body').css({ top: 50 });
@@ -54,7 +51,7 @@ S.editor = {
         this.enabled = true;
         S.editor.components.hideSelect();
         if (dashboard === true) {
-            S.editor.dashboard.show();
+            S.editor.dashboard.show('dashboard');
         } else {
             if (S.editor.dashboard.visible == true) {
                 S.editor.dashboard.hide();
@@ -65,10 +62,10 @@ S.editor = {
         S.events.doc.scroll.callback.add('editor-scroll', null, null, S.editor.events.doc.scroll.paint, S.editor.events.doc.scroll.end);
     },
 
-    events: {   
-        hash:{
+    events: {
+        url: {
             change: function () {
-                var hash = location.hash.replace("#", "").toLowerCase();
+                var url = location.href.toLowerCase();
                 //reload layers window
                 if ($('.winLayers').length == 1) {
                     S.editor.layers.refresh();
@@ -76,7 +73,7 @@ S.editor = {
 
                 //update dashboard
                 if (S.editor.dashboard.visible == true) {
-                    if (hash.indexOf('dashboard') < 0) {
+                    if (url.indexOf('dashboard') < 0) {
                         S.editor.dashboard.hide();
                     }
                 }
@@ -87,6 +84,9 @@ S.editor = {
             resize: function () {
                 S.editor.components.resizeSelectBox();
                 S.editor.window.callback.windowResize();
+                if (S.editor.dashboard.visible == true) {
+                    S.editor.dashboard.callback.resize();
+                }
             },
 
             scroll: {
@@ -102,9 +102,9 @@ S.editor = {
     },
 
     dashboard: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        visible: false, init: false, 
+        visible: false, init: false,
 
-        show: function () {
+        show: function (url) {
             $('.webpage, .window').hide();
             $('body').addClass('dashboard');
             S.window.changed = true;
@@ -114,10 +114,10 @@ S.editor = {
             $('.toolbar > .menu, .toolbar > .rightside > .savepage, .toolbar > .rightside > .close > a').hide();
             S.editor.dashboard.visible = true;
 
-            //add callback for the hash
+            //add callback for the url
             if (S.editor.dashboard.init == false) {
                 S.editor.dashboard.init = true;
-                S.hash.special.add('dashboard', S.editor.dashboard.callback.hash);
+                S.url.special.add('dashboard', S.editor.dashboard.callback.url);
             }
 
             if ($('.winDashboardInterface').length == 0) {
@@ -126,8 +126,8 @@ S.editor = {
             } else {
                 $('.winDashboardInterface').addClass('dashboard').show();
             }
-            
-            S.editor.dashboard.loadFromHash();
+
+            S.editor.dashboard.loadFromUrl(url);
 
             S.events.doc.resize.callback.add('dashboardresize', null, null, S.editor.dashboard.callback.resize, S.editor.dashboard.callback.resize);
             S.editor.dashboard.callback.resize();
@@ -152,11 +152,11 @@ S.editor = {
             }
         },
 
-        hideAllWindows: function(){
+        hideAllWindows: function () {
             $('.window:not(.winDashboardInterface)').hide();
         },
 
-        callback:{
+        callback: {
             resize: function () {
                 var pos = S.elem.pos($('.winDashboardInterface .dash-body')[0]);
                 $('.window.interface.dashboard:not(.winDashboardInterface)').css({ top: 50, left: pos.x, width: pos.w, height: S.window.absolute.h - 50 }).find('.grip').hide();
@@ -168,26 +168,23 @@ S.editor = {
                 });
             },
 
-            hash: function (hash) {
+            url: function (url) {
                 if (S.editor.dashboard.visible == true) {
-                    if (hash.indexOf('dashboard') == 0) {
-                        if (S.hash.last != hash) {
-                            S.editor.dashboard.loadFromHash();
-                        }
+                    if (url.toLowerCase().indexOf('dashboard') == 0) {
+                        S.editor.dashboard.loadFromUrl(url.toLowerCase());
                     }
                 } else {
-                    if (hash.indexOf('dashboard') == 0) {
-                        S.editor.dashboard.show();
+                    if (url.toLowerCase().indexOf('dashboard') == 0) {
+                        S.editor.dashboard.show(url.toLowerCase());
                     }
                 }
             }
         },
 
-        loadFromHash: function () {
-            var hash = location.hash.replace('#', '').toLowerCase();
-            if (hash.indexOf('Dashboard/') == 0) {
-                var arrhash = hash.split('/');
-                switch (arrhash[1]) {
+        loadFromUrl: function (url) {
+            if (url.indexOf('dashboard/') == 0) {
+                var arrurl = url.split('/');
+                switch (arrurl[1]) {
                     case 'timeline':
                         S.editor.window.open.timeline(S.website.title);
                         break;
@@ -197,7 +194,7 @@ S.editor = {
                         break;
 
                     case 'page-settings':
-                        S.editor.window.open.pageSettings(arrhash[2], S.website.title);
+                        S.editor.window.open.pageSettings(arrurl[2], S.website.title);
                         break;
 
                     case 'photos':
@@ -227,14 +224,14 @@ S.editor = {
                     default:
                         S.editor.window.open.timeline(S.website.title);
                 }
-            } else if (hash == 'dashboard') {
+            } else if (url == 'dashboard') {
                 S.editor.window.open.timeline(S.website.title);
             }
         }
     },
 
     window: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        windows: [], loadclick:null, popupshown: false,
+        windows: [], loadclick: null, popupshown: false,
 
         load: function (name, url, data, options) {
             var a = this.windows[name.replace(/ /g, '')];
@@ -250,7 +247,7 @@ S.editor = {
                     }, 100);
                 }
             }
-            
+
             if (win.length > 0) {
                 div = win[0];
                 if (autoHide == true && win[0].style.display != 'none') {
@@ -270,7 +267,7 @@ S.editor = {
                 var item = {
                     title: name, name: name.replace(/ /g, ''), x: 0, y: 50, w: 320, h: 240, maxh: 0, r: null, target: null,
                     align: null, arrow: null, spacing: 0, toolbar: true, classes: '', addResize: false, resizable: false,
-                    popup: false, visible: true, zIndex: 0, resizealign: 'minimize', noDashboard:false, hash:''
+                    popup: false, visible: true, zIndex: 0, resizealign: 'minimize', noDashboard: false, url: ''
                 };
 
                 //setup options
@@ -287,7 +284,7 @@ S.editor = {
                     if (options.arrow != null) { item.arrow = options.arrow; }
                     if (options.spacing != null) { item.spacing = options.spacing; }
                     if (options.toolbar != null) { item.toolbar = options.toolbar; }
-                    if (options.popup != null) { item.popup = options.popup; item.classes += ' popup'}
+                    if (options.popup != null) { item.popup = options.popup; item.classes += ' popup' }
                     if (options.autoHide != null) { item.autoHide = options.autoHide; }
                     if (options.postOnce != null) { item.postOnce = options.postOnce; item.pageId = S.page.id; }
                     if (options.visible != null) { item.visible = options.visible; }
@@ -295,9 +292,9 @@ S.editor = {
                     if (options.zIndex != null) { item.zIndex = options.zIndex; }
                     if (options.resizealign != null) { item.resizealign = options.resizealign; }
                     if (options.noDashboard != null) { item.noDashboard = options.noDashboard; }
-                    if (options.hash != null) { item.hash = options.hash; }
+                    if (options.url != null) { item.url = options.url; }
                 }
-                
+
                 if (a != null && typeof a != 'undefined') {
                     if (a.x != null) { item.x = a.x; }
                     if (a.y != null) { item.y = a.y; }
@@ -319,7 +316,7 @@ S.editor = {
                 //create window using options
                 div = document.createElement('div');
                 div.className = 'window win' + item.name + ' draggable interface' + item.classes;
-                
+
                 if (item.r != null) {
                     //right-aligned
                     item.addResize = true;
@@ -329,7 +326,7 @@ S.editor = {
                     div.style.left = item.x + 'px';
                 }
                 div.style.top = (item.y + item.spacing) + 'px';
-                
+
                 if (item.h.toString().indexOf('%') < 0) { div.style.minHeight = item.h + 'px'; } else {
                     div.style.minHeight = (((S.window.absolute.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
                     item.addResize = true;
@@ -346,7 +343,7 @@ S.editor = {
                     div.style.zIndex = 4500 + item.zIndex;
                 }
 
-                if (item.visible == false) { div.style.display = 'none';}
+                if (item.visible == false) { div.style.display = 'none'; }
 
                 var htm = '';
                 if (item.toolbar != false) {
@@ -357,7 +354,7 @@ S.editor = {
                     if (item.resizable == true) {
                         htm +=
                           '<div class="resizable">' +
-                            '<div class="resize-leftside"><a href="javascript:" onclick="S.editor.window.resize.leftSide(\''+ item.name +'\')" title="Maximize window to the left-hand side of the screen">' +
+                            '<div class="resize-leftside"><a href="javascript:" onclick="S.editor.window.resize.leftSide(\'' + item.name + '\')" title="Maximize window to the left-hand side of the screen">' +
                             '<svg viewBox="0 0 14 14" style="width:14px;"><use xlink:href="#icon-windowleftside" x="0" y="0" width="14" height="14"></use></svg></a></div>' +
                             '<div class="resize-maximize"><a href="javascript:" onclick="S.editor.window.resize.maximize(\'' + item.name + '\')" title="Maximize window to fullscreen">' +
                             '<svg viewBox="0 0 14 14" style="width:14px;"><use xlink:href="#icon-windowmaximize" x="0" y="0" width="14" height="14"></use></svg></a></div>' +
@@ -384,7 +381,7 @@ S.editor = {
                         function () { S.editor.window.callback.resize(this.vars); });
                 }
 
-                if (S.editor.dashboard.visible == true) {S.editor.dashboard.callback.resize(); }
+                if (S.editor.dashboard.visible == true) { S.editor.dashboard.callback.resize(); }
 
                 this.callback.windowResize();
             }
@@ -392,14 +389,14 @@ S.editor = {
             //request data from server to load into window
             var post = true;
             if (win.length > 0) {
-                if (a.postOnce == 'pageid') { 
-                    if(a.pageId == S.page.id){ post = false; }
-                }else if(a.postOnce === true){
+                if (a.postOnce == 'pageid') {
+                    if (a.pageId == S.page.id) { post = false; }
+                } else if (a.postOnce === true) {
                     post = false;
                 }
             }
             if (url != '' && url != null && post == true) {
-                S.ajax.post('/websilk/'+url, data, S.editor.window.callback.ajax);
+                S.ajax.post('/websilk/' + url, data, S.editor.window.callback.ajax);
             } else {
                 if (data != '') {
                     //load content from string
@@ -410,12 +407,12 @@ S.editor = {
             this.loadclick = div;
 
             //change url link
-            if (a.hash != '' && S.editor.dashboard.visible == true) {
-                location.hash = 'Dashboard/' + a.hash;
+            if (a.url != '' && S.editor.dashboard.visible == true) {
+                S.url.push('Dashboard - ' + S.util.str.Capitalize(a.url.replace('-', ' ')), 'Dashboard/' + S.util.str.Capitalize(a.url.replace('-', ' ')).replace(' ','-'));
             }
 
 
-            //S.events.render.trigger(true, true);
+            S.editor.events.doc.resize();
 
             setTimeout(function () { S.editor.window.loadclick = null; }, 200);
         },
@@ -433,8 +430,8 @@ S.editor = {
                     targ.spacing = item.spacing;
                     if (item.arrow == true) { targ.spacing += 10; }
                 }
-                
-                
+
+
                 switch (item.align) {
                     case 'bottom-center':
                         item.x = (targ.pos.x + (targ.pos.w / 2)) - (item.w / 2);
@@ -468,7 +465,7 @@ S.editor = {
             resize: function (item) {
                 item = S.editor.window.reposition(item);
                 var pos = S.elem.pos(item.elem);
-                if (item.resizealign == 'minimize'){
+                if (item.resizealign == 'minimize') {
                     item.x = pos.x;
                     if (item.w.toString().indexOf('%') < 0) { item.w = pos.w; }
                     if (item.h.toString().indexOf('%') < 0) { item.h = pos.h; }
@@ -482,14 +479,14 @@ S.editor = {
                     $(item.elem).css({ left: item.x });
                 }
                 if (item.h.toString().indexOf('%') > -1) {
-                    item.elem.style.minHeight = (((S.window.absolute.h - item.y) / 100) * parseInt(item.h.replace('%',''))) + 'px';
+                    item.elem.style.minHeight = (((S.window.absolute.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
                 }
 
                 if (item.w.toString().indexOf('%') > -1) {
                     item.elem.style.width = (((S.window.absolute.w - item.x) / 100) * parseInt(item.w.replace('%', ''))) + 'px';
                 }
-                
-                S.editor.window.resize.callback.execute(null,'onResize');
+
+                S.editor.window.resize.callback.execute(null, 'onResize');
             },
 
             click: function (target, type) {
@@ -533,25 +530,25 @@ S.editor = {
         },
 
         open: {
-            timeline: function(){
-                S.editor.window.load('DashboardTimeline', 'Dashboard/Timeline/Load', {}, { x: 155, y: 50, w: 250, h: '100%', toolbar: false, isDashboard: S.editor.dashboard.visible, hash: '' })
+            timeline: function () {
+                S.editor.window.load('DashboardTimeline', 'Dashboard/Timeline/Load', {}, { x: 155, y: 50, w: 250, h: '100%', toolbar: false, isDashboard: S.editor.dashboard.visible, url: '' })
             },
 
-            pages: function(){
-                S.editor.window.load('WebPages', 'Dashboard/Pages/LoadPages', {}, { x: 0, align: 'center', y: 0, w: 600, h: 200, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Web Pages for \'' + S.website.title + '\'', hash: 'pages' })
+            pages: function () {
+                S.editor.window.load('WebPages', 'Dashboard/Pages/LoadPages', {}, { x: 0, align: 'center', y: 0, w: 600, h: 200, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Web Pages for \'' + S.website.title + '\'', url: 'pages' })
             },
 
             pageSettings: function (pageId) {
                 S.editor.window.load('PageSettings', 'Dashboard/Pages/LoadSettings', { pageId: pageId },
-                    { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: 'pageid', title: 'Page Settings for \'' + S.website.title + '\'', hash: 'page-settings' });
+                    { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: 'pageid', title: 'Page Settings for \'' + S.website.title + '\'', url: 'page-settings' });
             },
 
             photoLibrary: function (type) {
-                S.editor.photos.show(null,type);
+                S.editor.photos.show(null, type);
             },
-            
+
             analytics: function () {
-                S.editor.window.load('Analytics', 'Dashboard/Analytics/LoadAnalytics', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Website Analytics for \'' + S.website.title + '\'', hash: 'analytics' })
+                S.editor.window.load('Analytics', 'Dashboard/Analytics/LoadAnalytics', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Website Analytics for \'' + S.website.title + '\'', url: 'analytics' })
             },
 
             designer: function () {
@@ -559,21 +556,21 @@ S.editor = {
             },
 
             users: function () {
-                S.editor.window.load('Users', 'Dashboard/Users/LoadUsers', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'User Security for \'' + S.website.title + '\'', hash: 'users' })
+                S.editor.window.load('Users', 'Dashboard/Users/LoadUsers', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'User Security for \'' + S.website.title + '\'', url: 'users' })
             },
 
-            apps: function(){
-                S.editor.window.load('Apps', 'Dashboard/Apps/LoadApps', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Apps Installed onto \'' + S.website.title + '\'', hash: 'apps' })
+            apps: function () {
+                S.editor.window.load('Apps', 'Dashboard/Apps/LoadApps', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: true, isDashboard: S.editor.dashboard.visible, title: 'Apps Installed onto \'' + S.website.title + '\'', url: 'apps' })
             },
 
-            websiteSettings: function(){
-                S.editor.window.load('WebsiteSettings', 'Dashboard/Website/LoadSettings', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, isDashboard: S.editor.dashboard.visible, postOnce: true, title: 'Website Settings for \'' + S.website.title + '\'', hash: 'settings' })
+            websiteSettings: function () {
+                S.editor.window.load('WebsiteSettings', 'Dashboard/Website/LoadSettings', {}, { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, isDashboard: S.editor.dashboard.visible, postOnce: true, title: 'Website Settings for \'' + S.website.title + '\'', url: 'settings' })
             }
         },
 
         draggable: function () {
             $(".editor .windows > .window").draggable({
-                handle: '.grip', scroll:false, snap: ".editor .window:not(.popup)", snapMode: "outer", drag: function (e, ui) {
+                handle: '.grip', scroll: false, snap: ".editor .window:not(.popup)", snapMode: "outer", drag: function (e, ui) {
                     if (ui.position.left >= S.window.absolute.w - $(this).width()) { ui.position.left = S.window.absolute.w - $(this).width(); }
                     if (ui.position.top >= S.window.absolute.h - $(this).height()) { ui.position.top = S.window.absolute.h - $(this).height(); }
                     if (ui.position.top <= 50) { ui.position.top = 50; }
@@ -582,7 +579,7 @@ S.editor = {
             });
         },
 
-        resize:{
+        resize: {
             leftSide: function (name) {
                 var window = $('.windows .win' + name),
                     item = S.editor.window.windows[name];
@@ -623,11 +620,11 @@ S.editor = {
                 var window = $('.windows .win' + name),
                     item = S.editor.window.windows[name];
                 item.resizealign = 'minimize';
-                window.css({ left: item.curPos.x, top: item.curPos.y, width: item.curPos.w, maxHeight: item.curPos.h, height:'auto' });
+                window.css({ left: item.curPos.x, top: item.curPos.y, width: item.curPos.w, maxHeight: item.curPos.h, height: 'auto' });
                 window.find('.resize-minimize').hide();
                 window.find('.resize-maximize, .resize-leftside, .resize-rightside').show();
                 S.editor.window.windows[name] = item;
-                S.editor.window.resize.callback.execute(window[0],'onResize');
+                S.editor.window.resize.callback.execute(window[0], 'onResize');
             },
 
             callback: {
@@ -666,7 +663,7 @@ S.editor = {
             } else {
                 c = e;
             }
-            if (c.hasClass('window')==true) {
+            if (c.hasClass('window') == true) {
                 c.hide();
             } else {
                 c.parents('.window').hide();
@@ -687,7 +684,7 @@ S.editor = {
 
         dragNew: {
             item: {
-                elem: null, pos: { x: 0, y: 0, w: 0, h: 0 }, curPos:{ x: 0, y: 0},
+                elem: null, pos: { x: 0, y: 0, w: 0, h: 0 }, curPos: { x: 0, y: 0 },
                 cursorStart: { x: 0, y: 0 }, cursor: { x: 0, y: 0 }, winPos: null
             },
             timer: null, hasStarted: false, painting: false, moved: false,
@@ -779,10 +776,10 @@ S.editor = {
                     y = this.item.pos.y + mDiff.y + this.item.cursorStart.scrolly + wPos.y;
 
                 if (this.item.curPos.x != x || this.item.curPos.y != y) {
-                    this.item.curPos = { x: x, y: y, w:this.item.pos.w };
+                    this.item.curPos = { x: x, y: y, w: this.item.pos.w };
 
                     if (mDiff.x != 0 || mDiff.y != 0) { this.moved = true; }
-                    
+
 
                     //find nearest panel 
                     var offset = { x: x + this.item.cursorStart.offset.x, y: y + this.item.cursorStart.offset.y }
@@ -846,7 +843,7 @@ S.editor = {
                                     border.y = cPos.y + 3;
                                     border.h = cPos.h;
                                     this.above = comp;
-                                } else if(isabove == true) {
+                                } else if (isabove == true) {
                                     border.x = cPos.x;
                                     border.y = cPos.y;
                                     border.h = cPos.h;
@@ -860,7 +857,7 @@ S.editor = {
                                 }
                                 $(div).css({ left: border.x, top: border.y, height: border.h, width: 1 });
                                 $('.tools .borders').append(div);
-                                
+
                             }
                         } else {
                             this.above = 2;
@@ -869,7 +866,7 @@ S.editor = {
                         }
                     }
                 }
-                
+
 
 
                 if (this.hasStarted == true) {
@@ -880,7 +877,7 @@ S.editor = {
             end: function () {
                 var d = S.editor.components.dragNew;
                 S.editor.components.dragNew.hasStarted = false;
-                
+
                 //unbind document mouse up event
                 $(document).unbind('mousemove', d.go);
                 $(document).unbind('mouseup', d.end);
@@ -895,7 +892,7 @@ S.editor = {
                     var x = pos.x - pPos.x - S.window.scrollx,
                         y = pos.y - pPos.y - S.window.scrolly;
                     var tc = (x - (Math.round((pPos.w - pos.w) / 2)));
-                    var responsive = 'px,px,px,,<tc>,'+x+','+y+',<w>,,,,,px';
+                    var responsive = 'px,px,px,,<tc>,' + x + ',' + y + ',<w>,,,,,px';
                     var pContain = $(panel).parents('.component');
                     var zIndex = parseInt(pContain.length > 0 ? pContain[0].style.zIndex : 99 || 99) + $(pid + ' > .component').length + 1;
                     var aboveId = '';
@@ -928,19 +925,19 @@ S.editor = {
                 elem: null, pos: { x: 0, y: 0, w: 0, h: 0 },
                 cursorStart: { x: 0, y: 0 }, cursor: { x: 0, y: 0 }
             },
-            timer:null, hasStarted:false, startedTime:null, painting:false, disabled:false, vertical:false, moved:false,
+            timer: null, hasStarted: false, startedTime: null, painting: false, disabled: false, vertical: false, moved: false,
             start: function (e) {
                 //execute $start function in order to change global variable 'this'
                 //to point to S.editor.components.drag
                 S.editor.components.drag.$start(e);
             },
 
-            $start:function (e){
+            $start: function (e) {
                 var comp = S.editor.components.hovered;
                 this.startedTime = new Date();
                 if (S.editor.enabled == false) { return; }
                 if (comp) { if (comp.id == 'inner') { return; } }
-                if ($(e.target).hasClass('component-select') == false && $(e.target).parents('.arrow-down').length == 0) { return;}
+                if ($(e.target).hasClass('component-select') == false && $(e.target).parents('.arrow-down').length == 0) { return; }
                 if (this.disabled == true) { return; }
                 this.panel = S.elem.panel(comp);
                 this.panelPos = S.elem.pos(this.panel);
@@ -1007,9 +1004,9 @@ S.editor = {
             },
 
             go: function (e) {
-                if (new Date() - S.editor.components.drag.startedTime < 200) { return;}
+                if (new Date() - S.editor.components.drag.startedTime < 200) { return; }
                 if (S.editor.components.drag.disabled == true) { return; }
-                if(S.editor.components.drag.painting == false){
+                if (S.editor.components.drag.painting == false) {
                     S.editor.components.drag.started();
                 }
                 S.editor.components.drag.item.cursor.x = e.pageX;
@@ -1017,7 +1014,7 @@ S.editor = {
             },
 
             paint: function () {
-                if (this.painting == false) { return;}
+                if (this.painting == false) { return; }
                 if (this.disabled == true) { return; }
                 var mDiff = {
                     x: (this.item.cursor.x - this.item.cursorStart.x),
@@ -1046,7 +1043,7 @@ S.editor = {
                     var isfirst = false;
                     var comp = comps[0];
                     if (comp == this.item.elem) {
-                        if (comps.length > 1) { comp = comps[1];}
+                        if (comps.length > 1) { comp = comps[1]; }
                     }
                     var cPos = S.elem.pos(comp);
                     if (offset.y < cPos.y + (cPos.h / 4)) {
@@ -1094,7 +1091,7 @@ S.editor = {
                     //destroy border
                     $('.tools .borders .left-border').remove();
                 }
-                    
+
                 S.editor.components.resizeSelectBox();
 
                 if (this.hasStarted == true) {
@@ -1103,8 +1100,8 @@ S.editor = {
             },
 
             end: function () {
-               var drag = S.editor.components.drag;
-               S.editor.components.drag.hasStarted = false;
+                var drag = S.editor.components.drag;
+                S.editor.components.drag.hasStarted = false;
 
                 //unbind document mouse up event
                 $(document).unbind('mousemove', drag.go);
@@ -1118,24 +1115,33 @@ S.editor = {
                     if (drag.above != -1 && drag.above != null) {
                         if (drag.above != 2 && drag.above != 1) {
                             //move component above the target
-                            $(drag.item.elem).insertBefore(drag.above);
-                            arranged = true;
+                            if ($(drag.above).prev('div')[0] != drag.item.elem) {
+                                $(drag.item.elem).insertBefore(drag.above);
+                                arranged = true;
+                            }
                         } else if (drag.above == 1) {
                             //move to very bottom
-                            $(drag.item.elem).insertAfter(drag.item.elem.parentNode.lastChild);
-                            arranged = true;
+                            if (drag.item.elem.parentNode.lastChild != drag.item.elem) {
+                                $(drag.item.elem).insertAfter(drag.item.elem.parentNode.lastChild);
+                                arranged = true;
+                            }
                         } else if (drag.above == 2) {
                             //move component to top
-                            $(drag.item.elem).insertBefore(drag.item.elem.parentNode.firstChild);
-                            arranged = true;
+                            if (drag.item.elem.parentNode.firstChild != drag.item.elem) {
+                                $(drag.item.elem).insertBefore(drag.item.elem.parentNode.firstChild);
+                                arranged = true;
+                            }
                         }
                     } else {
                         if (drag.panel.firstChild != drag.item.elem) {
                             //move component to top
-                            $(drag.item.elem).insertBefore(drag.item.elem.parentNode.firstChild);
-                            arranged = true;
+                            if (drag.item.elem.parentNode.firstChild != drag.item.elem) {
+                                $(drag.item.elem).insertBefore(drag.item.elem.parentNode.firstChild);
+                                arranged = true;
+                            }
                         }
                     }
+                    console.log('arranged = ' + arranged);
                     if (arranged == true) {
                         //save new arrangement of components for server-side
                         S.editor.components.saveArrangement(drag.panel);
@@ -1143,7 +1149,7 @@ S.editor = {
 
                     $(drag.item.elem).css({ left: '', top: '' });
                     $('.tools .borders .left-border').remove();
-                    
+
                     //show component select
                     setTimeout(function () {
                         //S.editor.components.selected = null;
@@ -1172,9 +1178,9 @@ S.editor = {
         resize: {
             options: {
                 pad: { left: 0, right: 0, top: 0, bottom: 0 }, inner: { left: false, right: false, top: false },
-                side: 't', cursor: { x: 0, y: 0 }, cursorStart: { x: 0, y: 0 }, elemStart: { x: 0, y: 0, w:0, h:0 }, offset: { x: 0, y: 0 },
+                side: 't', cursor: { x: 0, y: 0 }, cursorStart: { x: 0, y: 0 }, elemStart: { x: 0, y: 0, w: 0, h: 0 }, offset: { x: 0, y: 0 },
                 elemPos: { x: 0, y: 0, w: 0, h: 0 }, panelPos: { x: 0, y: 0, w: 0, h: 0 }, elem: null, timer: null, hasStarted: false,
-                corner: 20, border: 5, autoHeight:false, autoResize:false, rIndex:0, isPanel:false, startTimer:null
+                corner: 20, border: 5, autoHeight: false, autoResize: false, rIndex: 0, isPanel: false, startTimer: null
             },
 
             start: function (e) {
@@ -1183,7 +1189,7 @@ S.editor = {
                 S.editor.components.resize.$start(e, $(this));
             },
 
-            $start: function (e, bar){
+            $start: function (e, bar) {
                 if (S.editor.enabled == false) { return; }
                 if (S.editor.components.disabled == true) { return; }
                 if (S.editor.components.hovered.id == 'inner') { return; }
@@ -1278,7 +1284,7 @@ S.editor = {
             },
 
             paint: function () {
-                if (this.options.hasStarted == false) { return;}
+                if (this.options.hasStarted == false) { return; }
                 var pos = { w: this.options.elemStart.w, h: this.options.elemStart.h };
                 var mDiff = {
                     x: this.options.cursor.x - this.options.cursorStart.x,
@@ -1361,28 +1367,34 @@ S.editor = {
                     S.editor.components.menu.save.position(1);//, s);
                 }, 10);
 
-                
+
             }
         },
 
         mouseEnter: function () {
+            var comps = S.editor.components;
             if (S.editor.enabled == false) { return; }
-            if (S.editor.components.disabled == true) { return; }
-            S.editor.components.menu.hideAll();
+            if (comps.disabled == true) { return; }
+            comps.menu.hideAll();
             $('.component-select .properties').hide();
-            var c = this, selectType = '', isalsopanel = false, sel = S.editor.components.selected;
-            if (S.editor.components.hovered != null) {
+            var c = this, selectType = '', isalsopanel = false, sel = comps.selected, reselect = false;
+            if (comps.hovered != null) {
                 $('.tools > .component-select').stop();
             }
-            if (typeof arguments[0].id != 'undefined') { c = arguments[0]; }
+            if (typeof arguments[0].id != 'undefined') {
+                c = arguments[0];
+            }
+            if (arguments.length > 1) {
+                if (arguments[1] == 1) { reselect = true; }
+            }
             if (c == sel) { return; }
 
             //check if hovered element is inner panel cell
             if (c.id == 'inner') {
                 //cancel if hovered element is not a panel cell from a panel component
-                if (sel == null) { return;}
+                if (sel == null && reselect == false) { return; }
                 var p = S.elem.panelCell(c);
-                if (p == null) { return;}
+                if (p == null) { return; }
                 var parentId = p.id;
                 //check if there is a selected element
                 if (sel != null) {
@@ -1418,16 +1430,16 @@ S.editor = {
                                 return;
                             }
                         }
-                        
+
                     }
                 } else if (c.id != 'inner') {
                     if ($(sel).parents('#' + c.id).length > 0) { return; }
-                } else if(c.id == 'inner') {
+                } else if (c.id == 'inner') {
                     if ($(c).find(sel).length > 0) { return; }
                 }
 
                 //cancel if selected element is a child of hovered element
-                if ($(c).find(sel).length > 0) { return;}
+                if ($(c).find(sel).length > 0) { return; }
             }
 
 
@@ -1444,12 +1456,12 @@ S.editor = {
                 $('.tools > .component-select').show().stop().css({ opacity: 1 });
 
                 if (S.components.cache[c.id] != undefined) {
-                    S.editor.components.menu.items.load(S.components.cache[c.id].type.replace('/','-'));
+                    comps.menu.items.load(S.components.cache[c.id].type.replace('/', '-'));
                 } else {
-                    S.editor.components.menu.items.load('cell');
+                    comps.menu.items.load('cell');
                 }
 
-                S.editor.components.resizeSelectBox();
+                comps.resizeSelectBox();
 
                 //remove all special classes
                 $('.tools > .component-select').removeClass('isalsopanel isalsocell');
@@ -1480,7 +1492,7 @@ S.editor = {
                     }
 
                     //add custom quickmenus
-                    //S.editor.components.quickmenu.show(S.editor.components.hovered, 'cell');
+                    //comps.quickmenu.show(comps.hovered, 'cell');
 
                 } else {
                     $('.tools > .component-select').removeClass('forpanel');
@@ -1489,22 +1501,22 @@ S.editor = {
 
                     //add custom quickmenu
                     //if ($(c).hasClass('type-panel') == true) {
-                    //    S.editor.components.quickmenu.show(S.editor.components.hovered, 'panel');
+                    //    comps.quickmenu.show(comps.hovered, 'panel');
                     //}else{
-                    //    S.editor.components.quickmenu.show(S.editor.components.hovered, 'component');
+                    //    comps.quickmenu.show(comps.hovered, 'component');
                     //}
-                    
+
                 }
-                S.editor.components.callback.execute('onHover', S.editor.components.hovered);
-                
-            } 
-            $('.tools > .component-select').css({ opacity: 1 }).off('mouseleave').on('mouseleave',null, S.editor.components.hovered, S.editor.components.mouseLeave);
+                comps.callback.execute('onHover', comps.hovered);
+
+            }
+            $('.tools > .component-select').css({ opacity: 1 }).off('mouseleave').on('mouseleave', null, comps.hovered, comps.mouseLeave);
 
             //load menu
-            S.editor.components.menu.load();
+            comps.menu.load();
 
             //cancel leave timer
-            clearTimeout(S.editor.components.hideTimer);
+            clearTimeout(comps.hideTimer);
         },
 
         mouseLeave: function (e) {
@@ -1512,7 +1524,7 @@ S.editor = {
             if (S.editor.components.disabled == true) { return; }
 
             if (e.data == S.editor.components.hovered) {
-                
+
                 //fix for IE ---------
                 var hide = true;
                 if (e.relatedTarget) {
@@ -1525,60 +1537,62 @@ S.editor = {
                     }, 10);
                 }
             }
-            
+
         },
 
         click: function (target, type) {
-            if (S.editor.enabled == false) { return;}
-            if (S.editor.components.disabled == true) { return; }
+            var comps = S.editor.components;
+            if (S.editor.enabled == false) { return; }
+            if (comps.disabled == true) { return; }
             if (type == 'component-select') {
                 //select component
                 if ($(target).hasClass('component-select') == false) { return; }
-                if (S.editor.components.selected != S.editor.components.hovered) {
-                    if (S.editor.components.selected != null) { S.editor.components.callback.execute('onHide', S.editor.components.selected);}
-                    S.editor.components.selected = S.editor.components.hovered;
-                    S.editor.components.hideSelect('select');
-                    S.editor.components.callback.execute('onClick', S.editor.components.selected);
+                if (comps.selected != comps.hovered) {
+                    if (comps.selected != null) { comps.callback.execute('onHide', comps.selected); }
+                    S.editor.components.selected = comps.hovered;
+                    comps.hideSelect('select');
+                    comps.callback.execute('onClick', comps.selected);
                 }
             } else {
-                if(type != 'window' && type != 'toolbar' && type != 'tools'){
+                if (type != 'window' && type != 'toolbar' && type != 'tools') {
                     //deselect component
                     var t = target, hide = false;
                     if (type == 'component') {
                         if ($(t).hasClass('component') == true) {
-                            if ($(t).hasClass('.type-panel') == true) {
+                            if ($(t).hasClass('type-panel') == true || $(t).hasClass('inner-panel') == true) {
                                 //mouseEnter only if the component is a panel
-                                t = $(t).parents('.component')[0];
+                                t = $(t).parent('.component')[0];
                             }
                         }
                     }
-                    if (t == S.editor.components.selected || $(t).find(S.editor.components.selected).length > 0) {
+                    if (t == comps.selected || comps.selected == null || $(t).find(comps.selected).length > 0) {
                         //clicked selected panel to allow mouseEnter
-                        S.editor.components.callback.execute('onHide', S.editor.components.selected);
+                        comps.callback.execute('onHide', comps.selected);
                         S.editor.components.selected = null;
-                        S.editor.components.hideSelect();
-                        S.editor.components.mouseEnter(t);
+                        comps.hideSelect();
+                        comps.mouseEnter(t, 1);
+                        hide = false;
                     } else {
-                        if (S.editor.components.selected != null) {
-                            if ($(t).parents(S.editor.components.selected).length == 0) {
+                        if (comps.selected != null) {
+                            if ($(t).parents(comps.selected).length == 0) {
                                 hide = true;
                             }
-                        } else { hide = true;}
+                        } else { hide = true; }
                     }
                     if (type == 'bg') {
                         hide = true;
-                        if (S.editor.components.hovered == null) { S.editor.components.hovered = S.editor.components.selected;}
+                        if (comps.hovered == null) { S.editor.components.hovered = comps.selected; }
                     }
                     if (hide == true) {
                         //completely deselect component
-                        S.editor.components.callback.execute('onHide', S.editor.components.hovered);
+                        comps.callback.execute('onHide', comps.hovered);
                         S.editor.components.selected = null;
-                        S.editor.components.hideSelect();
+                        comps.hideSelect();
                     }
                 }
 
             }
-            
+
         },
 
         nudge: function (dir, speed) {
@@ -1628,32 +1642,32 @@ S.editor = {
                 if (this.items.length > 0) {
                     for (var x = 0; x < this.items.length; x++) {
                         //if (this.items[x].elem == target) {
-                            switch (type) {
-                                case '': case null: case 'onHover':
-                                    if (typeof this.items[x].onHover == 'function') {
-                                        this.items[x].onHover(target);
-                                    }
-                                    break;
+                        switch (type) {
+                            case '': case null: case 'onHover':
+                                if (typeof this.items[x].onHover == 'function') {
+                                    this.items[x].onHover(target);
+                                }
+                                break;
 
-                                case 'onClick':
-                                    if (typeof this.items[x].onClick == 'function') {
-                                        this.items[x].onClick(target);
-                                    }
-                                    break;
+                            case 'onClick':
+                                if (typeof this.items[x].onClick == 'function') {
+                                    this.items[x].onClick(target);
+                                }
+                                break;
 
-                                case 'onResize':
-                                    if (typeof this.items[x].onResize == 'function') {
-                                        this.items[x].onResize(target, pos);
-                                    }
-                                    break;
+                            case 'onResize':
+                                if (typeof this.items[x].onResize == 'function') {
+                                    this.items[x].onResize(target, pos);
+                                }
+                                break;
 
-                                case 'onHide':
-                                    if (typeof this.items[x].onHide == 'function') {
-                                        this.items[x].onHide(target);
-                                    }
-                                    break;
-                            }
-                            //break;
+                            case 'onHide':
+                                if (typeof this.items[x].onHide == 'function') {
+                                    this.items[x].onHide(target);
+                                }
+                                break;
+                        }
+                        //break;
                         //}
                     }
                 }
@@ -1662,7 +1676,7 @@ S.editor = {
 
         //component window
 
-        toolbar:{
+        toolbar: {
             mouseEnter: function (elem) {
                 //show tooltip for component
                 $('.winComponents #component-info')[0].innerHTML =
@@ -1699,8 +1713,8 @@ S.editor = {
                 }
                 this.hideAll();
                 $('.component-select .section-' + tab).show();
-                p.css({ opacity: 0, width:'' }).show();
-                var cPos = S.elem.pos(S.editor.components.hovered), pPos = S.elem.offset(p[0]), 
+                p.css({ opacity: 0, width: '' }).show();
+                var cPos = S.elem.pos(S.editor.components.hovered), pPos = S.elem.offset(p[0]),
                     mPos = S.elem.offset($('.component-select .menu')[0]),
                     options = S.editor.components.resize.options;
                 var pos = { x: mPos.x + mPos.w, y: 0 }
@@ -1731,7 +1745,7 @@ S.editor = {
             items: {
                 rules: [],
 
-                addRule:function(componentName, hideItems){
+                addRule: function (componentName, hideItems) {
                     //adds a rule to hide certain items when displaying custom menu items for a specific component type
                     //hideItems is selector of items to hide, example: ".menu-options, .menu-layer"
                     this.rules.push({ componentName: componentName, hideItems: hideItems });
@@ -1747,7 +1761,7 @@ S.editor = {
                         $(div).mouseleave(onleave);
                     }
                     div.innerHTML = iconHtm;
-                    if (append == null || append == 'after'){ 
+                    if (append == null || append == 'after') {
                         $('.component-select .menu').append(div);
                     } else if (append == 'before') {
                         $('.component-select .menu').prepend(div);
@@ -1779,7 +1793,7 @@ S.editor = {
 
                     //show either one or two columns with 6 menu items for each column
                     var items = $('.component-select .menu > .item:visible');
-                    
+
                     if (items.length > 6) {
                         $('.component-select .menu').css({ width: 83 });
                         $(items[1]).addClass('first');
@@ -1792,7 +1806,7 @@ S.editor = {
                         }
                     }
 
-                    
+
                     $('.component-select .btn-duplicate').show();
 
                     //hide duplicate button
@@ -1805,11 +1819,11 @@ S.editor = {
                             }
                         }
                     }
-                    
+
                 },
             },
 
-            load:function(){
+            load: function () {
                 //load component settings into menu tabs
                 var comp = S.components.cache[S.editor.components.hovered.id];
                 if (comp != null) {
@@ -1868,7 +1882,7 @@ S.editor = {
                     var extray = $('#lstPropsFixed').val() || '';
                     var width = $(c).css('maxWidth');
                     var widthtype = $('#lstPropsPosWidth').val();
-                    var height = $(c).css('height'); if (height == '0') { height = '';}
+                    var height = $(c).css('height'); if (height == '0') { height = ''; }
                     var heighttype = $('#lstPropsPosHeight').val();
                     var lvl = S.viewport.level;
 
@@ -1887,7 +1901,7 @@ S.editor = {
                     for (x = 0; x < 4; x++) {
                         //check padding for valid numbers
                         if (pad[x] == null || pad[x] == '') { pad[x] = '0'; }
-                        if (isNumeric(pad[x]) == false) { pad[x] = '0';}
+                        if (isNumeric(pad[x]) == false) { pad[x] = '0'; }
                     }
 
                     //compile values into a string array
@@ -1913,7 +1927,7 @@ S.editor = {
                             S.editor.components.menu.show('padding', 1);
                         }
                     }
-                    
+
                 },
 
                 layer: function () {
@@ -1950,11 +1964,11 @@ S.editor = {
                     comps.hideSelect();
                     S.ajax.post('/websilk/Editor/RemoveComponent', { componentId: id.substr(1) }, S.ajax.callback.inject);
                 }
-                
+
             },
         },
 
-        quickmenu:{
+        quickmenu: {
             items: [],
 
             add: function (componentType, menuHtm, onInit) {
@@ -1979,7 +1993,7 @@ S.editor = {
                     if (exists == false) { matching.push(S.components.cache[c].type.toLowerCase()); }
                 }
                 var components = [];
-                switch(type){
+                switch (type) {
                     case 'cell': case 'panel':
                         components = $(innerPanel).find('.component');
                         break;
@@ -1999,13 +2013,13 @@ S.editor = {
                             if (type == 'panel') {
                                 var inner = $(components[c]).parents('#inner')[0];
                                 iPos = S.elem.offset(inner);
-                                
+
                                 var gridpanel = $(inner).parents('.item-cell');
                                 if (gridpanel.length > 0) {
                                     iPos = S.elem.offset(gridpanel[0]);
                                     cPos.x += iPos.x;
                                     cPos.y += iPos.y;
-                                }                                
+                                }
                             }
                             for (a = 0; a < carr.length; a++) {
                                 if (carr[a].indexOf('type-') == 0) {
@@ -2021,7 +2035,7 @@ S.editor = {
                                             div.innerHTML = this.items[x].menuHtm;
                                             $('.component-select .quickmenu').append(div);
                                             var dPos = S.elem.offset(div);
-                                            
+
                                             if (type == 'cell' || type == 'panel') {
                                                 var newy = (cPos.y + ((cPos.h / 2) - (dPos.h / 2)));
                                                 if (newy < cPos.y + 20) { newy += 15; }
@@ -2041,15 +2055,15 @@ S.editor = {
                                                 } else {
                                                     div.style.left = cPos.x + ((cPos.w / 2) - (dPos.w / 2)) + 'px';
                                                 }
-                                                
+
                                             } else if (type == 'component') {
                                                 div.style.top = (cPos.h / 7) + 'px';
                                                 div.style.left = ((cPos.w / 2) - (dPos.w / 2)) + 'px';
                                             }
-                                            
-                                            
+
+
                                             div.style.opacity = '0';
-                                            
+
                                             $(div).css({ opacity: 0 }).addClass(arrow).show().stop().delay(0).animate({ opacity: 1 }, 500);
                                             break;
                                         }
@@ -2060,7 +2074,7 @@ S.editor = {
                         }
                     }
                 }
-                
+
             }
         },
 
@@ -2099,7 +2113,7 @@ S.editor = {
         },
 
         resizeSelectBox: function () {
-            if (this.hovered == null) { return;}
+            if (this.hovered == null) { return; }
             var cPos = S.elem.pos(this.hovered),
                 pad = { left: 12, right: 12, top: 12, bottom: 12 },
                 corner = this.resize.options.corner,
@@ -2131,9 +2145,9 @@ S.editor = {
 
             //reposition container
             if (this.selected != this.hovered) {
-                this.selbox.css({ left: cPos.x-pad.left, top: cPos.y-pad.top, width: cPos.w+(pad.left + pad.right), height: cPos.h+(pad.top + pad.bottom) });
+                this.selbox.css({ left: cPos.x - pad.left, top: cPos.y - pad.top, width: cPos.w + (pad.left + pad.right), height: cPos.h + (pad.top + pad.bottom) });
             } else {
-                this.selbox.css({ left: cPos.x-pad.left, top: cPos.y-pad.top, width: 0, height: 0 });
+                this.selbox.css({ left: cPos.x - pad.left, top: cPos.y - pad.top, width: 0, height: 0 });
             }
 
             cPos.w += (pad.left + pad.right);
@@ -2142,7 +2156,7 @@ S.editor = {
             this.resize.options.inner = inner;
 
             //repostion resize bars
-            if(this.posStart.w != cPos.w || this.posStart.h != cPos.h){
+            if (this.posStart.w != cPos.w || this.posStart.h != cPos.h) {
                 this.selbox.find('.resize-top').css({ top: 0, left: border + corner, width: cPos.w - (border * 2) - (corner * 2), height: border });
                 this.selbox.find('.resize-top-right').css({ top: 0, left: cPos.w - border - corner, width: corner + border, height: border });
                 this.selbox.find('.resize-right-top').css({ top: border, left: cPos.w - border, width: border, height: corner });
@@ -2191,7 +2205,7 @@ S.editor = {
             if (comp != null) {
                 type = S.components.cache[this.hovered.id].label;
             }
-            
+
             var label = type;
             if (type == 'panel') { label = 'Panel Cell'; }
             label = label.replace('-', ' ');//S.util.str.Capitalize(label.replace('-',' '));
@@ -2205,23 +2219,23 @@ S.editor = {
 
         properties: {
             //current = object loaded from component properties.js
-            selected: null, section:'', current: null, options: {},
+            selected: null, section: '', current: null, options: {},
 
             show: function () {
                 if ($('.winProperties').length == 0) {
                     //load the window first
                     var htm =
                         '<div class="top-menu"><div class="tabs"></div></div><div class="props-content"></div>' +
-                        '<div class="props-save">' + 
-                            '<div class="button apply center">Apply Changes</div>' + 
+                        '<div class="props-save">' +
+                            '<div class="button apply center">Apply Changes</div>' +
                         '</div>';
                     S.editor.window.load('Properties', '', htm, { x: 0, align: 'center', y: 0, w: 600, h: 100, spacing: 50, postOnce: true, visible: false, title: 'Component Properties' });
-                    
+
                 }
                 var section = arguments[0] || '';
                 if (S.editor.components.properties.selected != S.editor.components.hovered || S.editor.components.properties.section != section) {
                     $('.winProperties .props-content')[0].innerHTML = '';
-                    S.ajax.post('/websilk/Editor/ComponentProperties', { id: S.editor.components.hovered.id.substr(1), section:section }, S.ajax.callback.inject);
+                    S.ajax.post('/websilk/Editor/ComponentProperties', { id: S.editor.components.hovered.id.substr(1), section: section }, S.ajax.callback.inject);
                     S.editor.components.properties.section = section;
                 } else {
                     $('.winProperties').show();
@@ -2242,12 +2256,12 @@ S.editor = {
                 S.editor.components.properties.selected = S.editor.components.hovered;
             },
 
-            changed:function(){
+            changed: function () {
                 $('.winProperties .props-save').css('opacity', 1);
                 $('.winProperties .props-save > .button').off('click').on('click', S.editor.components.properties.save);
             },
 
-            save:function(){
+            save: function () {
                 $('.winProperties .props-save').css('opacity', 0.2);
                 $('.winProperties .props-save > .button').off('click');
                 S.editor.components.properties.current.save();
@@ -2255,7 +2269,7 @@ S.editor = {
 
             loaded: function (name, w) {
                 $('.winProperties .grip .title')[0].innerHTML = name + ' Properties';
-                $('.winProperties').css({ width: w});
+                $('.winProperties').css({ width: w });
                 $('.winProperties').show();
             },
 
@@ -2304,7 +2318,7 @@ S.editor = {
 
         },
 
-        getComponentAbove: function(c, y){
+        getComponentAbove: function (c, y) {
             var ePos, cPos = S.elem.pos(c);
             //if (arguments[1] != null) { cPos = arguments[1];}
             var panel = S.elem.panel(c);
@@ -2324,12 +2338,11 @@ S.editor = {
             return null;
         },
 
-        getPositionCss: function(c, level, position){
+        getPositionCss: function (c, level, position) {
             var css = '';
             var cssBefore = '';
             var id = c.id;
-            if (position != '' && position != null)
-            {
+            if (position != '' && position != null) {
                 var pos = position.split(',');
                 //x-type, x-offset, y-type, y-offset, fixed-type, width, width-type, height, height-type, padding
                 switch (pos[0]) //x-type
@@ -2340,9 +2353,9 @@ S.editor = {
 
                     case 'c':
                         if (pos[2] != '1') {
-                          css += 'float:none; display:inline-block; '
+                            css += 'float:none; display:inline-block; '
                         } else {
-                          css += 'float:none; display:block; '
+                            css += 'float:none; display:block; '
                         };
                         break;
 
@@ -2372,7 +2385,7 @@ S.editor = {
                         break;
                 }
 
-                
+
 
                 //y-offset
                 if (pos[4].length > 0 && pos[4] != 'auto') {
@@ -2434,18 +2447,18 @@ S.editor = {
             if (position != '') {
                 switch (level) {
                     case 0: //cell
-                        return '.screen.cell #' + id + '{' + css + '}';
+                        return '.s-cell #' + id + '{' + css + '}';
                     case 1: //mobile
-                        return '.screen.mobile #' + id + ', .screen.cell #' + id + '{' + css + '}';
+                        return '.s-mobile #' + id + ', .s-cell #' + id + '{' + css + '}';
                     case 2: //tablet
-                        return '.screen.tablet #' + id + ', .screen.mobile #' + id + ', .screen.cell #' + id + '{' + css + '}';
+                        return '.s-tablet #' + id + ', .s-mobile #' + id + ', .s-cell #' + id + '{' + css + '}';
                     case 3: //desktop
-                        return '.screen.desktop #' + id + ', .screen.tablet #' + id + ', .screen.mobile #' + id + ', .screen.cell #' + id + '{' + css + '}';
+                        return '.s-desktop #' + id + ', .s-tablet #' + id + ', .s-mobile #' + id + ', .s-cell #' + id + '{' + css + '}';
                     case 4: //HD
-                        return '.screen.hd #' + id + ',  .screen.desktop #' + id + ', .screen.tablet #' + id + ', .screen.mobile #' + id + ', .screen.cell #' + id + '{' + css + '}';
+                        return '.s-hd #' + id + ',  .s-desktop #' + id + ', .s-tablet #' + id + ', .s-mobile #' + id + ', .s-cell #' + id + '{' + css + '}';
                 }
             }
-            
+
             return '';
         },
 
@@ -2513,7 +2526,7 @@ S.editor = {
                 }
             } else {
                 //duplicate panel cell
-                
+
                 var p = S.elem.panelCell(c);
                 if (p != null) {
                     comp = S.components.cache[p.parentNode.id];
@@ -2525,7 +2538,7 @@ S.editor = {
                 }
             }
 
-            if(execCustom == false){
+            if (execCustom == false) {
                 //duplicate component
                 var options = { componentId: compType, panelId: pid, selector: selector, aboveId: aboveId, duplicate: c.id.substr(1) };
                 //first, send an AJAX request to save page changes
@@ -2534,8 +2547,8 @@ S.editor = {
                     S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
                 });
             }
-            
-            
+
+
         },
     },
 
@@ -2550,7 +2563,7 @@ S.editor = {
             //generate toolbar
             var toolbar = document.createElement('div'),
                 btnSelect = document.createElement('div');
-            
+
             toolbar.className = 'texteditor-toolbar';
             toolbar.style.display = 'none';
 
@@ -2610,7 +2623,7 @@ S.editor = {
             //add text editor button to the component select menu
             S.editor.components.menu.items.add('textbox', 'texteditor', htm, 'before', 'S.editor.components.click($(".component-select")[0], "component-select")');
 
-            
+
 
             //configure rangy
             rangy.config.preferTextRange = true;
@@ -2628,7 +2641,7 @@ S.editor = {
                 textedit.bind('mouseup', S.editor.textEditor.mouseUp);
                 S.events.doc.scroll.callback.add($('.tools .texteditor-toolbar')[0], target, S.editor.textEditor.reposition, S.editor.textEditor.reposition, S.editor.textEditor.reposition);
                 S.events.doc.resize.callback.add($('.tools .texteditor-toolbar')[0], target, S.editor.textEditor.reposition, S.editor.textEditor.reposition, S.editor.textEditor.reposition);
-                
+
                 //reposition the text editor toolbar
                 S.editor.textEditor.reposition(target);
 
@@ -2730,7 +2743,7 @@ S.editor = {
                 sel.refresh();
                 sel.setSingleRange(range);
             }
-            
+
 
             //apply attributes & class (name) to all elements within the select ///
             var applier = rangy.createClassApplier(name, {
@@ -2738,7 +2751,7 @@ S.editor = {
                 elementAttributes: attributes
             }, tag);
             applier.toggleSelection();
-            
+
             //remove any classes from the selection that don't belong /////////////
             if (remove != null) {
                 if (remove.length > 0) {
@@ -2816,7 +2829,7 @@ S.editor = {
             },
 
             alignLeft: function () {
-                S.editor.textEditor.alterRange('alignleft', 'span', {}, ['aligncenter','alignright'], true);
+                S.editor.textEditor.alterRange('alignleft', 'span', {}, ['aligncenter', 'alignright'], true);
             },
 
             alignCenter: function () {
@@ -2885,7 +2898,7 @@ S.editor = {
                 $('.component-select').show();
                 S.editor.components.resizeSelectBox();
                 S.editor.textEditor.hide(S.editor.components.hovered);
-                
+
             }
         },
 
@@ -2907,7 +2920,7 @@ S.editor = {
     },
 
     pages: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        tree:{
+        tree: {
             items: [],
 
             add: function (pageId, title) {
@@ -2918,9 +2931,9 @@ S.editor = {
             remove: function (pageId) {
                 var found = false;
                 for (var x = 0; x < S.editor.pages.tree.items.length; x++) {
-                    if (S.editor.pages.tree.items[x].pageId == pageId) {found = true; break; }
+                    if (S.editor.pages.tree.items[x].pageId == pageId) { found = true; break; }
                 }
-                S.editor.pages.tree.items.splice(x-1, 1);
+                S.editor.pages.tree.items.splice(x - 1, 1);
                 S.editor.pages.tree.updateTitle();
             },
 
@@ -2937,10 +2950,10 @@ S.editor = {
 
         add: {
             item: { parentId: 0, title: '', description: '' },
-            show:function (parentId) {
+            show: function (parentId) {
                 S.editor.pages.add.item = { parentId: parentId, title: '', description: '' };
                 S.editor.window.load('NewPage', 'Editor/NewPage', { parentId: parentId || 0, title: S.website.title },
-                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, noDashboard:true, title: 'New Web Page' });
+                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, noDashboard: true, title: 'New Web Page' });
             },
 
             typeTitle: function (e) {
@@ -2948,20 +2961,20 @@ S.editor = {
                 if (err == false) { if (title == '') { err = true; } }
                 if (err == false) { err = S.util.str.isAlphaNumeric(title, true); }
                 if (err == false) { err = S.util.str.hasCurseWords(title); }
-                title=title.replace(/ /g,'-');
+                title = title.replace(/ /g, '-');
                 if (err == true) {
                     $('#newpage-url').html('<div class="font-error" style="text-decoration:line-through">' + S.editor.pages.add.item.url + title + '</div>');
                 } else {
                     $('#newpage-url').html(S.editor.pages.add.item.url + title);
                 }
-                
+
             },
 
             submit: function () {
                 var title = $('#newPageTitle').val(), desc = $('#newPageDescription').val(), err = false, secure = false, datapage = false;
                 if (err == false) {
                     if (title == '') {
-                        S.util.message.show($('#newPageError'),'Please include a title for your page.'); return false;
+                        S.util.message.show($('#newPageError'), 'Please include a title for your page.'); return false;
                     }
                 }
                 if (err == false) {
@@ -2996,16 +3009,16 @@ S.editor = {
         },
 
         settings: {
-            item: { pageId: 0},
+            item: { pageId: 0 },
             show: function (pageId) {
-                S.editor.pages.settings.item = { pageId: pageId};
-                S.editor.window.load('PageSettings', 'Editor/PageSettings', { pageId: pageId},
-                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, title: 'Web Page Settings', hash: 'page-settings' });
+                S.editor.pages.settings.item = { pageId: pageId };
+                S.editor.window.load('PageSettings', 'Editor/PageSettings', { pageId: pageId },
+                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, title: 'Web Page Settings', url: 'page-settings' });
             },
 
             submit: function () {
                 var desc = $('#pageSettingsDescription').val(), err = false, secure = false;
-                
+
                 if (err == false) {
                     if (desc == '') {
                         S.util.message.show($('#pageSettingsError'), 'Please include a description for your page settings.'); return false;
@@ -3019,7 +3032,7 @@ S.editor = {
                 }
                 $(this).hide();
                 secure = $('#pageSettingsSecure').is(':checked');
-                var data = {pageId: S.editor.pages.settings.item.pageId, description: desc, isSecure: secure};
+                var data = { pageId: S.editor.pages.settings.item.pageId, description: desc, isSecure: secure };
                 S.ajax.post('/websilk/Dashboard/Pages/Update', data, S.ajax.callback.inject);
             },
         },
@@ -3059,7 +3072,7 @@ S.editor = {
     },
 
     layers: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        show: function(){
+        show: function () {
             S.editor.window.load('Layers', 'Editor/Layers', {}, { r: 0, y: 0, w: 250, h: 100, loadOnce: true });
         },
 
@@ -3073,8 +3086,8 @@ S.editor = {
                 i[0] = i[0] == 2 ? 1 : 2;
                 rowTitle = layers[l].title;
                 if (layers[l].pageType == 1) { rowTitle = 'Page'; }
-                itemId = rowTitle.replace(/ /g, '')+'Layer';
-                htm += '<div class="row color'+i[0]+' page-layer-row item-'+itemId+'">'+
+                itemId = rowTitle.replace(/ /g, '') + 'Layer';
+                htm += '<div class="row color' + i[0] + ' page-layer-row item-' + itemId + '">' +
                         '<div class="expander purple"><div class="column right icon icon-expand"><a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a></div></div>' +
                         '<div class="column left icon"><svg viewBox="0 0 36 36" style="width:20px; height:20px;"><use xlink:href="#icon-layers" x="0" y="0" width="36" height="36" /></svg></div>' +
                         '<div class="column left title">' + rowTitle + ' Layer</div><div class="clear"></div>';
@@ -3084,22 +3097,22 @@ S.editor = {
                 for (s = 0; s < laypanels.length; s++) {
                     //load each web page panel //////////////////////////////////////////////////////////////////////////////////
                     p = $(laypanels[s]);
-                    comps = p.find('.component').filter(function (index, elem) { if ($(elem).parents('.ispanel:not(.istheme)').length > 0) { return false; } return true;});
+                    comps = p.find('.component').filter(function (index, elem) { if ($(elem).parents('.ispanel:not(.istheme)').length > 0) { return false; } return true; });
                     hasSubs = false;
                     //make sure there are components within this panel that belong to the current layer
                     for (c = 0; c < comps.length; c++) {
                         if (S.components.cache[comps[c].id].pageId == pageId) { hasSubs = true; break; }
                     }
-                    
+
                     //this panel contains components that are a part of the current layer
                     i[1] = i[1] == 2 ? 1 : 2;
                     rowColor = 'blue';
                     rowTitle = S.util.str.Capitalize(p[0].className.split(' ')[0].replace('panel', '')) + ' Area';
                     itemId = rowTitle.replace(/ /g, '');
                     htm += '<div class="sub" style="display:none;">' +
-                        '<div class="row color'+i[1]+' page-panel-row item-'+itemId+'">' +
+                        '<div class="row color' + i[1] + ' page-panel-row item-' + itemId + '">' +
                         '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
-                    
+
                     if (hasSubs == true) {
                         htm += '<a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a>';
                     }
@@ -3118,18 +3131,18 @@ S.editor = {
                             rowTitle = S.util.str.Capitalize(classes[S.util.array.indexOfPartialString(classes, 'type-')].replace('type-', ''));
 
                             hasSubs = false;
-                            if (comp.find('.ispanel').length > 0) { hasSubs = true;}
+                            if (comp.find('.ispanel').length > 0) { hasSubs = true; }
                             itemId = comps[c].id;
-                            
+
                             htm += '<div class="sub" style="display:none;">' +
-                                '<div class="row color' + i[1] + ' component-row item-'+itemId+'">' +
+                                '<div class="row color' + i[1] + ' component-row item-' + itemId + '">' +
                                 '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
-                            
+
                             if (hasSubs == true) {
                                 htm += '<a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a>';
                             }
                             img = S.components.cache[comps[c].id].type;
-                            htm +='</div></div><div class="column left icon-img"><img src="/components/'+img+'/iconsm.png"/></div>' +
+                            htm += '</div></div><div class="column left icon-img"><img src="/components/' + img + '/iconsm.png"/></div>' +
                                 '<div class="column left title">' + rowTitle + '</div><div class="clear"></div>';
 
                             if (hasSubs == true) {
@@ -3153,11 +3166,11 @@ S.editor = {
                                         rowColor = 'green';
                                         itemId = panels[s2].id;
                                         htm += '<div class="sub" style="display:none;">' +
-                                            '<div class="row color' + i[2] + ' panel-cell-row item-'+itemId+'">' +
+                                            '<div class="row color' + i[2] + ' panel-cell-row item-' + itemId + '">' +
                                             '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand"><a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a></div></div>' +
                                             '<div class="column left icon"><svg viewBox="0 0 36 36" style="width:20px; height:20px;"><use xlink:href="#icon-panel" x="0" y="0" width="36" height="36"></use></svg></div>' +
                                             '<div class="column left title">' + rowTitle + '</div><div class="clear"></div>';
-                                            
+
                                         comps2 = p2.find('.component');
                                         i[4] = 2;
                                         for (c2 = 0; c2 < comps2.length; c2++) {
@@ -3166,14 +3179,14 @@ S.editor = {
                                             comp = $(comps2[c2]);
                                             rowColor = '';
                                             classes = comp[0].className.split(' ');
-                                            rowTitle = S.util.str.Capitalize(classes[S.util.array.indexOfPartialString(classes,'type-')].replace('type-', ''));
+                                            rowTitle = S.util.str.Capitalize(classes[S.util.array.indexOfPartialString(classes, 'type-')].replace('type-', ''));
 
                                             hasSubs = false;
                                             if (comp.find('.ispanel').length > 0) { hasSubs = true; rowColor = 'green'; }
                                             itemId = comps2[c2].id;
 
                                             htm += '<div class="sub" style="display:none;">' +
-                                                '<div class="row color' + i[1] + ' component-row item-'+itemId+'">' +
+                                                '<div class="row color' + i[1] + ' component-row item-' + itemId + '">' +
                                                 '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
 
                                             img = S.components.cache[comps2[c2].id].type;
@@ -3189,7 +3202,7 @@ S.editor = {
                             htm += '</div></div>'; // end component row
                         }
                         if (1 == 0) {
-                            
+
                         }
 
                         i[1] = 2;
@@ -3229,7 +3242,7 @@ S.editor = {
                 var rowType = classes[S.util.array.indexOfPartialString(classes, '-row')];
                 switch (rowType) {
                     case 'page-panel-row':
-                        S.editor.layers.mouseEnter.showPagePanel(itemId.toLowerCase().replace('area',''));
+                        S.editor.layers.mouseEnter.showPagePanel(itemId.toLowerCase().replace('area', ''));
                         break;
                     case 'component-row':
                         S.editor.layers.mouseEnter.showComponent(itemId);
@@ -3285,11 +3298,11 @@ S.editor = {
                         S.editor.layers.mouseLeave.hidePanelCell(itemId);
                         break;
                 }
-            
+
             },
 
             hidePagePanel: function (itemId) {
-                $('.tools .borders .page-panel-border.item-'+itemId).remove();
+                $('.tools .borders .page-panel-border.item-' + itemId).remove();
             },
 
             hideComponent: function (itemId) {
@@ -3366,13 +3379,13 @@ S.editor = {
                         '<div class="backgrounds-content"></div>' +
                         '<div class="fonts-content"></div>' +
                         '<div class="colorschemes-content"></div>' +
-                        '<div class="code-content">' + 
-                            '<div class="top-menu">' + 
-                                
-                            '</div>' + 
-                            '<div class="code-files">' + 
+                        '<div class="code-content">' +
+                            '<div class="top-menu">' +
+
+                            '</div>' +
+                            '<div class="code-files">' +
                                 '<div class="code-filelist"></div>' +
-                            '</div>' + 
+                            '</div>' +
                             '<div class="code-editor">' +
                                 '<div class="code-ace-files tabs">' +
                                     '<div class="code-ace-save">' +
@@ -3384,17 +3397,17 @@ S.editor = {
                                     '</div>' +
                                 '</div>' +
                                 '<div class="code-ace">' +
-                                    '<div id="ace-editor"></div>' + 
+                                    '<div id="ace-editor"></div>' +
                                 '</div>' +
                                 '<div class="code-ace-info"></div>' +
-                            '</div>' + 
+                            '</div>' +
                         '</div>' +
                     '</div>';
-                S.editor.window.load('Designer', '', htm, { x: 0, align: 'center', y: 0, w: 780, h: 400, spacing: 50, postOnce: true, resizable: true, title: 'Designer Tools', hash: 'designer' });
+                S.editor.window.load('Designer', '', htm, { x: 0, align: 'center', y: 0, w: 780, h: 400, spacing: 50, postOnce: true, resizable: true, title: 'Designer Tools', url: 'designer' });
             } else {
                 $('.windows .winDesigner').show();
             }
-            
+
         },
 
         hideContent: function () {
@@ -3426,7 +3439,7 @@ S.editor = {
         },
 
         code: {
-            ace: null, sessions:[], selected:0,
+            ace: null, sessions: [], selected: 0,
 
             show: function () {
                 S.editor.designer.show();
@@ -3454,18 +3467,18 @@ S.editor = {
                         });
 
                         //load website folder list of files
-                        S.ajax.post('/websilk/Dashboard/Designer/Code/LoadFolder', { type: 'website', folder:'' }, 
+                        S.ajax.post('/websilk/Dashboard/Designer/Code/LoadFolder', { type: 'website', folder: '' },
                             function (data) {
                                 S.ajax.callback.inject(data);
                                 //then load page CSS code for this web page
                                 S.editor.designer.code.file.load('page', '')
-                                
+
                                 //callback for resizing window
                                 S.editor.window.resize.callback.add($('.winDesigner')[0], null, S.editor.designer.code.resizeAce);
                                 S.editor.designer.code.resizeAce();
                             }
                         );
-                        
+
                     });
                 }
             },
@@ -3528,14 +3541,14 @@ S.editor = {
                                 S.editor.designer.code.ace.setSession(session);
                                 //save session to array
                                 S.editor.designer.code.sessions.push({ type: type, file: file, session: session, modified: false });
-                                S.editor.designer.code.selected = S.editor.designer.code.sessions.length-1;
+                                S.editor.designer.code.selected = S.editor.designer.code.sessions.length - 1;
                                 S.editor.designer.code.file.modified(false);
                             }
                         );
                     }
                 },
 
-                change:function(e, p){
+                change: function (e, p) {
                     S.editor.designer.code.sessions[S.editor.designer.code.selected].modified = true;
                     S.editor.designer.code.file.modified(true);
                 },
@@ -3544,11 +3557,11 @@ S.editor = {
                     if (ismodified == true) {
                         $('.winDesigner .code-ace-files .code-ace-save').css({ opacity: 1 }).attr('onclick', 'S.editor.designer.code.file.save()').removeClass('nosave');
                     } else {
-                        $('.winDesigner .code-ace-files .code-ace-save').css({ opacity: 0.3}).attr('onclick', '').addClass('nosave');
+                        $('.winDesigner .code-ace-files .code-ace-save').css({ opacity: 0.3 }).attr('onclick', '').addClass('nosave');
                     }
                 },
 
-                save: function (){
+                save: function () {
                     var s = S.editor.designer.code.sessions[S.editor.designer.code.selected];
                     if (s.modified == true) {
                         var t = s.session.getValue();
@@ -3592,9 +3605,9 @@ S.editor = {
 
     photos: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         info: { total: 0, start: 1, len: 0 },
-        folder:'', selected:null, ismoving: false,
+        folder: '', selected: null, ismoving: false,
 
-        init: function(){
+        init: function () {
             Dropzone.autoDiscover = false;
             var htm =
                 '<div class="top-menu">' +
@@ -3655,18 +3668,18 @@ S.editor = {
                 '<div class="info-bar"><div class="selected-folder font-faded">Folder: All Photos</div><div class="folder-info font-faded"></div></div>' +
                 '<div class="dialog-bar" style="display:none"></div>' +
                 '<div class="folder-addbar" style="display:none">' +
-                    '<div class="folder-create">' + 
+                    '<div class="folder-create">' +
                     '<div class="row">' +
                         '<div class="column-label with-buttons">New Folder</div>' +
                         '<div class="column-input with-buttons"><input type="text" id="txtNewFolder"/></div>' +
-                        '<div class="column-buttons">'+
-                            '<div class="button" onclick="S.editor.photos.folders.add()">Create Folder</div>'+
+                        '<div class="column-buttons">' +
+                            '<div class="button" onclick="S.editor.photos.folders.add()">Create Folder</div>' +
                             '<div class="button cancel" onclick="S.editor.photos.folders.hideAdd()">Cancel</div></div>' +
                     '</div></div>' +
                 '</div>' +
                 '<div class="photo-list"></div>' +
                 '<div class="folder-list"></div>';
-            S.editor.window.load('Photos', '', htm, { x: 0, align: 'center', y: 0, w: 780, h: 400, spacing: 50, postOnce: true, title: 'Photo Library', visible: false, zIndex: 40, hash: 'photos' });
+            S.editor.window.load('Photos', '', htm, { x: 0, align: 'center', y: 0, w: 780, h: 400, spacing: 50, postOnce: true, title: 'Photo Library', visible: false, zIndex: 40, url: 'photos' });
         },
 
         show: function (dialog, type) {
@@ -3674,7 +3687,7 @@ S.editor = {
                 $('.winPhotos').addClass('dashboard');
                 S.editor.dashboard.hideAllWindows();
                 S.editor.dashboard.callback.resize();
-                S.hash.ghost('Dashboard/Photos');
+                S.url.push(S.website.title + ' - ' + 'Dashboard Photos', 'Dashboard/Photos');
             }
             S.editor.window.hidePopUps();
             if ($('.winPhotos .photo-list')[0].children.length == 0) {
@@ -3697,7 +3710,7 @@ S.editor = {
             S.editor.photos.buttons.hide();
         },
 
-        bind:function(){
+        bind: function () {
             $('.winPhotos .photo-list').off('click').on('click', 'input', function () {
                 if ($(this).prop('checked') == true) {
                     $(this).parents('.check').removeClass('hover-only');
@@ -3715,13 +3728,13 @@ S.editor = {
             S.editor.photos.folders.hide();
         },
 
-        buttons:{
+        buttons: {
             show: function () {
                 $('.winPhotos .move-photos, .winPhotos .remove-photos').show();
                 $('.winPhotos .dropzone').hide();
             },
 
-            hide:function(){
+            hide: function () {
                 $('.winPhotos .move-photos, .winPhotos .remove-photos').hide();
                 $('.winPhotos .dropzone').show();
                 $('.winPhotos .photo-list :checked').prop('checked', '').parents('.check').addClass('hover-only');
@@ -3743,7 +3756,7 @@ S.editor = {
                 S.editor.photos.ismoving = true;
             },
 
-            moveCancel: function(){
+            moveCancel: function () {
                 S.editor.photos.folders.bind();
                 S.editor.photos.folders.hide();
                 $('.winPhotos .top-menu .msg-movephotos').hide();
@@ -3759,15 +3772,15 @@ S.editor = {
                         files.push(chks[x].getAttribute("filename"));
                         $(chks).parents('.photo').remove();
                     }
-                    
-                    S.ajax.post('/websilk/Dashboard/Photos/Remove', {files:files.join(',')}, S.ajax.callback.inject);
+
+                    S.ajax.post('/websilk/Dashboard/Photos/Remove', { files: files.join(',') }, S.ajax.callback.inject);
                 }
             }
         },
 
         folders: {
             show: function (type) {
-                S.ajax.post('/websilk/Dashboard/Photos/LoadFolders', {type:type != null ? type : ''}, S.ajax.callback.inject);
+                S.ajax.post('/websilk/Dashboard/Photos/LoadFolders', { type: type != null ? type : '' }, S.ajax.callback.inject);
                 $('.winPhotos .icon-folder use').attr('xlink:href', '#icon-grid');
                 $('.winPhotos .icon-folder a').attr('onclick', 'S.editor.photos.folders.hide()');
                 $('.winPhotos .photo-list, .winPhotos .info-bar, .winPhotos .dropzone, .winPhotos .upload').hide();
@@ -3783,21 +3796,21 @@ S.editor = {
                 S.editor.photos.ismoving = false;
             },
 
-            showAdd: function(){
+            showAdd: function () {
                 $('.winPhotos .folder-list').hide();
                 $('.winPhotos .folder-addbar').show();
             },
 
-            hideAdd: function(){
+            hideAdd: function () {
                 $('.winPhotos .folder-addbar').hide();
                 $('.winPhotos .folder-list').show();
             },
 
-            add: function(){
-                S.ajax.post('/websilk/Dashboard/Photos/AddFolder', {name:$('.winPhotos #txtNewFolder').val()}, S.ajax.callback.inject);
+            add: function () {
+                S.ajax.post('/websilk/Dashboard/Photos/AddFolder', { name: $('.winPhotos #txtNewFolder').val() }, S.ajax.callback.inject);
             },
 
-            addCallback: function(name){
+            addCallback: function (name) {
                 if (S.editor.photos.ismoving == true) {
                     S.editor.photos.folders.hideAdd();
                 } else {
@@ -3815,7 +3828,7 @@ S.editor = {
                     S.editor.photos.folders.select(name);
 
                 }).on('click', '.icon-close a', function (e) {
-                    if($(this).parents('.column-row.item')[0]){
+                    if ($(this).parents('.column-row.item')[0]) {
                         S.editor.photos.folders.remove($(this).parents('.column-row.item')[0].firstChild.textContent);
                     } return false;
                 }).parent('.icon-close').addClass('hover-only').css({ 'display': '' });
@@ -3829,13 +3842,13 @@ S.editor = {
                 $('.winPhotos .folder-list .folder-column:nth-child(1) > .row:nth-child(1), .winPhotos .folder-list .folder-column:nth-child(1) > .row:nth-child(2)').hide();
             },
 
-            remove: function(name){
+            remove: function (name) {
                 if (confirm("Do you really want to delete the folder '" + name + "' and all the photos that belong within the folder? This cannot be undone.") == true) {
                     S.ajax.post('/websilk/Dashboard/Photos/RemoveFolder', { folder: name }, S.ajax.callback.inject);
                 }
             },
 
-            select: function(name){
+            select: function (name) {
                 //if ($(e.target).parents('.icon-close').length > 0) { return; }
                 S.ajax.post('/websilk/Dashboard/Photos/LoadPhotoList', { start: "1", folder: name, search: '', orderby: '0' }, S.ajax.callback.inject);
             },
@@ -3877,7 +3890,7 @@ S.editor = {
                             } else {
                                 S.editor.window.open.photoLibrary();
                             }
-                            
+
                         });
 
                         this.on('complete', function (file) {
@@ -3912,7 +3925,7 @@ S.editor = {
             }
         },
 
-        dialog:{
+        dialog: {
             exec: null, photos: [], type: '',
 
             init: function () {
@@ -3943,10 +3956,10 @@ S.editor = {
             click: function (e) {
                 if ($(e.target).parents('.check').length > 0 || $(e.target).hasClass('check')) { return; }
                 var src = $(this).find('img')[0].getAttribute('src');
-                
+
                 if (src.indexOf('/') > -1) {
                     var path = src.split('/');
-                    src = path[path.length - 1].replace('tiny','');
+                    src = path[path.length - 1].replace('tiny', '');
                 }
                 S.editor.photos.dialog.exec(src);
                 if (S.editor.photos.dialog.type == 'select') {
@@ -3954,7 +3967,7 @@ S.editor = {
                 }
             },
 
-            close: function(){
+            close: function () {
                 S.editor.photos.dialog.exec = null;
                 S.editor.photos.dialog.photos = null;
                 S.editor.photos.dialog.type = '';
@@ -3963,9 +3976,9 @@ S.editor = {
                 $('.winPhotos').hide();
             },
 
-            callback:function(photos){
+            callback: function (photos) {
                 var dialog = S.editor.photos.dialog;
-                if(dialog.exec != null){
+                if (dialog.exec != null) {
                     //execute callback
                 }
             }
@@ -3973,7 +3986,7 @@ S.editor = {
         },
 
         listInfo: function () {
-            var end=0, total = $('.winPhotos .photo-list > .photo').length;
+            var end = 0, total = $('.winPhotos .photo-list > .photo').length;
             if (arguments[0]) {
                 end = arguments[0];
                 S.editor.photos.info.len = total;
@@ -3990,7 +4003,7 @@ S.editor = {
             var a = S.editor.photos.info;
             $('.winPhotos .folder-info')[0].innerHTML = 'Viewing ' + a.start + ' to ' + a.len + ' of ' + a.total + ' photos';
         }
-},
+    },
 
     save: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         cache: [],
@@ -3998,7 +4011,7 @@ S.editor = {
         add: function (id, type, obj) {
             var i = -1;
             for (x = 0; x < this.cache.length; x++) {
-                if (this.cache[x].id == id) {
+                if (this.cache[x].id == id && this.cache[x].type == type) {
                     i = x; break;
                 }
             }
@@ -4009,7 +4022,7 @@ S.editor = {
             $('.editor .toolbar .savepage').removeClass('nosave');
         },
 
-        enable:function(){
+        enable: function () {
             $('.editor .toolbar .savepage').removeClass('nosave');
         },
 
@@ -4052,14 +4065,14 @@ S.editor = {
 }
 
 S.hotkeys = {
-    keyhold:'',
-    keydown:function(e){
-        if ($("input, textarea").is(":focus") == false) {
+    keyhold: '',
+    keydown: function (e) {
+        if ($("input, textarea").is(":focus") == false && $('.textedit.editing').length == 0) {
             var k = e.keyCode, itemId = '', isPanel = false, c = null;
             if (S.editor.components.hovered != null) {
                 c = S.editor.components.hovered;
                 itemId = c.id.substr(1);
-                if ($(c).hasClass('type-stackpanel') == true) { isPanel = true;}
+                if ($(c).hasClass('type-stackpanel') == true) { isPanel = true; }
             }
 
             if (e.shiftKey == true) {//shift pressed
@@ -4086,7 +4099,7 @@ S.hotkeys = {
                     case 49: //1
                         //a.innerHTML = 'fast';
                         //lbl.innerHTML = "On instant";
-                       S.viewport.speed = 0;
+                        S.viewport.speed = 0;
                         break;
                     case 50: //2
                         //a.innerHTML = 'slow';
@@ -4140,7 +4153,7 @@ S.hotkeys = {
                 S.hotkeys.callback.execute('onKeyDown', k, 'ctrl');
                 switch (k) {
                     case 67: //c (copy)
-                       
+
                         break;
                     case 86: //v (paste)
                         var panelId = '', scrolly = S.window.pos().scrolly;
@@ -4210,10 +4223,10 @@ S.hotkeys = {
             }
 
             if (k >= 37 && k <= 40) { //arrow keys
-                if($('.type-textbox .textedit.editing').length == 0){
+                if ($('.type-textbox .textedit.editing').length == 0) {
                     return false;
                 }
-                
+
             }
 
         }
@@ -4235,50 +4248,158 @@ S.hotkeys = {
 
     callback: {
         //register & execute callbacks when the window resizes
-    items: [],
+        items: [],
 
-    add: function (elem, vars, onKeyDown, onKeyUp) {
-        this.items.push({ elem: elem, vars: vars, onKeyDown: onKeyDown, onKeyUp: onKeyUp });
-    },
+        add: function (elem, vars, onKeyDown, onKeyUp) {
+            this.items.push({ elem: elem, vars: vars, onKeyDown: onKeyDown, onKeyUp: onKeyUp });
+        },
 
-    remove: function (elem) {
-        for (var x = 0; x < this.items.length; x++) {
-            if (this.items[x].elem == elem) { this.items.splice(x, 1); x--; }
-        }
-    },
+        remove: function (elem) {
+            for (var x = 0; x < this.items.length; x++) {
+                if (this.items[x].elem == elem) { this.items.splice(x, 1); x--; }
+            }
+        },
 
-    execute: function (type, key, keyHeld) {
-        if (this.items.length > 0) {
-            switch (type) {
-                case '': case null: case 'onKeyDown':
-                    for (var x = 0; x < this.items.length; x++) {
-                        if (typeof this.items[x].onKeyDown == 'function') {
-                            this.items[x].onKeyDown(key, keyHeld);
-                        }
-                    } break;
+        execute: function (type, key, keyHeld) {
+            if (this.items.length > 0) {
+                switch (type) {
+                    case '': case null: case 'onKeyDown':
+                        for (var x = 0; x < this.items.length; x++) {
+                            if (typeof this.items[x].onKeyDown == 'function') {
+                                this.items[x].onKeyDown(key, keyHeld);
+                            }
+                        } break;
 
-                case 'onKeyUp':
-                    for (var x = 0; x < this.items.length; x++) {
-                        if (typeof this.items[x].onKeyUp == 'function') {
-                            this.items[x].onKeyUp(key, keyHeld);
-                        }
-                    } break;
+                    case 'onKeyUp':
+                        for (var x = 0; x < this.items.length; x++) {
+                            if (typeof this.items[x].onKeyUp == 'function') {
+                                this.items[x].onKeyUp(key, keyHeld);
+                            }
+                        } break;
+                }
             }
         }
     }
 }
+
+//Viewport (editor-specific) functions //////////////////////////////////////////////////////////////
+S.viewport.resize = function (width) {
+    var webpage = $('.webpage');
+    if (webpage.css('maxWidth') == '' || webpage.css('maxWidth') == 'none') {
+        webpage.css({ 'maxWidth': webpage.width() });
+    }
+    webpage.stop().animate({ maxWidth: width }, {
+        duration: this.speed * 1000,
+        progress: function () {
+            if (S.viewport.getLevel() == true) {
+                S.viewport.levelChanged(S.viewport.level);
+            }
+            S.events.doc.resize.trigger();
+        },
+        complete: function () {
+            S.events.doc.resize.trigger();
+            S.viewport.getLevel();
+            if (S.viewport.isChanging == true) {
+                S.viewport.isChanging = false;
+                if (S.editor.enabled == true) { S.editor.components.disabled = false; }
+                S.viewport.levelChanged(S.viewport.level);
+            } else {
+                if (S.editor.enabled == true) { S.editor.components.resizeSelectBox(); }
+            }
+        }
+    });
 }
 
+S.viewport.view = function (level) {
+    //hide selected components
+    S.editor.components.hideSelect();
+    S.editor.components.disabled = true;
+    switch (level) {
+        case 4: //HD
+            S.viewport.resize(1920); break;
+
+        default: //all other screen sizes
+            S.viewport.resize(S.viewport.levels[level]); break;
+    }
+    S.viewport.isChanging = false;
+    S.viewport.levelChanged(level)
+    S.viewport.isChanging = true;
+}
+
+S.viewport.levelChanged = function (level) {
+    if (S.viewport.isChanging == true) { return; }
+    S.viewport.sizeIndex = level;
+    var screen = 'HD', ext = 'hd';
+    switch (level) {
+        case 4: //HD
+            screen = 'HD'; ext = 'hd'; break;
+
+        case 3: //Desktop
+            screen = 'Desktop'; ext = 'desktop'; break;
+
+        case 2: //Tablet
+            screen = 'Tablet'; ext = 'tablet'; break;
+
+        case 1: //Mobile Device
+            screen = 'Mobile Device'; ext = 'mobile'; break;
+
+        case 0: //Cell Phone
+            screen = 'Cell Phone'; ext = 'cell'; break;
+
+    }
+    $('.toolbar .menu .screens use').attr('xlink:href', '#icon-screen' + ext)
+}
+
+S.viewport.nextLevel = function () {
+    if (S.editor.enabled == false) { return; }
+    S.viewport.speed = 2;
+    var sizeIndex = S.viewport.sizeIndex;
+    if (sizeIndex == -1) {
+        sizeIndex = S.viewport.level;
+    }
+    var next = sizeIndex > 0 ? sizeIndex - 1 : 4;
+    S.viewport.view(next);
+}
+
+S.viewport.previousLevel = function () {
+    if (S.editor.enabled == false) { return; }
+    S.viewport.speed = 2;
+    var sizeIndex = S.viewport.sizeIndex;
+    if (sizeIndex == -1) {
+        sizeIndex = S.viewport.level;
+    }
+    var prev = sizeIndex < 4 ? sizeIndex + 1 : 0;
+    S.viewport.view(prev);
+}
+
+S.viewport.getLevelOrder = function () {
+    this.getLevel();
+    var lvl = this.level;
+    switch (lvl) {
+        case 0:
+            return [0, 1, 2, 3, 4];
+        case 1:
+            return [1, 2, 0, 3, 4];
+        case 2:
+            return [2, 3, 4, 1, 0];
+        case 3:
+            return [3, 4, 2, 1, 0];
+        case 4:
+            return [4, 3, 2, 1, 0];
+    }
+}
+
+//Utility classes ///////////////////////////////////////////////////////////////////////////////////
 S.util.str = {
-    Capitalize: function(str){
+    Capitalize: function (str) {
         return str.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
     },
 
     isAlphaNumeric: function (str, spaces, exchars) {
-        var ex = [], chr, sub, err=false;
+        var ex = [], chr, sub, err = false;
         if (exchars) { if (exchars.length > 0) { ex.concat(exchars); } }
         for (x = 0; x < str.length; x++) {
-            sub = str.substr(x,1);
+            sub = str.substr(x, 1);
             chr = str.charCodeAt(x);
             //groups of characters
             if (chr >= 0 && chr <= 47) { err = true; }
@@ -4287,11 +4408,11 @@ S.util.str = {
             if (chr >= 123) { err = true; }
 
             //spaces
-            if (spaces == true) { if (sub == ' ') { err = false;}}
+            if (spaces == true) { if (sub == ' ') { err = false; } }
 
             //exempt characters
             for (y = 0; y < ex.length; y++) {
-                if (ex[y] == sub) { err = false; break;}
+                if (ex[y] == sub) { err = false; break; }
             }
         }
         return err;
@@ -4301,7 +4422,7 @@ S.util.str = {
         var words = ['fuck', 'cunt', 'nigger', 'pussy', 'asshole', 'bitch', 'whore', 'slut'];
         if (include) { if (include.length > 0) { words.concat(include); } }
         for (x = 0; x < words.length; x++) {
-            if (str.indexOf(words[x]) > -1) { return true;}
+            if (str.indexOf(words[x]) > -1) { return true; }
         }
         return false;
     }
@@ -4314,9 +4435,9 @@ S.util.file = {
 }
 
 S.util.array = {
-    indexOfPartialString:function(arr, str){
-        for (x = 0; x < arr.length; x++){
-            if(arr[x].indexOf(str)>-1){return x;}
+    indexOfPartialString: function (arr, str) {
+        for (x = 0; x < arr.length; x++) {
+            if (arr[x].indexOf(str) > -1) { return x; }
         }
         return -1;
     }
@@ -4324,9 +4445,9 @@ S.util.array = {
 
 S.util.message = {
     show: function (div, msg) {
-        $(div).css({opacity:0, height:'auto'}).show().html(msg);
+        $(div).css({ opacity: 0, height: 'auto' }).show().html(msg);
         var h = S.elem.height($(div)[0]);
-        $(div).css({ height: 0, overflow: 'hidden' }).show().animate({ height: h-9, opacity: 1 }, 1000).delay(10000).animate({ opacity: 0, height:0 }, 1000, function () { $(this).hide(); });
+        $(div).css({ height: 0, overflow: 'hidden' }).show().animate({ height: h - 9, opacity: 1 }, 1000).delay(10000).animate({ opacity: 0, height: 0 }, 1000, function () { $(this).hide(); });
     }
 }
 
@@ -4336,7 +4457,7 @@ S.util.scrollIntoView = function (elem) {
     var options = { offset: -100 }
     if (arguments[1] != null) {
         var arg = arguments[1];
-        if (arg.offset != null) { options.offset = arg.offset;}
+        if (arg.offset != null) { options.offset = arg.offset; }
     }
     if (pos.y < S.window.scrolly - 50 || pos.y + pos.h > S.window.h + S.window.scrolly + 10) {
         $(document.body).scrollTo($(elem), options);
@@ -4349,11 +4470,12 @@ document.onkeyup = S.hotkeys.keyup;
 S.events.doc.resize.callback.add($('.editor')[0], null, null, null, S.editor.events.doc.resize);
 S.events.doc.click.callback.add($('.editor')[0], null, S.editor.window.callback.click);
 S.events.doc.click.callback.add($('.editor')[0], null, S.editor.components.click);
-S.events.hash.callback.add($('.editor')[0], null, S.editor.events.hash.change);
+S.events.url.callback.add($('.editor')[0], null, S.editor.events.url.change);
 $('.webpage').delegate('.component', 'mouseenter', S.editor.components.mouseEnter);
 $('.webpage').delegate('.inner-panel', 'mouseenter', S.editor.components.mouseEnter);
 $('.component-select').delegate('.resize-bar', 'mousedown', S.editor.components.resize.start);
 $('.component-select .btn-duplicate > .submenu').hoverIntent({
     over: function () { $('.component-select .btn-duplicate .label').show(); },
     out: function () { $('.component-select .btn-duplicate .label').hide(); },
-    sensitivity: 100, interval: 333, timeout: 0 });
+    sensitivity: 100, interval: 333, timeout: 0
+});

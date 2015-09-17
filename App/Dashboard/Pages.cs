@@ -184,14 +184,7 @@ namespace Websilk.Services.Dashboard
                     }
                     if (string.IsNullOrEmpty(pageLink))
                     {
-                        if (S.Page.useAJAX == true)
-                        {
-                            pageLink = "/#" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
-                        }
-                        else
-                        {
-                            pageLink = "/" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
-                        }
+                        pageLink = "/" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
                     }
 
                     //setup options
@@ -345,14 +338,7 @@ namespace Websilk.Services.Dashboard
                     }
                     if (string.IsNullOrEmpty(pageLink))
                     {
-                        if (S.Page.useAJAX == true)
-                        {
-                            pageLink = "/#" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
-                        }
-                        else
-                        {
-                            pageLink = "/" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
-                        }
+                        pageLink = "/" + ((!string.IsNullOrEmpty(parentTitle) ? parentTitle + " " : "") + pageTitle).Replace(" ", "-");
                     }
 
                     //setup options

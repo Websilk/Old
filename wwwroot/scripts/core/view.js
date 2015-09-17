@@ -1,18 +1,16 @@
 /// Websilk Platform : view.js ///
 /// <reference path="global.js" />
 var S = {
-    init:function(ajax, viewstateid, title){
+    init: function (ajax, viewstateid, title) {
         S.page.useAjax = ajax;
         S.ajax.viewstateId = viewstateid;
-        S.hash.last = title;
         S.viewport.getLevel();
-        S.hash.start();
     },
 
     window: {
         w: 0, h: 0, scrollx: 0, scrolly: 0, z: 0, absolute: { w: 0, h: 0 }, changed: true,
 
-        pos:function(){
+        pos: function () {
             if (this.changed == false && arguments[0] == null) { return this; } else {
                 this.changed = false;
                 //cross-browser compatible window dimensions
@@ -43,7 +41,7 @@ var S = {
                 }
 
                 var bod = $('.body')[0];
-                if(bod != null){
+                if (bod != null) {
                     this.absolute.w = S.elem.width(bod);
                     this.absolute.h = this.h;
                 }
@@ -68,128 +66,20 @@ var S = {
                     if (changed == true) {
                         var wp = $(document.body);
                         var size = S.viewport.levelNames[x];
-                        if (wp.hasClass(size) == false) { wp.removeClass('cell mobile tablet desktop hd screen').addClass(size + ' screen'); }
+                        if (wp.hasClass(size) == false) { wp.removeClass('s-cell s-mobile s-tablet s-desktop s-hd').addClass('s-' + size); }
                     }
                     return changed;
                 }
-            }
-        },
-
-        resize: function (width) {
-            if (S.editor.enabled == false) { return; }
-            var webpage = $('.webpage');
-            if (webpage.css('maxWidth') == '' || webpage.css('maxWidth') == 'none') {
-                webpage.css({ 'maxWidth': webpage.width() });
-            }
-            webpage.stop().animate({ maxWidth: width }, {
-                duration: this.speed * 1000,
-                progress: function () {
-                    if (S.viewport.getLevel() == true) {
-                        S.viewport.levelChanged(S.viewport.level);
-                    }
-                    S.events.doc.resize.trigger();
-                },
-                complete: function () {
-                    S.events.doc.resize.trigger();
-                    S.viewport.getLevel();
-                    if (S.viewport.isChanging == true) {
-                        S.viewport.isChanging = false;
-                        if (S.editor.enabled == true) { S.editor.components.disabled = false; }
-                        S.viewport.levelChanged(S.viewport.level);
-                    } else {
-                        if (S.editor.enabled == true) { S.editor.components.resizeSelectBox(); }
-                    }
-                }
-            });
-        },
-
-        view: function (level) {
-            if (S.editor.enabled == false) { return; }
-            //hide selected components
-            S.editor.components.hideSelect();
-            S.editor.components.disabled = true;
-            switch (level) {
-                case 4: //HD
-                    S.viewport.resize(1920); break;
-
-                default: //all other screen sizes
-                    S.viewport.resize(S.viewport.levels[level]); break;
-            }
-            S.viewport.isChanging = false;
-            S.viewport.levelChanged(level)
-            S.viewport.isChanging = true;
-        },
-
-        levelChanged: function (level) {
-            if (S.viewport.isChanging == true) { return; }
-            S.viewport.sizeIndex = level;
-            var screen = 'HD', ext = 'hd';
-            switch (level) {
-                case 4: //HD
-                    screen = 'HD'; ext = 'hd'; break;
-
-                case 3: //Desktop
-                    screen = 'Desktop'; ext = 'desktop'; break;
-
-                case 2: //Tablet
-                    screen = 'Tablet'; ext = 'tablet'; break;
-
-                case 1: //Mobile Device
-                    screen = 'Mobile Device'; ext = 'mobile'; break;
-
-                case 0: //Cell Phone
-                    screen = 'Cell Phone'; ext = 'cell'; break;
-
-            }
-            $('.toolbar .menu .screens use').attr('xlink:href', '#icon-screen' + ext)
-        },
-
-        nextLevel: function () {
-            if (S.editor.enabled == false) { return; }
-            S.viewport.speed = 2;
-            var sizeIndex = S.viewport.sizeIndex;
-            if (sizeIndex == -1) {
-                sizeIndex = S.viewport.level;
-            }
-            var next = sizeIndex > 0 ? sizeIndex - 1 : 4;
-            S.viewport.view(next);
-        },
-
-        previousLevel: function () {
-            if (S.editor.enabled == false) { return; }
-            S.viewport.speed = 2;
-            var sizeIndex = S.viewport.sizeIndex;
-            if (sizeIndex == -1) {
-                sizeIndex = S.viewport.level;
-            }
-            var prev = sizeIndex < 4 ? sizeIndex + 1 : 0;
-            S.viewport.view(prev);
-        },
-
-        getLevelOrder: function () {
-            this.getLevel();
-            var lvl = this.level;
-            switch (lvl) {
-                case 0:
-                    return [0, 1, 2, 3, 4];
-                case 1:
-                    return [1, 2, 0, 3, 4];
-                case 2:
-                    return [2, 3, 4, 1, 0];
-                case 3:
-                    return [3, 4, 2, 1, 0];
-                case 4:
-                    return [4, 3, 2, 1, 0];
             }
         }
     },
 
     elem: {
-        get: function(id){
+        get: function (id) {
             return document.getElementById(id);
         },
 
-        pos: function(elem){
+        pos: function (elem) {
             var x = 0, y = 0, w = 0, h = 0;
             if (typeof elem != 'undefined' && elem != null) {
                 var e = elem;
@@ -200,7 +90,7 @@ var S = {
                 }
                 w = elem.offsetWidth ? elem.offsetWidth : elem.clientWidth;
                 h = elem.offsetHeight ? elem.offsetHeight : elem.clientHeight;
-                if (h == 0) {h = $(elem).height(); }
+                if (h == 0) { h = $(elem).height(); }
             }
             return { x: x, y: y, w: w, h: h };
         },
@@ -222,20 +112,21 @@ var S = {
             }
         },
 
-        top:function(elem){
+        top: function (elem) {
             return elem.offsetTop ? elem.offsetTop : elem.clientTop;
         },
 
-        width:function(elem){
+        width: function (elem) {
             return elem.offsetWidth ? elem.offsetWidth : elem.clientWidth;
         },
 
-        height:function(elem){
+        height: function (elem) {
             return elem.offsetHeight ? elem.offsetHeight : elem.clientHeight;
         },
 
-        fromEvent: function(event){
-            if (S.browser.isIE) { return window.event.srcElement;
+        fromEvent: function (event) {
+            if (S.browser.isIE) {
+                return window.event.srcElement;
             } else if (S.browser.isNS) { return event.target; }
             return null;
         },
@@ -261,10 +152,10 @@ var S = {
 
     },
 
-    css:{
+    css: {
         add: function (id, css) {
             $('#css' + id).remove();
-            $('head').append('<style id="css'+id+'" type="text/css">' + css + "</style>");
+            $('head').append('<style id="css' + id + '" type="text/css">' + css + "</style>");
         },
 
         remove: function (id) {
@@ -273,11 +164,11 @@ var S = {
     },
 
     website: {
-        id:0, title:''
+        id: 0, title: ''
     },
 
     page: {
-        id:0, title: '', useAjax: false,
+        id: 0, title: '', useAjax: false,
 
         bg: {
             YTPlayer: {
@@ -292,8 +183,8 @@ var S = {
         cache: new Array(),
 
         add: function (pageId, title, pageType) {
-            for (x = 0; x < this.cache.length; x++){
-                if(this.cache[x].pageId == pageId){
+            for (x = 0; x < this.cache.length; x++) {
+                if (this.cache[x].pageId == pageId) {
                     this.cache[x] = { pageId: pageId, title: title, pageType: pageType };
                     return;
                 }
@@ -318,10 +209,10 @@ var S = {
     },
 
     components: {
-        cache: new Array(), calls:{},
+        cache: new Array(), calls: {},
 
         add: function (id, type, position, css, label, limit, duplicate) {
-            if (id == null || id == '') { return;}
+            if (id == null || id == '') { return; }
             if (typeof this.cache['c' + id] == 'undefined') { this.cache.length++; }
             var pos = position || '', cs = css || '';
             if (pos == '') { pos = '||||'; }
@@ -359,7 +250,7 @@ var S = {
 
             click: {
                 trigger: function (target) {
-                    
+
                     var type = 'bg';
                     var t = $(target);
                     if (t.parents('.component').length > 0 || t.hasClass('component') == true) {
@@ -382,12 +273,12 @@ var S = {
                     items: [],
 
                     add: function (elem, vars, onClick) {
-                        this.items.push({ elem: elem, vars: vars, onClick: onClick});
+                        this.items.push({ elem: elem, vars: vars, onClick: onClick });
                     },
 
                     remove: function (elem) {
                         for (var x = 0; x < this.items.length; x++) {
-                            if (this.items[x].elem == elem) { this.items.splice(x, 1); x--;}
+                            if (this.items[x].elem == elem) { this.items.splice(x, 1); x--; }
                         }
                     },
 
@@ -412,7 +303,7 @@ var S = {
                     if (this.timer.started == false) { this.start(); }
                 },
 
-                start: function(){
+                start: function () {
                     if (this.timer.started == true) { return; }
                     this.timer.started = true;
                     this.timer.date = new Date();
@@ -496,7 +387,7 @@ var S = {
 
                 trigger: function () {
                     this.timer.date = new Date();
-                    if (this.timer.started == false) { this.start(); S.window.changed = true; S.window.pos();}
+                    if (this.timer.started == false) { this.start(); S.window.changed = true; S.window.pos(); }
                 },
 
                 start: function () {
@@ -562,7 +453,7 @@ var S = {
                                     } break;
 
                                 case 'onLevelChange':
-                                    
+
                                     for (var x = 0; x < this.items.length; x++) {
                                         if (typeof this.items[x].onLevelChange == 'function') {
                                             this.items[x].onLevelChange(lvl);
@@ -577,18 +468,17 @@ var S = {
 
         iframe: {
             loaded: function () {
-                
+
             }
         },
 
         ajax: {
-            //register & execute callbacks when ajax makes a post (including hash change)
-            loaded: true, 
+            //register & execute callbacks when ajax makes a post
+            loaded: true,
 
             start: function () {
                 this.loaded = false;
                 $(document.body).addClass('wait');
-                clearTimeout(S.hash.timer);
 
             },
 
@@ -596,23 +486,22 @@ var S = {
                 S.events.ajax.loaded = true;
                 $(document.body).removeClass('wait');
                 S.window.changed = true;
-                S.hash.isChanging = false;
-                S.hash.checked = 0;
-                S.hash.watch();
                 S.events.images.load();
+
+                //replace all relative URLs with ajax calls
+                setTimeout(function () { S.url.checkAnchors(); }, 500);
             },
 
             error: function (status, err) {
                 S.events.ajax.loaded = true;
                 $(document.body).removeClass('wait');
-                S.hash.isChanging = false; S.hash.checked = 0; S.hash.watch();
             },
 
             callback: {
                 items: [],
 
                 add: function (elem, vars, onStart, onComplete, onError) {
-                    this.items.push({ elem: elem, vars:vars, onStart: onStart, onComplete: onComplete, onError: onError });
+                    this.items.push({ elem: elem, vars: vars, onStart: onStart, onComplete: onComplete, onError: onError });
                 },
 
                 remove: function (elem) {
@@ -651,13 +540,20 @@ var S = {
             }
         },
 
-        hash: {
-            //register & execute callbacks when the hash changes
+        url: {
+            change: function(e){
+                if (typeof e.state == 'string') {
+                    S.url.load(e.state, 1);
+                    return false;
+                }
+            },
+
+            //register & execute callbacks when the url changes
             callback: {
                 items: [],
 
                 add: function (elem, vars, onCallback) {
-                    this.items.push({ elem: elem, vars: vars, onCallback: onCallback});
+                    this.items.push({ elem: elem, vars: vars, onCallback: onCallback });
                 },
 
                 remove: function (elem) {
@@ -702,7 +598,7 @@ var S = {
 
     ajax: {
         //class used to make simple web service posts to the server
-        viewstateId:'', expire:new Date(), queue:[], timerKeep: null, keeping: true,
+        viewstateId: '', expire: new Date(), queue: [], timerKeep: null, keeping: true,
 
         post: function (url, data, callback) {
             this.expire = new Date();
@@ -723,7 +619,7 @@ var S = {
             }
         },
 
-        runQueue:function(){
+        runQueue: function () {
             S.ajax.queue.shift();
             if (S.ajax.queue.length > 0) {
                 $.ajax(S.ajax.queue[0]);
@@ -766,22 +662,91 @@ var S = {
 
                 //S.events.render.trigger();
                 S.events.doc.resize.trigger();
+            },
+
+            pageRequest: function (data) {
+                if (data.d == null) { return; }
+                if (data.type == 'Websilk.PageRequest') {
+                    if (data.d.pageTitle == '' && data.d.components.length == 0) {
+                        if (S.editor.enabled == true) {
+                            S.editor.dashboard.hide();
+                        }
+                        return;
+                    }
+                    //load new page from web service
+                    var p, comp, div;
+
+                    //first, remove unwanted components
+                    for (x = 0; x < data.d.remove.length; x++) {
+                        $('#c' + data.d.remove[x]).remove();
+                    }
+                    S.components.cleanup();
+
+                    //remove any duplicate components
+                    for (x = 0; x < data.d.components.length; x++) {
+                        comp = data.d.components[x];
+                        if ($('#c' + comp.itemId).length > 0) {
+                            $('#c' + comp.itemId).remove();
+                        }
+                    }
+
+                    //next, add new components
+                    for (x = 0; x < data.d.components.length; x++) {
+                        comp = data.d.components[x];
+                        p = $('.panel' + comp.panelClassId + ' .inner-panel')[0];
+                        if (typeof p == 'object') {
+                            div = document.createElement('div');
+                            div.innerHTML = comp.html;
+                            p.appendChild(div.firstChild);
+                        }
+                    }
+                    $('#divPageLoad').hide();
+                    $('.component').show();
+
+                    //add editor if exists (only on login)
+                    if (data.d.editor != '') {
+                        $('.body').before(data.d.editor);
+                    }
+
+                    //update title
+                    if (data.d.pageTitle != '') { document.title = data.d.pageTitle; }
+
+                    //create new state in browser history
+                    S.url.push(data.d.pageTitle, data.d.url);
+
+                    //finally, execute callback javascript
+                    if (data.d.js != '' && data.d.js != null) {
+                        var js = new Function(data.d.js);
+                        js();
+                    }
+
+                    //reset the rendering engine
+                    S.events.doc.resize.trigger();
+
+                    //add CSS to page
+                    if (data.d.css != null && data.d.css != '') {
+                        S.css.add('pageRequest' + S.page.id, data.d.css);
+                    }
+
+                    //run registered callbacks
+                    S.events.url.callback.execute();
+                }
             }
         },
 
         keepAlive: function () {
             if (typeof isNotKeepAlive != "undefined") { return; }
             clearTimeout(this.timerKeep);
-            var options = {save:''};
+            var options = { save: '' };
             if (S.editor) {
                 if (S.editor.save) {
-                    if (S.editor.save.cache.length > 0){
+                    if (S.editor.save.cache.length > 0) {
                         options.save = JSON.stringify(S.editor.save.cache);
                         S.editor.save.cache = [];
                         $('.editor .toolbar .savepage').addClass('saving');
                     }
                 }
-                
+
             }
 
             if (((new Date() - this.expire) / 1000) >= 180 || options.save.length > 0) {
@@ -795,325 +760,70 @@ var S = {
                     }
                 });
             }
-            this.timerKeep = setTimeout(function () {S.ajax.keepAlive();}, 180000);
+            this.timerKeep = setTimeout(function () { S.ajax.keepAlive(); }, 180000);
         }
     },
 
-    panel:{
-        coordinates: new Array()
-    },
-    
-    editor:{
-        selectedLayerId: '', editMode: false, enabled:false
-    },
-    
-    hash: {
-        // 'AJAX URL Hash System ////////////////////////////////////////////////////////////////////////////////////'
-        //the hash system for Websilk is set up to manipulate components on the page. A few examples:
-
-        // page-name/dg8+3+2/b1e+1+love/7ob+2+15+2011/vsa+8279189
-        // dashboard/website+1078098+designs+82
-
-        //each object is separated by a plus sign +
-        //1st object is the page name of the Websilk Web Site
-        //other objects are component instances & commands to execute
-        //1st component in the example:
-        //dg8+3+2  <--- dg8 = component name, 3 = command #3, 2 = command attribute
-
-        last: '', timer: null, started:null, isChanging: false,
-
-        start: function () {
-            if (S.page.title != "") {
-                S.hash.started = new Date();
-                S.hash.update();
-                setTimeout(function () { S.hash.watch(); }, 500);
-            }
-        },
-
-        inject:function(obj, inject) {
-            //injects the hash into an <a/> tag
-            //inject should always be like so:
-            //componentId:command:(value)
-            //so for example, blog:search:love
-            //would search the blog app for the keyword "love"
-            //(value) means it is optional
-
-            //first, see if the app is already in the hash
-            var newhash = "";
-            var arrInj = inject.split("+");
-            var start = new Array();
-            var evTitle = S.page.title.replace(/\s/g, "-");
-            if (arrInj.length > 1) {
-                if (S.hash.last != "") {
-                    start[0] = S.hash.last.indexOf("/" + arrInj[0]);
-                    if (start[0] > -1) {
-                        //app is in hash, check to see if command is in app hash
-                        start[1] = S.hash.last.substr(start[0] + 1).indexOf("/");
-                        newhash = S.hash.last.substr(0, start[0] + 1) + inject;
-                        if (start[1] > -1) { newhash += S.hash.last.substr(start[0] + 1 + start[1]); }
-                    } else {
-                        newhash = S.hash.last + "/" + inject;
-                    }
-                } else { newhash = evTitle + "/" + inject; }
-            } else {
-                newhash = evTitle + "/" + inject;
-            }
-            if (obj.getAttribute("replace") == "true") {
-                newhash = evTitle + "/" + inject;
-            }
-            if (S.page.useAjax == false) {
-                newhash = newhash.replace(/\+/g, "/").replace(/:/g, "+");
-                //add query string to url
-                newhash = "?h=" + newhash;
-                if (window.location.search != "") {
-                    if (window.location.search.indexOf("?h=") < 0 && window.location.search.indexOf("&h=") < 0) {
-                        //h variable isn't in the old querystring, add the entire querystring
-                        newhash += "&" + window.location.search.substr(1);
-                    } else {
-                        //remove "h" variable from the old query string
-                        var oldhash = window.location.search;
-                        start[0] = oldhash.indexOf("?h=");
-                        if (start[0] < 0) { start[0] = oldhash.indexOf("&h="); }
-                        start[1] = oldhash.substr(start[0]).indexOf("&");
-                        if (start[1] > 1) {
-                            oldhash = oldhash.substr(0, start[0]) + oldhash.substr(start[1] + start[0]);
-                        } else {
-                            oldhash = oldhash.substr(0, start[0]);
+    url: {
+        load: function (url) {
+            //first, check for a special url
+            console.log('load ' + url);
+            var urls = url.split('/');
+            var words = S.url.special.words;
+            if (words.length > 0) {
+                for (var x in words) {
+                    if (urls[0].toLowerCase() == words[x].word.toLowerCase()) {
+                        if (arguments.length < 2) {
+                            S.url.push(S.website.title + ' - ' + url.replace('/', ' '), url);
                         }
-                        newhash += "&" + oldhash.replace("?", "");
+                        words[x].callback(url);
+                        return false;
                     }
                 }
-                obj.href = newhash;
-            } else {
-                //replace page title if needed
-                var apage = obj.getAttribute("page");
-                if (apage != "" && apage != null && apage != undefined) {
-                    start[0] = newhash.indexOf("/");
-                    if (start[0] > -1) {
-                        newhash = apage + "/" + newhash.substr(start[0] + 1);
-                    } else {
-                        if (newhash != "") {
-                            newhash = apage + "/" + newhash;
-                        } else {
-                            newhash = apage;
-                        }
-                    }
-                }
-                if (obj.getAttribute("replace") == "true") {
-                    newhash = inject;
-                }
-                if (newhash.substring(newhash.length, newhash.length - 1) == "+") { newhash = newhash.substring(0, newhash.length - 1); }
-                obj.href = "#" + newhash;
             }
-         },
-
-        watch: function() {
-            //check to see if the hash has changed every 0.5 seconds
-            if (S.page.useAjax == false) { return;}
-            var hash = location.hash.toLowerCase().replace('#', '');
-            clearTimeout(S.hash.timer); S.hash.timer = null;
-            if (location.hash.replace("#", "").toLowerCase() != S.hash.last.toLowerCase() && S.page.title != "") {
-                //hash has changed
-                
-                if (location.hash.replace("#", "").toLowerCase() != '' && (new Date() - S.hash.started / 1000) > 3) {
-                    S.hash.change(); return;
-                }
-
-            } else if (location.hash == "" && S.hash.last != "" && S.page.title != "") {
-                S.hash.change(); return;
-
-            } else if (S.page.title == "") {
-                S.hash.change(); return;
-                return;
-            }
-            S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
+            //post page request via Ajax
+            S.ajax.post('/websilk/App/Url', { url: url }, S.ajax.callback.pageRequest);
+            return false;
         },
 
-        post: function (url) {
-            if (S.page.useAjax == true) {
-                location.hash = '#'+url;
-            } else {
-                location.href = '/'+url
-            }
+        push: function (title, url) {
+            history.pushState(url, title, '/' + url);
         },
 
-        ghost:function(url) {
-            //changes the URL hash while bypassing an AJAX request
-            if (S.page.useAjax == false) { return; }
-            S.hash.last = url;
-            location.hash = url;
-        },
-
-        change: function () {
-            if (S.page.useAjax == false) { return; }
-            var hash = location.hash.toLowerCase().replace('#', '');
-            if (this.last.toLowerCase() == 'home' && hash == '') {
-                S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
-                return;
-            }
-
-            clearTimeout(S.hash.timer);
-            
-            //check for special hash words that would override the server-side method
-            var words = S.hash.special.words;
-            for (x = 0; x < words.length; x++) {
-                if (hash.indexOf(words[x].word) == 0) {
-                    S.hash.update();//updates all href links on the page with new hash
-                    words[x].callback(hash);
-                    S.events.hash.callback.execute(); //run registered callbacks
-                    S.hash.last = hash;
-                    S.hash.timer = setTimeout(function () { S.hash.watch(); }, 500);
-                    return;
-                }
-            }
-
-            
-
-            //no special hash words found, continue with server-side method
-            S.hash.isChanging = true;
-            var arrNhash = hash.split("/");
-            var finalhash = "";
-            if (S.hash.last != "") {
-                var changed = "";
-                var isChanged = true;
-                var arrHash = S.hash.last.split("/");
-                var arrNhashCmd, arrHashCmd;
-                for (x = 0; x < arrNhash.length; x++) {//search new hash
-                    isChanged = true;
-                    for (y = 0; y < arrHash.length; y++) {//compare with old hash
-                        if (arrNhash[x] == arrHash[y]) { isChanged = false; }
-                    }
-                    if (isChanged == true) {
-                        if (changed != "") { changed += "/"; }
-                        changed += arrNhash[x];
-                    }
-                }
-                if (changed != "") {
-                    //send hash changes to the server
-                    finalhash = changed;
-                }
-            } else {
-                //evolver hash is empty, send it all to the server
-                finalhash = hash;
-            }
-            if (finalhash == "" && arrNhash.length > 0) {
-                finalhash = arrNhash[0];
-            }
-            //remove page title if the page is already loaded
-            if (finalhash.indexOf(S.page.title) == 1) { finalhash = finalhash.substr(S.page.title.length + 2); }
-            finalhash = finalhash.replace("#", "");
-            S.hash.last = hash;
-            S.hash.update();//updates all href links on the page with new hash
-            //S.events.render.disabled = true;
-            S.ajax.post('/websilk/App/Hash', { url: finalhash }, S.hash.callback);
-        },
-
-        callback: function (data) {
-            if(data.d == null){return;}
-            if (data.type == 'Websilk.PageRequest') {
-                //load new page from web service
-                var p, comp, div;
-                    
-                //first, remove unwanted components
-                for (x = 0; x < data.d.remove.length; x++) {
-                    $('#c' + data.d.remove[x]).remove();
-                }
-                S.components.cleanup();
-
-                //remove any duplicate components
-                for (x = 0; x < data.d.components.length; x++) {
-                    comp = data.d.components[x];
-                    if ($('#c' + comp.itemId).length > 0) {
-                        $('#c' + comp.itemId).remove();
-                    }
-                }
-
-                //next, add new components
-                for (x = 0; x < data.d.components.length; x++) {
-                    comp = data.d.components[x];
-                    p = $('.panel' + comp.panelClassId + ' .inner-panel')[0];
-                    if (typeof p == 'object') {
-                        div = document.createElement('div');
-                        div.innerHTML = comp.html;
-                        p.appendChild(div.firstChild);
-                    }
-                }
-                $('#divPageLoad').hide();
-                $('.component').show();
-
-                //add editor if exists (only on login)
-                if (data.d.editor != '') {
-                    $('.body').before(data.d.editor);
-                }
-
-                //update title
-                if (data.d.pageTitle != '') { document.title = data.d.pageTitle; }
-
-                //finally, execute callback javascript
-                if (data.d.js != '' && data.d.js != null) {
-                    var js = new Function(data.d.js);
-                    js();
-                }
-
-                //reset the rendering engine
-                //S.events.render.init();
-                S.events.doc.resize.trigger();
-
-                //add CSS to page
-                if (data.d.css != null && data.d.css != '') {
-                    S.css.add('pageRequest' + S.page.id, data.d.css);
-                }
-
-                //run registered callbacks
-                S.events.hash.callback.execute();
-            }
-        },
-
-        update:function() {
-            //reset all a href links
-            var arra = $("a[hash]");
-            for (var x = 0; x < arra.length; x++) {
-                S.hash.inject(arra[x], arra[x].getAttribute("hash"));
-            }
-        },
-
-        combine:function(url1, url2) {
-          var url3, arr1, arr2, arr3, exists;
-          arr1 = url1.replace("#", "").split("/");
-          arr2 = url2.replace("#", "").split("/");
-          if (arr1.length > 1) {
-              for (var x = 1; x < arr1.length; x++) {
-                  arr3 = arr1[x].split("+");
-                  exists = false;
-                  if (arr3.length > 0) {
-                      //check 2nd array to see if it exists
-                      for (var y = 0; y < arr2.length; y++) {
-                          if (arr2[x].indexOf(arr3[0]) > -1) {
-                              exists = true;
-                          }
-                      }
-                      if (exists == false) { if (url3 != '') { url3 += '/'; } url3 += arr1[x]; }
-                  }
-              }
-              return url3;
-          } else {
-              return url2;
-          }
-        },
-
-        special:{
+        special: {
             words: [],
 
             add: function (word, callback) {
-                var words = S.hash.special.words;
-                for (x = 0; x < words.length; x++) {if (words[x].word == word) { return false;}}
-                S.hash.special.words.push({ word: word, callback: callback });
+                var words = S.url.special.words;
+                for (x = 0; x < words.length; x++) { if (words[x].word == word) { return false; } }
+                S.url.special.words.push({ word: word, callback: callback });
             }
+        },
+
+        fromAnchor: function(e){
+            S.url.load(e.getAttribute("href").substr(1));
+            return false;
+        },
+
+        checkAnchors: function () {
+            var anchors = $('a').filter(function () {
+                if (this.getAttribute('href').indexOf('/') == 0) { return true; } return false;
+            }).each(function () {
+                this.setAttribute('onclick', 'S.url.fromAnchor(this);return false;');
+            });
         }
     },
 
+    panel: {
+        coordinates: new Array()
+    },
+
+    editor: {
+        selectedLayerId: '', editMode: false, enabled: false
+    },
+
     browser: {
-        isIE:false, isNS:false, version:null,
+        isIE: false, isNS: false, version: null,
 
         get: function () {
             var ua, s, i;
@@ -1177,9 +887,10 @@ $.expr[':'].above = function (obj, index, meta, stack) {
 // Window Events ////////////////////////////////////////////////////////////////////////////////////'
 $(document).on('ready', function () { S.events.doc.ready(); });
 $(document.body).on('click', function (e) { S.events.doc.click.trigger(e.target); });
-$(window).on('resize', function () { S.events.doc.resize.trigger();});
+$(window).on('resize', function () { S.events.doc.resize.trigger(); });
 $(window).on('scroll', function () { S.events.doc.scroll.trigger(); });
 $('iframe').load(function () { S.events.iframe.loaded(); });
+window.onpopstate = S.events.url.change;
 
 
 // start timers /////////////////////////////////////////////////////////////////////////////////

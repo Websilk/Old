@@ -27,6 +27,7 @@ namespace Websilk
 
     public class PageRequest
     {
+        public string url = "";
         public string pageTitle = "";
         public List<PageComponent> components = new List<PageComponent>();
         public List<string> @remove = new List<string>();

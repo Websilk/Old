@@ -43,17 +43,17 @@ namespace Websilk.Services.Components
 
 
             //setup scaffold parameters
-            scaffold.Data["script"] = "isNotKeepAlive=1;S.ajax.viewstateId = '" + S.ViewStateId + "';";
+            scaffold.Data["script"] = "this.isNotKeepAlive=1; S.ajax.viewstateId = '" + S.ViewStateId + "';";
 
             if (S.isLocal == true)
             {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/utility/jquery-2.1.3.min.js\"></script>\n" +
-                                   "<script type=\"text/javascript\" src=\"/scripts/core/global.js\"></script>\n" +
-                                   "<script type=\"text/javascript\" src=\"/scripts/core/view.js\"></script>\n";
+                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.3.min.js\" noasync></script>\n" +
+                                   "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
+                                   "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n";
             }
             else
             {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\"></script>\n";
+                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\" noasync></script>\n";
             }
         }
 
@@ -273,7 +273,7 @@ namespace Websilk.Services.Components
             Inject result = new Inject();
             if (S.User.LogIn(authId) == true)
             {
-                return "dashboard";
+                return "Dashboard";
             }
             return "";
         }

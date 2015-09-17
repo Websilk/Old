@@ -281,151 +281,19 @@ namespace Websilk.Utility
             return result;
         }
 
-        public string GenerateLinkAsString(string hash, string page = "", bool replacehash = false)
+        public string URL(string url)
         {
-            //creates a string of the URL link within the Websilk web page that may include a hash
-            //first, replace partial hash with new hash if there are duplicate hash objects
-            string[] arrHash = S.Page.Url.pathAndHash.Split('\"');
-            string[] arrNew = null;
-            if (!string.IsNullOrEmpty(hash))
-                arrNew = hash.Split('\"');
-            string[] arrHashCmd = null;
-            string[] arrNewCmd = null;
-            string finalHash = "";
-            string newHash = "";
-            string newPage = page;
+            string newurl = url;
+            newurl = newurl.Replace(" ", "-");
 
-            //remove duplicates in the hash
-            if (!string.IsNullOrEmpty(hash))
-            {
-                for (int x = 0; x <= arrHash.Length - 1; x++)
-                {
-                    for (int y = 0; y <= arrNew.Length - 1; y++)
-                    {
-                        arrHashCmd = arrHash[x].Split('\"');
-                        arrNewCmd = arrNew[y].Split('\"');
-                        if (arrHashCmd[0] == arrNewCmd[0])
-                        {
-                            arrHash[x] = "";
-                        }
-                    }
-                }
-            }
-
-            //create compiled hash
-            if (!string.IsNullOrEmpty(S.Page.Url.pathAndHash))
-            {
-                for (int x = 0; x <= arrHash.Length - 1; x++)
-                {
-                    if (!string.IsNullOrEmpty(arrHash[x]))
-                    {
-                        if (!string.IsNullOrEmpty(finalHash))
-                            finalHash += "/";
-                        finalHash += arrHash[x];
-                    }
-                }
-            }
-
-            if (S.Page.useAJAX == false & S.Page.isEditable == false)
-            {
-                //create url
-                if (Right(newPage, 1) != "/" & !string.IsNullOrEmpty(newPage))
-                    newPage += "/";
-                if (Right(newHash, 1) != "/" & !string.IsNullOrEmpty(newHash))
-                    newHash += "/";
-
-                if (replacehash == true)
-                {
-                    newHash = newHash.Replace("//", "/");
-                    if (newHash.Trim() == "/")
-                        newHash = "";
-                    return S.Page.Url.host + newPage + newHash;
-                }
-                else
-                {
-                    return S.Page.Url.host + S.Page.Url.path + newPage + finalHash + newHash;
-                }
-            }
-            else
-            {
-                //create hash url
-                if (!string.IsNullOrEmpty(page))
-                {
-                    newPage = page.ToLower() + "/";
-                }
-                if (replacehash == true)
-                {
-                    return "#" + newPage + hash;
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(S.Page.Url.pathAndHash))
-                    {
-                        return "#" + S.Page.Url.pathAndHash + "/" + hash;
-                    }
-                    else
-                    {
-                        return "#" + hash;
-                    }
-                }
-            }
-
-        }
-
-        public string GenerateLinkAsHtmlAnchorString(string hash, string page = "", string cssClass = "", string cssStyle = "", bool replacehash = false)
-        {
-            //creates a string of the URL link within the Websilk web page that may include a hash
-            string href = "";
-            if (S.Page.useAJAX == false & S.Page.isEditable == false)
-            {
-                href += "<a href=\"" + GenerateLinkAsString(hash, page, replacehash) + "\"";
-                if (!string.IsNullOrEmpty(cssClass))
-                    href += " class=\"" + cssClass + "\"";
-                if (!string.IsNullOrEmpty(cssStyle))
-                    href += " style=\"" + cssStyle + "\"";
-                href += ">";
-            }
-            else
-            {
-                href += "<a href=\"#\" hash=\"" + GenerateLinkAsString(hash, page, replacehash).Replace("#", "") + "\"";
-                if (!string.IsNullOrEmpty(cssClass))
-                    href += " class=\"" + cssClass + "\"";
-                if (!string.IsNullOrEmpty(cssStyle))
-                    href += " style=\"" + cssStyle + "\"";
-                if (!string.IsNullOrEmpty(page))
-                    href += " page=\"" + page + "\"";
-                if (replacehash == true)
-                    href += " replace=\"true\"";
-                href += ">";
-            }
-            return href;
-        }
-
-        public string GenerateURL(string url)
-        {
-            int i = 0;
-            int e = 0;
-            string newurl = "";
-            string myUrl = url;
-            i = myUrl.IndexOf("#r=");
-            e = url.Length;
-            if (i >= 0)
-            {
-                newurl = myUrl.Substring(i + 3, e - (i + 3));
-                newurl = newurl.Replace(" ", "-");
-                newurl = GenerateLinkAsString("", newurl, true);
-                if (Right(newurl, 1) == "+")
-                    newurl = newurl.Substring(1, newurl.Length - 1);
-                myUrl = newurl;
-            }
             //inject Websilk Script
-            if (myUrl.IndexOf("#s=") >= 0 | myUrl.IndexOf("#v=") >= 0)
+            if (newurl.IndexOf("#s=") >= 0 | newurl.IndexOf("#v=") >= 0)
             {
                 //S.LoadWebsilkScript();
                 //make sure the websilk script class is loaded
                 //myUrl = S.Script.ParseHtmlString(myUrl, myContainer.id)
             }
-            return myUrl;
+            return newurl;
         }
 
         public string DateFolders(DateTime myDate, int folderCount = 3)

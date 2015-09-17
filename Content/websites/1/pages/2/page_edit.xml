@@ -7,7 +7,7 @@
       <design><![CDATA[]]></design>
     </component>
     <component name="login" id="ah2" index="2">
-      <position><![CDATA[||c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,auto,,280,px,200,px,20px 20px 20px 20px]]></position>
+      <position><![CDATA[||c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px|c,0,0,t,0,,280,px,200,px,20px 20px 20px 20px]]></position>
       <css><![CDATA[||||]]></css>
       <content><![CDATA[1|2|1|2|10|100%|100px|Log In|23|206|104|0|450|300|10]]></content>
       <design><![CDATA[textbox|button|||]]></design>
@@ -111,7 +111,7 @@
     <component name="panel" id="dlz" index="2">
       <position><![CDATA[||c,0,0,t,0,,596,px,343,auto,20px 20px 20px 20px||c,0,0,t,0,,1046,px,2239,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[Panel,panel,|Panel 2,panel,|Panel 13,panel,|Panel 14,panel,|Panel 15,panel,|Panel 16,panel,|Panel 17,panel,|Panel 18,panel,]]></content>
+      <content><![CDATA[Panel,panel,|Panel 2,panel,|Panel 13,panel,|Panel 14,panel,|Panel 15,panel,|Panel 16,panel,|Panel 17,panel,|Panel 18,panel,|Panel 19,panel,|Panel 20,panel,]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="textbox" id="YzE" index="3">
@@ -212,6 +212,46 @@
       <position><![CDATA[||||c,0,0,t,auto,,990,px,20,auto,0px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
       <content><![CDATA[<div>Sanji looooooves women. He's just hopeless...</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel19">
+    <component name="photo" id="ihn" index="1">
+      <position><![CDATA[||||c,0,,t,0,,1920,px,1200,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Anime/bwerhjp.jpg||1920|1200||||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel20">
+    <component name="textbox" id="YeJ" index="1">
+      <position><![CDATA[||||c,0,0,t,auto,,976,px,17,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>Howel's Moving Castle is one of Studio Ghibli's greatest masterpieces.</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel21">
+    <component name="textbox" id="jfi" index="1">
+      <position><![CDATA[||||c,0,0,t,auto,,998,px,17,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam cursus eros eget lacus. Suspendisse ante est, lobortis vitae, congue et, bibendum ut, tortor. Sed ut urna. Integer quis lorem non ligula semper ultricies.</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel22">
+    <component name="textbox" id="iET" index="1">
+      <position><![CDATA[||||c,0,,t,0,,200,px,200,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>craaaazy talk.&nbsp;</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="dlzPanel23">
+    <component name="textbox" id="FRh" index="1">
+      <position><![CDATA[||||c,0,0,t,auto,,1048,px,17,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>I really hope this works.</div>]]></content>
       <design><![CDATA[]]></design>
     </component>
   </panel>

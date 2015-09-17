@@ -55,10 +55,14 @@
                             "$S('c" + id + "').innerHTML = '" + htm.Replace("'", "\\'") + "';" + "alert('incorrect email or password');}" + 
                         "else{" +
                             "$S('c" + id + "').innerHTML = '<div style=\"padding-top:20px; width:100%; text-align:center;\">Login successful. Loading dashboard...</div>';" + 
-                            "S.ajax.post('/websilk/App/Hash', { url: data.d }, S.hash.callback);" + 
+                            "S.ajax.post('/websilk/App/Url', { url: data.d }, S.ajax.callback.pageRequest);" + 
                         "}" + 
                     "};";
                 S.Page.RegisterJS("login" + id, myJs);
+            }
+            else
+            {
+                innerHTML = "<div style=\"text-align:center; width:100%; padding-top:10px;\">You are currently logged into your account.</div>";
             }
 
             return base.Render();

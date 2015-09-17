@@ -10,16 +10,17 @@
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,user-scalable=yes" />
 
     <link type="text/css" rel="stylesheet" href="/css/websilk.css" />
+    <style type="text/css">{{head-css}}</style>
     <link type="text/css" rel="stylesheet" href="{{theme-css}}" id="themeCss" />
     <link type="text/css" rel="stylesheet" href="{{website-css}}" id="websiteCss" />
     {{editor-css}}
-    {{head-css}}
+    
 
     <link rel="icon" type="image/ico" href="{{favicon}}" />
     {{font-faces}}
 </head>
 <body class="{{body-class}}">
-    <div id="customCSS" class="absolute hide">{{custom-css}}</div>
+    <div id="customCSS" class="absolute hide"></div>
     <div id="customFontFaces"></div>
     <div class="svgicons"></div>
 
@@ -32,20 +33,9 @@
         </div>
     </div>
 
-    <script language="javascript" type="text/javascript">
-        if (location.hash.length > 1 && location.hash.toLowerCase() != '#home') {
-            //hide initial home page if there is a hash available
-            var c = document.getElementsByClassName('container');
-            for (x = 0; x < c.length; x++) {
-                c[x].style.display='none';
-            }
-            document.getElementById('divPageLoad').style.display='block';
-        }
-    </script>
-
     {{scripts}}
 
-    <script language="javascript" type="text/javascript">
+    <script language="javascript" type="text/javascript" noasync>
 
         //////////////////////////////////////////////////////////////
         // Post Message listener for iFrames on separate domains

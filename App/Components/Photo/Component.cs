@@ -73,7 +73,7 @@ namespace Websilk.Components
                         //add url link if it exists
                         if (!string.IsNullOrEmpty(data[4]))
                         {
-                            string myContent = S.Util.Str.GenerateURL(data[4]);
+                            string myContent = S.Util.Str.URL(data[4]);
                             if (myContent.IndexOf("javascript:") >= 0)
                             {
                                 myContent = "javascript:\" onclick=\"" + myContent.Replace("javascript:", "");

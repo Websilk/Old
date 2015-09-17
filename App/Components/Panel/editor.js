@@ -17,11 +17,8 @@
         }
         var index = 0;
         var childs = $('#' + p.parentNode.id + ' > .ispanel');
-        console.log(childs);
         for (i = 0; i < childs.length; i++) {
             if (childs[i].id == p.id) {
-                console.log(i);
-                console.log(p);
                 index = i; break;
             }
         }

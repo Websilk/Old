@@ -19,7 +19,7 @@ namespace Websilk.Pipeline
 
             //setup scaffolding variables
             scaffold = new Scaffold(S, "/app/pipeline/app.html", "", new string[]
-            { "title", "description", "facebook", "theme-css", "website-css", "editor-css", "head-css", "favicon", "font-faces", "body-class", "custom-css",
+            { "title", "description", "facebook", "theme-css", "website-css", "editor-css", "head-css", "favicon", "font-faces", "body-class",
               "background", "editor","webpage-class", "body-sides","body", "scripts", "https-url", "http-url"});
 
             //default favicon
@@ -40,9 +40,10 @@ namespace Websilk.Pipeline
             {
                 S.Page.isMobile = true;
             }
+            if(agent.Contains("tablet") | agent.Contains("ipad")) { S.Page.isTablet = true; }
 
             //get browser type
-            scaffold.Data["body-class"] = S.Util.GetBrowserType();
+            scaffold.Data["body-class"] = S.Util.GetBrowserType() + (S.Page.isMobile ? (S.Page.isTablet ? " s-tablet" : " s-mobile") : " s-hd");
 
             //parse URL
             S.Page.GetPageUrl();
@@ -90,33 +91,41 @@ namespace Websilk.Pipeline
                         string[] result = editor.LoadEditor();
                         scaffold.Data["editor"] = result[0];
                         S.Page.RegisterJS("editor", result[1]);
+
+                        //show dashboard
+                        string path = S.Request.Path.ToString().ToLower().Replace(" ", "+");
+                        if (path.Substring(0, 1) == "/") { path = path.Substring(1); }
+                        if (path.IndexOf("dashboard") == 0)
+                        {
+                            S.Page.RegisterJS("dash", "S.editor.dashboard.show('" + path.ToLower() + "');");
+                        }
                     }
+
+                    
 
                     //setup scripts
                     string scripts;
                     if(S.isLocal == true)
                     {
-                        scripts = "<script type=\"text/javascript\" src=\"/scripts/utility/jquery-2.1.3.min.js\"></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/core/global.js\"></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/core/view.js\"></script>\n" +
-                            //"<script type=\"text/javascript\" src=\"/scripts/core/responsive.js\"></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/utility.js?v=" + S.Version + "\"></script>";
-                        if(S.Page.isEditable == true)
+                        scripts = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.3.min.js\"></script>\n" +
+                            "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
+                            "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n" +
+                            "<script type=\"text/javascript\" src=\"/scripts/utility.js?v=" + S.Version + "\" noasync></script>\n";
+                        if (S.Page.isEditable == true)
                         {
-                            scripts += "<script type=\"text/javascript\" src=\"/scripts/core/editor.js?v=" + S.Version + "\"></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/rangy/rangy-compiled.js?v=" + S.Version + "\"></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/utility/dropzone.js?v=" + S.Version + "\"></script>\n" +
-                                "<script type=\"text/javascript\">S.editor.load();</script>";
+                            scripts += "<script type=\"text/javascript\" src=\"/scripts/core/editor.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" src=\"/scripts/rangy/rangy-compiled.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" src=\"/scripts/utility/dropzone.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
                         }
                     }
                     else
                     {
-                        scripts = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\"></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/utility.js?v=" + S.Version + "\"></script>";
+                        scripts = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\" noasync></script>\n";
                         if (S.Page.isEditable == true)
                         {
-                            scripts += "<script type=\"text/javascript\" src=\"/scripts/editor.js?v=" + S.Version + "\"></script>\n" +
-                                "<script type=\"text/javascript\">S.editor.load();</script>";
+                            scripts += "<script type=\"text/javascript\" src=\"/scripts/editor.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
                         }
                     }
 
@@ -125,10 +134,11 @@ namespace Websilk.Pipeline
                         S.Page.postJS += string.Join("\n", S.Page.postJScode) + S.Page.postJSLast;
                     }
                                         
-                    scaffold.Data["scripts"] = scripts + "\n" + "<script type=\"text/javascript\">" + S.Page.postJS + "</script>";
+                    
 
                     //render web page
                     scaffold.Data["body"] = S.Page.Render();
+                    scaffold.Data["scripts"] = scripts + "\n" + "<script type=\"text/javascript\" noasync>" + S.Page.postJS + "</script>";
                 }
             }
 
