@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Features;
 
 namespace Websilk
 {
@@ -21,7 +22,7 @@ namespace Websilk
         public HttpContext Context;
         public HttpRequest Request;
         public HttpResponse Response;
-        public ISessionCollection Session;
+        public ISession Session;
         public Elements Elements;
 
         public bool isFirstLoad = false;
@@ -47,10 +48,10 @@ namespace Websilk
             {
                 ViewStateId = viewstate;
                 if(ViewStateId == "") { ViewStateId = Util.Str.CreateID(); }
-                if (Session["viewstate-" + ViewStateId] != null)
+                if (Session.Get("viewstate-" + ViewStateId) != null)
                 {
                     ViewState vs = new ViewState();
-                    vs = (ViewState)Util.Serializer.ReadObject(Util.Str.GetString(Session["viewstate-" + ViewStateId]), vs.GetType());
+                    vs = (ViewState)Util.Serializer.ReadObject(Util.Str.GetString(Session.Get("viewstate-" + ViewStateId)), vs.GetType());
                     Page = vs.Page;
                     Elements = new Elements(this, Page.themeFolder);
 
@@ -58,9 +59,9 @@ namespace Websilk
                 else { Page = new Page(); }
             }else { Page = new Page(); }
 
-            if (Session["user"] != null)
+            if (Session.Get("user") != null)
             {
-                User = (User)Util.Serializer.ReadObject(Util.Str.GetString(Session["user"]), User.GetType());
+                User = (User)Util.Serializer.ReadObject(Util.Str.GetString(Session.Get("user")), User.GetType());
             }
 
             //load references to Core S
@@ -68,10 +69,10 @@ namespace Websilk
             Page.Load(this);
             User.Load(this);
 
-            if (Session["user"] == null) {
+            if (Session.Get("user") == null) {
                 //initialize session (to prevent bug where session tries to initialize 
                 //within S.Unload() after the response is sent to the client)
-                Session["user"] = Util.Serializer.WriteObject(User);
+                Session.Set("user", Util.Serializer.WriteObject(User));
             }
 
                 //generate visitor id
@@ -84,7 +85,7 @@ namespace Websilk
 
         public void Unload()
         {
-            Session["user"] = Util.Serializer.WriteObject(User);
+            Session.Set("user", Util.Serializer.WriteObject(User));
             SaveViewState();
             Sql.Close();
         }
@@ -95,7 +96,7 @@ namespace Websilk
             //save viewstate data into session, then add/update viewstate details in viewstates list
             ViewState vs = new ViewState();
             vs.Load(this);
-            Session["viewstate-" + ViewStateId] = Util.Serializer.WriteObject(vs);
+            Session.Set("viewstate-" + ViewStateId, Util.Serializer.WriteObject(vs));
             
             //set default values for unused variables
             if(Page.ComponentViews == null) { Page.ComponentViews = new List<ComponentView>(); }
@@ -111,9 +112,9 @@ namespace Websilk
             vsd.dateModified = DateTime.Now;
             vsd.id = ViewStateId;
 
-            if (Util.IsEmpty(Session["viewstates"]) == false)
+            if (Util.IsEmpty(Session.Get("viewstates")) == false)
             {
-                vss = (ViewStates)Util.Serializer.ReadObject(Util.Str.GetString(Session["viewstates"]), vss.GetType());
+                vss = (ViewStates)Util.Serializer.ReadObject(Util.Str.GetString(Session.Get("viewstates")), vss.GetType());
                 if (vss.Views.Count >= 0)
                 {
                     List<int> removes = new List<int>();
@@ -156,7 +157,7 @@ namespace Websilk
             {
                 vss.Views.Add(vsd);
             }
-            Session["viewstates"] = Util.Serializer.WriteObject(vss);
+            Session.Set("viewstates", Util.Serializer.WriteObject(vss));
         }
 
         public bool isSessionLost()

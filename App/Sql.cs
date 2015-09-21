@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Microsoft.Framework.ConfigurationModel;
 
 namespace Websilk
 {
@@ -30,8 +29,8 @@ namespace Websilk
         private void Start()
         {
             if (_started == true) { return; }
-            var config = new Configuration().AddJsonFile(S.Server.MapPath("config.json")).AddEnvironmentVariables();
-            string active = config.Get("Data:Active");
+
+            string active = S.Server.sqlActive;
 
             switch (active)
             {
@@ -45,7 +44,7 @@ namespace Websilk
                     break;
             }
 
-            conn.ConnectionString = config.Get("Data:" + active);
+            conn.ConnectionString = S.Server.sqlConnection;// config.Get("Data:" + active);
             conn.Open();
             cmd.Connection = conn;
             cmd.CommandType = System.Data.CommandType.Text;

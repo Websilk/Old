@@ -47,7 +47,7 @@ namespace Websilk.Services.Components
 
             if (S.isLocal == true)
             {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.3.min.js\" noasync></script>\n" +
+                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.4.min.js\" noasync></script>\n" +
                                    "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
                                    "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n";
             }

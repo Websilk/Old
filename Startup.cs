@@ -5,7 +5,10 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.Framework.DependencyInjection;
+using System.IO;
+
 using Microsoft.AspNet.StaticFiles;
+//using Microsoft.Framework.Configuration;
 
 namespace Websilk
 {
@@ -31,15 +34,24 @@ namespace Websilk
 
             //exception handling
             var errOptions = new ErrorPageOptions();
-            errOptions.ShowSourceCode = true;
+            //errOptions.ShowSourceCode = true;
             errOptions.SourceCodeLineCount = 10;
-            errOptions.SetDefaultVisibility(true);
-            errOptions.ShowExceptionDetails = true;
-            errOptions.ShowEnvironment = true;
+            //errOptions.SetDefaultVisibility(true);
+            //errOptions.ShowExceptionDetails = true;
+            //errOptions.ShowEnvironment = true;
             app.UseErrorPage();
 
             //use session (3 hour timeout)
-            app.UseInMemorySession(configure: s => s.IdleTimeout = TimeSpan.FromMinutes(60*3));
+            //app.UseSession(configure: s => s.IdleTimeout = TimeSpan.FromMinutes(60*3));
+            app.UseSession();
+
+            //get server info from config.json
+            //var configBuilder = new ConfigurationBuilder().AddJsonFile(server.MapPath("config.json")).AddEnvironmentVariables();
+            //IConfiguration config = configBuilder.Build();
+            //string active = config.GetSection("Data:Active");
+            //string conn = config.GetSection("Data:" + active);
+            server.sqlActive = "SqlServerTrusted";
+            server.sqlConnection = "server=.\\SQL2012; database=WebsilkDev; Trusted_Connection=true";
 
             //run application
             app.Run(async (context) =>
@@ -90,6 +102,7 @@ namespace Websilk
                 {
                     //file
                     requestType = "file";
+                    //404 file not found
                 }
 
                 if(requestType == "") {

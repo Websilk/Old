@@ -12,7 +12,10 @@ namespace Websilk
 
         public int requestCount = 0;
         public float requestTime = 0;
+        public string sqlActive = "";
+        public string sqlConnection = "";
         private string _path = "";
+
 
         //Dictionary used for caching non-serialized objects, files from disk, or raw text
         //be careful not to leak memory into the cache while causing an implosion!
