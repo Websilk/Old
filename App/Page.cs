@@ -763,26 +763,29 @@ namespace Websilk
                 }
             }
 
-            if (ptype == 1)
-            {
-                //setup page request for web service
-                PageRequest = new PageRequest();
-            }
-
 
             //////////////////////////////////////////////////////
             //update  page settings
             string pFolder = pageFile.Replace("page.xml", "");
             if (ptype == 1)
             {
+                //setup page request
+                PageRequest = new PageRequest();
+                PageRequest.pageId = pid;
+
+                //setup page title
                 string pt = S.Util.Str.GetPageTitle(pageTitle).Replace("-", " ");
                 string wt = S.Util.Str.GetWebsiteTitle(pageTitle);
                 pageId = pid;
                 pageFolder = pFolder;
                 pageTitle = wt + " - " + pt;
                 Url.path = pt.Trim().ToLower();
-                myJs += "S.page.title = \"" + pt.ToLower() + "\"; S.page.id=" + pageId + ";" + 
-                        "S.website.title = \"" + wt.ToLower() + "\"; S.website.id=" + websiteId + ";";
+                myJs += "S.website.title = \"" + wt + "\"; S.website.id=" + websiteId + ";";
+                if(S.isWebService == false)
+                {
+                    myJs += "S.page.title = \"" + pt.ToLower() + "\"; S.page.id=" + pageId + ";";
+                }
+
                 //hide page loading div
                 string newTitle = pageTitle;
                 if (isEditable == true)

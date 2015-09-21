@@ -12,6 +12,7 @@ namespace Websilk
 
         public int requestCount = 0;
         public float requestTime = 0;
+        private string _path = "";
 
         //Dictionary used for caching non-serialized objects, files from disk, or raw text
         //be careful not to leak memory into the cache while causing an implosion!
@@ -26,7 +27,8 @@ namespace Websilk
         #region "System.UI.Web.Page.Server methods"
         public string path(string strPath = "")
         {
-            return Path.GetFullPath("config.json").Replace("config.json","") + strPath.Replace("/", "\\");
+            if(_path == "") { _path = Path.GetFullPath("config.json").Replace("config.json", ""); }
+            return _path + strPath.Replace("/", "\\");
         }
 
         public string MapPath(string strPath = "") { return path(strPath); }

@@ -133,5 +133,23 @@ namespace Websilk.Services.Components
             return response;
         }
 
+        public string Arrangement(string id)
+        {
+            if (S.isSessionLost() == true) { return "lost"; }
+
+            //check security
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return ""; }
+
+            string response = "";
+            ComponentView view = S.Page.GetComponentViewById(id);
+            if (view != null)
+            {
+                string[] design = view.designField.Split('|');
+                if(design.Length == 0 || view.designField == "") { design = new string[] { "grid", "" }; }
+                response = design[0] + "," + design[1];
+            }
+
+            return response;
+        }
     }
 }

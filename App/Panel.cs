@@ -6,6 +6,7 @@ namespace Websilk
 {
     public enum enumArrangement
     {
+        none = -1,
         grid = 0,
         vertical = 1,
         slideshow = 2,

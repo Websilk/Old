@@ -29,6 +29,7 @@ namespace Websilk
         public bool isWebService = false;
         public bool useViewState = true;
         public string ViewStateId = "";
+        private int viewStateTimeout = 10; //minutes
 
         public Core(Server server, HttpContext context, string viewstate = "", string type = "")
         {
@@ -66,6 +67,7 @@ namespace Websilk
             Sql.Load();
             Page.Load(this);
             User.Load(this);
+
             if (Session["user"] == null) {
                 //initialize session (to prevent bug where session tries to initialize 
                 //within S.Unload() after the response is sent to the client)
@@ -129,7 +131,7 @@ namespace Websilk
                         {
                             //clean up expired viewstates
                             TimeSpan ts = DateTime.Now - vss.Views[x].dateModified;
-                            if (ts.Minutes > 10)
+                            if (ts.Minutes > viewStateTimeout)
                             {
                                 removes.Add(x);
                                 Session.Remove("viewstate-" + vss.Views[x].id);
@@ -159,7 +161,9 @@ namespace Websilk
 
         public bool isSessionLost()
         {
-            if(Page.websiteTitle == "") { return true; }
+            if(Page.websiteTitle == "") {
+                return true;
+            }
             return false;
         }
     }

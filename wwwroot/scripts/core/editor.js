@@ -16,13 +16,11 @@ S.editor = {
         setTimeout(function () { S.editor.photos.dropzone.init(); }, 100);
 
         //init component select custom menus
-        S.editor.components.menu.items.addRule('cell', '.menu-position, .menu-layer');
         S.editor.components.menu.items.addRule('textbox', '.menu-options');
-        htm = '<div style="width:17px; height:17px;">' +
-              '<svg viewBox="0 0 17 17" style="width:17px; height:17px; padding-top:5px;"><use xlink:href="#icon-panelgrid" x="0" y="0" width="17" height="17"></use></svg>' +
-              '</div>';
-        S.editor.components.menu.items.add('panel', 'arrangement', htm, 3, ' S.editor.components.menu.show("arrangement")');
-        S.editor.components.menu.items.add('cell', 'arrangement', htm, 3, ' S.editor.components.menu.show("arrangement")');
+        
+
+        //add special words for URL
+        S.url.special.add('dashboard', S.editor.dashboard.callback.url);
 
         //show editor
         if (arguments[0] === true) {
@@ -117,17 +115,21 @@ S.editor = {
             //add callback for the url
             if (S.editor.dashboard.init == false) {
                 S.editor.dashboard.init = true;
-                S.url.special.add('dashboard', S.editor.dashboard.callback.url);
             }
 
             if ($('.winDashboardInterface').length == 0) {
+
                 //load interface window
                 S.editor.window.load('DashboardInterface', 'Dashboard/Interface/Load', {}, { x: 0, y: 50, w: '100%', h: '100%', toolbar: false });
+                
+                //load from url with a delay
+                
             } else {
                 $('.winDashboardInterface').addClass('dashboard').show();
+                
             }
-
-            S.editor.dashboard.loadFromUrl(url);
+            S.editor.dashboard.loadFromUrl(url.toLowerCase());
+            
 
             S.events.doc.resize.callback.add('dashboardresize', null, null, S.editor.dashboard.callback.resize, S.editor.dashboard.callback.resize);
             S.editor.dashboard.callback.resize();
@@ -408,7 +410,12 @@ S.editor = {
 
             //change url link
             if (a.url != '' && S.editor.dashboard.visible == true) {
-                S.url.push('Dashboard - ' + S.util.str.Capitalize(a.url.replace('-', ' ')), 'Dashboard/' + S.util.str.Capitalize(a.url.replace('-', ' ')).replace(' ','-'));
+                var t = S.util.str.Capitalize(a.url.replace('-', ' ')).replace(' ', '-');
+                var u = 'Dashboard/' + t;
+                document.title = S.website.title + ' - ' + t + ' - Dashboard';
+                if (location.href.indexOf(S.url.domain() + u) < 0) {
+                    S.url.push(S.website.title + ' - ' + t, u);
+                }
             }
 
 
@@ -1141,7 +1148,6 @@ S.editor = {
                             }
                         }
                     }
-                    console.log('arranged = ' + arranged);
                     if (arranged == true) {
                         //save new arrangement of components for server-side
                         S.editor.components.saveArrangement(drag.panel);
@@ -1714,22 +1720,26 @@ S.editor = {
                 this.hideAll();
                 $('.component-select .section-' + tab).show();
                 p.css({ opacity: 0, width: '' }).show();
-                var cPos = S.elem.pos(S.editor.components.hovered), pPos = S.elem.offset(p[0]),
+                var cPos = S.elem.pos(S.editor.components.hovered),
+                    pPos = S.elem.offset(p[0]),
                     mPos = S.elem.offset($('.component-select .menu')[0]),
                     options = S.editor.components.resize.options;
                 var pos = { x: mPos.x + mPos.w, y: 0 }
+                if (pPos.w < 200) { pPos.w = 200; }
+
                 if (options.inner.right == true) {
                     //display window inside component select next to menu
-                    pos.x = mPos.x - 3;
-                    p.css({ opacity: 1, left: pos.x - pPos.w, top: options.border + 3 });
+                    pos.x = mPos.x + 3;
+                    p.css({ opacity: 1, left: pos.x - pPos.w});
                 } else {
-                    if (mPos.x + pPos.w >= S.window.w) {
+                    
+                    if (cPos.x + mPos.x + pPos.w + 40 >= S.window.w) {
                         //display window inside component select next to resize bar
-                        pos.x = mPos.x - options.border;
-                        p.css({ opacity: 1, left: pos.x - pPos.w, top: options.border + 3 });
+                        pos.x = mPos.x - options.border;    
+                        p.css({ opacity: 1, left: pos.x - pPos.w});
                     } else {
                         //display window outside component next to menu
-                        p.css({ opacity: 1, left: pos.x - options.border + 2, top: 0 });
+                        p.css({ opacity: 1, left: pos.x - options.border + 2});
                     }
 
                 }
@@ -1966,6 +1976,10 @@ S.editor = {
                 }
 
             },
+
+            special: {
+                //custom functions used for special menu items
+            }
         },
 
         quickmenu: {
@@ -2119,7 +2133,7 @@ S.editor = {
                 corner = this.resize.options.corner,
                 border = this.resize.options.border,
                 inner = { left: false, right: false, top: false },
-                menu = this.selbox.find('.menu');
+                menu = this.selbox.find('.menu'), menuy = 0;
             var menuPos = S.elem.offset(menu[0]);
 
             //check padding for window edges
@@ -2180,12 +2194,18 @@ S.editor = {
 
             //reposition menu
             if (inner.right == false) {
-                menu.css({ left: cPos.w, top: 0 }).removeClass('inside').addClass('outside');
+                menuy = 0;
+                menu.css({ left: cPos.w }).removeClass('inside').addClass('outside');
                 $('.component-select .menu .item').css({ marginLeft: 0 });
             } else {
-                menu.css({ left: cPos.w - menuPos.w - border, top: border }).removeClass('outside').addClass('inside');
+                menuy = border;
+                menu.css({ left: cPos.w - menuPos.w - border }).removeClass('outside').addClass('inside');
                 $('.component-select .menu .item').css({ marginLeft: 3 });
             }
+            if (cPos.y < S.window.scrolly + 70) {
+                menuy = S.window.scrolly + 70 - cPos.y;
+            }
+            $('.component-select .menu, .component-select .properties > .box').css({ top: menuy });
 
             //reposition duplicate button
             if (cPos.y + cPos.h - 70 > S.window.absolute.h + S.window.scrolly) {
@@ -2219,7 +2239,7 @@ S.editor = {
 
         properties: {
             //current = object loaded from component properties.js
-            selected: null, section: '', current: null, options: {},
+            selected: null, current: null, options: {}, section: '',
 
             show: function () {
                 if ($('.winProperties').length == 0) {
@@ -2232,10 +2252,11 @@ S.editor = {
                     S.editor.window.load('Properties', '', htm, { x: 0, align: 'center', y: 0, w: 600, h: 100, spacing: 50, postOnce: true, visible: false, title: 'Component Properties' });
 
                 }
-                var section = arguments[0] || '';
-                if (S.editor.components.properties.selected != S.editor.components.hovered || S.editor.components.properties.section != section) {
+                var element = arguments[0] || S.editor.components.hovered;
+                var section = arguments[1] || '';
+                if (S.editor.components.properties.selected != element) {
                     $('.winProperties .props-content')[0].innerHTML = '';
-                    S.ajax.post('/websilk/Editor/ComponentProperties', { id: S.editor.components.hovered.id.substr(1), section: section }, S.ajax.callback.inject);
+                    S.ajax.post('/websilk/Editor/ComponentProperties', { id: element.id.substr(1), section: section }, S.ajax.callback.inject);
                     S.editor.components.properties.section = section;
                 } else {
                     $('.winProperties').show();
@@ -2520,35 +2541,28 @@ S.editor = {
                 compType = comp.type;
                 if (comp.duplicate != null) {
                     //execute custom duplicate command
-                    execCustom = true;
                     comp.duplicate(c);
                     return;
                 }
             } else {
                 //duplicate panel cell
-
                 var p = S.elem.panelCell(c);
                 if (p != null) {
                     comp = S.components.cache[p.parentNode.id];
                     if (comp != null) {
-                        execCustom = true;
                         comp.duplicate(c);
                         return;
                     }
                 }
             }
 
-            if (execCustom == false) {
-                //duplicate component
-                var options = { componentId: compType, panelId: pid, selector: selector, aboveId: aboveId, duplicate: c.id.substr(1) };
-                //first, send an AJAX request to save page changes
-                S.editor.save.click(function () {
-                    //then duplicate component
-                    S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
-                });
-            }
-
-
+            //duplicate component
+            var options = { componentId: compType, panelId: pid, selector: selector, aboveId: aboveId, duplicate: c.id.substr(1) };
+            //first, send an AJAX request to save page changes
+            S.editor.save.click(function () {
+                //then duplicate component
+                S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
+            });
         },
     },
 
@@ -3687,7 +3701,8 @@ S.editor = {
                 $('.winPhotos').addClass('dashboard');
                 S.editor.dashboard.hideAllWindows();
                 S.editor.dashboard.callback.resize();
-                S.url.push(S.website.title + ' - ' + 'Dashboard Photos', 'Dashboard/Photos');
+                document.title = S.website.title + ' - Photos - Dashboard';
+                S.url.push(S.website.title + ' - ' + 'Photos - Dashboard', 'Dashboard/Photos');
             }
             S.editor.window.hidePopUps();
             if ($('.winPhotos .photo-list')[0].children.length == 0) {

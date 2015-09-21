@@ -76,8 +76,10 @@ namespace Websilk.Services
                     S.Page.PageRequest.css = "";
                     S.Page.PageRequest.editor = "";
                     S.Page.PageRequest.js = "";
-                    S.Page.PageRequest.pageTitle = "";
-                    S.Page.PageRequest.url = "";
+                    S.Page.PageRequest.pageTitle = S.Page.pageTitle;
+                    S.Page.PageRequest.url = url;
+                    S.Page.PageRequest.pageId = S.Page.pageId;
+                    S.Page.PageRequest.already = true;
 
                 }
                 S.Page.PageRequest.url = url;

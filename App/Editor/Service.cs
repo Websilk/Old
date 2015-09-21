@@ -348,7 +348,7 @@ namespace Websilk.Services
             S.Page.RegisterJS("loadprops", js);
 
             //load properties window
-            ComponentProperties properties = (ComponentProperties)Activator.CreateInstance(type, new object[] { S, comp });
+            ComponentProperties properties = (ComponentProperties)Activator.CreateInstance(type, new object[] { S, comp, section });
             S.Page.RegisterJS("props", "S.editor.components.properties.loaded('" + comp.name + "'," + properties.Width + ");");
 
             //finally, render properties window

@@ -8,6 +8,7 @@ namespace Websilk.Components
 
         public string headHtml = "";
         public string footHtml = "";
+        private enumArrangement _arrangment;
 
         public Panel(Core WebsilkCore) : base(WebsilkCore)
         {
@@ -31,7 +32,7 @@ namespace Websilk.Components
         {
             get
             {
-                return "S.components.calls.duplicatePanelCell";
+                return "S.components.calls.panel.duplicateCell";
             }
         }
 
@@ -66,6 +67,7 @@ namespace Websilk.Components
             {
                 //setup initial panel data
                 dataField = "Panel,panel,";
+                designField = "grid|";
                 data = new string[] { dataField };
                 panelData = dataField.Split(',');
             }
@@ -116,20 +118,9 @@ namespace Websilk.Components
         {
             List<string> panels = new List<string>();
             //data = name,design,css|name,design,css|etc...
-            if(myPanels.Count > 1)
-            {
-                if(myPanels.Count > 1)
-                {
+            //design = arrange-type|arrange-settings|...
 
-                }
-            }
-            for (int x = 0; x < myPanels.Count; x++)
-            {
-                //render each panel
-                panels.Add(RenderPanel(x));
-            }
-
-            enumArrangement arrangement = enumArrangement.grid;
+            enumArrangement arrangement = getArrangement();
             switch (arrangement)
             {
                 case enumArrangement.grid:
@@ -147,7 +138,12 @@ namespace Websilk.Components
                 case enumArrangement.book:
                     DivItem.Classes.Add("arrange-book");
                     break;
+            }
 
+            for (int x = 0; x < myPanels.Count; x++)
+            {
+                //render each panel
+                panels.Add(RenderPanel(x));
             }
 
             DivItem.innerHTML = headHtml + string.Join("\n", panels.ToArray()) + footHtml;
@@ -185,10 +181,34 @@ namespace Websilk.Components
             }
 
             //add arrangement type to panel
-            myPanels[index].arrangement = 0;
+            myPanels[index].arrangement = getArrangement();
             elemPanel.Render(myPanels[index]);
             if (panelCss != "") { S.Page.RegisterCSS("panel" + id + "_" + index, panelCss); }
             return myPanels[index].Render();
+        }
+
+        private enumArrangement getArrangement()
+        {
+            if(_arrangment != enumArrangement.none) { return _arrangment; }
+            enumArrangement arrangement = enumArrangement.grid;
+            if (design.Length > 0)
+            {
+                //load arrangement from design settings
+                switch (design[0])
+                {
+                    case "vertical":
+                        arrangement = enumArrangement.vertical;
+                        break;
+                    case "slideshow":
+                        arrangement = enumArrangement.vertical;
+                        break;
+                    case "book":
+                        arrangement = enumArrangement.book;
+                        break;
+                }
+            }
+            _arrangment = arrangement;
+            return arrangement;
         }
     }
 }

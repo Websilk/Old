@@ -453,7 +453,8 @@ body > .tools{position:absolute; height:0px; width:0px; z-index:3000; font-famil
 .component-select .menu.outside .item.last{border-bottom-right-radius:4px;}
 
 .component-select .properties{position:absolute;}
-.component-select .properties > .box{overflow:hidden; border-radius:4px;}
+.component-select .properties > .box{position:relative; overflow:hidden; border-radius:4px;}
+.component-select .properties .loading{padding:50px 0px; text-align:center;}
 .component-select .addons{position:absolute;}
 .component-select .addons .btn-duplicate{width:42px; height:42px; top:20px; left:20px;}
 .component-select .addons .btn-duplicate .submenu{text-align:center; border-radius:50px; overflow:hidden; cursor:pointer;}

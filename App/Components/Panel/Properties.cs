@@ -11,7 +11,7 @@ namespace Websilk.Components.Properties
             }
         }
 
-        public Panel(Core WebsilkCore, ComponentView c) : base(WebsilkCore, c)
+        public Panel(Core WebsilkCore, ComponentView c, string Section) : base(WebsilkCore, c, Section)
         {
             //scaffold.Setup(new string[] { "helpicon-hover", "helpicon-link", "helpicon-alt", "helpicon-window" });
             //scaffold.Data["helpicon-hover"] = "";

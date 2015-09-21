@@ -2,6 +2,7 @@
 /// <reference path="global.js" />
 var S = {
     init: function (ajax, viewstateid, title) {
+        console.log(window);
         S.page.useAjax = ajax;
         S.ajax.viewstateId = viewstateid;
         S.viewport.getLevel();
@@ -209,7 +210,7 @@ var S = {
     },
 
     components: {
-        cache: new Array(), calls: {},
+        cache: new Array(), calls: {}, //calls contain custom functions used by components
 
         add: function (id, type, position, css, label, limit, duplicate) {
             if (id == null || id == '') { return; }
@@ -488,7 +489,7 @@ var S = {
                 S.window.changed = true;
                 S.events.images.load();
 
-                //replace all relative URLs with ajax calls
+                //replace all relative URLs with ajax posts
                 setTimeout(function () { S.url.checkAnchors(); }, 500);
             },
 
@@ -541,10 +542,9 @@ var S = {
         },
 
         url: {
-            change: function(e){
+            change: function (e) {
                 if (typeof e.state == 'string') {
                     S.url.load(e.state, 1);
-                    return false;
                 }
             },
 
@@ -590,7 +590,6 @@ var S = {
             },
 
             complete: function () {
-                //S.events.render.init();
                 S.events.doc.resize.trigger();
             }
         }
@@ -667,7 +666,9 @@ var S = {
             pageRequest: function (data) {
                 if (data.d == null) { return; }
                 if (data.type == 'Websilk.PageRequest') {
-                    if (data.d.pageTitle == '' && data.d.components.length == 0) {
+                    if (data.d.already == true && data.d.components.length == 0) {
+                        //create new state in browser history
+                        S.url.push(data.d.pageTitle, data.d.url);
                         if (S.editor.enabled == true) {
                             S.editor.dashboard.hide();
                         }
@@ -708,8 +709,9 @@ var S = {
                         $('.body').before(data.d.editor);
                     }
 
-                    //update title
-                    if (data.d.pageTitle != '') { document.title = data.d.pageTitle; }
+                    //update id & title
+                    S.page.id = data.d.pageId;
+                    if (data.d.pageTitle != '') {  document.title = data.d.pageTitle; }
 
                     //create new state in browser history
                     S.url.push(data.d.pageTitle, data.d.url);
@@ -735,6 +737,7 @@ var S = {
         },
 
         keepAlive: function () {
+            //return;
             if (typeof isNotKeepAlive != "undefined") { return; }
             clearTimeout(this.timerKeep);
             var options = { save: '' };
@@ -765,29 +768,45 @@ var S = {
     },
 
     url: {
+        nopush: false, last:'', 
+
         load: function (url) {
+            if (!history) {
+                //browser doesn't support history API
+                return;
+            }
             //first, check for a special url
-            console.log('load ' + url);
-            var urls = url.split('/');
+            var u = url;
+            var urls = u.split('/');
             var words = S.url.special.words;
             if (words.length > 0) {
                 for (var x in words) {
                     if (urls[0].toLowerCase() == words[x].word.toLowerCase()) {
+                        //found special url, skip ajax post
                         if (arguments.length < 2) {
-                            S.url.push(S.website.title + ' - ' + url.replace('/', ' '), url);
+                            S.url.push(S.website.title + ' - ' + u.replace('/', ' '), u);
                         }
-                        words[x].callback(url);
+                        S.url.nopush = true;
+                        words[x].callback(u);
+                        setTimeout(function () { S.url.nopush = false; }, 1000);
                         return false;
                     }
                 }
             }
             //post page request via Ajax
-            S.ajax.post('/websilk/App/Url', { url: url }, S.ajax.callback.pageRequest);
+            S.ajax.post('/websilk/App/Url', { url: u }, S.ajax.callback.pageRequest);
             return false;
         },
 
         push: function (title, url) {
+            if (!history) {
+                //browser doesn't support history API
+                return;
+            }
+            if (S.url.nopush == true) { return; }
+            if (S.url.last == url) { return; }
             history.pushState(url, title, '/' + url);
+            S.url.last = url;
         },
 
         special: {
@@ -806,11 +825,19 @@ var S = {
         },
 
         checkAnchors: function () {
+            if (!history) {
+                //browser doesn't support history API
+                return;
+            }
             var anchors = $('a').filter(function () {
                 if (this.getAttribute('href').indexOf('/') == 0) { return true; } return false;
             }).each(function () {
                 this.setAttribute('onclick', 'S.url.fromAnchor(this);return false;');
             });
+        },
+
+        domain: function () {
+            return location.href.split('://')[0] + '://' + location.href.replace('http://', '').replace('https://', '').split('/')[0] + '/';
         }
     },
 
@@ -890,11 +917,21 @@ $(document.body).on('click', function (e) { S.events.doc.click.trigger(e.target)
 $(window).on('resize', function () { S.events.doc.resize.trigger(); });
 $(window).on('scroll', function () { S.events.doc.scroll.trigger(); });
 $('iframe').load(function () { S.events.iframe.loaded(); });
-window.onpopstate = S.events.url.change;
+window.addEventListener('popstate', S.events.url.change);
 
 
 // start timers /////////////////////////////////////////////////////////////////////////////////
 if (typeof document.getElementsByClassName('component') != 'undefined') {
-    S.events.doc.load();
     setTimeout(function () { S.ajax.keepAlive(); }, 100);
 }
+
+//record initial page load in history API
+if (history) {
+    history.replaceState(document.location.href.replace(S.url.domain(), ''), document.title, document.location.href);
+}
+
+//raise event after document is loaded
+S.events.doc.load();
+
+
+

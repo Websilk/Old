@@ -34,6 +34,8 @@ namespace Websilk
         public string js = "";
         public string css = "";
         public string editor = "";
+        public bool already = false;
+        public int pageId = 0;
     }
 
     public class Inject

@@ -81,7 +81,7 @@ namespace Websilk.Pipeline
                     }
 
                     //register app javascript
-                    js += "S.init(" + S.Page.useAJAX.ToString().ToLower() + ",'" + S.ViewStateId + "',S.page.title);";
+                    js += "S.init(" + S.Page.useAJAX.ToString().ToLower() + ",'" + S.ViewStateId + "', S.page.title);";
                     S.Page.RegisterJS("app", js);
 
                     //display Page Editor
@@ -128,14 +128,7 @@ namespace Websilk.Pipeline
                                 "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
                         }
                     }
-
-                    if(S.Page.postJScode.Length > 0)
-                    {
-                        S.Page.postJS += string.Join("\n", S.Page.postJScode) + S.Page.postJSLast;
-                    }
-                                        
                     
-
                     //render web page
                     scaffold.Data["body"] = S.Page.Render();
                     scaffold.Data["scripts"] = scripts + "\n" + "<script type=\"text/javascript\" noasync>" + S.Page.postJS + "</script>";

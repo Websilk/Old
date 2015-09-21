@@ -13,7 +13,7 @@ namespace Websilk.Components.Properties
             }
         }
 
-        public Photo(Core WebsilkCore, ComponentView c) : base(WebsilkCore, c)
+        public Photo(Core WebsilkCore, ComponentView c, string Section) : base(WebsilkCore, c, Section)
         {
             //file|hover-file|orig-width|orig-height|url|new-window|window-name|alt-text|speed (0 - 8)
             //use-bg|bg-size|bg-position|use-tile|use-parallax|parallax-speed|parallax-offset (9 - 15)

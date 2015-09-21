@@ -344,6 +344,7 @@ namespace Websilk
         protected ComponentView _component;
 
         public string id = "";
+        public string section = "";
 
         public ComponentView Component
         {
@@ -361,11 +362,12 @@ namespace Websilk
             get { return 300; }
         }
 
-        public ComponentProperties(Core WebsilkCore, ComponentView c)
+        public ComponentProperties(Core WebsilkCore, ComponentView c, string Section)
         {
             S = WebsilkCore;
             _component = c;
             id = Component.id;
+            section = Section;
             scaffold = new Scaffold(S, "/app/components/" + Component.name.Replace(" ", "/") + "/properties.html", "");
         }
 
