@@ -5,10 +5,10 @@
 *.suo
 *.user
 *.sln.docstates
-wwwroot/content/
-!wwwroot/content/themes/default
-wwwroot/images/screenshots
-wwwroot/images/workflow
+/wwwroot/content/
+/wwwroot/images/screenshots
+/wwwroot/images/workflow
+!/wwwroot/content/themes/default
 *.bak
 
 # Build results
