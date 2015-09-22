@@ -109,7 +109,8 @@ namespace Websilk.Pipeline
                     {
                         scripts = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.4.min.js\"></script>\n" +
                             "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n";
+                            "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n" +
+                            "<script type=\"text/javascript\" src=\"/scripts/utility.js\" noasync></script>\n";
                         if (S.Page.isEditable == true)
                         {
                             scripts += "<script type=\"text/javascript\" src=\"/scripts/core/editor.js?v=" + S.Version + "\" noasync></script>\n" +

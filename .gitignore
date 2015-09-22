@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 wwwroot/content/
+!wwwroot/content/themes/default
 wwwroot/images/screenshots
 wwwroot/images/workflow
 *.bak
