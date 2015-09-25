@@ -274,16 +274,36 @@
                     </div>
                     <div class="arrange-details">
                         <div id="divArrangeDetailsGrid">
-
+                            <div class="row color2">
+                                <div class="column-label">Type</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeGridWidth" onchange="S.components.calls.panel.arrangement.grid.changeWidth()">
+                                        <option value="px">Pixels</option>
+                                        <option value="r">Responsive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color1" id="gridWidthPixels" style="display:none;">
+                                <div class="column-label">Width</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtGridWidthPixels" value="0" style="width:25px" />&nbsp;px
+                                </div>
+                            </div>
+                            <div class="row color1" id="gridWidthResponsive" style="display:none;">
+                                <div class="column-label">Columns</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtGridWidthRows" value="0" style="width:25px" />&nbsp;max
+                                </div>
+                            </div>
                         </div>
-                        <div id="divArrangeDetailsVertical">
-
+                        <div id="divArrangeDetailsRows">
+                            Rows Options
                         </div>
                         <div id="divArrangeDetailsSlideshow">
-
+                            Slideshow Options
                         </div>
                         <div id="divArrangeDetailsBook">
-
+                            Book Options
                         </div>
                     </div>
                     <div class="loading">

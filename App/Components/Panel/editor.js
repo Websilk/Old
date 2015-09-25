@@ -97,10 +97,59 @@ S.components.calls.panel = {
         callback: function (data) {
             if (data.d != '') {
                 //load arrangement data
+                var d = data.d.split(',');
+                var name = '';
+                console.log(d);
+                if (d.length > 0) {
+                    var htm = '';
+                    switch (d[0]) {
+                        case 'grid':
+                            name = 'Grid';
+                            S.components.calls.panel.arrangement.grid.changeWidth();
+                            break;
+                        case 'rows':
+                            name = 'Rows';
+                            break;
+                        case 'slideshow':
+                            name = 'Slideshow';
+                            break;
+                        case 'book':
+                            name = 'Book';
+                            break;
+                    }
+                    htm +=  '<div class="left">' +
+                            '<svg viewBox="0 0 32 32" style="width:25px;"><use xlink:href="#icon-panel' + d[0] + '" x="0" y="0" width="32" height="32" /></svg>' +
+                            '</div>' +
+                            '<div class="left" style="padding: 3px 0px 11px 10px;"><h4>' + name + '</h4></div>' +
+                            '<div class="right" style="padding:5px 5px 0px 0px">' +
+                            '<svg viewBox="0 0 16 5" style="width:17px;"><use xlink:href="#icon-arrow-down" x="0" y="0" width="16" height="5" /></svg>' +
+                            '</div>';
+
+                    $('#divArrangeType').html(htm);
+                    $('.component-select #divArrangeDetails' + name).show();
+                    $('.component-select .section-arrangement .arrange-type, .component-select .section-arrangement .arrange-details').show();
+                    
+                }
 
                 $('.component-select .section-arrangement .loading').hide();
             }
             
+        },
+
+        grid: {
+            changeWidth: function () {
+                var type = $('#lstArrangeGridWidth').val();
+                switch (type) {
+                    case 'px':
+                        $('#gridWidthPixels').show();
+                        $('#gridWidthResponsive').hide();
+                        break;
+                    case 'r':
+                        $('#gridWidthResponsive').show();
+                        $('#gridWidthPixels').hide();
+                        break;
+                }
+            }
         }
     }
 }

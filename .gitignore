@@ -6,7 +6,7 @@
 *.user
 *.sln.docstates
 !/wwwroot/content/themes/default
-/wwwroot/content/
+/wwwroot/content/websites/
 /wwwroot/images/screenshots
 /wwwroot/images/workflow
 
