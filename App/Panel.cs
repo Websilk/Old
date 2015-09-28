@@ -8,7 +8,7 @@ namespace Websilk
     {
         none = -1,
         grid = 0,
-        vertical = 1,
+        rows = 1,
         slideshow = 2,
         book = 3
     }
@@ -21,7 +21,8 @@ namespace Websilk
         public string id = "";
         public int pageId = 0;
         public bool isPartOfTheme = false;
-        public enumArrangement arrangement = 0;
+        public enumArrangement arrangement = enumArrangement.none;
+        public string[] arrange = new string[] { }; //arrangement settings
 
         [JsonIgnore]
         public List<Component> Components = new List<Component>();
@@ -64,14 +65,38 @@ namespace Websilk
                               InnerFoot;
 
             var classes = "";
+            var style = "";
+            if(arrange.Length == 0) { arrange = new string[] { "a", "150", "0" }; }
+
             switch (arrangement)
             {
                 case enumArrangement.grid:
+                    //arrange-settings = width-type (fixed or responsive), fixed-width, 
+                    //                   responsive-max-columns, responsive-min-width, 
+                    //                   height-type (auto or fixed), fixed-height, 
+                    //                   auto-height-mosaic, spacing
                     classes += " item-cell";
+                    if(arrange[0] == "r")
+                    {
+                        style += "min-width:" + arrange[3] + "px;";
+                    }
+                    if(arrange[4] == "f")
+                    {
+                        style += "height:" + arrange[5] + "px;";
+                    }
+                    if(arrange[7] != "0")
+                    {
+                        style += "padding:0px " +(int.Parse(arrange[7]) / 2) + "px;";
+                    }
                     break;
 
-                case enumArrangement.vertical:
+                case enumArrangement.rows:
+                    //arrange-settings = height-type (auto or fixed), fixed-height, spacing
                     classes += " item-cell";
+                    if (arrange[7] != "0")
+                    {
+                        style += "padding-bottom:" + arrange[2] + "px;";
+                    }
                     break;
 
                 case enumArrangement.slideshow:
@@ -83,8 +108,10 @@ namespace Websilk
                     break;
 
             }
+            if(style != "") { style = " style=\"" + style + "\""; }
 
-            htm = StackHead + "<div id=\"" + id + "\" class=\"panel" + name + " ispanel" + (isPartOfTheme == true ? " istheme" : "") + classes + "\">" +
+            htm = StackHead + "<div id=\"" + id + "\" class=\"panel" + name + " ispanel" + (isPartOfTheme == true ? " istheme" : "") + classes + "\"" + 
+                  style + ">" +
                   DesignHead + inner.Render() + DesignFoot + "</div>" + StackFoot;
 
             return htm;

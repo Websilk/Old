@@ -2,7 +2,6 @@
 /// <reference path="global.js" />
 var S = {
     init: function (ajax, viewstateid, title) {
-        console.log(window);
         S.page.useAjax = ajax;
         S.ajax.viewstateId = viewstateid;
         S.viewport.getLevel();
@@ -402,6 +401,7 @@ var S = {
                 go: function () {
                     S.window.changed = true; S.window.pos();
                     if (this.timer.started == false) { return; }
+                    S.viewport.getLevel();
 
                     if (new Date() - this.timer.date > this.timer.timeout) {
                         this.stop();
@@ -413,6 +413,7 @@ var S = {
                 stop: function () {
                     if (this.timer.started == false) { return; }
                     this.timer.started = false;
+                    S.viewport.getLevel();
                 },
 
                 callback: {
@@ -905,11 +906,6 @@ S.util = {}
 
 //setup jQuery //////////////////////////////////////////////////////////////////////////////////////
 $.ajaxSetup({ 'cache': true });
-
-//pseudo-selector "above"
-$.expr[':'].above = function (obj, index, meta, stack) {
-    return S.elem.top(obj) < meta[3];
-}
 
 // Window Events ////////////////////////////////////////////////////////////////////////////////////'
 $(document).on('ready', function () { S.events.doc.ready(); });

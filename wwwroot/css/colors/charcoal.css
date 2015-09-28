@@ -209,18 +209,18 @@
 .interface .color1 textarea,
 .interface .color1 select {
   color: rgba(224, 224, 224, 0.9);
-  background-color: #414141;
+  background-color: #4d4d4d;
 }
 .interface .color1:hover input,
 .interface .color1:hover textarea,
 .interface .color1:hover select {
   color: #e0e0e0;
-  background-color: #414141;
+  background-color: #4d4d4d;
 }
 .interface .color1 input:focus,
 .interface .color1 textarea:focus,
 .interface .color1 select:focus {
-  background-color: #555555;
+  background-color: #6c6c6c;
 }
 .interface .button {
   color: #ffffff;
@@ -342,18 +342,18 @@
 .interface .color2 textarea,
 .interface .color2 select {
   color: rgba(224, 224, 224, 0.9);
-  background-color: #3e3e3e;
+  background-color: #4b4b4b;
 }
 .interface .color2:hover input,
 .interface .color2:hover textarea,
 .interface .color2:hover select {
   color: #e0e0e0;
-  background-color: #3e3e3e;
+  background-color: #4b4b4b;
 }
 .interface .color2 input:focus,
 .interface .color2 textarea:focus,
 .interface .color2 select:focus {
-  background-color: #525252;
+  background-color: #696969;
 }
 .interface .button {
   color: #ffffff;
@@ -478,18 +478,18 @@
 .interface.component-select .color1 textarea,
 .interface.component-select .color1 select {
   color: rgba(255, 255, 255, 0.9);
-  background-color: #3f3f3f;
+  background-color: #4b4b4b;
 }
 .interface.component-select .color1:hover input,
 .interface.component-select .color1:hover textarea,
 .interface.component-select .color1:hover select {
   color: #ffffff;
-  background-color: #3f3f3f;
+  background-color: #4b4b4b;
 }
 .interface.component-select .color1 input:focus,
 .interface.component-select .color1 textarea:focus,
 .interface.component-select .color1 select:focus {
-  background-color: #535353;
+  background-color: #6a6a6a;
 }
 .interface.component-select .button {
   color: #ffffff;
@@ -614,18 +614,18 @@
 .interface.component-select .color2 textarea,
 .interface.component-select .color2 select {
   color: rgba(255, 255, 255, 0.9);
-  background-color: #3f3f3f;
+  background-color: #4b4b4b;
 }
 .interface.component-select .color2:hover input,
 .interface.component-select .color2:hover textarea,
 .interface.component-select .color2:hover select {
   color: #ffffff;
-  background-color: #3f3f3f;
+  background-color: #4b4b4b;
 }
 .interface.component-select .color2 input:focus,
 .interface.component-select .color2 textarea:focus,
 .interface.component-select .color2 select:focus {
-  background-color: #535353;
+  background-color: #6a6a6a;
 }
 .interface.component-select .button {
   color: #ffffff;
@@ -750,18 +750,18 @@
 .interface.component-select.forpanel .color1 textarea,
 .interface.component-select.forpanel .color1 select {
   color: #ffffff;
-  background-color: #4fc1ba;
+  background-color: #62c7c1;
 }
 .interface.component-select.forpanel .color1:hover input,
 .interface.component-select.forpanel .color1:hover textarea,
 .interface.component-select.forpanel .color1:hover select {
   color: #ffffff;
-  background-color: #4fc1ba;
+  background-color: #62c7c1;
 }
 .interface.component-select.forpanel .color1 input:focus,
 .interface.component-select.forpanel .color1 textarea:focus,
 .interface.component-select.forpanel .color1 select:focus {
-  background-color: #6ecbc6;
+  background-color: #8fd7d3;
 }
 .interface.component-select.forpanel .button {
   color: #ffffff;
@@ -886,18 +886,18 @@
 .interface.component-select.forpanel .color2 textarea,
 .interface.component-select.forpanel .color2 select {
   color: #ffffff;
-  background-color: #4fc1ba;
+  background-color: #62c7c1;
 }
 .interface.component-select.forpanel .color2:hover input,
 .interface.component-select.forpanel .color2:hover textarea,
 .interface.component-select.forpanel .color2:hover select {
   color: #ffffff;
-  background-color: #4fc1ba;
+  background-color: #62c7c1;
 }
 .interface.component-select.forpanel .color2 input:focus,
 .interface.component-select.forpanel .color2 textarea:focus,
 .interface.component-select.forpanel .color2 select:focus {
-  background-color: #6ecbc6;
+  background-color: #8fd7d3;
 }
 .interface.component-select.forpanel .button {
   color: #ffffff;
@@ -1019,18 +1019,18 @@
 .interface .purple textarea,
 .interface .purple select {
   color: #e0e0e0;
-  background-color: #64157a;
+  background-color: #76198f;
 }
 .interface .purple:hover input,
 .interface .purple:hover textarea,
 .interface .purple:hover select {
   color: #e0e0e0;
-  background-color: #64157a;
+  background-color: #76198f;
 }
 .interface .purple input:focus,
 .interface .purple textarea:focus,
 .interface .purple select:focus {
-  background-color: #811c9c;
+  background-color: #a122c3;
 }
 .interface .button {
   color: #ffffff;
@@ -1152,18 +1152,18 @@
 .interface .blue textarea,
 .interface .blue select {
   color: #e0e0e0;
-  background-color: #132e6c;
+  background-color: #173882;
 }
 .interface .blue:hover input,
 .interface .blue:hover textarea,
 .interface .blue:hover select {
   color: #e0e0e0;
-  background-color: #132e6c;
+  background-color: #173882;
 }
 .interface .blue input:focus,
 .interface .blue textarea:focus,
 .interface .blue select:focus {
-  background-color: #193d8f;
+  background-color: #204eb6;
 }
 .interface .button {
   color: #ffffff;
@@ -1285,18 +1285,18 @@
 .interface .turqoise textarea,
 .interface .turqoise select {
   color: #e0e0e0;
-  background-color: #146f6d;
+  background-color: #178582;
 }
 .interface .turqoise:hover input,
 .interface .turqoise:hover textarea,
 .interface .turqoise:hover select {
   color: #e0e0e0;
-  background-color: #146f6d;
+  background-color: #178582;
 }
 .interface .turqoise input:focus,
 .interface .turqoise textarea:focus,
 .interface .turqoise select:focus {
-  background-color: #1a928e;
+  background-color: #21b9b4;
 }
 .interface .button {
   color: #ffffff;
@@ -1418,18 +1418,18 @@
 .interface .green textarea,
 .interface .green select {
   color: #e0e0e0;
-  background-color: #12682c;
+  background-color: #167d35;
 }
 .interface .green:hover input,
 .interface .green:hover textarea,
 .interface .green:hover select {
   color: #e0e0e0;
-  background-color: #12682c;
+  background-color: #167d35;
 }
 .interface .green input:focus,
 .interface .green textarea:focus,
 .interface .green select:focus {
-  background-color: #188a3b;
+  background-color: #1fb14c;
 }
 .interface .button {
   color: #ffffff;
@@ -1551,18 +1551,18 @@
 .interface .yellow textarea,
 .interface .yellow select {
   color: #e0e0e0;
-  background-color: #827517;
+  background-color: #98891b;
 }
 .interface .yellow:hover input,
 .interface .yellow:hover textarea,
 .interface .yellow:hover select {
   color: #e0e0e0;
-  background-color: #827517;
+  background-color: #98891b;
 }
 .interface .yellow input:focus,
 .interface .yellow textarea:focus,
 .interface .yellow select:focus {
-  background-color: #a5941d;
+  background-color: #ccb724;
 }
 .interface .button {
   color: #ffffff;
@@ -1684,18 +1684,18 @@
 .interface .orange textarea,
 .interface .orange select {
   color: #e0e0e0;
-  background-color: #824c17;
+  background-color: #98591b;
 }
 .interface .orange:hover input,
 .interface .orange:hover textarea,
 .interface .orange:hover select {
   color: #e0e0e0;
-  background-color: #824c17;
+  background-color: #98591b;
 }
 .interface .orange input:focus,
 .interface .orange textarea:focus,
 .interface .orange select:focus {
-  background-color: #a5601d;
+  background-color: #cc7724;
 }
 .interface .button {
   color: #ffffff;
@@ -1817,18 +1817,18 @@
 .interface .red textarea,
 .interface .red select {
   color: #e0e0e0;
-  background-color: #821717;
+  background-color: #981b1b;
 }
 .interface .red:hover input,
 .interface .red:hover textarea,
 .interface .red:hover select {
   color: #e0e0e0;
-  background-color: #821717;
+  background-color: #981b1b;
 }
 .interface .red input:focus,
 .interface .red textarea:focus,
 .interface .red select:focus {
-  background-color: #a51d1d;
+  background-color: #cc2424;
 }
 .interface .button {
   color: #ffffff;
@@ -2015,18 +2015,18 @@
 .interface.dashboard .color1 textarea,
 .interface.dashboard .color1 select {
   color: rgba(68, 68, 68, 0.9);
-  background-color: #cacaca;
+  background-color: #bdbdbd;
 }
 .interface.dashboard .color1:hover input,
 .interface.dashboard .color1:hover textarea,
 .interface.dashboard .color1:hover select {
   color: #444444;
-  background-color: #cacaca;
+  background-color: #bdbdbd;
 }
 .interface.dashboard .color1 input:focus,
 .interface.dashboard .color1 textarea:focus,
 .interface.dashboard .color1 select:focus {
-  background-color: #b5b5b5;
+  background-color: #9e9e9e;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2148,18 +2148,18 @@
 .interface.dashboard .color2 textarea,
 .interface.dashboard .color2 select {
   color: rgba(68, 68, 68, 0.9);
-  background-color: #c7c7c7;
+  background-color: #bababa;
 }
 .interface.dashboard .color2:hover input,
 .interface.dashboard .color2:hover textarea,
 .interface.dashboard .color2:hover select {
   color: #444444;
-  background-color: #c7c7c7;
+  background-color: #bababa;
 }
 .interface.dashboard .color2 input:focus,
 .interface.dashboard .color2 textarea:focus,
 .interface.dashboard .color2 select:focus {
-  background-color: #b3b3b3;
+  background-color: #9c9c9c;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2281,18 +2281,18 @@
 .interface.dashboard .purple textarea,
 .interface.dashboard .purple select {
   color: #444444;
-  background-color: #d7abe3;
+  background-color: #ce98dd;
 }
 .interface.dashboard .purple:hover input,
 .interface.dashboard .purple:hover textarea,
 .interface.dashboard .purple:hover select {
   color: #444444;
-  background-color: #d7abe3;
+  background-color: #ce98dd;
 }
 .interface.dashboard .purple input:focus,
 .interface.dashboard .purple textarea:focus,
 .interface.dashboard .purple select:focus {
-  background-color: #c98cd9;
+  background-color: #b86acd;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2414,18 +2414,18 @@
 .interface.dashboard .blue textarea,
 .interface.dashboard .blue select {
   color: #444444;
-  background-color: #9fb3df;
+  background-color: #8ca3d9;
 }
 .interface.dashboard .blue:hover input,
 .interface.dashboard .blue:hover textarea,
 .interface.dashboard .blue:hover select {
   color: #444444;
-  background-color: #9fb3df;
+  background-color: #8ca3d9;
 }
 .interface.dashboard .blue input:focus,
 .interface.dashboard .blue textarea:focus,
 .interface.dashboard .blue select:focus {
-  background-color: #809ad5;
+  background-color: #5e7fc9;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2547,18 +2547,18 @@
 .interface.dashboard .turqoise textarea,
 .interface.dashboard .turqoise select {
   color: #444444;
-  background-color: #a2e0de;
+  background-color: #8fdad7;
 }
 .interface.dashboard .turqoise:hover input,
 .interface.dashboard .turqoise:hover textarea,
 .interface.dashboard .turqoise:hover select {
   color: #444444;
-  background-color: #a2e0de;
+  background-color: #8fdad7;
 }
 .interface.dashboard .turqoise input:focus,
 .interface.dashboard .turqoise textarea:focus,
 .interface.dashboard .turqoise select:focus {
-  background-color: #83d6d3;
+  background-color: #61cac7;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2680,18 +2680,18 @@
 .interface.dashboard .green textarea,
 .interface.dashboard .green select {
   color: #444444;
-  background-color: #9bdeaf;
+  background-color: #88d7a0;
 }
 .interface.dashboard .green:hover input,
 .interface.dashboard .green:hover textarea,
 .interface.dashboard .green:hover select {
   color: #444444;
-  background-color: #9bdeaf;
+  background-color: #88d7a0;
 }
 .interface.dashboard .green input:focus,
 .interface.dashboard .green textarea:focus,
 .interface.dashboard .green select:focus {
-  background-color: #7dd497;
+  background-color: #5ac87c;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2813,18 +2813,18 @@
 .interface.dashboard .yellow textarea,
 .interface.dashboard .yellow select {
   color: #444444;
-  background-color: #e5dfb3;
+  background-color: #dfd79f;
 }
 .interface.dashboard .yellow:hover input,
 .interface.dashboard .yellow:hover textarea,
 .interface.dashboard .yellow:hover select {
   color: #444444;
-  background-color: #e5dfb3;
+  background-color: #dfd79f;
 }
 .interface.dashboard .yellow input:focus,
 .interface.dashboard .yellow textarea:focus,
 .interface.dashboard .yellow select:focus {
-  background-color: #dbd394;
+  background-color: #d0c471;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -2946,18 +2946,18 @@
 .interface.dashboard .orange textarea,
 .interface.dashboard .orange select {
   color: #444444;
-  background-color: #e5ccb3;
+  background-color: #dfbf9f;
 }
 .interface.dashboard .orange:hover input,
 .interface.dashboard .orange:hover textarea,
 .interface.dashboard .orange:hover select {
   color: #444444;
-  background-color: #e5ccb3;
+  background-color: #dfbf9f;
 }
 .interface.dashboard .orange input:focus,
 .interface.dashboard .orange textarea:focus,
 .interface.dashboard .orange select:focus {
-  background-color: #dbb794;
+  background-color: #d0a071;
 }
 .interface.dashboard .button {
   color: #ffffff;
@@ -3079,18 +3079,18 @@
 .interface.dashboard .red textarea,
 .interface.dashboard .red select {
   color: #444444;
-  background-color: #e5b3b3;
+  background-color: #df9f9f;
 }
 .interface.dashboard .red:hover input,
 .interface.dashboard .red:hover textarea,
 .interface.dashboard .red:hover select {
   color: #444444;
-  background-color: #e5b3b3;
+  background-color: #df9f9f;
 }
 .interface.dashboard .red input:focus,
 .interface.dashboard .red textarea:focus,
 .interface.dashboard .red select:focus {
-  background-color: #db9494;
+  background-color: #d07171;
 }
 .interface.dashboard .button {
   color: #ffffff;

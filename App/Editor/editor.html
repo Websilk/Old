@@ -267,43 +267,247 @@
 
                 <div class="section-arrangement" style="width:200px;">
                     <div class="row color1 column-title">Arrangement</div>
-                    <div class="row color1 arrange-type">
-                        <div class="column-row" id="divArrangeType">
+                    <div class="row color2" id="divArrangeType">
+                        <div class="column-row arrange-type" style="cursor:pointer;" onclick="S.components.calls.panel.arrangement.list();">
 
                         </div>
                     </div>
-                    <div class="arrange-details">
+                    <div id="divArrangeTypes" style="display:none;">
+                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('grid')">
+                            <div class="column-row">
+                                <div class="left">
+                                    <svg viewBox="0 0 32 32" style="width:25px;">
+                                        <use xlink:href="#icon-panelgrid" x="0" y="0" width="32" height="32" />
+                                    </svg>
+                                </div>
+                                <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Grid</h4></div>
+                            </div>
+                        </div>
+                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('rows')">
+                            <div class="column-row">
+                                <div class="left">
+                                    <svg viewBox="0 0 32 32" style="width:25px;">
+                                        <use xlink:href="#icon-panelrows" x="0" y="0" width="32" height="32" />
+                                    </svg>
+                                </div>
+                                <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Rows</h4></div>
+                            </div>
+                        </div>
+                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('slideshow')">
+                            <div class="column-row">
+                                <div class="left">
+                                    <svg viewBox="0 0 32 32" style="width:25px;">
+                                        <use xlink:href="#icon-panelslideshow" x="0" y="0" width="32" height="32" />
+                                    </svg>
+                                </div>
+                                <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Slideshow</h4></div>
+                            </div>
+                        </div>
+                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('book')">
+                            <div class="column-row">
+                                <div class="left">
+                                    <svg viewBox="0 0 32 32" style="width:25px;">
+                                        <use xlink:href="#icon-panelbook" x="0" y="0" width="32" height="32" />
+                                    </svg>
+                                </div>
+                                <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Book</h4></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divArrangeDetails">
                         <div id="divArrangeDetailsGrid">
-                            <div class="row color2">
-                                <div class="column-label">Type</div>
+                            <div class="row color1">
+                                <div class="column-label">Width</div>
                                 <div class="column-input">
                                     <select id="lstArrangeGridWidth" onchange="S.components.calls.panel.arrangement.grid.changeWidth()">
-                                        <option value="px">Pixels</option>
+                                        <option value="f">Fixed</option>
                                         <option value="r">Responsive</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color1" id="gridWidthPixels" style="display:none;">
+                            <div class="row color2" id="gridWidthFixed" style="display:none;">
                                 <div class="column-label">Width</div>
                                 <div class="column-input">
-                                    <input type="text" id="txtGridWidthPixels" value="0" style="width:25px" />&nbsp;px
+                                    <input type="text" id="txtGridWidthFixed" value="0" style="width:25px" />&nbsp;px
                                 </div>
                             </div>
-                            <div class="row color1" id="gridWidthResponsive" style="display:none;">
+                            <div class="row color2" id="gridWidthResponsive" style="display:none;">
                                 <div class="column-label">Columns</div>
                                 <div class="column-input">
-                                    <input type="text" id="txtGridWidthRows" value="0" style="width:25px" />&nbsp;max
+                                    <select id="lstArrangeGridColumns">
+                                        <option value="2">2 columns</option>
+                                        <option value="3">3 columns</option>
+                                        <option value="4">4 columns</option>
+                                        <option value="5">5 columns</option>
+                                        <option value="6">6 columns</option>
+                                        <option value="7">7 columns</option>
+                                        <option value="8">8 columns</option>
+                                        <option value="9">9 columns</option>
+                                        <option value="10">10 columns</option>
+                                        <option value="11">11 columns</option>
+                                        <option value="12">12 columns</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color2" id="gridWidthResponsiveMin" style="display:none;">
+                                <div class="column-label">Minimum</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtGridWidthMin" value="0" style="width:25px" />&nbsp;px width
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label">Height</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeGridHeight" onchange="S.components.calls.panel.arrangement.grid.changeHeight()">
+                                        <option value="f">Fixed</option>
+                                        <option value="a">Auto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color2" id="gridHeightFixed" style="display:none;">
+                                <div class="column-label">Height</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtGridHeightFixed" value="0" style="width:25px" />&nbsp;px
+                                </div>
+                            </div>
+                            <div class="row color2" id="gridHeightAuto" style="display:none;">
+                                <div class="column-label"></div>
+                                <div class="column-input">
+                                    <input type="checkbox" id="chkGridMosaic" /><label for="chkGridMosaic">Mosaic Grid</label>
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label">Spacing</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtGridSpacing" style="width:40px"  /> px
                                 </div>
                             </div>
                         </div>
                         <div id="divArrangeDetailsRows">
-                            Rows Options
+                            <div class="row color1">
+                                <div class="column-label">Height</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeRowsHeight" onchange="S.components.calls.panel.arrangement.rows.changeHeight()">
+                                        <option value="f">Fixed</option>
+                                        <option value="a">Auto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color2" id="rowsHeightFixed" style="display:none;">
+                                <div class="column-label">Height</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtRowsHeightFixed" value="0" style="width:25px" />&nbsp;px
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label">Spacing</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtRowsSpacing" style="width:25px" /> px
+                                </div>
+                            </div>
                         </div>
                         <div id="divArrangeDetailsSlideshow">
-                            Slideshow Options
+                            <div class="row color1">
+                                <div class="column-label">Height</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeSlideTransition" onchange="S.components.calls.panel.arrangement.slideshow.changeTransition()">
+                                        <option value="h">Horizontal</option>
+                                        <option value="v">Vertical</option>
+                                        <option value="f">Fade In</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color2">
+                                <div class="column-label">Easing</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeSlideEasing">
+                                        <option value="linear">Linear</option>
+                                        <option value="swing">Swing</option>
+                                        <option value="easeInQuad">Ease In</option>
+                                        <option value="easeOutQuad">Ease Out</option>
+                                        <option value="easeInOutQuad">Ease In Out</option>
+                                        <option value="easeInCubic">Cubic In</option>
+                                        <option value="easeOutCubic">Cubic Out</option>
+                                        <option value="easeInOutCubic">Cubic In Out</option>
+                                        <option value="easeInQuart">Quart In</option>
+                                        <option value="easeOutQuart">Quart Out</option>
+                                        <option value="easeInOutQuart">Quart In Out</option>
+                                        <option value="easeInQuint">Quint In</option>
+                                        <option value="easeOutQuint">Quint Out</option>
+                                        <option value="easeInOutQuint">Quint In Out</option>
+                                        <option value="easeInExpo">Expo In</option>
+                                        <option value="easeOutExpo">Expo Out</option>
+                                        <option value="easeInOutExpo">Expo In Out</option>
+                                        <option value="easeInSine">Sine In</option>
+                                        <option value="easeOutSine">Sine Out</option>
+                                        <option value="easeInOutSine">Sine In Out</option>
+                                        <option value="easeInCirc">Circ In</option>
+                                        <option value="easeOutCirc">Circ Out</option>
+                                        <option value="easeInOutCirc">Circ In Out</option>
+                                        <option value="easeInElastic">Elastic In</option>
+                                        <option value="easeOutElastic">Elastic Out</option>
+                                        <option value="easeInOutElastic">Elastic In Out</option>
+                                        <option value="easeInBack">Back In</option>
+                                        <option value="easeOutBack">Back Out</option>
+                                        <option value="easeInOutBack">Back In Out</option>
+                                        <option value="easeInBounce">Bounce In</option>
+                                        <option value="easeOutBounce">Bounce Out</option>
+                                        <option value="easeInOutBounce">Bounce In Out</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label">Speed</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtSlideSpeed" value="0" style="width:25px" />&nbsp;milliseconds
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label"></div>
+                                <div class="column-input">
+                                    <input type="checkbox" id="chkSlideAutoPlay" onchange="S.components.calls.panel.arrangement.slideshow.changeAutoPlay()" /><label for="chkSlideAutoPlay">Autoplay</label>
+                                </div>
+                            </div>
+                            <div class="row color1" id="slideAutoPlayDelay" style="display:none">
+                                <div class="column-label">Delay</div>
+                                <div class="column-input">
+                                    <input type="text" id="txtSlideDelay" value="0" style="width:25px" />&nbsp;seconds
+                                </div>
+                            </div>
                         </div>
                         <div id="divArrangeDetailsBook">
-                            Book Options
+                            <div class="row color1">
+                                <div class="column-label">Paper</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeBookPaper">
+                                        <option value="m">Matte</option>
+                                        <option value="l">Laminate</option>
+                                        <option value="t">Textured</option>
+                                        <option value="p">Plain</option>
+                                        <option value="a">Ancient</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row color1">
+                                <div class="column-label">Start At</div>
+                                <div class="column-input">
+                                    <select id="lstArrangeBookStart">
+                                        <option value="0">Book Cover</option>
+                                        <option value="1">Page #1</option>
+                                        <option value="2">Page #2</option>
+                                        <option value="3">Page #3</option>
+                                        <option value="4">Page #4</option>
+                                        <option value="5">Page #5</option>
+                                        <option value="6">Page #6</option>
+                                        <option value="7">Page #7</option>
+                                        <option value="8">Page #8</option>
+                                        <option value="9">Page #9</option>
+                                        <option value="10">Page #10</option>
+                                        <option value="11">Page #11</option>
+                                        <option value="12">Page #12</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="loading">

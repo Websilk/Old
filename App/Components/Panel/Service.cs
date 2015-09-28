@@ -151,5 +151,11 @@ namespace Websilk.Services.Components
 
             return response;
         }
+
+        public string SaveArrangement(string id, string arrange)
+        {
+
+            return "";
+        }
     }
 }

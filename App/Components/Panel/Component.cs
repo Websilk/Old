@@ -9,10 +9,11 @@ namespace Websilk.Components
         public string headHtml = "";
         public string footHtml = "";
         private enumArrangement _arrangment;
+        private string[] _arrange = new string[] { };
 
         public Panel(Core WebsilkCore) : base(WebsilkCore)
         {
-            
+            _arrangment = enumArrangement.none;
         }
 
         public override string name
@@ -67,12 +68,13 @@ namespace Websilk.Components
             {
                 //setup initial panel data
                 dataField = "Panel,panel,";
-                designField = "grid|";
+                designField = "rows|a,150,0";
                 data = new string[] { dataField };
                 panelData = dataField.Split(',');
             }
 
             //create the panel instances that belong to this component
+            if(designField == "") { designField = "rows|a,150,0"; LoadDataArrays(); }
             for (int x = 0; x < data.Length; x++)
             {
                 panelData = data[x].Split(',');
@@ -119,23 +121,36 @@ namespace Websilk.Components
             List<string> panels = new List<string>();
             //data = name,design,css|name,design,css|etc...
             //design = arrange-type|arrange-settings|...
+            string[] arrange = design[1].Split(',');
+            _arrange = arrange;
 
             enumArrangement arrangement = getArrangement();
             switch (arrangement)
             {
                 case enumArrangement.grid:
+                    //arrange-settings = width-type (fixed or responsive), fixed-width, 
+                    //                   responsive-max-columns, responsive-min-width, 
+                    //                   height-type (auto or fixed), fixed-height, 
+                    //                   auto-height-mosaic, spacing
                     DivItem.Classes.Add("arrange-grid");
+                    if(arrange[0] == "r")
+                    {
+                        DivItem.Classes.Add("columns" + arrange[2]);
+                    }
                     break;
 
-                case enumArrangement.vertical:
-                    DivItem.Classes.Add("arrange-vertical");
+                case enumArrangement.rows:
+                    //arrange-settings = height-type (auto or fixed), fixed-height, spacing
+                    DivItem.Classes.Add("arrange-rows");
                     break;
 
                 case enumArrangement.slideshow:
+                    //arrange-settings = transition, easing-type, transition-time, auto-play, auto-play-delay
                     DivItem.Classes.Add("arrange-slideshow");
                     break;
 
                 case enumArrangement.book:
+                    //arrange-settings = paper-material (matte, laminant, textured, plain, ancient), starting-page (0=book cover, 1=page #1)
                     DivItem.Classes.Add("arrange-book");
                     break;
             }
@@ -154,8 +169,10 @@ namespace Websilk.Components
         {
             string[] panelData;
             string panelCss = "";
-            string panelDesign = "!";
             Element.Panel elemPanel = null;
+
+            string[] arrange = _arrange;
+            if(arrange.Length == 0) { arrange = design[1].Split(','); }
 
             GetPanelList();
 
@@ -168,6 +185,7 @@ namespace Websilk.Components
             {
                 panelData = new string[] { "", "", "" };
             }
+
             if (panelData[1] != "")
             {
                 //add CSS styling to panel inner div
@@ -175,13 +193,14 @@ namespace Websilk.Components
             }
 
             //add skin to panel
-            if (panelDesign != panelData[1] || elemPanel == null)
+            if (panelData[1] != "!" || elemPanel == null)
             {
                 elemPanel = (Element.Panel)S.Elements.Load(ElementType.Panel, panelData[1]);
             }
 
             //add arrangement type to panel
             myPanels[index].arrangement = getArrangement();
+            myPanels[index].arrange = arrange;
             elemPanel.Render(myPanels[index]);
             if (panelCss != "") { S.Page.RegisterCSS("panel" + id + "_" + index, panelCss); }
             return myPanels[index].Render();
@@ -196,11 +215,11 @@ namespace Websilk.Components
                 //load arrangement from design settings
                 switch (design[0])
                 {
-                    case "vertical":
-                        arrangement = enumArrangement.vertical;
+                    case "rows":
+                        arrangement = enumArrangement.rows;
                         break;
                     case "slideshow":
-                        arrangement = enumArrangement.vertical;
+                        arrangement = enumArrangement.slideshow;
                         break;
                     case "book":
                         arrangement = enumArrangement.book;

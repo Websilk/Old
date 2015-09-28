@@ -45,6 +45,35 @@ select, input, textarea{margin:0px;}
 .webpage .type-photo a.hover:hover img:first-child{opacity:0;}
 .webpage .type-photo a.hover:hover img.over{opacity:1;}
 
+.webpage .arrange-grid > .ispanel{box-sizing:border-box; float:left;}
+.webpage .arrange-grid.columns2 > .ispanel{ width:50%; }
+.webpage .arrange-grid.columns3 > .ispanel{ width:33.3333%; }
+.webpage .arrange-grid.columns4 > .ispanel{ width:25%; }
+.webpage .arrange-grid.columns5 > .ispanel{ width:20%; }
+.webpage .arrange-grid.columns6 > .ispanel{ width:16.6666%; }
+.webpage .arrange-grid.columns7 > .ispanel{ width:14.2857%; }
+.webpage .arrange-grid.columns8 > .ispanel{ width:12.5%; }
+.webpage .arrange-grid.columns9 > .ispanel{ width:11.1111%; }
+.webpage .arrange-grid.columns10 > .ispanel{ width:10%; }
+.webpage .arrange-grid.columns11 > .ispanel{ width:9.0909%; }
+.webpage .arrange-grid.columns12 > .ispanel{ width:8.3333%; }
+body.s-tablet .webpage .arrange-grid > .ispanel{ width:50%; min-width:unset !important;}
+body.s-tablet .webpage .arrange-grid.columns8 > .ispanel,
+body.s-tablet .webpage .arrange-grid.columns9 > .ispanel,
+body.s-tablet .webpage .arrange-grid.columns10 > .ispanel,
+body.s-tablet .webpage .arrange-grid.columns11 > .ispanel,
+body.s-tablet .webpage .arrange-grid.columns12 > .ispanel{width:33.3333%;}
+body.s-mobile .webpage .arrange-grid > .ispanel{ width:100%; min-width:unset !important;}
+body.s-mobile .webpage .arrange-grid.columns6 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns7 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns8 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns9 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns10 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns11 > .ispanel,
+body.s-mobile .webpage .arrange-grid.columns12 > .ispanel
+{ width:50%; min-width:unset !important;}
+body.s-cell .webpage .arrange-grid > .ispanel{ width:100%; min-width:unset !important;}
+
 /*special elements*/
 .svgicons{position:absolute; height:0px; width:0px;}
 .mb_YTVPBar{display:none !important;}
@@ -186,6 +215,7 @@ options at the top and paging buttons on the bottom for example*/
 .spacing .menu-column{padding:0px 15px 0px 0px;}
 .spacing .menu-column.end{padding:0px;}/*last div in the menu*/
 .spacing .menu-column.group-end{padding-right:30px;}/*last div in a group of floating divs*/
+
 
 /*
 /////////////////////////////////////////////////////////////////

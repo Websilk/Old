@@ -1414,7 +1414,8 @@ S.editor = {
                         }
                     }
                     //check if hovered panel cell element has siblings
-                    if ($('#' + parentId).parent().hasClass('arrange-grid') == true) {
+                    var parent = $('#' + parentId).parent();
+                    if (parent.hasClass('arrange-grid') == true || parent.hasClass('arrange-rows') == true) {
                         //cancel if panel cell has no siblings
                         if ($('#' + p.parentNode.id + ' > .ispanel').length == 1) { return; }
                     } else {
@@ -1744,6 +1745,7 @@ S.editor = {
 
                 }
                 this.load();
+                S.editor.components.resizeSelectBox();
             },
 
             hideAll: function () {
@@ -2206,7 +2208,8 @@ S.editor = {
                 menuy = S.window.scrolly + 70 - cPos.y;
             }
             $('.component-select .menu, .component-select .properties > .box').css({ top: menuy });
-
+            var bh = S.elem.height($('.component-select .menu, .component-select .properties > .box').get());
+            $('.component-select .properties > .barrier').css({ top: menuy + bh });
             //reposition duplicate button
             if (cPos.y + cPos.h - 70 > S.window.absolute.h + S.window.scrolly) {
                 $('.component-select .btn-duplicate').css({
@@ -2322,6 +2325,15 @@ S.editor = {
 
         //functions
 
+        hoveredComponent: function(){
+            var c = this.hovered;
+            if (c.id == 'inner') {
+                var p = S.elem.panelCell(c);
+                return p.parentNode;
+            }
+            return c;
+        },
+
         inRange: function (cPos, ePos) {
             //cPos = target
             //ePos = element that may be in range
@@ -2337,26 +2349,6 @@ S.editor = {
             }
             return false;
 
-        },
-
-        getComponentAbove: function (c, y) {
-            var ePos, cPos = S.elem.pos(c);
-            //if (arguments[1] != null) { cPos = arguments[1];}
-            var panel = S.elem.panel(c);
-            var comps = $(panel).find('.component:above(' + (y + 300) + ')').sort(function (a, b) {
-                var aPos = S.elem.pos(a), bPos = S.elem.pos(b);
-                if (aPos.y + aPos.h > bPos.y + bPos.h) { return -1; } return 1;
-            });
-            if (comps.length == 0) { return null; }
-            for (x = 0; x < comps.length; x++) {
-                if ($(comps[x]).parents('.component').parents(panel).length == 0 && comps[x] != c) {
-                    ePos = S.elem.pos(comps[x]);
-                    if (ePos.y + (ePos.h / 2) <= y) {
-                        if (this.inRange(cPos, ePos) == true || this.inRange(ePos, cPos) == true) { return comps[x]; }
-                    }
-                }
-            }
-            return null;
         },
 
         getPositionCss: function (c, level, position) {
