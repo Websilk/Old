@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Websilk
 {
@@ -51,7 +50,8 @@ namespace Websilk
                     Random rnd = new Random();
                     int ran = rnd.Next(1, 9999);
                     js += "$.when(" + "$.getScript('/scripts/core/editor.js?v=" + ran + "')," + 
-                        "$.getScript('/scripts/rangy/rangy-compiled.js?v=" + ran + "')," + 
+                        "$.getScript('/scripts/rangy/lib/rangy-core.js?v=" + ran + "')," +
+                        "$.getScript('/scripts/rangy/lib/rangy-classapplier.js?v=" + ran + "')," +
                         "$.getScript('/scripts/utility/dropzone.js?v=" + ran + "')," + 
                         "$.Deferred(function(deferred){$(deferred.resolve);})" + 
                         ").done(function(){ S.editor.load(); });";

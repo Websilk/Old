@@ -114,7 +114,8 @@ namespace Websilk.Pipeline
                         if (S.Page.isEditable == true)
                         {
                             scripts += "<script type=\"text/javascript\" src=\"/scripts/core/editor.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/rangy/rangy-compiled.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" src=\"/scripts/rangy/lib/rangy-core.js?v=" + S.Version + "\" noasync></script>\n" +
+                                "<script type=\"text/javascript\" src=\"/scripts/rangy/lib/rangy-classapplier.js?v=" + S.Version + "\" noasync></script>\n" +
                                 "<script type=\"text/javascript\" src=\"/scripts/utility/dropzone.js?v=" + S.Version + "\" noasync></script>\n" +
                                 "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
                         }

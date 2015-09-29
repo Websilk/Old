@@ -69,8 +69,7 @@ namespace Websilk.Components
                 //setup initial panel data
                 dataField = "Panel,panel,";
                 designField = "rows|a,150,0";
-                data = new string[] { dataField };
-                panelData = dataField.Split(',');
+                LoadDataArrays();
             }
 
             //create the panel instances that belong to this component

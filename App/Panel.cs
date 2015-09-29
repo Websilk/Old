@@ -66,7 +66,31 @@ namespace Websilk
 
             var classes = "";
             var style = "";
-            if(arrange.Length == 0) { arrange = new string[] { "a", "150", "0" }; }
+
+            //check if arrangement settings are empty
+            bool isempty = false;
+            if(arrange.Length == 0) { isempty = true; }
+            if(arrange.Length > 0) { if (arrange[0] == "") { isempty = true; } }
+            if(isempty == true)
+            {
+                //set default arrangement settings
+                switch (arrangement)
+                {
+                    case enumArrangement.grid:
+                        arrange = new string[] { "r", "300", "3", "250", "a", "200", "0", "0" };
+                        break;
+                    case enumArrangement.rows:
+                        arrange = new string[] { "a", "150", "0" };
+                        break;
+                    case enumArrangement.slideshow:
+                        arrange = new string[] { "h", "easeInOutQuad", "700", "0", "5" };
+                        break;
+                    case enumArrangement.book:
+                        arrange = new string[] { "m", "0" };
+                        break;
+
+                }
+            }
 
             switch (arrangement)
             {
@@ -93,7 +117,7 @@ namespace Websilk
                 case enumArrangement.rows:
                     //arrange-settings = height-type (auto or fixed), fixed-height, spacing
                     classes += " item-cell";
-                    if (arrange[7] != "0")
+                    if (arrange[2] != "0")
                     {
                         style += "padding-bottom:" + arrange[2] + "px;";
                     }
