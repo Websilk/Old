@@ -4163,16 +4163,10 @@ S.hotkeys = {
                 switch (k) {
                     case 67: //c (copy)
 
+                        return false;
                         break;
                     case 86: //v (paste)
-                        var panelId = '', scrolly = S.window.pos().scrolly;
-                        if (isPanel == true) {
-                            panelId = itemId;
-                            var pPos = S.elem.pos(p);
-                            scrolly = S.window.pos().scrolly - pPos.y + 50;
-                        }
-                        //var panelIndex = ''; //index of visible panel in a slideshow
-                        //postWebsilkAjax('7', panelId + ',' + panelIndex + ',' + scrolly + ',' + interfaceSelected);
+                        
                         return false;
                         break;
                     case 88: //x (cut)
@@ -4483,8 +4477,6 @@ S.events.url.callback.add($('.editor')[0], null, S.editor.events.url.change);
 $('.webpage').delegate('.component', 'mouseenter', S.editor.components.mouseEnter);
 $('.webpage').delegate('.inner-panel', 'mouseenter', S.editor.components.mouseEnter);
 $('.component-select').delegate('.resize-bar', 'mousedown', S.editor.components.resize.start);
-$('.component-select .btn-duplicate > .submenu').hoverIntent({
-    over: function () { $('.component-select .btn-duplicate .label').show(); },
-    out: function () { $('.component-select .btn-duplicate .label').hide(); },
-    sensitivity: 100, interval: 333, timeout: 0
-});
+$('.component-select .btn-duplicate > .submenu').hover(
+    function () { $('.component-select .btn-duplicate .label').show(); },
+    function () { $('.component-select .btn-duplicate .label').hide(); });

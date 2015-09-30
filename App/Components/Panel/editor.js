@@ -93,7 +93,7 @@ S.components.calls.panel = {
                 if (S.components.cache[c.id].arrangement != null) {
                     this.load(S.components.cache[c.id].arrangement);
                 } else {
-                    S.ajax.post('websilk/Components/Panel/Arrangement', { id: c.id.substr(1) }, this.callback);
+                    S.ajax.post('/api/Components/Panel/Arrangement', { id: c.id.substr(1) }, this.callback);
                     //hide previously loaded data
                     $('.component-select #divArrangeDetails > div, .component-select #divArrangeType, .component-select #divArrangeTypes').hide();
                     $('.component-select .section-arrangement .loading').show();

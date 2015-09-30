@@ -49,10 +49,11 @@ namespace Websilk
                 {
                     Random rnd = new Random();
                     int ran = rnd.Next(1, 9999);
-                    js += "$.when(" + "$.getScript('/scripts/core/editor.js?v=" + ran + "')," + 
-                        "$.getScript('/scripts/rangy/lib/rangy-core.js?v=" + ran + "')," +
-                        "$.getScript('/scripts/rangy/lib/rangy-classapplier.js?v=" + ran + "')," +
-                        "$.getScript('/scripts/utility/dropzone.js?v=" + ran + "')," + 
+                    js += "$.when(" +
+                        "$.getScript('/scripts/editor/utility.js?v=" + ran + "')," +
+                        "$.getScript('/scripts/editor/editor.js?v=" + ran + "')," +
+                        "$.getScript('/scripts/editor/rangy.js?v=" + ran + "')," +
+                        "$.getScript('/scripts/editor/dropzone.js?v=" + ran + "')," + 
                         "$.Deferred(function(deferred){$(deferred.resolve);})" + 
                         ").done(function(){ S.editor.load(); });";
                 }else

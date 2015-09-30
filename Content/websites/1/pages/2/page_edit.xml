@@ -3,7 +3,7 @@
     <component name="textbox" id="yjy" index="1">
       <position><![CDATA[||c,0,0,t,0,,882,px,20,auto,50px 20px 20px 20px|c,0,0,t,0,,250,px,20,auto,50px 20px 20px 20px|c,0,0,t,auto,,480,px,20,auto,50px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div>We're here to help you.</div>]]></content>
+      <content><![CDATA[<div><span class="aligncenter">We're here to help you.</span></div>]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="login" id="ah2" index="2">
@@ -15,7 +15,7 @@
     <component name="textbox" id="bZq" index="3">
       <position><![CDATA[c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,0,,188,px,40,px,50px 0px 20px 50px|c,0,0,t,0,,300,px,40,px,50px 0px 50px 50px|c,0,0,t,auto,,292,px,40,px,80px 50px 50px 50px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Please log into your account or sign up.&nbsp;</div>]]></content>
+      <content><![CDATA[<div><span class="aligncenter">Please log into your account or sign up.&nbsp;</span></div>]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="panel" id="xdB" index="4">
@@ -59,7 +59,7 @@
     <component name="textbox" id="dUt" index="1">
       <position><![CDATA[||||c,0,1,t,auto,,200,px,17,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div>God is great!</div>]]></content>
+      <content><![CDATA[<div><span class="aligncenter">God is great!</span></div>]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="textbox" id="oAa" index="2">
@@ -105,7 +105,7 @@
     <component name="textbox" id="YId" index="1">
       <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Websilk is so completely optimized, all of the fat has been trimmed, and so I have made Websilk into a truly fearsome competitor to WordPress. That is very cool.</div>]]></content>
+      <content><![CDATA[<div>Websilk is so completely optimized, all of the fat has been trimmed, and so I have made Websilk&nbsp;into a truly fearsome competitor to WordPress. That is very cool.</div>]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="panel" id="dlz" index="2">
@@ -117,7 +117,7 @@
     <component name="textbox" id="YzE" index="3">
       <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div>There can be only one (in the CMS wars).</div>]]></content>
+      <content><![CDATA[<div><span class="aligncenter">There can be only one (in the CMS wars).</span></div>]]></content>
       <design><![CDATA[]]></design>
     </component>
   </panel>
