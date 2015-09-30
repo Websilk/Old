@@ -54,7 +54,7 @@ S.components.calls.panel = {
         //first, send an AJAX request to save page changes, then create new panel cell
         S.editor.save.click(function () {
             //then duplicate component
-            S.ajax.post('/websilk/Components/Panel/DuplicateCell', options, S.ajax.callback.inject);
+            S.ajax.post('/api/Components/Panel/DuplicateCell', options, S.ajax.callback.inject);
         });
 
     },
@@ -305,7 +305,8 @@ S.components.calls.panel = {
                         $p.each(function () { $(this).css({ height: d[6] }); });
                     }
                     if (d[8] != '0') {
-                        $p.each(function () { $(this).css({ padding: '0px ' + (parseInt(d[8]) / 2) + 'px' }); });
+                        var pad = (parseInt(d[8]) / 2);
+                        $p.each(function () { $(this).css({ padding: '0px ' + pad + 'px ' + pad + 'px ' + pad + 'px' }); });
                     }
                     break;
 

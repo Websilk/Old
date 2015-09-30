@@ -10,21 +10,21 @@ S.editor.components.properties.current = {
     photo: {
         update: function (src) {
             var id = S.editor.components.properties.selected.id.substr(1);
-            S.ajax.post('/websilk/Components/Photo/UpdatePhoto', { id: id, photo: src, type: 1 }, S.ajax.callback.inject);
+            S.ajax.post('/api/Components/Photo/UpdatePhoto', { id: id, photo: src, type: 1 }, S.ajax.callback.inject);
         }
     },
 
     photoHover: {
         update: function (src) {
             var id = S.editor.components.properties.selected.id.substr(1);
-            S.ajax.post('/websilk/Components/Photo/UpdatePhoto', { id: id, photo: src, type: 2 }, S.ajax.callback.inject);
+            S.ajax.post('/api/Components/Photo/UpdatePhoto', { id: id, photo: src, type: 2 }, S.ajax.callback.inject);
         },
 
         remove: function () {
             if (confirm('Do you really want to remove the photo that is used when the mouse hovers over the component?') == true) {
                 var id = S.editor.components.properties.selected.id.substr(1);
                 $('.winProperties .remove-hover-photo').hide();
-                S.ajax.post('/websilk/Components/Photo/RemoveHover', { id: id }, S.ajax.callback.inject);
+                S.ajax.post('/api/Components/Photo/RemoveHover', { id: id }, S.ajax.callback.inject);
             }
             
         }
@@ -50,6 +50,6 @@ S.editor.components.properties.current = {
             target: $('#propsLstTarget').val(),
             win: $('#propsTxtWindowName').val()
         };
-        S.ajax.post('/websilk/Components/Photo/SaveProperties', options, S.ajax.callback.inject);
+        S.ajax.post('/api/Components/Photo/SaveProperties', options, S.ajax.callback.inject);
     }
 }

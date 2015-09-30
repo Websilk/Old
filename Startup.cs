@@ -70,9 +70,9 @@ namespace Websilk
 
                 if (paths.Length > 1)
                 {
-                    if(paths[0]=="websilk")
+                    if(paths[0]=="api")
                     {
-                        //run a web service via ajax (e.g. /websilk/namespace/class/function)
+                        //run a web service via ajax (e.g. /api/namespace/class/function)
                          IFormCollection form = null;
                         if(context.Request.ContentType != null)
                         {

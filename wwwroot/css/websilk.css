@@ -45,6 +45,8 @@ select, input, textarea{margin:0px;}
 .webpage .type-photo a.hover:hover img:first-child{opacity:0;}
 .webpage .type-photo a.hover:hover img.over{opacity:1;}
 
+.webpage .type-textbox{text-align:left;}
+
 .webpage .arrange-grid > .ispanel{box-sizing:border-box; float:left;}
 .webpage .arrange-grid.columns2 > .ispanel{ width:50%; }
 .webpage .arrange-grid.columns3 > .ispanel{ width:33.3333%; }

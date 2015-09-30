@@ -100,17 +100,23 @@ namespace Websilk
                     //                   height-type (auto or fixed), fixed-height, 
                     //                   auto-height-mosaic, spacing
                     classes += " item-cell";
-                    if(arrange[0] == "r")
+                    if (arrange[0] == "r")
                     {
                         style += "min-width:" + arrange[3] + "px;";
                     }
-                    if(arrange[4] == "f")
+                    else if (arrange[0] == "f")
+                    {
+                        style += "max-width:" + arrange[1] + "px;";
+                    }
+                        if (arrange[4] == "f")
                     {
                         style += "height:" + arrange[5] + "px;";
                     }
                     if(arrange[7] != "0")
                     {
-                        style += "padding:0px " +(int.Parse(arrange[7]) / 2) + "px;";
+                        string pad = (int.Parse(arrange[7]) / 2).ToString();
+
+                        style += "padding:0px " + pad + "px " + pad + "px " + pad + "px;";
                     }
                     break;
 

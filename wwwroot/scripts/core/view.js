@@ -755,7 +755,7 @@ var S = {
 
             if (((new Date() - this.expire) / 1000) >= 180 || options.save.length > 0) {
                 this.expire = new Date();
-                this.post("/websilk/App/KeepAlive", options, function (data) {
+                this.post("/api/App/KeepAlive", options, function (data) {
                     if (S.editor) {
                         $('.editor .toolbar .savepage').removeClass('saving').addClass('nosave');
                     }
@@ -795,7 +795,7 @@ var S = {
                 }
             }
             //post page request via Ajax
-            S.ajax.post('/websilk/App/Url', { url: u }, S.ajax.callback.pageRequest);
+            S.ajax.post('/api/App/Url', { url: u }, S.ajax.callback.pageRequest);
             return false;
         },
 

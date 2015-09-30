@@ -398,7 +398,7 @@ S.editor = {
                 }
             }
             if (url != '' && url != null && post == true) {
-                S.ajax.post('/websilk/' + url, data, S.editor.window.callback.ajax);
+                S.ajax.post('/api/' + url, data, S.editor.window.callback.ajax);
             } else {
                 if (data != '') {
                     //load content from string
@@ -914,7 +914,7 @@ S.editor = {
 
                     //send request to server for new component
                     var options = { componentId: cid, panelId: pid, selector: selector, aboveId: aboveId, duplicate: '' };
-                    S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
+                    S.ajax.post('/api/Editor/NewComponent', options, S.ajax.callback.inject);
 
                 } else if (d.moved == false) {
                     //cancel drag
@@ -1699,7 +1699,7 @@ S.editor = {
 
         category: {
             load: function (id) {
-                S.ajax.post('/websilk/Editor/ComponentsFromCategory', { category: id },
+                S.ajax.post('/api/Editor/ComponentsFromCategory', { category: id },
                     function (data) {
                         S.ajax.callback.inject(data);
                         $('.window.winComponents #component-categories').hide();
@@ -1969,12 +1969,12 @@ S.editor = {
                     id = p.parentNode.id.substr(1);
                     p.parentNode.removeChild(p);
                     comps.hideSelect();
-                    S.ajax.post('/websilk/Components/Panel/RemoveCell', { id: id, panelId: pid }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Components/Panel/RemoveCell', { id: id, panelId: pid }, S.ajax.callback.inject);
                 } else {
                     //remove component
                     comps.hovered.parentNode.removeChild(comps.hovered);
                     comps.hideSelect();
-                    S.ajax.post('/websilk/Editor/RemoveComponent', { componentId: id.substr(1) }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Editor/RemoveComponent', { componentId: id.substr(1) }, S.ajax.callback.inject);
                 }
 
             },
@@ -2259,7 +2259,7 @@ S.editor = {
                 var section = arguments[1] || '';
                 if (S.editor.components.properties.selected != element) {
                     $('.winProperties .props-content')[0].innerHTML = '';
-                    S.ajax.post('/websilk/Editor/ComponentProperties', { id: element.id.substr(1), section: section }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Editor/ComponentProperties', { id: element.id.substr(1), section: section }, S.ajax.callback.inject);
                     S.editor.components.properties.section = section;
                 } else {
                     $('.winProperties').show();
@@ -2553,7 +2553,7 @@ S.editor = {
             //first, send an AJAX request to save page changes
             S.editor.save.click(function () {
                 //then duplicate component
-                S.ajax.post('/websilk/Editor/NewComponent', options, S.ajax.callback.inject);
+                S.ajax.post('/api/Editor/NewComponent', options, S.ajax.callback.inject);
             });
         },
     },
@@ -2800,6 +2800,8 @@ S.editor = {
                 }
                 sel.setSingleRange(range);
             }
+
+            S.editor.textEditor.save.start();
         },
 
         commands: {
@@ -3010,7 +3012,7 @@ S.editor = {
                 secure = $('#newPageSecure').is(':checked');
                 if ($('#newPageData')) { datapage = $('#newPageData').is(':checked'); }
                 var data = { title: title, description: desc, parentId: S.editor.pages.add.item.parentId, isSecure: secure, isDataPage: datapage };
-                S.ajax.post('/websilk/Dashboard/Pages/Create', data, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Pages/Create', data, S.ajax.callback.inject);
             },
         },
 
@@ -3039,13 +3041,13 @@ S.editor = {
                 $(this).hide();
                 secure = $('#pageSettingsSecure').is(':checked');
                 var data = { pageId: S.editor.pages.settings.item.pageId, description: desc, isSecure: secure };
-                S.ajax.post('/websilk/Dashboard/Pages/Update', data, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Pages/Update', data, S.ajax.callback.inject);
             },
         },
 
         remove: function (pageId) {
             if (confirm('Do you really want to delete this web page? This cannot be undone.') == true) {
-                S.ajax.post('/websilk/Dashboard/Pages/Remove', { pageId: pageId }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Pages/Remove', { pageId: pageId }, S.ajax.callback.inject);
             }
         },
 
@@ -3055,13 +3057,13 @@ S.editor = {
             } else {
                 S.editor.pages.tree.remove(pageId);
             }
-            S.ajax.post('/websilk/Dashboard/Pages/LoadSubPages', { parentId: pageId }, S.ajax.callback.inject);
+            S.ajax.post('/api/Dashboard/Pages/LoadSubPages', { parentId: pageId }, S.ajax.callback.inject);
         },
 
         expand: function (pageId) {
             if ($('.winWebPages .content .page-' + pageId).children().length == 3) {
                 //load sub pages
-                S.ajax.post('/websilk/Dashboard/Pages/LoadSubPages', { parentId: pageId }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Pages/LoadSubPages', { parentId: pageId }, S.ajax.callback.inject);
             } else {
                 //view sub pages
                 $('.winWebPages .content .page-' + pageId + ' > .sub').show();
@@ -3473,7 +3475,7 @@ S.editor = {
                         });
 
                         //load website folder list of files
-                        S.ajax.post('/websilk/Dashboard/Designer/Code/LoadFolder', { type: 'website', folder: '' },
+                        S.ajax.post('/api/Dashboard/Designer/Code/LoadFolder', { type: 'website', folder: '' },
                             function (data) {
                                 S.ajax.callback.inject(data);
                                 //then load page CSS code for this web page
@@ -3511,7 +3513,7 @@ S.editor = {
                     if (found == false) {
                         //load file from server
                         S.editor.designer.code.ace.focus();
-                        S.ajax.post('/websilk/Dashboard/Designer/code/LoadFile', { type: type, file: file },
+                        S.ajax.post('/api/Dashboard/Designer/code/LoadFile', { type: type, file: file },
                             function (data) {
                                 //get file name
                                 var f = file;
@@ -3574,7 +3576,7 @@ S.editor = {
                         s.modified = false;
                         S.editor.designer.code.sessions[S.editor.designer.code.selected] = s;
                         $('.winDesigner .code-ace-files .code-ace-save').addClass('saving');
-                        S.ajax.post('/websilk/Dashboard/Designer/code/SaveFile', { type: s.type, file: s.file, value: t },
+                        S.ajax.post('/api/Dashboard/Designer/code/SaveFile', { type: s.type, file: s.file, value: t },
                             function (data) {
                                 $('.winDesigner .code-ace-files .code-ace-save').removeClass('saving').addClass('nosave');
                                 S.editor.designer.code.file.modified(false);
@@ -3595,7 +3597,7 @@ S.editor = {
 
             folder: {
                 load: function (type, folder) {
-                    S.ajax.post('/websilk/Dashboard/Designer/code/LoadFolder', { type: type, folder: folder }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Dashboard/Designer/code/LoadFolder', { type: type, folder: folder }, S.ajax.callback.inject);
                 }
             },
 
@@ -3698,7 +3700,7 @@ S.editor = {
             }
             S.editor.window.hidePopUps();
             if ($('.winPhotos .photo-list')[0].children.length == 0) {
-                S.ajax.post("/websilk/Dashboard/Photos/LoadPhotoList", { start: '1', folder: '', search: '', orderby: '0' },
+                S.ajax.post("/api/Dashboard/Photos/LoadPhotoList", { start: '1', folder: '', search: '', orderby: '0' },
                     function (data) {
                         S.ajax.callback.inject(data);
                         //change onclick 
@@ -3780,14 +3782,14 @@ S.editor = {
                         $(chks).parents('.photo').remove();
                     }
 
-                    S.ajax.post('/websilk/Dashboard/Photos/Remove', { files: files.join(',') }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Dashboard/Photos/Remove', { files: files.join(',') }, S.ajax.callback.inject);
                 }
             }
         },
 
         folders: {
             show: function (type) {
-                S.ajax.post('/websilk/Dashboard/Photos/LoadFolders', { type: type != null ? type : '' }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Photos/LoadFolders', { type: type != null ? type : '' }, S.ajax.callback.inject);
                 $('.winPhotos .icon-folder use').attr('xlink:href', '#icon-grid');
                 $('.winPhotos .icon-folder a').attr('onclick', 'S.editor.photos.folders.hide()');
                 $('.winPhotos .photo-list, .winPhotos .info-bar, .winPhotos .dropzone, .winPhotos .upload').hide();
@@ -3814,7 +3816,7 @@ S.editor = {
             },
 
             add: function () {
-                S.ajax.post('/websilk/Dashboard/Photos/AddFolder', { name: $('.winPhotos #txtNewFolder').val() }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Photos/AddFolder', { name: $('.winPhotos #txtNewFolder').val() }, S.ajax.callback.inject);
             },
 
             addCallback: function (name) {
@@ -3851,13 +3853,13 @@ S.editor = {
 
             remove: function (name) {
                 if (confirm("Do you really want to delete the folder '" + name + "' and all the photos that belong within the folder? This cannot be undone.") == true) {
-                    S.ajax.post('/websilk/Dashboard/Photos/RemoveFolder', { folder: name }, S.ajax.callback.inject);
+                    S.ajax.post('/api/Dashboard/Photos/RemoveFolder', { folder: name }, S.ajax.callback.inject);
                 }
             },
 
             select: function (name) {
                 //if ($(e.target).parents('.icon-close').length > 0) { return; }
-                S.ajax.post('/websilk/Dashboard/Photos/LoadPhotoList', { start: "1", folder: name, search: '', orderby: '0' }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Photos/LoadPhotoList', { start: "1", folder: name, search: '', orderby: '0' }, S.ajax.callback.inject);
             },
 
             change: function (name) {
@@ -3867,11 +3869,11 @@ S.editor = {
                 $('.winPhotos .selected-folder')[0].innerHTML = 'Folder: ' + n;
                 S.editor.photos.folder = name;
                 S.editor.photos.folders.bind();
-                S.editor.photos.dropzone.body.options.url = '/websilk/Dashboard/Photos/Upload?v=' + S.ajax.viewstateId + '&folder=' + encodeURIComponent(S.editor.photos.folder);
+                S.editor.photos.dropzone.body.options.url = '/api/Dashboard/Photos/Upload?v=' + S.ajax.viewstateId + '&folder=' + encodeURIComponent(S.editor.photos.folder);
             },
 
             moveTo: function (name) {
-                S.ajax.post('/websilk/Dashboard/Photos/MoveTo', { folder: name, files: S.editor.photos.selected.join(',') }, S.ajax.callback.inject);
+                S.ajax.post('/api/Dashboard/Photos/MoveTo', { folder: name, files: S.editor.photos.selected.join(',') }, S.ajax.callback.inject);
             }
         },
 
@@ -3880,7 +3882,7 @@ S.editor = {
 
             init: function () {
                 S.editor.photos.dropzone.body = new Dropzone(document.body, {
-                    url: '/websilk/Dashboard/Photos/Upload?v=' + S.ajax.viewstateId,
+                    url: '/api/Dashboard/Photos/Upload?v=' + S.ajax.viewstateId,
                     previewsContainer: ".winPhotos .dropzone",
                     clickable: ".winPhotos .top-menu .upload a",
                     paramName: 'file',
@@ -3925,7 +3927,7 @@ S.editor = {
                             setTimeout(function () {
                                 list.scrollTop(list.prop('scrollHeight') + 50);
                             }, 1000);
-                            S.ajax.post('/websilk/Dashboard/Photos/Save', { folder: S.editor.photos.folder }, S.ajax.callback.inject);
+                            S.ajax.post('/api/Dashboard/Photos/Save', { folder: S.editor.photos.folder }, S.ajax.callback.inject);
                         });
                     }
                 });
@@ -4040,7 +4042,7 @@ S.editor = {
                 S.editor.save.cache = [];
                 $('.editor .toolbar .savepage').addClass('saving');
                 clearTimeout(S.ajax.timerKeep);
-                S.ajax.post("/websilk/App/KeepAlive", options, function () {
+                S.ajax.post("/api/App/KeepAlive", options, function () {
                     if (callback != null) { callback(); }
                     $('.editor .toolbar .savepage').removeClass('saving').addClass('nosave');
                     S.ajax.expire = new Date();

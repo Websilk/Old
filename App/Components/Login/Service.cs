@@ -34,7 +34,7 @@ namespace Websilk.Services.Components
                                "<link rel=\"Stylesheet\" type=\"text/css\" href=\"" + websiteFolder + "website.css\"/>";
 
             //set form action
-            scaffold.Data["action"] = "/websilk/Components/Login/PostForm" + S.Request.QueryString;
+            scaffold.Data["action"] = "/api/Components/Login/PostForm" + S.Request.QueryString;
 
             //set missing Page properties
             S.Page.themeFolder = themeFolder;

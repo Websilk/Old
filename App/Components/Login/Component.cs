@@ -37,7 +37,7 @@
             {
                 loginQuery += "&resetpass=" + S.Request.Query["resetpass"];
             }
-            string htm = "<iframe id=\"loginframe" + id + "\" style=\"width:100%; height:100%; background-color:transparent;\"  frameborder=\"0\" scrolling=\"no\" src=\"" + loginHost + "/websilk/Components/Login/LoadForm?v=" + S.ViewStateId + "&w=" + S.Page.websiteId + "&u=" + S.Page.ownerId + "&l=" + S.Page.themeName + "&s=" + dataField.Replace("|", ",") + "&d=" + designField.Replace("|", ",") + loginQuery;
+            string htm = "<iframe id=\"loginframe" + id + "\" style=\"width:100%; height:100%; background-color:transparent;\"  frameborder=\"0\" scrolling=\"no\" src=\"" + loginHost + "/api/Components/Login/LoadForm?v=" + S.ViewStateId + "&w=" + S.Page.websiteId + "&u=" + S.Page.ownerId + "&l=" + S.Page.themeName + "&s=" + dataField.Replace("|", ",") + "&d=" + designField.Replace("|", ",") + loginQuery;
             if (S.Page.isEditable == true) { htm += "&edit=1"; }
             htm += "\"></iframe>";
             innerHTML = htm;
@@ -47,7 +47,7 @@
                 string myJs = "";
                 myJs += 
                     "S.components.cache['c" + id + "'].LoginFromIframe = function(id){" + 
-                        "S.ajax.post('/websilk/Components/Login/Authenticate',{'authId':id}, this.LoginRedirect);" + 
+                        "S.ajax.post('/api/Components/Login/Authenticate',{'authId':id}, this.LoginRedirect);" + 
                     "};" + 
                     "S.components.cache['c" + id + "'].LoginRedirect = function(data){" + 
                         "var c = S.components.cache['c" + id + "'];" + 
@@ -55,7 +55,7 @@
                             "$S('c" + id + "').innerHTML = '" + htm.Replace("'", "\\'") + "';" + "alert('incorrect email or password');}" + 
                         "else{" +
                             "$S('c" + id + "').innerHTML = '<div style=\"padding-top:20px; width:100%; text-align:center;\">Login successful. Loading dashboard...</div>';" + 
-                            "S.ajax.post('/websilk/App/Url', { url: data.d }, S.ajax.callback.pageRequest);" + 
+                            "S.ajax.post('/api/App/Url', { url: data.d }, S.ajax.callback.pageRequest);" + 
                         "}" + 
                     "};";
                 S.Page.RegisterJS("login" + id, myJs);
