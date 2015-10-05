@@ -1237,6 +1237,9 @@ S.editor = {
                     x: this.options.elemPos.x - this.options.left,
                     y: this.options.elemPos.y - this.options.top,
                 }
+                this.options.classes = S.util.css.objects($(c));
+                this.options.margin = this.options.classes['margin-right'];
+
 
                 //get selected resize side or corner
                 if (bar.hasClass('resize-top') == true) {
@@ -1299,7 +1302,7 @@ S.editor = {
                 var perc = false;
                 var center = 1;
                 if ($(this.options.elem).css('display').indexOf('inline-block') == 0 ||
-                    $(this.options.elem).css('margin').indexOf('auto') >= 0) { center = 2; }
+                    this.options.margin.indexOf('auto') >= 0) { center = 2; }
                 if (this.options.elem.style.width.indexOf('%') >= 0) { perc = true; }
                 if (perc == true) {
                     //find new percentage value
@@ -4451,6 +4454,43 @@ S.util.message = {
         $(div).css({ opacity: 0, height: 'auto' }).show().html(msg);
         var h = S.elem.height($(div)[0]);
         $(div).css({ height: 0, overflow: 'hidden' }).show().animate({ height: h - 9, opacity: 1 }, 1000).delay(10000).animate({ opacity: 0, height: 0 }, 1000, function () { $(this).hide(); });
+    }
+}
+
+S.util.css = {
+    objects: function(a){
+        var sheets = document.styleSheets, o = {};
+        for(var i in sheets) {
+            var rules = sheets[i].rules || sheets[i].cssRules;
+            for(var r in rules) {
+                if(a.is(rules[r].selectorText)) {
+                    o = $.extend(o,
+                        S.util.css.convert(rules[r].style),
+                        S.util.css.convert(a.attr('style')
+                        ));
+                }
+            }
+        }
+        return o;
+    },
+
+    convert: function (css){
+        var s = {};
+        if(!css) return s;
+        if(css instanceof CSSStyleDeclaration) {
+            for(var i in css) {
+                if((css[i]).toLowerCase) {
+                    s[(css[i]).toLowerCase()] = (css[css[i]]);
+                }
+            }
+        } else if(typeof css == "string") {
+            css = css.split("; ");          
+            for (var i in css) {
+                var l = css[i].split(": ");
+                s[l[0].toLowerCase()] = (l[1]);
+            };
+        }
+        return s;
     }
 }
 

@@ -345,6 +345,7 @@ namespace Websilk
 
         public string id = "";
         public string section = "";
+        private List<ComponentPropertiesMenu> menuItems = new List<ComponentPropertiesMenu>();
 
         public ComponentView Component
         {
@@ -385,6 +386,23 @@ namespace Websilk
             }
         }
 
+        public void AddMenuItem(string name, bool selected = false)
+        {
+            int index = menuItems.Count;
+            menuItems.Add(new ComponentPropertiesMenu(name, index, selected));
+
+        }
+
+        public void RenderMenu()
+        {
+            string htm = "<div class=\"main-menu\">";
+            foreach(ComponentPropertiesMenu item in menuItems)
+            {
+                htm += "<div class=\"item" + (item.selected == true ? " selected" : "") + "><div class=\"arrow\" style=\"display:none;\"></div>" + item.name + "</div>";
+            }
+            htm += "</div>";
+        }
+
     }
 
     public class ComponentQuickMenu
@@ -412,5 +430,17 @@ namespace Websilk
         }
     }
 
+    public class ComponentPropertiesMenu
+    {
+        public string name = "";
+        public int index = 0;
+        public bool selected = false;
+
+        public ComponentPropertiesMenu(string menuName, int menuIndex = 0, bool isSelected = false) {
+            name = menuName;
+            index = menuIndex;
+            selected = isSelected;
+        }
+    }
 }
 

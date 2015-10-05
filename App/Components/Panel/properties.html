@@ -1,43 +1,18 @@
 <div class="props-pages clear">
     <div class="page-1">
-        <div class="row column-title center space-below"><h5>Arrangement</h5></div>
-        <div class="row color1 four-columns">
-            <div class="column-row center space-below">
-                <a href="javascript:" onclick="S.editor.components.properties.calls.changeArrangement('grid')">
-                    <svg viewBox="0 0 32 32" style="width:32px;">
-                        <use xlink:href="#icon-panelgrid" x="0" y="0" width="32" height="32" />
-                    </svg></a>
-                <div class="column-row">Grid</div>
+        <div class="row">
+            <div class="column-title">
+                Cells
             </div>
         </div>
-        <div class="row color1 four-columns">
-            <div class="column-row center space-below">
-                <a href="javascript:" onclick="S.editor.components.properties.calls.changeArrangement('rows')">
-                    <svg viewBox="0 0 32 32" style="width:32px;">
-                        <use xlink:href="#icon-panelrows" x="0" y="0" width="32" height="32" />
-                    </svg></a>
-                <div class="column-row">Rows</div>
+        {{cell-list}}
+    </div>
+    <div class="page-2">
+        <div class="row">
+            <div class="column-title">
+                Cell '{{cell-name}}'
             </div>
         </div>
-        <div class="row color1 four-columns">
-            <div class="column-row center space-below">
-                <a href="javascript:" onclick="S.editor.components.properties.calls.changeArrangement('slideshow')">
-                    <svg viewBox="0 0 32 32" style="width:32px;">
-                        <use xlink:href="#icon-panelslideshow" x="0" y="0" width="32" height="32" />
-                    </svg>
-                </a>
-                <div class="column-row">Slideshow</div>
-            </div>
-        </div>
-        <div class="row color1 four-columns">
-            <div class="column-row center space-below">
-                <a href="javascript:" onclick="S.editor.components.properties.calls.changeArrangement('book')">
-                    <svg viewBox="0 0 32 32" style="width:32px;">
-                        <use xlink:href="#icon-panelbook" x="0" y="0" width="32" height="32" />
-                    </svg>
-                </a>
-                <div class="column-row">Book</div>
-            </div>
-        </div>
+        {{cell-list}}
     </div>
 </div>
