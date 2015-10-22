@@ -1449,7 +1449,7 @@ namespace Websilk
                 if (!string.IsNullOrEmpty(pos[10]))
                 {
                     string[] pad = pos[10].Replace("px", "").Split(' ');
-                    css += "padding:" + pos[10] + "; width:calc(100% - " + (int.Parse(pad[1]) + int.Parse(pad[3])) + "px); ";
+                    css += "padding:" + pos[10] + "; width:100%; ";
                 }
                 else
                 {

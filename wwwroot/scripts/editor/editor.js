@@ -953,7 +953,7 @@ S.editor = {
                 this.above = -1;
                 this.item.elem = comp;
                 S.editor.components.posStart = S.elem.pos(comp);
-                this.item.pos = S.elem.innerPos(comp);
+                this.item.pos = S.elem.pos(comp);
                 this.item.offset = S.elem.offset(comp);
                 this.item.offset.x = parseInt($(comp).css('left')) || 0;
                 this.item.offset.y = parseInt($(comp).css('top')) || 0;
@@ -1215,7 +1215,7 @@ S.editor = {
                 this.options.cursor.y = mPos.y;
                 this.options.cursorStart.x = mPos.x;
                 this.options.cursorStart.y = mPos.y;
-                this.options.elemPos = S.elem.innerPos(c);
+                this.options.elemPos = S.elem.pos(c);
                 this.options.panelPos = S.elem.pos(p);
                 this.options.elemStart = {
                     x: this.options.elemPos.x - this.options.offset.x,
@@ -1553,7 +1553,10 @@ S.editor = {
         click: function (target, type) {
             var comps = S.editor.components;
             if (S.editor.enabled == false) { return; }
-            if (comps.disabled == true) { return; }
+            if (comps.disabled == true) {
+                comps.callback.execute('onHide', comps.selected, target);
+                return;
+            }
             if (type == 'component-select') {
                 //select component
                 if ($(target).hasClass('component-select') == false) { return; }
@@ -1577,7 +1580,7 @@ S.editor = {
                     }
                     if (t == comps.selected || comps.selected == null || $(t).find(comps.selected).length > 0) {
                         //clicked selected panel to allow mouseEnter
-                        comps.callback.execute('onHide', comps.selected);
+                        comps.callback.execute('onHide', comps.selected, target);
                         S.editor.components.selected = null;
                         comps.hideSelect();
                         comps.mouseEnter(t, 1);
@@ -1595,7 +1598,7 @@ S.editor = {
                     }
                     if (hide == true) {
                         //completely deselect component
-                        comps.callback.execute('onHide', comps.hovered);
+                        comps.callback.execute('onHide', comps.hovered, target);
                         S.editor.components.selected = null;
                         comps.hideSelect();
                     }
@@ -1648,7 +1651,7 @@ S.editor = {
                 }
             },
 
-            execute: function (type, target, pos) {
+            execute: function (type, target, extra) {
                 if (this.items.length > 0) {
                     for (var x = 0; x < this.items.length; x++) {
                         //if (this.items[x].elem == target) {
@@ -1667,13 +1670,13 @@ S.editor = {
 
                             case 'onResize':
                                 if (typeof this.items[x].onResize == 'function') {
-                                    this.items[x].onResize(target, pos);
+                                    this.items[x].onResize(target, extra);
                                 }
                                 break;
 
                             case 'onHide':
                                 if (typeof this.items[x].onHide == 'function') {
-                                    this.items[x].onHide(target);
+                                    this.items[x].onHide(target, extra);
                                 }
                                 break;
                         }
@@ -1718,9 +1721,11 @@ S.editor = {
 
             show: function (tab) {
                 var p = $('.component-select .properties');
+                var ishidden = true;
                 if ($('.component-select .section-' + tab)[0].style.display != 'none' && p[0].style.display != 'none' && arguments[1] == null) {
                     this.hideAll(); return;
                 }
+                if (p[0].style.display != 'none') { ishidden = false; }
                 this.hideAll();
                 $('.component-select .section-' + tab).show();
                 p.css({ opacity: 0, width: '' }).show();
@@ -1747,7 +1752,7 @@ S.editor = {
                     }
 
                 }
-                this.load();
+                if (ishidden == true) { this.load(); }
                 S.editor.components.resizeSelectBox();
             },
 
@@ -2098,6 +2103,7 @@ S.editor = {
         },
 
         hideSelect: function () {
+            if (S.editor.components.disabled == true) { return false;}
             var type = arguments[0] || '';
             if (type == 'leave') {
                 S.editor.components.hovered = null;
@@ -2121,14 +2127,6 @@ S.editor = {
             }
             $('.tools > .component-select').hide();
             $('.component-select .menu .item').css({ paddingRight: 0 });
-            return;
-
-            if (hide == true && (type == '' || type == 'leave')) {
-                $('.tools > .component-select').hide();
-            } else {
-                $('.tools > .component-select').css({ width: 0, height: 0 });
-            }
-            //stop().animate({ opacity: 0 }, 4000, function () { $(this).hide();});
         },
 
         resizeSelectBox: function () {
@@ -2452,7 +2450,7 @@ S.editor = {
                 //padding
                 if (pos[10].length > 0) {
                     var pad = pos[10].replace(/px/g, '').split(' ');
-                    css += 'padding:' + pos[10] + '; width:calc(100% - ' + (parseInt(pad[1]) + parseInt(pad[3])) + 'px); ';
+                    css += 'padding:' + pos[10] + '; width:100%; ';
                 } else {
                     css += 'padding:0px; width:100%;';
                 }
@@ -2562,7 +2560,7 @@ S.editor = {
     },
 
     textEditor: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        instance: null,
+        selected: false,
 
         init: function () {
             //setup callbacks
@@ -2585,8 +2583,8 @@ S.editor = {
                 { title: 'italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
                 { title: 'strike-thru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
                 { title: 'underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
-                { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.bulletList()' },
-                { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.numberList()' },
+                { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
+                { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
                 //{ title: 'outdent', svg: 'outdent', click: 'S.editor.textEditor.commands.outdent()' },
                 { title: 'indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
                 { title: 'align left', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
@@ -2653,11 +2651,15 @@ S.editor = {
 
                 //reposition the text editor toolbar
                 S.editor.textEditor.reposition(target);
+                S.editor.textEditor.selected = true;
+                S.editor.components.disabled = true;
 
                 //focus text
                 var range = document.createRange();
                 var sel = window.getSelection();
-                range.setStart(textedit[0].lastChild, 1);
+                try {
+                    range.setStart(textedit[0].lastChild, 1);
+                } catch (ex) { }
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
@@ -2680,8 +2682,12 @@ S.editor = {
             $('.tools .texteditor-btnselect').css({ top: pos.y - 12, left: pos.x + pos.w + 10 }).show();
         },
 
-        hide: function (target) {
+        hide: function (target, clicked) {
             if ($(target).hasClass('type-textbox') == true) {
+                if ($(clicked).parents('.textedit.editing').length == 1 || target == clicked) {
+                    S.editor.components.disabled = true;
+                    return;
+                }
                 if ($(target).find('.textedit.editing').length == 1) {
                     var textedit = $(target).find('.textedit');
                     textedit.removeClass('editing')[0].contentEditable = "false";
@@ -2694,6 +2700,10 @@ S.editor = {
                 S.events.doc.scroll.callback.remove($('.tools .texteditor-toolbar')[0]);
                 S.events.doc.resize.callback.remove($('.tools .texteditor-toolbar')[0]);
             }
+            S.editor.components.hovered = null;
+            S.editor.components.selected = null;
+            S.editor.textEditor.selected = false;
+            S.editor.components.disabled = false;
         },
 
         keyUp: function () {
@@ -2702,11 +2712,11 @@ S.editor = {
         },
 
         mouseDown: function () {
-            S.editor.components.disabled = true;
+            //S.editor.components.disabled = true;
         },
 
         mouseUp: function () {
-            setTimeout(function () { S.editor.components.disabled = false; }, 100);
+            //setTimeout(function () { S.editor.components.disabled = false; }, 100);
         },
 
         alterRange: function (name, tag, attributes, remove, outerOnly) {
@@ -2807,6 +2817,21 @@ S.editor = {
             S.editor.textEditor.save.start();
         },
 
+        getRange: function () {
+            var sel = rangy.getSelection();
+            if (sel.rangeCount > 0) {
+                var range = sel.getRangeAt(0);
+                var nodes = range.getNodes();
+                var parent = range.commonAncestorContainer;
+                if (nodes[0] == parent) { parent = parent.parentNode; }
+                //if (parent.nodeName == '#text') { parent = parent.parentNode; }
+                var roots = $(nodes).filter(function () { if (this.parentNode != parent) { return false; } return true; });
+                if (nodes.length == 1) { roots = nodes; }
+                return { range: range, nodes: roots, parent: parent };
+            }
+            return { range: null, nodes: [], parent: null };
+        },
+
         commands: {
             bold: function () {
                 S.editor.textEditor.alterRange('bold', 'span', {});
@@ -2824,8 +2849,29 @@ S.editor = {
                 S.editor.textEditor.alterRange('underline', 'span', {});
             },
 
-            bulletList: function () {
-                //S.editor.textEditor.instance.invokeElement('ul', { style: 'list-style-type:disc' }).invokeElement('li', {});
+            list: function (type) {
+                var r = S.editor.textEditor.getRange();
+                if (r.range != null) {
+                    var range = r.range;
+                    var nodes = r.nodes;
+                    var parent = r.parent;
+
+                    //check first to see if I should remove the bullet list
+                    if ($(nodes).is('ul') || $(parent).is('ul')) {
+                        //remove bullet list
+                        $(nodes).find('li').contents().unwrap();
+                        $(nodes).contents().unwrap();
+                        $(parent).find('ul').contents().unwrap();
+                        if ($(parent).is('ul')) {
+                            $(parent).contents().unwrap();
+                        }
+                    } else {
+                        //generate bullet list
+                        var ul = document.createElement('ul');
+                        ul.style.listStyleType = type || '';
+                        $(nodes).wrapAll(ul).wrap('<li></li>');
+                    }
+                }
             },
 
             numberList: function () {

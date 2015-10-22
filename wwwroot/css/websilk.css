@@ -15,22 +15,22 @@ body {font-size:12px;}
 .right{float:right;}
 .clear{clear:both;}
 .center{text-align:center;}
-.spriteoverflow{position:relative;overflow:hidden;}
-.wh100{width:100%; height:100%;}
-.w100{width:100%;}
-.h100{height:100%;}
 .wait, .wait div {cursor: wait !important;}
-select, input, textarea{margin:0px;}
+select, input, textarea{margin:0px; box-sizing:border-box;}
 .iphone, .ipad{font-size:16px;}
+input{outline:none;}
 
 /* webpage specific */
 .body{position:relative; width:100%;}
 .webpage{position:relative; margin:0px auto;}
-.webpage .component{position:relative; vertical-align:top;}
+.webpage .component{position:relative; vertical-align:top; box-sizing:border-box;}
 .webpage .ispanel {position:relative; width:100%; height:100%;}
 .webpage .inner-panel{position:relative; width:100%; height:100%; min-height:30px; text-align:center;}
 .webpage .inner-panel:after{content:""; display:table; clear:both;}
-.webpage input[type='text']{padding:3px 7px; width:calc(100% - 14px); font-size:14px;}input{outline:none;}
+.webpage input[type='text'],
+.webpage input[type='password'],
+.webpage input[type='email']{padding:3px 7px; width:calc(100% - 14px); font-size:14px;}
+.webpage ul{padding-left:40px;}
 
 /* theme elements (textbox.html) */
 .nobg{background-color:transparent; border-style:none; border-width:0px;}
@@ -59,22 +59,16 @@ select, input, textarea{margin:0px;}
 .webpage .arrange-grid.columns10 > .ispanel{ width:10%; }
 .webpage .arrange-grid.columns11 > .ispanel{ width:9.0909%; }
 .webpage .arrange-grid.columns12 > .ispanel{ width:8.3333%; }
-body.s-tablet .webpage .arrange-grid > .ispanel{ width:50%; min-width:unset !important;}
-body.s-tablet .webpage .arrange-grid.columns8 > .ispanel,
-body.s-tablet .webpage .arrange-grid.columns9 > .ispanel,
-body.s-tablet .webpage .arrange-grid.columns10 > .ispanel,
-body.s-tablet .webpage .arrange-grid.columns11 > .ispanel,
-body.s-tablet .webpage .arrange-grid.columns12 > .ispanel{width:33.3333%;}
-body.s-mobile .webpage .arrange-grid > .ispanel{ width:100%; min-width:unset !important;}
-body.s-mobile .webpage .arrange-grid.columns6 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns7 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns8 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns9 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns10 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns11 > .ispanel,
-body.s-mobile .webpage .arrange-grid.columns12 > .ispanel
-{ width:50%; min-width:unset !important;}
-body.s-cell .webpage .arrange-grid > .ispanel{ width:100%; min-width:unset !important;}
+.s-tablet .webpage .arrange-grid > .ispanel{ width:50%; min-width:unset !important;}
+.s-tablet .webpage .arrange-grid.columns8 > .ispanel,
+.s-tablet .webpage .arrange-grid.columns9 > .ispanel,
+.s-tablet .webpage .arrange-grid.columns10 > .ispanel,
+.s-tablet .webpage .arrange-grid.columns11 > .ispanel,
+.s-tablet .webpage .arrange-grid.columns12 > .ispanel{width:33.3333%;}
+.s-mobile .webpage .arrange-grid > .ispanel{ width:50%; min-width:unset !important;}
+.s-mobile .webpage .arrange-grid.columns2 > .ispanel,
+.s-mobile .webpage .arrange-grid.columns3 > .ispanel{ width:100%; min-width:unset !important;}
+.s-cell .webpage .arrange-grid > .ispanel{ width:100%; min-width:unset !important;}
 
 /*special elements*/
 .svgicons{position:absolute; height:0px; width:0px;}
