@@ -1113,7 +1113,6 @@ S.editor = {
                 //unbind document mouse up event
                 $(document).unbind('mousemove', drag.go);
                 $(document).unbind('mouseup', drag.end);
-
                 if (drag.painting == true && drag.disabled == false && drag.moved == true) {
                     S.editor.components.drag.painting = false;
 
@@ -2560,7 +2559,7 @@ S.editor = {
     },
 
     textEditor: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        selected: false,
+        selected: false, pressing:false,
 
         init: function () {
             //setup callbacks
@@ -2683,9 +2682,19 @@ S.editor = {
         },
 
         hide: function (target, clicked) {
+            if (target == null) {
+                S.editor.components.hovered = null;
+                S.editor.components.selected = null;
+                S.editor.textEditor.selected = false;
+                S.editor.components.disabled = false;
+                return;
+            }
             if ($(target).hasClass('type-textbox') == true) {
-                if ($(clicked).parents('.textedit.editing').length == 1 || target == clicked) {
+                if ($(clicked).parents('.textedit.editing, .texteditor-toolbar').length >= 1 || 
+                    target == clicked || $(clicked).hasClass('textedit editing') ||
+                    S.editor.textEditor.pressing == true) {
                     S.editor.components.disabled = true;
+                    S.editor.textEditor.pressing = false;
                     return;
                 }
                 if ($(target).find('.textedit.editing').length == 1) {
@@ -2699,11 +2708,13 @@ S.editor = {
                 $('.tools .texteditor-toolbar, .tools .texteditor-btnselect').hide();
                 S.events.doc.scroll.callback.remove($('.tools .texteditor-toolbar')[0]);
                 S.events.doc.resize.callback.remove($('.tools .texteditor-toolbar')[0]);
+                if (S.editor.components.disabled == true) {
+                    S.editor.components.hovered = null;
+                    S.editor.components.selected = null;
+                    S.editor.textEditor.selected = false;
+                    S.editor.components.disabled = false;
+                }
             }
-            S.editor.components.hovered = null;
-            S.editor.components.selected = null;
-            S.editor.textEditor.selected = false;
-            S.editor.components.disabled = false;
         },
 
         keyUp: function () {
@@ -2712,6 +2723,7 @@ S.editor = {
         },
 
         mouseDown: function () {
+            S.editor.textEditor.pressing = true;
             //S.editor.components.disabled = true;
         },
 
@@ -2720,7 +2732,7 @@ S.editor = {
         },
 
         alterRange: function (name, tag, attributes, remove, outerOnly) {
-            var sel = rangy.getSelection(), range, el, f, container,
+            var sel = rangy.getSelection(), range, el, f, container, r,
                 hasremove = false, hasclass = false;
 
             //select children if there is no selection made ///////////////////////
@@ -2731,36 +2743,22 @@ S.editor = {
             if (outerOnly == true) {
                 //create outer node
                 sel.refresh();
-                range = sel.getRangeAt(0).cloneRange();
-                container = range.commonAncestorContainer;
-                var contents = range.extractContents();
-                f = document.createDocumentFragment();
+                r = this.getRange();
+                range = r.range;
+                container = r.parent;
                 el = document.createElement(tag);
-                if (attributes != null) { $(el).attr(attributes); }
-                el.appendChild(contents);
+                $(r.nodes).wrapAll(el);
                 var el2 = $(el).find('.' + name);
                 if (el2.length == 0 && remove != null) {
                     for (x = 0; x < remove.length; x++) {
-                        el2 = $(el).find('.' + remove[x]);
-                        if (el2.length > 0) { hasremove = true; break; }
+                        el2 = $(el).find('.' + remove[x]).contents().unwrap();
                     }
                 }
-                if (el2.length > 0) {
-                    el = el.firstChild;
-                    if (hasremove == false) {
-                        //remove outer node (toggle)
-                        hasclass = true;
-                        $(f).append(el.childNodes);
-                        range.insertNode(f);
-                    }
-                }
-                if (hasclass == false) {
-                    f.appendChild(el);
-                    range.insertNode(f);
-                }
+                $(container).find('span:not([class])').contents().unwrap();
                 range.normalizeBoundaries();
                 sel.refresh();
                 sel.setSingleRange(range);
+                
             }
 
 
@@ -2799,21 +2797,6 @@ S.editor = {
                 }
             }
 
-            if (outerOnly == true) {
-                //remove class (name) from all child nodes
-                if (hasclass == false) {
-                    el.className = name;
-                }
-                var c = $(el).find('.' + name).removeClass(name);
-                sel.refresh();
-                if (hasclass == false) {
-                    range.selectNode(el);
-                } else {
-                    range.selectNodeContents(container);
-                }
-                sel.setSingleRange(range);
-            }
-
             S.editor.textEditor.save.start();
         },
 
@@ -2827,9 +2810,9 @@ S.editor = {
                 //if (parent.nodeName == '#text') { parent = parent.parentNode; }
                 var roots = $(nodes).filter(function () { if (this.parentNode != parent) { return false; } return true; });
                 if (nodes.length == 1) { roots = nodes; }
-                return { range: range, nodes: roots, parent: parent };
+                return { range: range, nodes: roots, parent: parent, sel: sel };
             }
-            return { range: null, nodes: [], parent: null };
+            return { range: null, nodes: [], parent: null, sel:null };
         },
 
         commands: {
@@ -2857,11 +2840,17 @@ S.editor = {
                     var parent = r.parent;
 
                     //check first to see if I should remove the bullet list
-                    if ($(nodes).is('ul') || $(parent).is('ul')) {
+                    if ($(nodes).is('ul') || $(parent).is('ul') || $(parent).is('li')) {
                         //remove bullet list
-                        $(nodes).find('li').contents().unwrap();
-                        $(nodes).contents().unwrap();
-                        $(parent).find('ul').contents().unwrap();
+                        if ($(parent).is('li')) {
+                            var ul = $(parent.parentNode)
+                            $(parent).contents().unwrap();
+                            ul.contents().unwrap();
+                        } else {
+                            $(nodes).find('li').contents().unwrap();
+                            $(nodes).contents().unwrap();
+                            $(parent).find('ul').contents().unwrap();
+                        }
                         if ($(parent).is('ul')) {
                             $(parent).contents().unwrap();
                         }
@@ -2872,10 +2861,9 @@ S.editor = {
                         $(nodes).wrapAll(ul).wrap('<li></li>');
                     }
                 }
-            },
-
-            numberList: function () {
-                //S.editor.textEditor.instance.invokeElement('ul', { style: 'list-style-type:decimal' }).invokeElement('li', {});
+                r.range.normalizeBoundaries();
+                r.sel.refresh();
+                r.sel.setSingleRange(r.range);
             },
 
             outdent: function () {
