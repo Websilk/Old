@@ -305,6 +305,14 @@ ul.columns-first{float:left;}
 .interface .screenshot{width:150px; height:100px; overflow:hidden;}
 .interface .screenshot img{width:150px;}
 
+/* window main-menu (with downward arrow on selected item)  */
+.interface .main-menu{width:100%; background-color:#26394a;}
+.interface .main-menu .item{padding:4px 12px; color:#3ccdff;}
+.interface .main-menu .item.selected{background-color:#285673; color:#ffffff;}
+.interface .main-menu .item.selected:after {
+    top:100%; left:50%; border:solid transparent; content:" "; height:0; width:0; position:absolute; 
+    pointer-events:none; border-color:rgba(40, 86, 115, 0); border-top-color:#285673; border-width:10px; margin-left:-10px;}
+
 /* dashboard */
 .window.dashboard:not(.winDashboardInterface) > .content{position:relative; height:100%; max-height:calc(100% - 60px);}
 .interface .dashboard-only, .interface .dash-only{display:none;}

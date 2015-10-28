@@ -953,7 +953,7 @@ S.editor = {
                 this.above = -1;
                 this.item.elem = comp;
                 S.editor.components.posStart = S.elem.pos(comp);
-                this.item.pos = S.elem.innerPos(comp);
+                this.item.pos = S.elem.pos(comp);
                 this.item.offset = S.elem.offset(comp);
                 this.item.offset.x = parseInt($(comp).css('left')) || 0;
                 this.item.offset.y = parseInt($(comp).css('top')) || 0;
@@ -1113,7 +1113,6 @@ S.editor = {
                 //unbind document mouse up event
                 $(document).unbind('mousemove', drag.go);
                 $(document).unbind('mouseup', drag.end);
-
                 if (drag.painting == true && drag.disabled == false && drag.moved == true) {
                     S.editor.components.drag.painting = false;
 
@@ -1215,7 +1214,7 @@ S.editor = {
                 this.options.cursor.y = mPos.y;
                 this.options.cursorStart.x = mPos.x;
                 this.options.cursorStart.y = mPos.y;
-                this.options.elemPos = S.elem.innerPos(c);
+                this.options.elemPos = S.elem.pos(c);
                 this.options.panelPos = S.elem.pos(p);
                 this.options.elemStart = {
                     x: this.options.elemPos.x - this.options.offset.x,
@@ -1237,6 +1236,9 @@ S.editor = {
                     x: this.options.elemPos.x - this.options.left,
                     y: this.options.elemPos.y - this.options.top,
                 }
+                this.options.classes = S.util.css.objects($(c));
+                this.options.margin = this.options.classes['margin-right'];
+
 
                 //get selected resize side or corner
                 if (bar.hasClass('resize-top') == true) {
@@ -1299,7 +1301,7 @@ S.editor = {
                 var perc = false;
                 var center = 1;
                 if ($(this.options.elem).css('display').indexOf('inline-block') == 0 ||
-                    $(this.options.elem).css('margin').indexOf('auto') >= 0) { center = 2; }
+                    this.options.margin.indexOf('auto') >= 0) { center = 2; }
                 if (this.options.elem.style.width.indexOf('%') >= 0) { perc = true; }
                 if (perc == true) {
                     //find new percentage value
@@ -1550,7 +1552,10 @@ S.editor = {
         click: function (target, type) {
             var comps = S.editor.components;
             if (S.editor.enabled == false) { return; }
-            if (comps.disabled == true) { return; }
+            if (comps.disabled == true) {
+                comps.callback.execute('onHide', comps.selected, target);
+                return;
+            }
             if (type == 'component-select') {
                 //select component
                 if ($(target).hasClass('component-select') == false) { return; }
@@ -1574,7 +1579,7 @@ S.editor = {
                     }
                     if (t == comps.selected || comps.selected == null || $(t).find(comps.selected).length > 0) {
                         //clicked selected panel to allow mouseEnter
-                        comps.callback.execute('onHide', comps.selected);
+                        comps.callback.execute('onHide', comps.selected, target);
                         S.editor.components.selected = null;
                         comps.hideSelect();
                         comps.mouseEnter(t, 1);
@@ -1592,7 +1597,7 @@ S.editor = {
                     }
                     if (hide == true) {
                         //completely deselect component
-                        comps.callback.execute('onHide', comps.hovered);
+                        comps.callback.execute('onHide', comps.hovered, target);
                         S.editor.components.selected = null;
                         comps.hideSelect();
                     }
@@ -1645,7 +1650,7 @@ S.editor = {
                 }
             },
 
-            execute: function (type, target, pos) {
+            execute: function (type, target, extra) {
                 if (this.items.length > 0) {
                     for (var x = 0; x < this.items.length; x++) {
                         //if (this.items[x].elem == target) {
@@ -1664,13 +1669,13 @@ S.editor = {
 
                             case 'onResize':
                                 if (typeof this.items[x].onResize == 'function') {
-                                    this.items[x].onResize(target, pos);
+                                    this.items[x].onResize(target, extra);
                                 }
                                 break;
 
                             case 'onHide':
                                 if (typeof this.items[x].onHide == 'function') {
-                                    this.items[x].onHide(target);
+                                    this.items[x].onHide(target, extra);
                                 }
                                 break;
                         }
@@ -1715,9 +1720,11 @@ S.editor = {
 
             show: function (tab) {
                 var p = $('.component-select .properties');
+                var ishidden = true;
                 if ($('.component-select .section-' + tab)[0].style.display != 'none' && p[0].style.display != 'none' && arguments[1] == null) {
                     this.hideAll(); return;
                 }
+                if (p[0].style.display != 'none') { ishidden = false; }
                 this.hideAll();
                 $('.component-select .section-' + tab).show();
                 p.css({ opacity: 0, width: '' }).show();
@@ -1744,7 +1751,7 @@ S.editor = {
                     }
 
                 }
-                this.load();
+                if (ishidden == true) { this.load(); }
                 S.editor.components.resizeSelectBox();
             },
 
@@ -2095,6 +2102,7 @@ S.editor = {
         },
 
         hideSelect: function () {
+            if (S.editor.components.disabled == true) { return false;}
             var type = arguments[0] || '';
             if (type == 'leave') {
                 S.editor.components.hovered = null;
@@ -2118,14 +2126,6 @@ S.editor = {
             }
             $('.tools > .component-select').hide();
             $('.component-select .menu .item').css({ paddingRight: 0 });
-            return;
-
-            if (hide == true && (type == '' || type == 'leave')) {
-                $('.tools > .component-select').hide();
-            } else {
-                $('.tools > .component-select').css({ width: 0, height: 0 });
-            }
-            //stop().animate({ opacity: 0 }, 4000, function () { $(this).hide();});
         },
 
         resizeSelectBox: function () {
@@ -2449,7 +2449,7 @@ S.editor = {
                 //padding
                 if (pos[10].length > 0) {
                     var pad = pos[10].replace(/px/g, '').split(' ');
-                    css += 'padding:' + pos[10] + '; width:calc(100% - ' + (parseInt(pad[1]) + parseInt(pad[3])) + 'px); ';
+                    css += 'padding:' + pos[10] + '; width:100%; ';
                 } else {
                     css += 'padding:0px; width:100%;';
                 }
@@ -2559,7 +2559,7 @@ S.editor = {
     },
 
     textEditor: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        instance: null,
+        selected: false, pressing:false,
 
         init: function () {
             //setup callbacks
@@ -2582,8 +2582,8 @@ S.editor = {
                 { title: 'italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
                 { title: 'strike-thru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
                 { title: 'underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
-                { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.bulletList()' },
-                { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.numberList()' },
+                { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
+                { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
                 //{ title: 'outdent', svg: 'outdent', click: 'S.editor.textEditor.commands.outdent()' },
                 { title: 'indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
                 { title: 'align left', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
@@ -2650,11 +2650,15 @@ S.editor = {
 
                 //reposition the text editor toolbar
                 S.editor.textEditor.reposition(target);
+                S.editor.textEditor.selected = true;
+                S.editor.components.disabled = true;
 
                 //focus text
                 var range = document.createRange();
                 var sel = window.getSelection();
-                range.setStart(textedit[0].lastChild, 1);
+                try {
+                    range.setStart(textedit[0].lastChild, 1);
+                } catch (ex) { }
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
@@ -2677,8 +2681,22 @@ S.editor = {
             $('.tools .texteditor-btnselect').css({ top: pos.y - 12, left: pos.x + pos.w + 10 }).show();
         },
 
-        hide: function (target) {
+        hide: function (target, clicked) {
+            if (target == null) {
+                S.editor.components.hovered = null;
+                S.editor.components.selected = null;
+                S.editor.textEditor.selected = false;
+                S.editor.components.disabled = false;
+                return;
+            }
             if ($(target).hasClass('type-textbox') == true) {
+                if ($(clicked).parents('.textedit.editing, .texteditor-toolbar').length >= 1 || 
+                    target == clicked || $(clicked).hasClass('textedit editing') ||
+                    S.editor.textEditor.pressing == true) {
+                    S.editor.components.disabled = true;
+                    S.editor.textEditor.pressing = false;
+                    return;
+                }
                 if ($(target).find('.textedit.editing').length == 1) {
                     var textedit = $(target).find('.textedit');
                     textedit.removeClass('editing')[0].contentEditable = "false";
@@ -2690,6 +2708,12 @@ S.editor = {
                 $('.tools .texteditor-toolbar, .tools .texteditor-btnselect').hide();
                 S.events.doc.scroll.callback.remove($('.tools .texteditor-toolbar')[0]);
                 S.events.doc.resize.callback.remove($('.tools .texteditor-toolbar')[0]);
+                if (S.editor.components.disabled == true) {
+                    S.editor.components.hovered = null;
+                    S.editor.components.selected = null;
+                    S.editor.textEditor.selected = false;
+                    S.editor.components.disabled = false;
+                }
             }
         },
 
@@ -2699,15 +2723,16 @@ S.editor = {
         },
 
         mouseDown: function () {
-            S.editor.components.disabled = true;
+            S.editor.textEditor.pressing = true;
+            //S.editor.components.disabled = true;
         },
 
         mouseUp: function () {
-            setTimeout(function () { S.editor.components.disabled = false; }, 100);
+            //setTimeout(function () { S.editor.components.disabled = false; }, 100);
         },
 
         alterRange: function (name, tag, attributes, remove, outerOnly) {
-            var sel = rangy.getSelection(), range, el, f, container,
+            var sel = rangy.getSelection(), range, el, f, container, r,
                 hasremove = false, hasclass = false;
 
             //select children if there is no selection made ///////////////////////
@@ -2718,36 +2743,22 @@ S.editor = {
             if (outerOnly == true) {
                 //create outer node
                 sel.refresh();
-                range = sel.getRangeAt(0).cloneRange();
-                container = range.commonAncestorContainer;
-                var contents = range.extractContents();
-                f = document.createDocumentFragment();
+                r = this.getRange();
+                range = r.range;
+                container = r.parent;
                 el = document.createElement(tag);
-                if (attributes != null) { $(el).attr(attributes); }
-                el.appendChild(contents);
+                $(r.nodes).wrapAll(el);
                 var el2 = $(el).find('.' + name);
                 if (el2.length == 0 && remove != null) {
                     for (x = 0; x < remove.length; x++) {
-                        el2 = $(el).find('.' + remove[x]);
-                        if (el2.length > 0) { hasremove = true; break; }
+                        el2 = $(el).find('.' + remove[x]).contents().unwrap();
                     }
                 }
-                if (el2.length > 0) {
-                    el = el.firstChild;
-                    if (hasremove == false) {
-                        //remove outer node (toggle)
-                        hasclass = true;
-                        $(f).append(el.childNodes);
-                        range.insertNode(f);
-                    }
-                }
-                if (hasclass == false) {
-                    f.appendChild(el);
-                    range.insertNode(f);
-                }
+                $(container).find('span:not([class])').contents().unwrap();
                 range.normalizeBoundaries();
                 sel.refresh();
                 sel.setSingleRange(range);
+                
             }
 
 
@@ -2786,22 +2797,22 @@ S.editor = {
                 }
             }
 
-            if (outerOnly == true) {
-                //remove class (name) from all child nodes
-                if (hasclass == false) {
-                    el.className = name;
-                }
-                var c = $(el).find('.' + name).removeClass(name);
-                sel.refresh();
-                if (hasclass == false) {
-                    range.selectNode(el);
-                } else {
-                    range.selectNodeContents(container);
-                }
-                sel.setSingleRange(range);
-            }
-
             S.editor.textEditor.save.start();
+        },
+
+        getRange: function () {
+            var sel = rangy.getSelection();
+            if (sel.rangeCount > 0) {
+                var range = sel.getRangeAt(0);
+                var nodes = range.getNodes();
+                var parent = range.commonAncestorContainer;
+                if (nodes[0] == parent) { parent = parent.parentNode; }
+                //if (parent.nodeName == '#text') { parent = parent.parentNode; }
+                var roots = $(nodes).filter(function () { if (this.parentNode != parent) { return false; } return true; });
+                if (nodes.length == 1) { roots = nodes; }
+                return { range: range, nodes: roots, parent: parent, sel: sel };
+            }
+            return { range: null, nodes: [], parent: null, sel:null };
         },
 
         commands: {
@@ -2821,12 +2832,38 @@ S.editor = {
                 S.editor.textEditor.alterRange('underline', 'span', {});
             },
 
-            bulletList: function () {
-                //S.editor.textEditor.instance.invokeElement('ul', { style: 'list-style-type:disc' }).invokeElement('li', {});
-            },
+            list: function (type) {
+                var r = S.editor.textEditor.getRange();
+                if (r.range != null) {
+                    var range = r.range;
+                    var nodes = r.nodes;
+                    var parent = r.parent;
 
-            numberList: function () {
-                //S.editor.textEditor.instance.invokeElement('ul', { style: 'list-style-type:decimal' }).invokeElement('li', {});
+                    //check first to see if I should remove the bullet list
+                    if ($(nodes).is('ul') || $(parent).is('ul') || $(parent).is('li')) {
+                        //remove bullet list
+                        if ($(parent).is('li')) {
+                            var ul = $(parent.parentNode)
+                            $(parent).contents().unwrap();
+                            ul.contents().unwrap();
+                        } else {
+                            $(nodes).find('li').contents().unwrap();
+                            $(nodes).contents().unwrap();
+                            $(parent).find('ul').contents().unwrap();
+                        }
+                        if ($(parent).is('ul')) {
+                            $(parent).contents().unwrap();
+                        }
+                    } else {
+                        //generate bullet list
+                        var ul = document.createElement('ul');
+                        ul.style.listStyleType = type || '';
+                        $(nodes).wrapAll(ul).wrap('<li></li>');
+                    }
+                }
+                r.range.normalizeBoundaries();
+                r.sel.refresh();
+                r.sel.setSingleRange(r.range);
             },
 
             outdent: function () {
@@ -4451,6 +4488,43 @@ S.util.message = {
         $(div).css({ opacity: 0, height: 'auto' }).show().html(msg);
         var h = S.elem.height($(div)[0]);
         $(div).css({ height: 0, overflow: 'hidden' }).show().animate({ height: h - 9, opacity: 1 }, 1000).delay(10000).animate({ opacity: 0, height: 0 }, 1000, function () { $(this).hide(); });
+    }
+}
+
+S.util.css = {
+    objects: function(a){
+        var sheets = document.styleSheets, o = {};
+        for(var i in sheets) {
+            var rules = sheets[i].rules || sheets[i].cssRules;
+            for(var r in rules) {
+                if(a.is(rules[r].selectorText)) {
+                    o = $.extend(o,
+                        S.util.css.convert(rules[r].style),
+                        S.util.css.convert(a.attr('style')
+                        ));
+                }
+            }
+        }
+        return o;
+    },
+
+    convert: function (css){
+        var s = {};
+        if(!css) return s;
+        if(css instanceof CSSStyleDeclaration) {
+            for(var i in css) {
+                if((css[i]).toLowerCase) {
+                    s[(css[i]).toLowerCase()] = (css[css[i]]);
+                }
+            }
+        } else if(typeof css == "string") {
+            css = css.split("; ");          
+            for (var i in css) {
+                var l = css[i].split(": ");
+                s[l[0].toLowerCase()] = (l[1]);
+            };
+        }
+        return s;
     }
 }
 
