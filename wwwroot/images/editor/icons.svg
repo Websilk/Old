@@ -581,22 +581,6 @@ M 7 3
 L 8 3 8 9 7.5 12.3 7 9 7 3 Z"/>
 </g>
 
-<g id="iconMore_0_Layer1_0_FILL">
-<path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
-M 18 18
-L 18 0 0 0 0 18 18 18 Z"/>
-</g>
-
-<g id="iconMore_0_Layer0_0_FILL">
-<path fill="#FFFFFF" stroke="none" d="
-M 9 14
-Q 8.15 14 7.55 14.55 7 15.15 7 16 7 16.85 7.55 17.4 8.15 18 9 18 9.85 18 10.4 17.4 11 16.85 11 16 11 15.15 10.4 14.55 9.85 14 9 14
-M 10.4 3.4
-Q 11 2.85 11 2 11 1.15 10.4 0.55 9.85 0 9 0 8.15 0 7.55 0.55 7 1.15 7 2 7 2.85 7.55 3.4 8.15 4 9 4 9.85 4 10.4 3.4
-M 10.4 10.4
-Q 11 9.85 11 9 11 8.15 10.4 7.55 9.85 7 9 7 8.15 7 7.55 7.55 7 8.15 7 9 7 9.85 7.55 10.4 8.15 11 9 11 9.85 11 10.4 10.4 Z"/>
-</g>
-
 <g id="iconMoveFolder_0_Layer1_0_FILL">
 <path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
 M 31 -4
@@ -1524,6 +1508,22 @@ L 17 7.9
 Q 16.85 6.85 16.15 6 15.3 5 14.05 5 Z"/>
 </g>
 
+<g id="iconTextMore_0_Layer1_0_FILL">
+<path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
+M 0 0
+L 0 18 18 18 18 0 0 0 Z"/>
+</g>
+
+<g id="iconTextMore_0_Layer0_0_FILL">
+<path fill="#FFFFFF" stroke="none" d="
+M 9 14
+Q 8.15 14 7.55 14.55 7 15.15 7 16 7 16.85 7.55 17.4 8.15 18 9 18 9.85 18 10.4 17.4 11 16.85 11 16 11 15.15 10.4 14.55 9.85 14 9 14
+M 10.4 10.4
+Q 11 9.85 11 9 11 8.15 10.4 7.55 9.85 7 9 7 8.15 7 7.55 7.55 7 8.15 7 9 7 9.85 7.55 10.4 8.15 11 9 11 9.85 11 10.4 10.4
+M 10.4 3.4
+Q 11 2.85 11 2 11 1.15 10.4 0.55 9.85 0 9 0 8.15 0 7.55 0.55 7 1.15 7 2 7 2.85 7.55 3.4 8.15 4 9 4 9.85 4 10.4 3.4 Z"/>
+</g>
+
 <g id="iconTextNumbers_0_Layer1_0_FILL">
 <path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
 M 18 0
@@ -2091,18 +2091,6 @@ L 1 13 1 1 7 1 7 13 Z"/>
 <use xlink:href="#icon_logout_0_Layer0_0_FILL"/>
 </g>
 </g>
-</symbol><symbol id="icon-more" viewBox="0 0 18 18">
-
-
-<g transform="matrix( 1, 0, 0, 1, 0,0) ">
-<g transform="matrix( 1, 0, 0, 1, 0,0) ">
-<use xlink:href="#iconMore_0_Layer1_0_FILL"/>
-</g>
-
-<g transform="matrix( 1, 0, 0, 1, 0,0) ">
-<use xlink:href="#iconMore_0_Layer0_0_FILL"/>
-</g>
-</g>
 </symbol><symbol id="icon-movefolder" viewBox="0 0 31 25">
 
 
@@ -2501,6 +2489,18 @@ L 1 13 1 1 7 1 7 13 Z"/>
 
 <g transform="matrix( 1, 0, 0, 1, 0,0) ">
 <use xlink:href="#iconTextLink_0_Layer0_0_FILL"/>
+</g>
+</g>
+</symbol><symbol id="icon-textmore" viewBox="0 0 18 18">
+
+
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#iconTextMore_0_Layer1_0_FILL"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#iconTextMore_0_Layer0_0_FILL"/>
 </g>
 </g>
 </symbol><symbol id="icon-textnumbers" viewBox="0 0 18 18">
