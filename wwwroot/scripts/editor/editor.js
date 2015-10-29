@@ -2573,33 +2573,50 @@ S.editor = {
             toolbar.className = 'texteditor-toolbar';
             toolbar.style.display = 'none';
 
-            btnSelect.className = 'texteditor-btnselect';
+            btnSelect.className = 'texteditor-btnselect skin';
             btnSelect.style.display = 'none';
 
             //create buttons for toolbar
             var buttons = [
-                { title: 'bold', svg: 'bold', click: 'S.editor.textEditor.commands.bold()' },
-                { title: 'italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
-                { title: 'strike-thru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
-                { title: 'underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
-                { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
-                { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
-                //{ title: 'outdent', svg: 'outdent', click: 'S.editor.textEditor.commands.outdent()' },
-                { title: 'indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
-                { title: 'align left', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
-                { title: 'align center', svg: 'center', click: 'S.editor.textEditor.commands.alignCenter()' },
-                { title: 'align right', svg: 'right', click: 'S.editor.textEditor.commands.alignRight()' },
-                { title: 'photo', svg: 'photo', click: 'S.editor.textEditor.commands.photo.show()' },
-                { title: 'table', svg: 'table', click: 'S.editor.textEditor.commands.table.show()' },
-                { title: 'anchor link', svg: 'link', click: 'S.editor.textEditor.commands.link.show()' },
-                { title: 'font color', svg: 'color', click: 'S.editor.textEditor.commands.colors.show("color")' },
-                { title: 'highlight color', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' },
-                { title: 'source code', svg: 'source', click: 'S.editor.textEditor.commands.source.show()' }
+                [
+                    { title: 'bold', svg: 'bold', click: 'S.editor.textEditor.commands.bold()' },
+                    { title: 'italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
+                    { title: 'strike-thru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
+                    { title: 'underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
+                    { title: 'font family', classes:'dropdown', html: '<select id="textEditorFontFamily" onchange="S.editor.textEditor.commands.fontFamily()" style="width:150px;">' + S.editor.textEditor.fonts.list() + '</select>' },
+                    { title: 'font size', classes: 'dropdown', html: '<select id="textEditorFontSize" onchange="S.editor.textEditor.commands.fontSize()" style="width:55px;">' + S.editor.textEditor.fonts.size() + '</select>' }
+                    //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(2)' }
+                ],
+                [
+                    { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
+                    { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
+                    { title: 'indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
+                    { title: 'align left', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
+                    { title: 'align center', svg: 'center', click: 'S.editor.textEditor.commands.alignCenter()' },
+                    { title: 'align right', svg: 'right', click: 'S.editor.textEditor.commands.alignRight()' },
+                    { title: 'photo', svg: 'photo', click: 'S.editor.textEditor.commands.photo.show()' },
+                    { title: 'table', svg: 'table', click: 'S.editor.textEditor.commands.table.show()' },
+                    { title: 'anchor link', svg: 'link', click: 'S.editor.textEditor.commands.link.show()' },
+                    { title: 'source code', svg: 'source', click: 'S.editor.textEditor.commands.source.show()' },
+                    { title: 'font color', svg: 'color', click: 'S.editor.textEditor.commands.colors.show("color")' },
+                    { title: 'highlight color', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' }
+                    //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(1)' }
+                ]
             ];
 
+            //buttons: section #1
             for (x = 0; x < buttons.length; x++) {
-                htm += '<div class="button"><a href="javascript:" onmousedown="' + buttons[x].click + ';return false" title="' + buttons[x].title + '">' +
-                    '<svg viewBox="0 0 18 18"><use xlink:href="#icon-text' + buttons[x].svg + '" x="0" y="0" width="18" height="18"></use></svg></a></div>';
+                htm += '<div class="buttons b' + (x + 1) + ' skin"' + (x > 0 ? ' style="display:block;"' : '') + '>';
+                for (y = 0; y < buttons[x].length; y++) {
+                    if (buttons[x][y].html) {
+                        htm += '<div class="button' + (buttons[x][y].classes ? ' ' + buttons[x][y].classes : '') +
+                            '" title="' + buttons[x][y].title + '">' + buttons[x][y].html + '</div>';
+                    } else {
+                        htm += '<div class="button"><a href="javascript:" onmousedown="' + buttons[x][y].click + ';return false" title="' + buttons[x][y].title + '">' +
+                        '<svg viewBox="0 0 18 18"><use xlink:href="#icon-text' + buttons[x][y].svg + '" x="0" y="0" width="18" height="18"></use></svg></a></div>';
+                    }
+                }
+                htm += '</div>';
             }
 
 
@@ -2724,28 +2741,98 @@ S.editor = {
 
         mouseDown: function () {
             S.editor.textEditor.pressing = true;
-            //S.editor.components.disabled = true;
         },
 
         mouseUp: function () {
-            //setTimeout(function () { S.editor.components.disabled = false; }, 100);
+            //update toolbar
+            S.editor.textEditor.info();
         },
 
-        alterRange: function (name, tag, attributes, remove, outerOnly) {
+        info: function(){
+            //get info about selection and update toolbar buttons & form fields
+            var editor = S.editor.textEditor;
+            var r = editor.getRange();
+            var nodes = $(r.nodes);
+            if (nodes == null) { nodes = $(r.parent); }
+            //add all child elements to nodes list
+            var childs = nodes.find('span');
+            var classes = null;
+            var cls = '';
+            var dups = [[], []];
+            var i = 0;
+            nodes = nodes.add(childs);
+            //get all classes from all nodes
+            nodes.each(function () {
+                classes = null;
+                var node = $(this);
+                if (node[0].nodeName == '#text') { node = $(node[0]).parent(); }
+                cls = $(node).attr('class');
+                if (cls != null && cls != '') {
+                    classes = cls.split(' ');
+                } else if(classes == null) {
+                    classes = [];
+                }
+                //also get classes of parent nodes
+                node.parentsUntil('.editing').each(function () {
+                    var pclass = $(this).attr('class');
+                    if (pclass != null && pclass != '') {
+                        classes = classes.concat(pclass.split(' '));
+                    }
+                });
+
+                //find classes that match toolbar buttons & form fields
+                if (classes != null) {
+                    for (x = 0; x < classes.length; x++) {
+                        if (classes[x].indexOf('font-') >= 0) {
+                            //font-family ///////////////////////////////////////////////////
+                            if (dups[0].length > 0) {
+                                if (i > 0) {
+                                    //more than one font-family in the group of nodes
+                                    $('#textEditorFontFamily').val('font-none');
+                                }
+                            } else {
+                                dups[0].push(classes[x]);
+                                $('#textEditorFontFamily').val(classes[x]);
+                            }
+                        }
+                        if (classes[x].indexOf('fontsize-') >= 0) {
+                            //font-size //////////////////////////////////////////////////////
+                            if (dups[1].length > 0) {
+                                if (i > 0) {
+                                    //more than one font-size in the group of nodes
+                                    $('#textEditorFontSize').val('');
+                                }
+                            }else{
+                                dups[1].push(classes[x]);
+                                $('#textEditorFontSize').val(classes[x].replace('fontsize-', ''));
+                            }
+
+                        }
+                    }
+                }
+                i++;
+            });
+
+            
+        },
+
+        alterRange: function (name, tag, attributes, remove, outerOnly, styles) {
             var sel = rangy.getSelection(), range, el, f, container, r,
                 hasremove = false, hasclass = false;
+            r = this.getRange();
+            if (r.sel.isCollapsed == true) { return; }
 
             //select children if there is no selection made ///////////////////////
             if (sel.isCollapsed == true) {
                 sel.selectAllChildren(sel.anchorNode);
             }
 
+            sel.refresh();
+            range = r.range;
+            container = r.parent;
+
             if (outerOnly == true) {
                 //create outer node
-                sel.refresh();
-                r = this.getRange();
-                range = r.range;
-                container = r.parent;
                 el = document.createElement(tag);
                 $(r.nodes).wrapAll(el);
                 var el2 = $(el).find('.' + name);
@@ -2765,9 +2852,11 @@ S.editor = {
             //apply attributes & class (name) to all elements within the select ///
             var applier = rangy.createClassApplier(name, {
                 elementTagName: tag,
-                elementAttributes: attributes
+                elementAttributes: attributes,
+                elementProperties:{'style':styles}
             }, tag);
             applier.toggleSelection();
+            
 
             //remove any classes from the selection that don't belong /////////////
             if (remove != null) {
@@ -2807,7 +2896,6 @@ S.editor = {
                 var nodes = range.getNodes();
                 var parent = range.commonAncestorContainer;
                 if (nodes[0] == parent) { parent = parent.parentNode; }
-                //if (parent.nodeName == '#text') { parent = parent.parentNode; }
                 var roots = $(nodes).filter(function () { if (this.parentNode != parent) { return false; } return true; });
                 if (nodes.length == 1) { roots = nodes; }
                 return { range: range, nodes: roots, parent: parent, sel: sel };
@@ -2815,7 +2903,92 @@ S.editor = {
             return { range: null, nodes: [], parent: null, sel:null };
         },
 
+        cleanUp: function () {
+            var r = S.editor.textEditor.getRange();
+            $('.textedit.editing').find('[class=""]').contents().unwrap();
+            r.range.refresh(true);
+        },
+
+        removeClass(selector, matching){
+            $(selector).removeClass(function (index, css) { if (css) { return (css.match(matching) || []).join(' '); } else { return css } });
+        },
+
+        isCollapsed: function () {
+            var r = editor.getRange();
+            if (r.sel.isCollapsed == true) { return; }
+        },
+
         commands: {
+            fontFamily: function () {
+                var editor = S.editor.textEditor;
+                var r = editor.getRange();
+                var val = $('#textEditorFontFamily').val();
+                var els = $(r.nodes);
+                var istext = false;
+                if (r.sel.isCollapsed == true) { return;}
+                if (r.nodes.length == 1) {
+                    if (r.nodes[0].nodeName == '#text') {
+                        els = $(r.nodes[0].parentNode);
+                        istext = true;
+                    }
+                }
+                if (r.sel.anchorOffset == 0) {
+                    editor.removeClass($(els), /(^|\s)font-\S+/g);
+                    editor.removeClass($(els).find('[class*="font-"]'), /(^|\s)font-\S+/g);
+                } else {
+                    //editor.removeClass($(r.nodes).find('[class*="font-"]'), /(^|\s)font-\S+/g);
+                }
+                S.editor.textEditor.alterRange(val, 'span', {});
+                $('.textedit.editing [class*="font-none"]').removeClass('font-none');
+                editor.cleanUp();
+            },
+
+            fontSize: function () {
+                var editor = S.editor.textEditor;
+                var val = $('#textEditorFontSize').val();
+                var r = editor.getRange();
+                var els = $(r.nodes);
+                var istext = false;
+                if (r.sel.isCollapsed == true) { return; }
+                if (els.length == 1) {
+                    if (els[0].nodeName == '#text') {
+                        els = $(els[0].parentNode);
+                        istext = true;
+                    }
+                }
+                els = els.add(els.find('span'));
+                console.log(els);
+                console.log(istext);
+                if (istext == false) {
+                    //remove font-sizes from multiple nodes
+                    editor.removeClass(els.css({ 'font-size': '' }), /(^|\s)fontsize-\S+/g);
+                } else {
+                    if (els.find('[class*="fontsize-"]').length > 0) {
+                        //remove font-sizes from single text node that has child nodes with font sizes
+                        els.css({ 'font-size': '' }).each(function () {
+                            editor.removeClass($(this).find('[class*="fontsize-"]'), /(^|\s)fontsize-\S+/g);
+                        });
+                    }
+                }
+                
+                if (r.sel.anchorOffset == 0) {
+                    //selected beginning of node, remove font-sizes from parent
+                    if ($(r.parent).is('[class*="fontsize-"]') && $(r.parent.parentNode).is('.textedit')) {
+                        //remove font-sizes from selected root node
+                        editor.removeClass($(r.parent).css({ 'font-size': '' }), /(^|\s)fontsize-\S+/g);
+                    }
+                    //remove font-sizes from each node in the list
+                    els.css({ 'font-size': '' }).each(function () {
+                        editor.removeClass($(this).find('[class*="fontsize-"]'), /(^|\s)fontsize-\S+/g);
+                    });
+                }
+                
+                if (val != '') {
+                    editor.alterRange('fontsize-' + val, 'span', {}, {}, null, { 'font-size': (parseInt(val) / 12) + 'em' });
+                }
+                editor.cleanUp();
+            },
+
             bold: function () {
                 S.editor.textEditor.alterRange('bold', 'span', {});
             },
@@ -2936,6 +3109,11 @@ S.editor = {
 
                 }
             },
+            
+            more:function(index){
+                $('.texteditor-toolbar .buttons').hide();
+                $('.texteditor-toolbar .b' + index).show();
+            },
 
             componentSelect: function () {
                 S.editor.components.hovered = S.editor.components.selected;
@@ -2945,6 +3123,47 @@ S.editor = {
                 S.editor.textEditor.hide(S.editor.components.hovered);
 
             }
+        },
+
+        fonts:{
+            families: [
+                {title:'[Select A Font]',className:'font-none'},
+                {title:'Georgia',className:'font-georgia'},
+                {title:'Book Antiqua',className:'font-book'},
+                {title:'Times New Roman',className:'font-times'},
+                {title:'Arial',className:'font-arial'},
+                {title:'Arial Black',className:'font-arial-black'},
+                {title:'Impact',className:'font-impact'},
+                {title:'Lucida Sans',className:'font-lucida'},
+                {title:'Tahoma',className:'font-tahoma'},
+                {title:'Trebuchet MS',className:'font-trebuchet'},
+                {title:'Verdana',className:'font-verdana'},
+                {title:'Courier New',className:'font-courier-new'},
+                {title:'Lucida Console',className:'font-lucida-console'}
+            ],
+
+            list:function(){
+                var htm = "";
+                var fam = S.editor.textEditor.fonts.families;
+                for(x=0;x<fam.length;x++){
+                    htm += '<option value="' + fam[x].className + '">' + fam[x].title + '</option>';
+                }
+                return htm;
+            },
+
+            sizes:[
+                7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,
+                41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,62,65,70,72,75,80,85,90,95,100,110,120,
+                130,140,150,160,170,180,190,200,250],
+
+            size: function () {
+                var htm = '<option value="">Auto</option>';;
+                var siz = S.editor.textEditor.fonts.sizes;
+                for (x = 0; x < siz.length; x++) {
+                    htm += '<option value="' + siz[x] + '">' + siz[x] + '</option>';
+                }
+                return htm;
+            },
         },
 
         save: {

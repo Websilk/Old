@@ -3712,24 +3712,19 @@
 .component-select.forpanel .quickmenu-item {
   background-color: #3aa39d;
 }
-.tools .texteditor-toolbar,
-.tools .texteditor-btnselect {
+.tools .skin {
   background-color: #272727;
 }
-.tools .texteditor-toolbar a:link use,
-.tools .texteditor-btnselect a:link use {
+.tools .skin a:link use {
   color: #ffffff;
 }
-.tools .texteditor-toolbar a:hover use,
-.tools .texteditor-btnselect a:hover use {
+.tools .skin a:hover use {
   color: #33ffcc;
 }
-.tools .texteditor-toolbar a:active use,
-.tools .texteditor-btnselect a:active use {
+.tools .skin a:active use {
   color: #00ffcc;
 }
-.tools .texteditor-toolbar a:visited use,
-.tools .texteditor-btnselect a:visited use {
+.tools .skin a:visited use {
   color: #ffffff;
 }
 body.dashboard {

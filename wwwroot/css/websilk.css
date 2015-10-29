@@ -46,6 +46,18 @@ input{outline:none;}
 .webpage .type-photo a.hover:hover img.over{opacity:1;}
 
 .webpage .type-textbox{text-align:left;}
+.webpage .font-georgia{font-family:Georgia, serif;}
+.webpage .font-book{font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;}
+.webpage .font-times{font-family:"Times New Roman", Times, serif;}
+.webpage .font-arial{font-family:Arial, Helvetica, sans-serif;}
+.webpage .font-arial-black{font-family:"Arial Black", Gadget, sans-serif;}
+.webpage .font-impact{font-family:Impact, Charcoal, sans-serif;}
+.webpage .font-lucida{font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+.webpage .font-tahoma{font-family:Tahoma, Geneva, sans-serif;}
+.webpage .font-trebuchet{font-family:"Trebuchet MS", Helvetica, sans-serif;}
+.webpage .font-verdana{font-family:Verdana, Geneva, sans-serif;}
+.webpage .font-courier-new{font-family:"Courier New", Courier, monospace;}
+.webpage .font-lucida-console{font-family:"Lucida Console", Monaco, monospace;}
 
 .webpage .arrange-grid > .ispanel{box-sizing:border-box; float:left;}
 .webpage .arrange-grid.columns2 > .ispanel{ width:50%; }
