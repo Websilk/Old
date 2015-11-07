@@ -2579,40 +2579,40 @@ S.editor = {
             //create buttons for toolbar
             var buttons = [
                 [
-                    { title: 'bold', svg: 'bold', click: 'S.editor.textEditor.commands.bold()' },
-                    { title: 'italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
-                    { title: 'strike-thru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
-                    { title: 'underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
-                    { title: 'font family', classes:'dropdown', html: '<select id="textEditorFontFamily" onchange="S.editor.textEditor.commands.fontFamily()" style="width:150px;">' + S.editor.textEditor.fonts.list() + '</select>' },
-                    { title: 'font size', classes: 'dropdown', html: '<select id="textEditorFontSize" onchange="S.editor.textEditor.commands.fontSize()" style="width:55px;">' + S.editor.textEditor.fonts.size() + '</select>' }
+                    { title: 'bold', cssName: 'tool-bold', svg: 'bold', click: 'S.editor.textEditor.commands.bold()' },
+                    { title: 'italic', cssName: 'tool-italic', svg: 'italic', click: 'S.editor.textEditor.commands.italic()' },
+                    { title: 'strike-thru', cssName: 'tool-linethru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
+                    { title: 'underline', cssName: 'tool-underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
+                    { title: 'font family', cssName: 'tool-font', classes: 'dropdown', html: '<select id="textEditorFontFamily" onchange="S.editor.textEditor.commands.fontFamily()" style="width:150px;">' + S.editor.textEditor.fonts.list() + '</select>' },
+                    { title: 'font size', cssName: 'tool-fontsize', classes: 'dropdown', html: '<select id="textEditorFontSize" onchange="S.editor.textEditor.commands.fontSize()" style="width:55px;">' + S.editor.textEditor.fonts.size() + '</select>' }
                     //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(2)' }
                 ],
                 [
-                    { title: 'bullet list', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
-                    { title: 'number list', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
-                    { title: 'indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
-                    { title: 'align left', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
-                    { title: 'align center', svg: 'center', click: 'S.editor.textEditor.commands.alignCenter()' },
-                    { title: 'align right', svg: 'right', click: 'S.editor.textEditor.commands.alignRight()' },
-                    { title: 'photo', svg: 'photo', click: 'S.editor.textEditor.commands.photo.show()' },
-                    { title: 'table', svg: 'table', click: 'S.editor.textEditor.commands.table.show()' },
-                    { title: 'anchor link', svg: 'link', click: 'S.editor.textEditor.commands.link.show()' },
-                    { title: 'source code', svg: 'source', click: 'S.editor.textEditor.commands.source.show()' },
-                    { title: 'font color', svg: 'color', click: 'S.editor.textEditor.commands.colors.show("color")' },
-                    { title: 'highlight color', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' }
+                    { title: 'bullet list', cssName: 'tool-bulletlist', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
+                    { title: 'number list', cssName: 'tool-numberlist', svg: 'numbers', click: 'S.editor.textEditor.commands.list(\'decimal\')' },
+                    { title: 'indent', cssName: 'tool-indent', svg: 'indent', click: 'S.editor.textEditor.commands.indent()' },
+                    { title: 'align left', cssName: 'tool-alignleft', svg: 'left', click: 'S.editor.textEditor.commands.alignLeft()' },
+                    { title: 'align center', cssName: 'tool-aligncenter', svg: 'center', click: 'S.editor.textEditor.commands.alignCenter()' },
+                    { title: 'align right', cssName: 'tool-alignright', svg: 'right', click: 'S.editor.textEditor.commands.alignRight()' },
+                    { title: 'photo', cssName: 'tool-photo', svg: 'photo', click: 'S.editor.textEditor.commands.photo.show()' },
+                    { title: 'table', cssName: 'tool-table', svg: 'table', click: 'S.editor.textEditor.commands.table.show()' },
+                    { title: 'anchor link', cssName: 'tool-anchor', svg: 'link', click: 'S.editor.textEditor.commands.link.show()' },
+                    { title: 'source code', cssName: 'tool-source', svg: 'source', click: 'S.editor.textEditor.commands.source.show()' },
+                    { title: 'font color', cssName: 'tool-color', svg: 'color', click: 'S.editor.textEditor.commands.colors.show("color")' },
+                    { title: 'highlight color', cssName: 'tool-bgcolor', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' }
                     //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(1)' }
                 ]
             ];
 
-            //buttons: section #1
+            //render buttons
             for (x = 0; x < buttons.length; x++) {
                 htm += '<div class="buttons b' + (x + 1) + ' skin"' + (x > 0 ? ' style="display:block;"' : '') + '>';
                 for (y = 0; y < buttons[x].length; y++) {
                     if (buttons[x][y].html) {
-                        htm += '<div class="button' + (buttons[x][y].classes ? ' ' + buttons[x][y].classes : '') +
+                        htm += '<div class="button ' + buttons[x][y].cssName + (buttons[x][y].classes ? ' ' + buttons[x][y].classes : '') +
                             '" title="' + buttons[x][y].title + '">' + buttons[x][y].html + '</div>';
                     } else {
-                        htm += '<div class="button"><a href="javascript:" onmousedown="' + buttons[x][y].click + ';return false" title="' + buttons[x][y].title + '">' +
+                        htm += '<div class="button ' + buttons[x][y].cssName + '"><a href="javascript:" onmousedown="' + buttons[x][y].click + ';return false" title="' + buttons[x][y].title + '">' +
                         '<svg viewBox="0 0 18 18"><use xlink:href="#icon-text' + buttons[x][y].svg + '" x="0" y="0" width="18" height="18"></use></svg></a></div>';
                     }
                 }
@@ -2655,19 +2655,20 @@ S.editor = {
 
         show: function (target) {
             if ($(target).hasClass('type-textbox') == true) {
+                var editor = S.editor.textEditor;
                 var textedit = $(target).find('.textedit');
                 textedit.addClass('editing')[0].contentEditable = "true";
 
                 //setup events
-                S.hotkeys.callback.add('texteditor', null, null, S.editor.textEditor.keyUp);
-                textedit.bind('mousedown', S.editor.textEditor.mouseDown);
-                textedit.bind('mouseup', S.editor.textEditor.mouseUp);
-                S.events.doc.scroll.callback.add($('.tools .texteditor-toolbar')[0], target, S.editor.textEditor.reposition, S.editor.textEditor.reposition, S.editor.textEditor.reposition);
-                S.events.doc.resize.callback.add($('.tools .texteditor-toolbar')[0], target, S.editor.textEditor.reposition, S.editor.textEditor.reposition, S.editor.textEditor.reposition);
+                S.hotkeys.callback.add('texteditor', null, null, editor.keyUp);
+                textedit.bind('mousedown', editor.mouseDown);
+                textedit.bind('mouseup', editor.mouseUp);
+                S.events.doc.scroll.callback.add($('.tools .texteditor-toolbar')[0], target, editor.reposition, editor.reposition, editor.reposition);
+                S.events.doc.resize.callback.add($('.tools .texteditor-toolbar')[0], target, editor.reposition, editor.reposition, editor.reposition);
 
                 //reposition the text editor toolbar
-                S.editor.textEditor.reposition(target);
-                S.editor.textEditor.selected = true;
+                editor.reposition(target);
+                editor.selected = true;
                 S.editor.components.disabled = true;
 
                 //focus text
@@ -2680,6 +2681,7 @@ S.editor = {
                 sel.removeAllRanges();
                 sel.addRange(range);
                 textedit.focus();
+                editor.info();
             }
         },
 
@@ -2737,6 +2739,7 @@ S.editor = {
         keyUp: function () {
             S.editor.textEditor.reposition(S.editor.components.selected);
             S.editor.textEditor.save.start();
+            S.editor.textEditor.info();
         },
 
         mouseDown: function () {
@@ -2745,10 +2748,10 @@ S.editor = {
 
         mouseUp: function () {
             //update toolbar
-            S.editor.textEditor.info();
+            setTimeout(function () { S.editor.textEditor.info(); }, 50);
         },
 
-        info: function(){
+        info: function(changeInputs){
             //get info about selection and update toolbar buttons & form fields
             var editor = S.editor.textEditor;
             var r = editor.getRange();
@@ -2758,9 +2761,15 @@ S.editor = {
             var childs = nodes.find('span');
             var classes = null;
             var cls = '';
-            var dups = [[], []];
+            var dups = [[], [], []];
             var i = 0;
             nodes = nodes.add(childs);
+
+            //reset all toolbar buttons
+            $('.texteditor-toolbar a').removeClass('selected');
+            $('#textEditorFontFamily').val('font-none');
+            $('#textEditorFontSize').val('');
+
             //get all classes from all nodes
             nodes.each(function () {
                 classes = null;
@@ -2783,36 +2792,87 @@ S.editor = {
                 //find classes that match toolbar buttons & form fields
                 if (classes != null) {
                     for (x = 0; x < classes.length; x++) {
-                        if (classes[x].indexOf('font-') >= 0) {
-                            //font-family ///////////////////////////////////////////////////
-                            if (dups[0].length > 0) {
-                                if (i > 0) {
-                                    //more than one font-family in the group of nodes
-                                    $('#textEditorFontFamily').val('font-none');
+                        if (changeInputs !== false) {
+                            if (classes[x].indexOf('font-') >= 0) {
+                                //font-family ///////////////////////////////////////////////////
+                                if (dups[0].length > 0) {
+                                    if (i > 0) {
+                                        //more than one font-family in the group of nodes
+                                        $('#textEditorFontFamily').val('font-none');
+                                    }
+                                } else {
+                                    dups[0].push(classes[x]);
+                                    $('#textEditorFontFamily').val(classes[x]);
                                 }
-                            } else {
-                                dups[0].push(classes[x]);
-                                $('#textEditorFontFamily').val(classes[x]);
+                            }
+                            if (classes[x].indexOf('fontsize-') >= 0) {
+                                //font-size //////////////////////////////////////////////////////
+                                if (dups[1].length > 0) {
+                                    if (i > 0) {
+                                        //more than one font-size in the group of nodes
+                                        $('#textEditorFontSize').val('');
+                                    }
+                                } else {
+                                    dups[1].push(classes[x]);
+                                    $('#textEditorFontSize').val(classes[x].replace('fontsize-', ''));
+                                }
+
                             }
                         }
-                        if (classes[x].indexOf('fontsize-') >= 0) {
-                            //font-size //////////////////////////////////////////////////////
-                            if (dups[1].length > 0) {
-                                if (i > 0) {
-                                    //more than one font-size in the group of nodes
-                                    $('#textEditorFontSize').val('');
-                                }
-                            }else{
-                                dups[1].push(classes[x]);
-                                $('#textEditorFontSize').val(classes[x].replace('fontsize-', ''));
-                            }
-
+                        if (classes[x].indexOf('bold') >= 0) {
+                            //bold ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-bold a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('italic') >= 0) {
+                            //italic ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-italic a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('linethru') >= 0) {
+                            //strike thru ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-linethru a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('underline') >= 0) {
+                            //underline ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-underline a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('alignleft') >= 0) {
+                            //align left ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-alignleft a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('aligncenter') >= 0) {
+                            //align center ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-aligncenter a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('alignright') >= 0) {
+                            //align right ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-alignright a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('indent') >= 0) {
+                            //indent ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-indent a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('bulletlist') >= 0) {
+                            //bulleted list ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-bulletlist a').addClass('selected');
+                        }
+                        if (classes[x].indexOf('numberlist') >= 0) {
+                            //numbered list ///////////////////////////////////////////////////////////
+                            dups[2].push(classes[x]);
+                            $('.texteditor-toolbar .button.tool-numberlist a').addClass('selected');
                         }
                     }
                 }
                 i++;
             });
-
             
         },
 
@@ -2827,7 +2887,7 @@ S.editor = {
                 sel.selectAllChildren(sel.anchorNode);
             }
 
-            sel.refresh();
+            sel.refresh(true);
             range = r.range;
             container = r.parent;
 
@@ -2842,9 +2902,9 @@ S.editor = {
                     }
                 }
                 $(container).find('span:not([class])').contents().unwrap();
-                range.normalizeBoundaries();
-                sel.refresh();
-                sel.setSingleRange(range);
+                //range.normalizeBoundaries();
+                sel.refresh(true);
+                //sel.setSingleRange(range);
                 
             }
 
@@ -2873,7 +2933,7 @@ S.editor = {
             }
 
             //replace trailing spaces with &nbsp; /////////////////////////////////
-            sel.refresh();
+            sel.refresh(true);
             var nodes = [];
             //get all nodes within the selection
             for (x = 0; x < sel.rangeCount; x++) {
@@ -2886,7 +2946,9 @@ S.editor = {
                 }
             }
 
-            S.editor.textEditor.save.start();
+            this.cleanUp();
+
+            this.save.start();
         },
 
         getRange: function () {
@@ -2906,6 +2968,94 @@ S.editor = {
         cleanUp: function () {
             var r = S.editor.textEditor.getRange();
             $('.textedit.editing').find('[class=""]').contents().unwrap();
+
+            //remove unwanted styles
+            var nodes = $('.textedit.editing [style!=""]');
+            var styles = [];
+            for (var x = 0; x < nodes.length; x++) {
+                var style = nodes[x].getAttribute('style') || '';
+                if (style != '') {
+                    styles = nodes[x].getAttribute('style').replace(/; /g, ';').split(';');
+                    for (var y = 0; y < styles.length; y++) {
+                        if (styles[y].indexOf('font-size') < 0) {
+                            styles[y] = '';
+                        }
+                    }
+                    styles = styles.filter(function (n) { return n != ''; });
+                    nodes[x].setAttribute('style', styles.join('; '));
+                }
+                
+            }
+
+            //clean up text (remove &nbsp;)
+            $('.textedit.editing *').each(
+                function () {
+                    if (this.children.length == 0) {
+                        var htm = $(this).html();
+                        htm = htm.replace(/&nbsp;/g, ' ');
+                        $(this).html(htm);
+                    }
+                    
+                }
+            );
+
+            //combine nested tags //////////////////////////////////////
+            var changed = true;
+            var found = false;
+            var node;
+            var nested = [];
+            var classes = [];
+            
+            var i = 0;
+
+            //loop until there are no more nested tags
+            while (changed == true) {
+                nodes = $('.textedit.editing div, .textedit.editing span, .textedit.editing p');
+                changed = false;
+                for (var x = 0; x < nodes.length; x++) {
+                    if (nodes[x].children.length == 1) {
+                        nested = [nodes[x]];
+                        classes = [];
+                        styles = [];
+                        node = nodes[x];
+                        found = false;
+                        while (found == false) {
+                            //traverse heirarchy to find nested nodes
+                            if (node.children.length == 1) {
+                                if (node.firstChild.tagName == node.tagName) {
+                                    node = node.firstChild;
+                                    nested.push(node);
+                                } else { found = true; }
+                            } else { found = true;}
+                        }
+                        if (nested.length > 1) {
+                            //combine nested nodes
+                            for (var y = 0; y < nested.length; y++) {
+                                //get classes & styles from nested nodes
+                                if (nested[y].className != '') {
+                                    classes = classes.concat(nested[y].className.split(' '));
+                                }
+                                if (nested[y].getAttribute('style') != '') {
+                                    var style = nested[y].getAttribute('style') || '';
+                                    if (style != '') {
+                                        styles = styles.concat(style.replace(/; /g, ';').split(';'));
+                                    }
+                                    
+                                }
+                            }
+                            
+                            //get contents from last nested node
+                            var contents = $(nested[nested.length - 1])[0].innerHTML.replace(/&nbsp;/g,' ');
+                            //replace contents of first node with new contents
+                            $(nested[0]).attr('class',classes.join(' ')).attr('style',styles.join('; ')).html(contents);
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+                i++;
+                if (i > 100) { break;}
+            }
             r.range.refresh(true);
         },
 
@@ -2957,8 +3107,6 @@ S.editor = {
                     }
                 }
                 els = els.add(els.find('span'));
-                console.log(els);
-                console.log(istext);
                 if (istext == false) {
                     //remove font-sizes from multiple nodes
                     editor.removeClass(els.css({ 'font-size': '' }), /(^|\s)fontsize-\S+/g);
@@ -2984,28 +3132,34 @@ S.editor = {
                 }
                 
                 if (val != '') {
-                    editor.alterRange('fontsize-' + val, 'span', {}, {}, null, { 'font-size': (parseInt(val) / 12) + 'em' });
+                    editor.alterRange('fontsize-' + val, 'span', {}, {}, null, { 'font-size': val + 'px' });
                 }
+                r.range.refresh(true);
                 editor.cleanUp();
             },
 
             bold: function () {
                 S.editor.textEditor.alterRange('bold', 'span', {});
+                S.editor.textEditor.info(false);
             },
 
             italic: function () {
                 S.editor.textEditor.alterRange('italic', 'span', {});
+                S.editor.textEditor.info(false);
             },
 
             strikethru: function () {
                 S.editor.textEditor.alterRange('linethru', 'span', {});
+                S.editor.textEditor.info(false);
             },
 
             underline: function () {
                 S.editor.textEditor.alterRange('underline', 'span', {});
+                S.editor.textEditor.info(false);
             },
 
             list: function (type) {
+                var editor = S.editor.textEditor;
                 var r = S.editor.textEditor.getRange();
                 if (r.range != null) {
                     var range = r.range;
@@ -3030,6 +3184,7 @@ S.editor = {
                     } else {
                         //generate bullet list
                         var ul = document.createElement('ul');
+                        ul.className = type + 'list' || 'bulletlist';
                         ul.style.listStyleType = type || '';
                         $(nodes).wrapAll(ul).wrap('<li></li>');
                     }
@@ -3037,6 +3192,8 @@ S.editor = {
                 r.range.normalizeBoundaries();
                 r.sel.refresh();
                 r.sel.setSingleRange(r.range);
+                S.editor.textEditor.info(false);
+                editor.cleanUp();
             },
 
             outdent: function () {
@@ -3044,18 +3201,22 @@ S.editor = {
 
             indent: function () {
                 S.editor.textEditor.alterRange('indent', 'span', {}, {}, true);
+                S.editor.textEditor.info(false);
             },
 
             alignLeft: function () {
                 S.editor.textEditor.alterRange('alignleft', 'span', {}, ['aligncenter', 'alignright'], true);
+                S.editor.textEditor.info(false);
             },
 
             alignCenter: function () {
                 S.editor.textEditor.alterRange('aligncenter', 'span', {}, ['alignleft', 'alignright'], true);
+                S.editor.textEditor.info(false);
             },
 
             alignRight: function () {
                 S.editor.textEditor.alterRange('alignright', 'span', {}, ['aligncenter', 'alignleft'], true);
+                S.editor.textEditor.info(false);
             },
 
             photo: {

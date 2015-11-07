@@ -13,6 +13,7 @@
 @svg-active:#00ffcc;
 @svg-visited:#ffffff;
 @svg-saving:#58ff00;
+@svg-selected:#58ff00;
 
 @interface-bg:#272727;
 @interface-color-faded:#aaaaaa;
@@ -664,6 +665,9 @@
     a:hover use{color:@svg-hover;}
     a:active use{color:@svg-active;}
     a:visited use{color:@svg-visited;}
+    a.selected:link use{color:@svg-selected;}
+    a.selected:visited use{color:@svg-selected;}
+
 }
 
 body.dashboard{background-color:#e3e3e3;}

@@ -3727,6 +3727,12 @@
 .tools .skin a:visited use {
   color: #ffffff;
 }
+.tools .skin a.selected:link use {
+  color: #58ff00;
+}
+.tools .skin a.selected:visited use {
+  color: #58ff00;
+}
 body.dashboard {
   background-color: #e3e3e3;
 }
