@@ -15,6 +15,9 @@ S.editor = {
         S.editor.photos.init();
         setTimeout(function () { S.editor.photos.dropzone.init(); }, 100);
 
+        //initialize any dialog windows
+        S.editor.dialogs.url.init();
+
         //init component select custom menus
         S.editor.components.menu.items.addRule('textbox', '.menu-options');
         
@@ -286,6 +289,7 @@ S.editor = {
                     if (options.arrow != null) { item.arrow = options.arrow; }
                     if (options.spacing != null) { item.spacing = options.spacing; }
                     if (options.toolbar != null) { item.toolbar = options.toolbar; }
+                    if (options.classes != null) { item.classes += ' ' + options.classes; }
                     if (options.popup != null) { item.popup = options.popup; item.classes += ' popup' }
                     if (options.autoHide != null) { item.autoHide = options.autoHide; }
                     if (options.postOnce != null) { item.postOnce = options.postOnce; item.pageId = S.page.id; }
@@ -1551,6 +1555,7 @@ S.editor = {
 
         click: function (target, type) {
             var comps = S.editor.components;
+            if ($(target).parents('.isdialog').length > 0) { return;}
             if (S.editor.enabled == false) { return; }
             if (comps.disabled == true) {
                 comps.callback.execute('onHide', comps.selected, target);
@@ -2584,8 +2589,8 @@ S.editor = {
                     { title: 'strike-thru', cssName: 'tool-linethru', svg: 'strikethru', click: 'S.editor.textEditor.commands.strikethru()' },
                     { title: 'underline', cssName: 'tool-underline', svg: 'underline', click: 'S.editor.textEditor.commands.underline()' },
                     { title: 'font family', cssName: 'tool-font', classes: 'dropdown', html: '<select id="textEditorFontFamily" onchange="S.editor.textEditor.commands.fontFamily()" style="width:150px;">' + S.editor.textEditor.fonts.list() + '</select>' },
-                    { title: 'font size', cssName: 'tool-fontsize', classes: 'dropdown', html: '<select id="textEditorFontSize" onchange="S.editor.textEditor.commands.fontSize()" style="width:55px;">' + S.editor.textEditor.fonts.size() + '</select>' }
-                    //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(2)' }
+                    { title: 'font size', cssName: 'tool-fontsize', classes: 'dropdown', html: '<select id="textEditorFontSize" onchange="S.editor.textEditor.commands.fontSize()" style="width:55px;">' + S.editor.textEditor.fonts.size() + '</select>' },
+                    { title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(2)' }
                 ],
                 [
                     { title: 'bullet list', cssName: 'tool-bulletlist', svg: 'bullet', click: 'S.editor.textEditor.commands.list()' },
@@ -2599,8 +2604,8 @@ S.editor = {
                     { title: 'anchor link', cssName: 'tool-anchor', svg: 'link', click: 'S.editor.textEditor.commands.link.show()' },
                     { title: 'source code', cssName: 'tool-source', svg: 'source', click: 'S.editor.textEditor.commands.source.show()' },
                     { title: 'font color', cssName: 'tool-color', svg: 'color', click: 'S.editor.textEditor.commands.colors.show("color")' },
-                    { title: 'highlight color', cssName: 'tool-bgcolor', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' }
-                    //{ title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(1)' }
+                    { title: 'highlight color', cssName: 'tool-bgcolor', svg: 'bgcolor', click: 'S.editor.textEditor.commands.colors.show("highlight")' },
+                    { title: 'more', svg: 'more', click: 'S.editor.textEditor.commands.more(1)' }
                 ]
             ];
 
@@ -2708,6 +2713,7 @@ S.editor = {
                 S.editor.components.disabled = false;
                 return;
             }
+            if ($(target).parents('.isdialog').length > 0) { return;}
             if ($(target).hasClass('type-textbox') == true) {
                 if ($(clicked).parents('.textedit.editing, .texteditor-toolbar').length >= 1 || 
                     target == clicked || $(clicked).hasClass('textedit editing') ||
@@ -2962,7 +2968,7 @@ S.editor = {
                 if (nodes.length == 1) { roots = nodes; }
                 return { range: range, nodes: roots, parent: parent, sel: sel };
             }
-            return { range: null, nodes: [], parent: null, sel:null };
+            return { range: null, nodes: [], parent: null, sel:sel };
         },
 
         cleanUp: function () {
@@ -3240,12 +3246,27 @@ S.editor = {
             },
 
             link: {
-                show: function () {
+                selection: null,
 
+                show: function () {
+                    var editor = S.editor.textEditor;
+                    var r = S.editor.textEditor.getRange();
+                    editor.commands.link.selection = r.sel.saveRanges();
+                    var a = $(r.parent);
+                    if (!a.is('a')) { a = a.find('a[href]');}
+                    var href = '';
+                    if (a.length > 0) {
+                        href = a[0].getAttribute('href');
+                    }
+                    S.editor.dialogs.url.show(S.editor.textEditor.commands.link.add, href);
                 },
 
-                add: function () {
-
+                add: function (url) {
+                    var editor = S.editor.textEditor;
+                    var r = S.editor.textEditor.getRange();
+                    r.sel.restoreRanges(editor.commands.link.selection);
+                    r = S.editor.textEditor.getRange();
+                    editor.alterRange('link', 'a', {'href':url}, {}, null);
                 }
             },
 
@@ -4428,6 +4449,41 @@ S.editor = {
             if (S.editor.photos.info.len > 0 && S.editor.photos.info.start == 0) { S.editor.photos.info.start = 1; }
             var a = S.editor.photos.info;
             $('.winPhotos .folder-info')[0].innerHTML = 'Viewing ' + a.start + ' to ' + a.len + ' of ' + a.total + ' photos';
+        }
+    },
+
+    dialogs: {
+        url: {
+            _callback: null,
+
+            init: function () {
+                htm =
+                '<div class="row">' +
+                    '<div class="column-left islabel">' +
+                        '<div class="icon icon-folder">' +
+                            '<a href="javascript:" onclick="S.editor.dialogs.url.folders.show()">' +
+                                '<svg viewBox="0 0 18 18" style="width:18px; height:18px;"><use xlink:href="#icon-folderfiles" x="0" y="0" width="18" height="18"></use></svg>' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="column-left islabel" style="width:100%; max-width:370px;"><input type="text" id="txtDialogUrl" style="width:100%; max-width:370px;"/></div>' +
+                    '<div class="column-left">' +
+                        '<div class="button apply" onclick="S.editor.dialogs.url.select()">Select</div>' +
+                    '</div>' +
+                '</div>';
+                S.editor.window.load('Url', '', htm, { x: 0, align: 'center', y: 0, w: 500, h: 80, spacing: 50, postOnce: true, title: 'Choose a URL', zIndex: 40, visible:false, url: 'photos', classes:'isdialog' });
+            },
+
+            show:function(callback, url){
+                S.editor.dialogs.url._callback = callback;
+                $('#txtDialogUrl').val(url || '');
+                $('.winUrl').show();
+            },
+
+            select: function () {
+                S.editor.dialogs.url._callback($('#txtDialogUrl').val());
+                $('.windows > .winUrl').hide();
+            }
         }
     },
 

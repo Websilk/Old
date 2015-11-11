@@ -116,6 +116,10 @@ body.editing{-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-s
 .interface .column-input.label{padding:10px 5px 0 7px; min-height:26px;}
 
 .interface .column-row{clear:both; padding:10px 12px 0 12px; min-height:26px; width:calc(100% - 24px);}
+.interface .column-left{float:left; padding:10px 12px 0 0;}
+.interface .row > .column-left:first-child{padding:10px 12px 0 12px;}
+.interface .row > .column-left:last-child{padding:10px 0 0 0;}
+.interface .column-left.islabel{padding-top:15px !important;}
 .interface .column-title{padding:7px 12px 0 12px; min-height:19px; width:calc(100% - 24px);}
 .interface .column-description{padding:7px 12px 10px 12px; min-height:19px; width:calc(100% - 24px);}
 .interface .row.four-columns .column-label{width:50px;}
