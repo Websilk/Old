@@ -1,14 +1,11 @@
 ﻿//Websilk Selector Framework (replaces jQuery)
 
 //private selector object
-var _ = function () {
-    //initialize return object
-    var elems = [];
-
-    //get return object /////////////////////////////////////
-    return function (sel) {
-        this.selector = sel;
+(function(){
+    //main function that (usually) returns a list of DOM objects /////////////////////////////////////
+    function select(sel) {
         var self = this;
+        var elems = [];
 
         function getSelectorType(val) {
             if (val.substr(0, 1) == '#') {
@@ -149,7 +146,7 @@ var _ = function () {
             return false;
         }
 
-        //get array of elements based on selector
+        //get array of elements based on selector //////////////////////////////////////////////////////////
         if (sel != null && typeof sel != 'object') {
             //first, sort out the selector into an array
             var sels = sel.split(' '), i = -1, i2 = 0, selitem, s, e;
@@ -205,75 +202,72 @@ var _ = function () {
             }
 
         } else if (typeof sel == 'object') {
-            //elements are already defined instead of using a selector
+            //elements are already defined instead of using a selector /////////////////////////////////////
             if (sel.length > 1) {
                 elems = sel;
             } else {
                 elems = [sel];
             }
         } else {
-            this.elems.length = 0;
+            elems.length = 0;
         }
 
-        //set up object to return
-        elems.css = css;
-        elems.attr = attr;
-
-        return elems;
+        this.elems = elems;
     }
 
     //functions that are accessable by return object ////////
-    function addClass(classes) {
+    select.prototype.addClass = function(classes) {
         //Add class name to each of the elements in the collection. 
         //Multiple class names can be given in a space-separated string.
+        
         return this;
     }
 
-    function after(content) {
+    select.prototype.after = function(content) {
         //Add content to the DOM after each elements in the collection. 
         //The content can be an HTML string, a DOM node or an array of nodes.
         return this;
     }
 
-    function append(content) {
+    select.prototype.append = function (content) {
         //Append content to the DOM inside each individual element in the collection. 
         //The content can be an HTML string, a DOM node or an array of nodes.
         return this;
     }
 
-    function appendTo(target) {
+    select.prototype.appendTo = function(target) {
         //Append elements from the current collection to the target element. 
         //This is like append, but with reversed operands.
         return this;
     }
 
-    function attr(name) {
+    select.prototype.attr = function(name) {
         //Read or set DOM attributes. When no value is given, reads 
         //specified attribute from the first element in the collection. 
         //When value is given, sets the attribute to that value on each element 
-        //in the collection. When value is null, the attribute is removed (like with removeAttr). 
+        //in the collection. When value is null, the attribute is removed  = function(like with removeAttr). 
         //Multiple attributes can be set by passing an object with name-value pairs.
         return this;
     }
 
-    function before(content) {
+    select.prototype.before = function(content) {
         //Add content to the DOM before each element in the collection. 
         //The content can be an HTML string, a DOM node or an array of nodes.
         return this;
     }
 
-    function children(selector) {
+    select.prototype.children = function(selector) {
         //Get immediate children of each element in the current collection. 
-        //If selector is given, filter the results to only include ones matching the CSS selector.
+        //If selector is given, filter the results to only include ones matching the CSS select.
         return this;
     }
 
-    function closest(selector) {
-        //Traverse upwards from the current element to find the first element that matches the selector. 
+    select.prototype.closest = function(selector) {
+        //Traverse upwards from the current element to find the first element that matches the select. 
         return this;
     }
 
-    function css(params) {
+    select.prototype.css = function(params) {
         //Read or set CSS properties on DOM elements. When no value is given, 
         //returns the CSS property from the first element in the collection. 
         //When a value is given, sets the property to that value on each element of the collection.
@@ -281,72 +275,72 @@ var _ = function () {
         //Multiple properties can be retrieved at once by passing an array of property names. 
         //Multiple properties can be set by passing an object to the method.
 
-        //When a value for a property is blank (empty string, null, or undefined), that property is removed. 
+        //When a value for a property is blank  = function(empty string, null, or undefined), that property is removed. 
         //When a unitless number value is given, “px” is appended to it for properties that require units.
         return this;
     }
 
-    function each(func) {
+    select.prototype.each = function(func) {
         //Iterate through every element of the collection. Inside the iterator function, 
-        //this keyword refers to the current item (also passed as the second argument to the function). 
-        //If the iterator function returns false, iteration stops.
+        //this keyword refers to the current item  = function(also passed as the second argument to the function). 
+        //If the iterator select.prototype.returns false, iteration stops.
         return this;
     }
 
-    function empty(func) {
+    select.prototype.empty = function(func) {
         //Clear DOM contents of each element in the collection.
         return this;
     }
 
-    function filter(selector) {
-        //Filter the collection to contain only items that match the CSS selector. 
-        //If a function is given, return only elements for which the function returns a truthy value. 
+    select.prototype.filter = function(selector) {
+        //Filter the collection to contain only items that match the CSS select. 
+        //If a select.prototype.is given, return only elements for which the select.prototype.returns a truthy value. 
         //Inside the function, the this keyword refers to the current element.
         return this;
     }
 
-    function find(selector) {
+    select.prototype.find = function(selector) {
         //Find elements that match CSS selector executed in scope of nodes in the current collection.
         return this;
     }
 
-    function get(index) {
+    select.prototype.get = function(index) {
         //Get all elements or a single element from the current collection. 
         //When no index is given, returns all elements in an ordinary array. 
         //When index is specified, return only the element at that position. 
-        return this;
+        return this.elems[index];
     }
 
-    function has(selector) {
+    select.prototype.has = function(selector) {
         //Filter the current collection to include only elements that have 
         //any number of descendants that match a selector, or that contain a specific DOM node.
         return this;
     }
 
-    function hasClass(classes) {
+    select.prototype.hasClass = function(classes) {
         //Check if any elements in the collection have the specified class.
         return this;
     }
 
-    function height(val) {
+    select.prototype.height = function(val) {
         //Get the height of the first element in the collection; 
         //or set the height of all elements in the collection.
         return this;
     }
 
-    function hide() {
+    select.prototype.hide = function() {
         //Hide elements in this collection by setting their display CSS property to none.
         return this;
     }
 
-    function html(content) {
+    select.prototype.html = function(content) {
         //Get or set HTML contents of elements in the collection. 
         //When no content given, returns innerHTML of the first element. 
         //When content is given, use it to replace contents of each element. 
         return this;
     }
 
-    function index() {
+    select.prototype.index = function() {
         //Get the position of an element. When no element is given, 
         //returns position of the current element among its siblings. 
         //When an element is given, returns its position in the current collection. 
@@ -354,49 +348,49 @@ var _ = function () {
         return this;
     }
 
-    function insertAfter(target) {
+    select.prototype.insertAfter = function(target) {
         //Insert elements from the current collection after the target element in the DOM. 
         //This is like after, but with reversed operands.
         return this;
     }
 
-    function insertBefore(target) {
+    select.prototype.insertBefore = function(target) {
         //Insert elements from the current collection before each of the target elements in the DOM. 
         //This is like before, but with reversed operands.
         return this;
     }
 
-    function is(selector) {
-        //Check if the first element of the current collection matches the CSS selector.
+    select.prototype.is = function(selector) {
+        //Check if the first element of the current collection matches the CSS select.
         return this;
     }
 
-    function last() {
+    select.prototype.last = function() {
         //Get the last element of the current collection.
         return this;
     }
 
-    function map(func) {
+    select.prototype.map = function(func) {
         //Iterate through every element of the collection. Inside the iterator function, 
-        //this keyword refers to the current item (also passed as the second argument to the function). 
-        //If the iterator function returns false, iteration stops.
+        //this keyword refers to the current item  = function(also passed as the second argument to the function). 
+        //If the iterator select.prototype.returns false, iteration stops.
         return this;
     }
 
-    function next(selector) {
+    select.prototype.next = function(selector) {
         //Get the next sibling–optionally filtered by selector–of each element in the collection.
         return this;
     }
 
-    function not(selector) {
-        //Filter the current collection to get a new collection of elements that don’t match the CSS selector. 
+    select.prototype.not = function(selector) {
+        //Filter the current collection to get a new collection of elements that don’t match the CSS select. 
         //If another collection is given instead of selector, return only elements not present in it. 
-        //If a function is given, return only elements for which the function returns a falsy value. 
+        //If a select.prototype.is given, return only elements for which the select.prototype.returns a falsy value. 
         //Inside the function, the this keyword refers to the current element.
         return this;
     }
 
-    function offset(coordinates) {
+    select.prototype.offset = function(coordinates) {
         //Get position of the element in the document. 
         //Returns an object with properties: top, left, width and height.
 
@@ -405,92 +399,78 @@ var _ = function () {
         return this;
     }
 
-    function offsetParent() {
+    select.prototype.offsetParent = function() {
         //Find the first ancestor element that is positioned, 
         //meaning its CSS position value is “relative”, “absolute” or “fixed”.
         return this;
     }
 
-    function parent(selector) {
+    select.prototype.parent = function(selector) {
         //Get immediate parents of each element in the collection. 
-        //If CSS selector is given, filter results to include only ones matching the selector.
+        //If CSS selector is given, filter results to include only ones matching the select.
         return this;
     }
 
-    function parents(selector) {
+    select.prototype.parents = function(selector) {
         //Get all ancestors of each element in the collection. 
-        //If CSS selector is given, filter results to include only ones matching the selector.
+        //If CSS selector is given, filter results to include only ones matching the select.
         return this;
     }
 
-    function pluck(property) {
+    select.prototype.pluck = function(property) {
         //Get values from a named property of each element in the collection, 
         //with null and undefined values filtered out.
         return this;
     }
 
-    function position() {
+    select.prototype.position = function() {
         //Get the position of the first element in the collection, relative to the offsetParent. 
         //This information is useful when absolutely positioning an element to appear aligned with another.
         return this;
     }
 
-    function prepend(content) {
+    select.prototype.prepend = function(content) {
         //Prepend content to the DOM inside each element in the collection. 
         //The content can be an HTML string, a DOM node or an array of nodes.
         return this;
     }
 
-    function prependTo(target) {
+    select.prototype.prependTo = function(target) {
         //Prepend elements of the current collection inside each of the target elements. 
         //This is like prepend, only with reversed operands.
         return this;
     }
 
-    function prev(selector) {
+    select.prototype.prev = function(selector) {
         //Get the previous sibling–optionally filtered by selector–of each element in the collection.
         return this;
     }
 
-    function prop(name, val) {
+    select.prototype.prop = function(name, val) {
         //Read or set properties of DOM elements. This should be preferred over attr in case of 
         //reading values of properties that change with user interaction over time, such as checked and selected.
         return this;
     }
 
-    function push(elems) {
+    select.prototype.push = function(elems) {
         //Add elements to the end of the current collection.
         return this;
     }
 
-    function each(func) {
-        //Iterate through every element of the collection. Inside the iterator function, 
-        //this keyword refers to the current item (also passed as the second argument to the function). 
-        //If the iterator function returns false, iteration stops.
-        return this;
+    //public selector object //////////////////////////////////////////////////////////////////////////////////////////
+    window.$ = function(selector) {
+        return new select(selector);
     }
 
-    function each(func) {
-        //Iterate through every element of the collection. Inside the iterator function, 
-        //this keyword refers to the current item (also passed as the second argument to the function). 
-        //If the iterator function returns false, iteration stops.
-        return this;
+
+    //add functionality to the $ object ///////////////////////////////////////////////////////////////////////////////
+    $.array = {
+        removeDuplicates: function (array) {
+
+        }
     }
 
-    function each(func) {
-        //Iterate through every element of the collection. Inside the iterator function, 
-        //this keyword refers to the current item (also passed as the second argument to the function). 
-        //If the iterator function returns false, iteration stops.
-        return this;
-    }
-
-}
-
-//public selector object
-var $ = function(selector) {
-    var e = new _();
-    return e(selector);
-}
+})();
 
 
 //add functions to the public selector object ($)
