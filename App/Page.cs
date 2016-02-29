@@ -741,7 +741,7 @@ namespace Websilk
             {
                 if (!string.IsNullOrEmpty(S.Request.Query["noload"]))
                 {
-                    string[] nl = S.Request.Query["noload"].ToLower().Split('\"');
+                    string[] nl = S.Request.Query["noload"].ToString().ToLower().Split('\"');
                     for (int x = 0; x <= nl.Length - 1; x++)
                     {
                         //don't load this content layer, since the querystring says not to

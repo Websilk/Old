@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Diagnostics;
-using Microsoft.Framework.DependencyInjection;
-using System.IO;
-
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNet.StaticFiles;
-//using Microsoft.Framework.Configuration;
 
 namespace Websilk
 {
@@ -34,24 +32,22 @@ namespace Websilk
 
             //exception handling
             var errOptions = new ErrorPageOptions();
-            //errOptions.ShowSourceCode = true;
             errOptions.SourceCodeLineCount = 10;
-            //errOptions.SetDefaultVisibility(true);
-            //errOptions.ShowExceptionDetails = true;
-            //errOptions.ShowEnvironment = true;
-            app.UseErrorPage();
+            app.UseDeveloperExceptionPage();
 
             //use session (3 hour timeout)
-            //app.UseSession(configure: s => s.IdleTimeout = TimeSpan.FromMinutes(60*3));
             app.UseSession();
 
             //get server info from config.json
-            //var configBuilder = new ConfigurationBuilder().AddJsonFile(server.MapPath("config.json")).AddEnvironmentVariables();
-            //IConfiguration config = configBuilder.Build();
-            //string active = config.GetSection("Data:Active");
-            //string conn = config.GetSection("Data:" + active);
-            server.sqlActive = "SqlServerTrusted";
-            server.sqlConnection = "server=.\\SQL2012; database=WebsilkDev; Trusted_Connection=true";
+            var configBuilder = new ConfigurationBuilder()
+                .AddJsonFile(server.MapPath("config.json"))
+                .AddEnvironmentVariables();
+            IConfiguration config = configBuilder.Build();
+
+            string active = config.GetSection("Data:Active").Value;
+            string conn = config.GetSection("Data:" + active).Value;
+            server.sqlActive = active;
+            server.sqlConnection = conn;
 
             //run application
             app.Run(async (context) =>

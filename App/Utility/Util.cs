@@ -30,7 +30,7 @@
         #region "Information"
         public string GetBrowserType()
         {
-            string browser = S.Request.Headers["User-Agent"].ToLower();
+            string browser = S.Request.Headers["User-Agent"].ToString().ToLower();
             int major = 11;
             int minor = 0;
             if (browser.IndexOf("chrome") >= 0)

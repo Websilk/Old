@@ -26,7 +26,7 @@ namespace Websilk.Pipeline
             scaffold.Data["favicon"] = "/images/favicon.gif";
 
             //check for web bots such as gogle bot
-            string agent = context.Request.Headers["User-Agent"].ToLower();
+            string agent = context.Request.Headers["User-Agent"].ToString().ToLower();
             if (agent.Contains("bot") | agent.Contains("crawl") | agent.Contains("spider"))
             {
                 S.Page.useAJAX = false;

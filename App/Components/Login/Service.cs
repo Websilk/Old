@@ -23,8 +23,8 @@ namespace Websilk.Services.Components
             scaffold  = new Scaffold(S, "/app/components/login/login.html", "", new string[] { "head", "action", "body", "foot", "script" });
 
             //get Website properties from Request.Query
-            content = S.Request.Query["s"].Split(',');
-            design = S.Request.Query["d"].Split(',');
+            content = S.Request.Query["s"].ToString().Split(',');
+            design = S.Request.Query["d"].ToString().Split(',');
             if (design.Length <= 1) { design = new string[] { "", "", "", "", "", "", "", "", "", "", "", "false", "", "", "" }; }
             websiteId = int.Parse(S.Request.Query["w"]);
             themeFolder = "/content/themes/" + S.Request.Query["l"] + "/";
