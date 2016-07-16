@@ -1,0 +1,273 @@
+﻿@import "colors.less";
+
+//editor toolbar colors
+@bg-color:#efefef;
+@bg-color-hover:#e0e0e0;
+@color:#666;
+
+@link:#666;
+@hover:#33ffcc;
+@active:#00ffcc;
+@visited:#ffffff;
+
+@svg-link:#555;
+@svg-hover:#009C75;
+@svg-active:#00945B;
+@svg-visited:#555;
+@svg-saving:#AB0050;
+@svg-selected:#007B80;
+
+// component box & tools colors
+@tools-bg:#272727;
+@tools-svg-link:#ddd;
+@tools-svg-hover:#33ffcc;
+@tools-svg-active:#00ffcc;
+@tools-svg-visited:#ffffff;
+@tools-svg-saving:#58ff00;
+@tools-svg-selected:#58ff00;
+@tools-color-faded:#aaaaaa;
+.editor();
+
+
+
+///////////////////////////////////////
+// Setup Page Editor Interface Colors
+.interface{
+    @window-bg:@bg-color;
+    @window-hover:@bg-color-hover;
+    @window-color:@color;
+    @window-color-faded:#aaaaaa;
+    @window-color-help:#9EE3C3;
+    @window-grip:rgba(255, 255, 255, 0.1);
+    @window-title:@bg-color;
+    @window-close:#cc0000;
+    @window-header:darken(@bg-color, 5%);
+    @window-top-menu:#2a2a2a;
+    @window-tab:@window-top-menu;
+    @window-tab-hover:lighten(@window-bg,8%);
+    @window-tab-selected:#00EEB6;
+    @button-bg:#00AC83;
+    @button-color:#ffffff;
+    @button-apply-bg:#00AC83;
+    @button-apply-color:#ffffff;
+    @button-cancel-bg:#777777;
+    @button-cancel-color:#56978C;
+    @button-outline-bg:#ffffff;
+    @button-outline-color:#ffffff;
+    @a-link:#00eeb6;
+    @a-hover:#00ffc3;
+    @a-active:#00ffc3;
+    @a-visited:#00eeb6;
+    @svg2-link:@svg-link;
+    @svg2-hover:@svg-hover;
+    @svg2-active:@svg-active;
+    @svg2-visited:@svg-visited;
+    @select-bgcolor:#252525;
+    @select-hovercolor:#000000;
+    @select-color:#ffffff;
+    @select-panel-bgcolor:#3AA39D;
+    @select-panel-hovercolor:#3DABA6;
+    @select-panel-color:#ffffff;
+    @component-select:true;
+    @has-colors:true;
+    @has-fields:true;
+    @has-buttons:true;
+    .getInterface(light);
+}
+
+///////////////////////////////////////
+// Setup Dashboard Interface Colors
+.interface.dashboard{
+    @window-bg:#e3e3e3;
+    @window-hover:#ABD3D1;
+    @window-color:#444444;
+    @window-color-faded:#999999;
+    @window-color-help:#329392;
+    @window-grip:rgba(0, 0, 0, 0.1);
+    @window-title:#aaaaaa;
+    @window-close:#cc0000;
+    @window-header:#d6d6d6;
+    @window-top-menu:#dfdfdf;
+    @window-tab:@window-top-menu;
+    @window-tab-hover:lighten(@window-bg,8%);
+    @window-tab-selected:#00EEB6;
+    @button-bg:#00AC83;
+    @button-color:#ffffff;
+    @button-apply-bg:#00AC83;
+    @button-apply-color:#ffffff;
+    @button-cancel-bg:#777777;
+    @button-cancel-color:#56978C;
+    @button-outline-bg:#ffffff;
+    @button-outline-color:#ffffff;
+    @a-link:#0093ca;
+    @a-hover:#00bbc2;
+    @a-active:#00bbc2;
+    @a-visited:#0093ca;
+    @svg2-link:#444444;
+    @svg2-hover:#FF8B35;
+    @svg2-active:#FF8B35;
+    @svg2-visited:#444444;
+    @component-select:false;
+    @has-colors:true;
+    @has-fields:true;
+    @has-buttons:true;
+    .getInterface(light);
+}
+
+///////////////////////////////////////
+// Setup Dashboard Menu Interface Colors
+.interface .dash-menu{
+    @window-bg:#50606B;
+    @window-hover:#4B6874;
+    @window-color:#ffffff;
+    @window-color-faded:#9BC9DC;
+    @window-color-help:#9EE3C3;
+    @window-grip:rgba(255, 255, 255, 0.1);
+    @window-title:#aaaaaa;
+    @window-close:#cc0000;
+    @window-header:#46545E;
+    @window-top-menu:#2a2a2a;
+    @window-tab:@window-top-menu;
+    @window-tab-hover:lighten(@window-bg,8%);
+    @window-tab-selected:saturate(lighten(#263039,4%),15%);
+    @a-link:#ffffff;
+    @a-hover:#ffffff;
+    @a-active:#ffffff;
+    @a-visited:#ffffff;
+    @svg2-link:#ffffff;
+    @svg2-hover:#33ffcc;
+    @svg2-active:#00ffcc;
+    @svg2-visited:#ffffff;
+    @component-select:false;
+    @has-colors:false;
+    @has-fields:false;
+    @has-buttons:false;
+    .getInterface(dark);
+}
+
+///////////////////////////////////////
+// Setup Dashboard Box Interface Colors
+.interface .dash-box{
+    @window-bg:#e3e3e3;
+    @window-hover:#ABD3D1;
+    @window-color:#444444;
+    @window-color-faded:#999999;
+    @window-color-help:#329392;
+    @window-grip:rgba(0, 0, 0, 0.1);
+    @window-title:#aaaaaa;
+    @window-close:#cc0000;
+    @window-header:#d6d6d6;
+    @window-top-menu:#dfdfdf;
+    @window-tab:@window-top-menu;
+    @window-tab-hover:lighten(@window-bg,8%);
+    @window-tab-selected:saturate(lighten(#0099CC,4%),15%);
+    @button-bg:#00AC83;
+    @button-color:#ffffff;
+    @button-apply-bg:#00AC83;
+    @button-apply-color:#ffffff;
+    @button-cancel-bg:#777777;
+    @button-cancel-color:#56978C;
+    @button-outline-bg:#ffffff;
+    @button-outline-color:#ffffff;
+    @a-link:#00eeb6;
+    @a-hover:#00ffc3;
+    @a-active:#00ffc3;
+    @a-visited:#00eeb6;
+    @svg2-link:#444444;
+    @svg2-hover:#FF8B35;
+    @svg2-active:#FF8B35;
+    @svg2-visited:#444444;
+    @component-select:false;
+    @has-colors:false;
+    @has-fields:false;
+    @has-buttons:false;
+    .getInterface(light);
+}
+
+///////////////////////////////////////
+
+.component-select{
+    //color variables ////////////////////////
+    @bg-color:#252525;
+    @bg-color-hover:#000000;
+    @color:#dddddd;
+    @color-hover:#33ffcc;
+    @corner-color:@bg-color;
+    @glass:fade(@bg-color, 30%);
+    color:@color;
+    background-color:@glass;
+    .resize-side{background-color:@bg-color;}
+    .resize-corner{background-color:@corner-color;}
+    .resize-side:hover{}
+    .arrow-down{background-color:@bg-color; color:@color;}
+    .arrow-down:hover{background-color:@bg-color-hover; color:@color-hover;}
+    .arrow-top:after{border-bottom-color:@bg-color;}
+    .arrow-right:after{border-left-color:@bg-color;}
+    .menu, .submenu {
+        .item{background-color:@bg-color; color:@color;}
+        > .item:hover{background-color:@bg-color-hover;}
+        .item .item:hover{background-color:@bg-color-hover;}
+        > .item:hover > div > svg{color:@color-hover !important;}
+        .item .item:hover > div > svg{color:@color-hover !important;}
+    }
+    .submenu, .bg {background-color:@bg-color;}
+    .properties > .box{background-color:@bg-color;}
+    .quickmenu-item{background-color:@bg-color;}
+}
+
+///////////////////////////////////////
+
+.component-select.forpanel{
+    //color variables ////////////////////////
+    
+    @bg-color:#3AA39D;
+    @bg-color-hover:#3AA39D;
+    @color:#ffffff;
+    @color-hover:#81FE70;
+    @a-link:#81FE70;
+    @a-hover:#81FE70;
+    @a-active:#81FE70;
+    @a-visited:#81FE70;
+    @corner-color:@bg-color;
+    @glass:fade(@bg-color, 30%);
+    color:@color;
+    background-color:@glass;
+
+    a:link{color:@a-link;}
+    a:hover{color:@a-hover;}
+    a:active{color:@a-active;}
+    a:visited{color:@a-visited;}
+
+    .resize-side{background-color:@bg-color;}
+    .resize-corner{background-color:@corner-color;}
+    .arrow-down{background-color:@bg-color; color:@color;}
+    .arrow-down:hover{background-color:@bg-color-hover; color:@color-hover;}
+    .arrow-top:after{border-bottom-color:@bg-color;}
+    .arrow-right:after{border-left-color:@bg-color;}
+    .menu, .submenu{
+        .item{background-color:@bg-color; color:@color;}
+        > .item:hover{background-color:@bg-color-hover;}
+        .item .item:hover{background-color:@bg-color-hover;}
+        > .item:hover > div > svg{color:@color-hover !important;}
+        .item .item:hover > div > svg{color:@color-hover !important;}
+    }
+    .submenu, .bg {background-color:@bg-color;}
+    .properties > .box{background-color:@bg-color;}
+    .quickmenu-item{background-color:@bg-color;}
+}
+
+///////////////////////////////////////
+// Editor Interface Skinning
+///////////////////////////////////////
+.tools .skin
+{
+    background-color:@tools-bg;
+
+    a:link use{color:@tools-svg-link;}
+    a:hover use{color:@tools-svg-hover;}
+    a:active use{color:@tools-svg-active;}
+    a:visited use{color:@tools-svg-visited;}
+    a.selected:link use{color:@tools-svg-selected;}
+    a.selected:visited use{color:@tools-svg-selected;}
+
+}

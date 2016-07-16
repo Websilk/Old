@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using Newtonsoft.Json;
 
 namespace Websilk
@@ -32,7 +31,7 @@ namespace Websilk
         public DateTime signupDate;
         public string displayName = "";
         public int defaultPageId = 0;
-        public string editorColor = "charcoal";
+        public string editorColor = "pearl";
 
         public List<structSecurity> security;
         public List<WebsiteSecurity> websiteSecurity = new List<WebsiteSecurity>();

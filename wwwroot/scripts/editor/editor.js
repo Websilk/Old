@@ -947,7 +947,7 @@ S.editor = {
                 var comp = S.editor.components.hovered;
                 this.startedTime = new Date();
                 if (S.editor.enabled == false) { return; }
-                if (comp) { if (comp.id == 'inner') { return; } }
+                if (comp) { if (S.elem.isInnerPanel(comp) == true) { return; } }
                 if ($(e.target).hasClass('component-select') == false && $(e.target).parents('.arrow-down').length == 0) { return; }
                 if (this.disabled == true) { return; }
                 this.panel = S.elem.panel(comp);
@@ -1201,7 +1201,7 @@ S.editor = {
             $start: function (e, bar) {
                 if (S.editor.enabled == false) { return; }
                 if (S.editor.components.disabled == true) { return; }
-                if (S.editor.components.hovered.id == 'inner') { return; }
+                if (S.elem.isInnerPanel(S.editor.components.hovered) == true) { return; }
 
                 var c = S.editor.components.hovered;
                 var mPos = { x: e.pageX + S.window.scrollx, y: e.pageY + S.window.scrolly };
@@ -1402,7 +1402,7 @@ S.editor = {
             if (c == sel) { return; }
 
             //check if hovered element is inner panel cell
-            if (c.id == 'inner') {
+            if (S.elem.isInnerPanel(c) == true) {
                 //cancel if hovered element is not a panel cell from a panel component
                 if (sel == null && reselect == false) { return; }
                 var p = S.elem.panelCell(c);
@@ -1411,7 +1411,7 @@ S.editor = {
                 //check if there is a selected element
                 if (sel != null) {
                     //check if hovered element is inside selected element
-                    if (sel.id != 'inner') {
+                    if (S.elem.isInnerPanel(sel) == true) {
                         if ($('#' + sel.id + ' .' + c.className.replace(' ', '.')).length == 0) {
                             if ($(sel).parents('.ispanel').find(c).length == 0) {
                                 //cancel if selected element 
@@ -1434,8 +1434,8 @@ S.editor = {
 
             //check selected element
             if (sel != null) {
-                if (sel.id == 'inner') {
-                    if (c.id != 'inner') {
+                if (S.elem.isInnerPanel(sel) == true) {
+                    if (S.elem.isInnerPanel(c) == true) {
                         //check if hovered element is a panel
                         if ($(c).hasClass('type-panel') == true) {
                             if ($(sel).closest('.type-panel')[0] == c) {
@@ -1445,9 +1445,9 @@ S.editor = {
                         }
 
                     }
-                } else if (c.id != 'inner') {
+                } else if (S.elem.isInnerPanel(c) == true) {
                     if ($(sel).parents('#' + c.id).length > 0) { return; }
-                } else if (c.id == 'inner') {
+                } else if (S.elem.isInnerPanel(c) == true) {
                     if ($(c).find(sel).length > 0) { return; }
                 }
 
@@ -1484,7 +1484,7 @@ S.editor = {
                     //check if hovered panel cell element has siblings
                     selectType = 'cell';
                     isalsopanel = true;
-                } else if ($(c).hasClass('inner-panel') == true) {
+                } else if (S.elem.isInnerPanel(c) == true) {
                     selectType = 'cell';
                     var p = S.elem.panelCell(c);
                     if (p == null) { return; }
@@ -1576,7 +1576,7 @@ S.editor = {
                     var t = target, hide = false;
                     if (type == 'component') {
                         if ($(t).hasClass('component') == true) {
-                            if ($(t).hasClass('type-panel') == true || $(t).hasClass('inner-panel') == true) {
+                            if ($(t).hasClass('type-panel') == true || S.elem.isInnerPanel(t) == true) {
                                 //mouseEnter only if the component is a panel
                                 t = $(t).parent('.component')[0];
                             }
@@ -1974,7 +1974,7 @@ S.editor = {
             remove: function () {
                 var comps = S.editor.components;
                 var id = comps.hovered.id;
-                if (id == 'inner') {
+                if (S.elem.isInnerPanel(comps.hovered) == true) {
                     //remove panel cell
                     var p = S.elem.panelCell(comps.hovered);
                     var pid = p.id.substr(5);
@@ -2121,7 +2121,7 @@ S.editor = {
             }
             var ctype = S.components.cache[sel.id];
             var hide = true;
-            if (sel.id != 'inner' && ctype != null) {
+            if (S.elem.isInnerPanel(sel) == false && ctype != null) {
                 hide = false;
                 switch (ctype.type) {
                     case 'panel': case 'textbox':
@@ -2332,7 +2332,7 @@ S.editor = {
 
         hoveredComponent: function(){
             var c = this.hovered;
-            if (c.id == 'inner') {
+            if (S.elem.isInnerPanel(c) == true) {
                 var p = S.elem.panelCell(c);
                 return p.parentNode;
             }
@@ -4866,6 +4866,7 @@ S.viewport.getLevelOrder = function () {
 }
 
 //Utility classes ///////////////////////////////////////////////////////////////////////////////////
+
 S.util.str = {
     Capitalize: function (str) {
         return str.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });

@@ -1,15 +1,15 @@
 <layout>
   <panel name="body">
     <component name="login" id="ah2" index="1">
-      <position><![CDATA[||c,0,0,t,0,,886,px,154,auto,50px 20px 20px 20px|c,0,0,t,0,,250,px,20,auto,50px 20px 20px 20px|l,0,0,t,auto,,424,px,154,auto,50px 20px 20px 20px]]></position>
+      <position><![CDATA[||c,0,0,t,0,,886,px,154,auto,50px 20px 20px 20px|c,0,0,t,0,,422,px,224,auto,50px 20px 20px 20px|c,0,0,t,0,,424,px,224,auto,50px 20px 20px 20px]]></position>
       <css><![CDATA[||||]]></css>
       <content><![CDATA[1|2|1|2|10|100%|100px|Log In|23|206|104|0|450|300|10]]></content>
       <design><![CDATA[textbox|button|||]]></design>
     </component>
     <component name="textbox" id="bZq" index="2">
-      <position><![CDATA[c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,0,,506,px,40,px,50px 20px 20px 20px|c,0,0,t,auto,,448,px,40,px,50px 0px 20px 50px|c,0,0,t,0,,300,px,40,px,50px 0px 50px 50px|c,0,0,t,auto,,292,px,40,px,80px 50px 50px 50px]]></position>
+      <position><![CDATA[c,0,0,t,0,,350,px,30,px,10px 20px 20px 20px|c,0,0,t,0,,506,px,34,px,10px 20px 0px 20px|c,0,0,t,0,,448,px,36,px,10px 0px 0px 0px|c,0,0,t,0,,428,px,130,px,80px 0px 50px 0px|c,0,0,t,0,,404,px,267,auto,80px 50px 0px 50px]]></position>
       <css><![CDATA[]]></css>
-      <content><![CDATA[<div><span class="aligncenter">Please log into your account or sign up.&nbsp;</span></div>]]></content>
+      <content><![CDATA[<div><span class="aligncenter">Please log into your account or sign up.&nbsp;</span><span class="aligncenter">This is how we do it.</span><span class="aligncenter">And then.</span><span class="aligncenter">Things push down.</span><span class="aligncenter">Until the very end of time.</span><span class="aligncenter">There will be a time for peace.</span><span class="aligncenter">Until then, war will reign all powerful.</span><span class="aligncenter">The might of men will clash.</span><span class="aligncenter">All that has been considered progress,</span><span class="aligncenter">will ultimately be destroyed.</span><span class="aligncenter">Technology will conqure us all.</span></div>]]></content>
       <design><![CDATA[]]></design>
     </component>
     <component name="panel" id="TmF" index="3">
@@ -17,144 +17,6 @@
       <css><![CDATA[]]></css>
       <content><![CDATA[Panel,panel,]]></content>
       <design><![CDATA[rows|a,150,0]]></design>
-    </component>
-  </panel>
-  <panel name="nbQPanel">
-    <component name="textbox" id="YId" index="1">
-      <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Websilk is so completely optimized, all of the fat has been trimmed, and so I have made Websilk&nbsp;into a truly fearsome competitor to WordPress. That is very cool.</div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="panel" id="dlz" index="2">
-      <position><![CDATA[|c,0,0,t,0,,460,px,2475,auto,20px 20px 20px 20px|c,0,0,t,0,,900,px,1496,auto,20px 20px 20px 20px|c,0,0,t,0,,890,px,837,auto,20px 20px 20px 20px|c,0,0,t,auto,,962,px,883,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Panel,panel,|Panel 2,panel,|Panel 3,panel,|Panel 13,panel,|Panel 14,panel,|Panel 15,panel,|Panel 16,panel,|Panel 17,panel,|Panel 18,panel,|Panel 19,panel,|Panel 20,panel,]]></content>
-      <design><![CDATA[rows|]]></design>
-    </component>
-    <component name="textbox" id="YzE" index="3">
-      <position><![CDATA[|||c,0,0,t,auto,,858,px,80,auto,20px 20px 20px 20px|c,0,0,t,-1,,424,px,60,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div><span class="aligncenter">There can be only one (in the CMS wars).</span></div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel">
-    <component name="photo" id="BLo" index="1">
-      <position><![CDATA[|c,0,0,t,0,,176,px,180,auto,20px 20px 20px 20px|c,0,0,t,0,,130,px,134,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/gvnyekz.png|Icons/qhvices.png|256|256|http://www.google.com/chrome|1|_blank|Get Chrome right now!|||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="photo" id="xZl" index="2">
-      <position><![CDATA[c,0,0,t,auto,,186,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,184,px,188,auto,20px 20px 20px 20px|c,0,0,t,0,,118,px,122,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/OmGCJHr.png||200|200|||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="photo" id="xay" index="3">
-      <position><![CDATA[|c,0,0,t,auto,,160,px,162,auto,20px 20px 20px 20px|c,0,0,t,0,,124,px,127,auto,20px 20px 20px 20px||c,0,0,t,0,,90,px,94,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/VOTerUt.png||1063|1052|||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="photo" id="uFN" index="4">
-      <position><![CDATA[|c,0,0,t,auto,,170,px,172,auto,20px 20px 20px 20px|c,0,0,t,0,,124,px,127,auto,20px 20px 20px 20px||c,0,0,t,0,,92,px,96,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/VOTerUt.png||1063|1052|||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="photo" id="lIJ" index="5">
-      <position><![CDATA[|c,0,0,t,auto,,174,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,132,px,136,auto,20px 20px 20px 20px||c,0,0,t,0,,96,px,100,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/OmGCJHr.png||200|200|||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-    <component name="photo" id="SGV" index="6">
-      <position><![CDATA[c,0,0,t,auto,,174,px,178,auto,20px 20px 20px 20px|c,0,0,t,0,,170,px,174,auto,20px 20px 20px 20px|c,0,0,t,0,,120,px,124,auto,20px 20px 20px 20px||c,0,0,t,0,,90,px,94,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Icons/gvnyekz.png|Icons/qhvices.png|256|256|http://www.google.com/chrome|1|_blank|Get Chrome right now!|||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel2">
-    <component name="photo" id="GwC" index="1">
-      <position><![CDATA[||||c,0,,t,0,,1920,px,1080,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[ojbtxys.png||1920|1080||||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel3">
-    <component name="textbox" id="BBl" index="1">
-      <position><![CDATA[||||c,0,0,t,auto,,1132,px,20,auto,0px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>A vector image of the surface of Mars, taken by NASA's Mars Rover.</div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel13">
-    <component name="photo" id="SlB" index="1">
-      <position><![CDATA[||||c,0,,t,0,,960,px,695,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Anime/bZkjodq.jpg||960|695||||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel14">
-    <component name="textbox" id="qIq" index="1">
-      <position><![CDATA[||||c,0,0,t,auto,,972,px,20,auto,0px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Luffy smashes Doflamingo's face in while using Fourth Gear!!!!</div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel15">
-    <component name="photo" id="VDq" index="1">
-      <position><![CDATA[||||c,0,,t,0,,1920,px,1080,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Anime/iorhzyd.jpg||1920|1080||||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel16">
-    <component name="textbox" id="eFT" index="1">
-      <position><![CDATA[||||c,0,0,t,0,,1028,px,20,auto,00px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Found this scene in One Piece intro for just a split second on episode 402.</div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel17">
-    <component name="photo" id="vcu" index="1">
-      <position><![CDATA[||||c,0,,t,0,,1280,px,688,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[pppbgse.jpg||1280|688||||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel18">
-    <component name="textbox" id="AtP" index="1">
-      <position><![CDATA[||||c,0,0,t,auto,,990,px,20,auto,0px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Sanji looooooves women. He's just hopeless...</div>]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel19">
-    <component name="photo" id="ihn" index="1">
-      <position><![CDATA[||||c,0,,t,0,,1920,px,1200,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[Anime/bwerhjp.jpg||1920|1200||||||||||||]]></content>
-      <design><![CDATA[]]></design>
-    </component>
-  </panel>
-  <panel name="dlzPanel20">
-    <component name="textbox" id="YeJ" index="1">
-      <position><![CDATA[||||c,0,0,t,auto,,976,px,17,auto,20px 20px 20px 20px]]></position>
-      <css><![CDATA[]]></css>
-      <content><![CDATA[<div>Howel's Moving Castle is one of Studio Ghibli's greatest masterpieces.</div>]]></content>
-      <design><![CDATA[]]></design>
     </component>
   </panel>
   <layers />

@@ -148,6 +148,12 @@ var S = {
                     return $S(parentId);
                 }
             }
+        },
+
+        isInnerPanel(elem) {
+            if (!elem.className) { return false; }
+            if (elem.className.indexOf('inner-panel') >= 0) { return true; }
+            return false;
         }
 
     },
@@ -902,7 +908,9 @@ var S = {
     }
 }
 
-S.util = {}
+S.util = {
+    
+}
 
 //setup jQuery //////////////////////////////////////////////////////////////////////////////////////
 $.ajaxSetup({ 'cache': true });
