@@ -1,9 +1,10 @@
 ﻿<div class="editor">
+    <div class="dialog-bg"></div>
     <div class="toolbar" style="display:none;">
         <div class="logo">
             <a href="http://www.websilk.io" target="_blank">
-                <svg viewBox="0 0 125 25">
-                    <use xlink:href="#icon-logo" x="0" y="0" width="125" height="25"></use>
+                <svg viewBox="0 0 92 30">
+                    <use xlink:href="#icon-logo" x="0" y="0" width="92" height="30"></use>
                 </svg>
             </a>
         </div>
@@ -54,7 +55,7 @@
             </div>
             <div class="profile">
                 <div class="photo">
-                    <a href="javascript:" onclick="S.editor.window.load('Profile','Editor/Profile', {}, {w:100, h:50, target:'.editor .toolbar .rightside .photo', align: 'bottom-center', arrow:true, spacing: 10, toolbar: false, autoHide:true, popup:true, postOnce:true, noDashboard:true})">
+                    <a href="javascript:" onclick="S.editor.window.load('Profile','Editor/Profile', {}, {w:110, h:50, target:'.editor .toolbar .rightside .photo', align: 'bottom-center', arrow:true, spacing: 10, toolbar: false, autoHide:true, popup:true, postOnce:true, noDashboard:true})">
                         {{photo}}
                     </a>
                 </div>
@@ -84,6 +85,7 @@
 
 <div class="tools" style="display:none;">
     <div class="borders"></div>
+    
     <div class="component-select interface" style="display:none;" onmousedown="S.editor.components.drag.start(event)">
         <div class="resize-bar resize-side resize-top"></div>
         <div class="resize-bar resize-corner resize-top-right"></div>
@@ -149,9 +151,9 @@
                     </div>
                 </div>
                 <div class="section-position" style="width:200px;">
-                    <div class="row color1 column-title">Position</div>
+                    <div class="row hover column-title">Position</div>
 
-                    <div class="row color1">
+                    <div class="row hover">
                         <div class="column-label">Align X</div>
                         <div class="column-input">
                             <select id="lstPropsAlignX" onchange="S.editor.components.menu.save.position()">
@@ -162,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="row color2">
+                    <div class="row hover-alt">
                         <div class="column-label">Align Y</div>
                         <div class="column-input">
                             <select id="lstPropsAlignY" onchange="S.editor.components.menu.save.position()">
@@ -172,7 +174,7 @@
                         </div>
                     </div>
 
-                    <div class="row color2" id="alignYfixed" style="display:none;">
+                    <div class="row hover-alt" id="alignYfixed" style="display:none;">
                         <div class="column-label">Fixed</div>
                         <div class="column-input">
                             <select id="lstPropsFixed" onchange="S.editor.components.menu.save.position()">
@@ -183,7 +185,7 @@
                         </div>
                     </div>
 
-                    <div class="row color1">
+                    <div class="row hover">
                         <div class="column-label">Width</div>
                         <div class="column-input">
                             <select id="lstPropsPosWidth" onchange="S.editor.components.menu.save.position()">
@@ -194,7 +196,7 @@
                         </div>
                     </div>
 
-                    <div class="row color2">
+                    <div class="row hover-alt">
                         <div class="column-label">Height</div>
                         <div class="column-input">
                             <select id="lstPropsPosHeight" onchange="S.editor.components.menu.save.position()">
@@ -205,7 +207,7 @@
                         </div>
                     </div>
 
-                    <div class="row color1">
+                    <div class="row hover">
                         <div class="column-label"></div>
                         <div class="column-input">
                             <input type="checkbox" id="chkPropsAlignXNewline" name="chkPropsAlignXNewline" onclick="S.editor.components.menu.save.position()" />
@@ -213,7 +215,7 @@
                         </div>
                     </div>
 
-                    <div class="row color2">
+                    <div class="row hover-alt">
                         <div class="column-label">Padding</div>
                         <div class="column-input label" id="divPropsPadding"><a href="javascript:" onclick="S.editor.components.menu.show('padding')">0px 0px 0px 0px</a></div>
                     </div>
@@ -222,58 +224,58 @@
                 </div>
 
                 <div class="section-padding" style="width:200px;">
-                    <div class="row color1 column-title">Padding</div>
-                    <div class="row color1">
+                    <div class="row hover column-title">Padding</div>
+                    <div class="row hover">
                         <div class="column-label">Top</div>
                         <div class="column-input">
                             <input type="text" id="txtPosPadTop" onkeyup="S.editor.components.menu.save.position()" />px
                         </div>
                     </div>
-                    <div class="row color2">
+                    <div class="row hover-alt">
                         <div class="column-label">Right</div>
                         <div class="column-input">
                             <input type="text" id="txtPosPadRight" onkeyup="S.editor.components.menu.save.position()" />px
                         </div>
                     </div>
-                    <div class="row color1">
+                    <div class="row hover">
                         <div class="column-label">Bottom</div>
                         <div class="column-input">
                             <input type="text" id="txtPosPadBottom" onkeyup="S.editor.components.menu.save.position()" />px
                         </div>
                     </div>
-                    <div class="row color2">
+                    <div class="row hover-alt">
                         <div class="column-label">Left</div>
                         <div class="column-input">
                             <input type="text" id="txtPosPadLeft" onkeyup="S.editor.components.menu.save.position()" />px
                         </div>
                     </div>
-                    <div class="row color1">
+                    <div class="row hover">
                         <div class="column-label"></div>
                         <div class="column-input label" id="divPropsPaddingBack"><a href="javascript:" onclick="S.editor.components.menu.show('position')">&lt; Back to Position</a></div>
                     </div>
                 </div>
 
                 <div class="section-layer">
-                    <div class="row color1 column-title">Layer</div>
+                    <div class="row hover column-title">Layer</div>
                 </div>
 
                 <div class="section-css">
-                    <div class="row color1 column-title">Custom CSS</div>
+                    <div class="row hover column-title">Custom CSS</div>
                 </div>
 
                 <div class="section-style">
-                    <div class="row color1 column-title">Styling</div>
+                    <div class="row hover column-title">Styling</div>
                 </div>
 
                 <div class="section-arrangement" style="width:200px;">
-                    <div class="row color1 column-title">Arrangement</div>
-                    <div class="row color2" id="divArrangeType">
+                    <div class="row hover column-title">Arrangement</div>
+                    <div class="row hover-alt" id="divArrangeType">
                         <div class="column-row arrange-type" style="cursor:pointer;" onclick="S.components.calls.panel.arrangement.list();">
 
                         </div>
                     </div>
                     <div id="divArrangeTypes" style="display:none;">
-                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('grid')">
+                        <div class="row hover" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('grid')">
                             <div class="column-row">
                                 <div class="left">
                                     <svg viewBox="0 0 32 32" style="width:25px;">
@@ -283,7 +285,7 @@
                                 <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Grid</h4></div>
                             </div>
                         </div>
-                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('rows')">
+                        <div class="row hover" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('rows')">
                             <div class="column-row">
                                 <div class="left">
                                     <svg viewBox="0 0 32 32" style="width:25px;">
@@ -293,7 +295,7 @@
                                 <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Rows</h4></div>
                             </div>
                         </div>
-                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('slideshow')">
+                        <div class="row hover" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('slideshow')">
                             <div class="column-row">
                                 <div class="left">
                                     <svg viewBox="0 0 32 32" style="width:25px;">
@@ -303,7 +305,7 @@
                                 <div class="left" style="padding: 3px 0px 11px 10px;"><h4>Slideshow</h4></div>
                             </div>
                         </div>
-                        <div class="row color1" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('book')">
+                        <div class="row hover" style="cursor:pointer" onclick="S.components.calls.panel.arrangement.change('book')">
                             <div class="column-row">
                                 <div class="left">
                                     <svg viewBox="0 0 32 32" style="width:25px;">
@@ -316,7 +318,7 @@
                     </div>
                     <div id="divArrangeDetails">
                         <div id="divArrangeDetailsGrid">
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Width</div>
                                 <div class="column-input">
                                     <select id="lstArrangeGridWidth" onchange="S.components.calls.panel.arrangement.grid.changeWidth()">
@@ -325,13 +327,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color2" id="gridWidthFixed" style="display:none;">
+                            <div class="row hover-alt" id="gridWidthFixed" style="display:none;">
                                 <div class="column-label">Width</div>
                                 <div class="column-input">
                                     <input type="text" id="txtGridWidthFixed" value="0" style="width:25px" />&nbsp;px
                                 </div>
                             </div>
-                            <div class="row color2" id="gridWidthResponsive" style="display:none;">
+                            <div class="row hover-alt" id="gridWidthResponsive" style="display:none;">
                                 <div class="column-label">Columns</div>
                                 <div class="column-input">
                                     <select id="lstArrangeGridColumns">
@@ -349,13 +351,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color2" id="gridWidthResponsiveMin" style="display:none;">
+                            <div class="row hover-alt" id="gridWidthResponsiveMin" style="display:none;">
                                 <div class="column-label">Minimum</div>
                                 <div class="column-input">
                                     <input type="text" id="txtGridWidthMin" value="0" style="width:25px" />&nbsp;px width
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Height</div>
                                 <div class="column-input">
                                     <select id="lstArrangeGridHeight" onchange="S.components.calls.panel.arrangement.grid.changeHeight()">
@@ -364,19 +366,19 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color2" id="gridHeightFixed" style="display:none;">
+                            <div class="row hover-alt" id="gridHeightFixed" style="display:none;">
                                 <div class="column-label">Height</div>
                                 <div class="column-input">
                                     <input type="text" id="txtGridHeightFixed" value="0" style="width:25px" />&nbsp;px
                                 </div>
                             </div>
-                            <div class="row color2" id="gridHeightAuto" style="display:none;">
+                            <div class="row hover-alt" id="gridHeightAuto" style="display:none;">
                                 <div class="column-label"></div>
                                 <div class="column-input">
                                     <input type="checkbox" id="chkGridMosaic" /><label for="chkGridMosaic">Mosaic Grid</label>
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Spacing</div>
                                 <div class="column-input">
                                     <input type="text" id="txtGridSpacing" style="width:40px"  /> px
@@ -384,7 +386,7 @@
                             </div>
                         </div>
                         <div id="divArrangeDetailsRows">
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Height</div>
                                 <div class="column-input">
                                     <select id="lstArrangeRowsHeight" onchange="S.components.calls.panel.arrangement.rows.changeHeight()">
@@ -393,13 +395,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color2" id="rowsHeightFixed" style="display:none;">
+                            <div class="row hover-alt" id="rowsHeightFixed" style="display:none;">
                                 <div class="column-label">Height</div>
                                 <div class="column-input">
                                     <input type="text" id="txtRowsHeightFixed" value="0" style="width:25px" />&nbsp;px
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Spacing</div>
                                 <div class="column-input">
                                     <input type="text" id="txtRowsSpacing" style="width:25px" /> px
@@ -407,7 +409,7 @@
                             </div>
                         </div>
                         <div id="divArrangeDetailsSlideshow">
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Height</div>
                                 <div class="column-input">
                                     <select id="lstArrangeSlideTransition" onchange="S.components.calls.panel.arrangement.slideshow.changeTransition()">
@@ -417,7 +419,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color2">
+                            <div class="row hover-alt">
                                 <div class="column-label">Easing</div>
                                 <div class="column-input">
                                     <select id="lstArrangeSlideEasing">
@@ -456,19 +458,19 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Speed</div>
                                 <div class="column-input">
                                     <input type="text" id="txtSlideSpeed" value="0" style="width:25px" />&nbsp;milliseconds
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label"></div>
                                 <div class="column-input">
                                     <input type="checkbox" id="chkSlideAutoPlay" onchange="S.components.calls.panel.arrangement.slideshow.changeAutoPlay()" /><label for="chkSlideAutoPlay">Autoplay</label>
                                 </div>
                             </div>
-                            <div class="row color1" id="slideAutoPlayDelay" style="display:none">
+                            <div class="row hover" id="slideAutoPlayDelay" style="display:none">
                                 <div class="column-label">Delay</div>
                                 <div class="column-input">
                                     <input type="text" id="txtSlideDelay" value="0" style="width:25px" />&nbsp;seconds
@@ -476,7 +478,7 @@
                             </div>
                         </div>
                         <div id="divArrangeDetailsBook">
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Paper</div>
                                 <div class="column-input">
                                     <select id="lstArrangeBookPaper">
@@ -488,7 +490,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row color1">
+                            <div class="row hover">
                                 <div class="column-label">Start At</div>
                                 <div class="column-input">
                                     <select id="lstArrangeBookStart">
@@ -536,3 +538,4 @@
         </div>
     </div>
 </div>
+

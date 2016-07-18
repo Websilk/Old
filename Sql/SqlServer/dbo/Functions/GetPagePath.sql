@@ -13,19 +13,17 @@ BEGIN
 	DECLARE 
 		@Result nvarchar(MAX),
 		@title nvarchar(250),
-		@pageTitle nvarchar(250),
 		@parentId int = 0
 
 	SELECT @title=title, @parentId=parentId FROM pages WHERE pageid=@pageId 
-	SELECT @pageTitle = value FROM dbo.SplitArray(@title,' - ') WHERE Position=2
 	
 	IF @parentId is not null AND @parentId > 0 BEGIN
 		DECLARE @parentTitle nvarchar(250)
 		SELECT @parentTitle=title FROM pages WHERE pageid=@parentId 
-		SET @Result = dbo.GetPagePath(@parentId) + '/' + REPLACE(@title, @parentTitle, '')
+		SET @Result = dbo.GetPagePath(@parentId) + '/' + @title
 	END 
 	ELSE BEGIN
-		SET @Result = @pageTitle
+		SET @Result = @title
 	END
 
 	-- Return the result of the function

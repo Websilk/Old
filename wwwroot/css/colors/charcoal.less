@@ -265,7 +265,7 @@
 
         // Color Default //////////////////////////////////////////////////////////////////////////////////////////////////
         &{
-            @name:~'color1';
+            @name:~'hover';
             @bgcolor:@window-bg;
             @hovercolor:@window-hover;
             @font-color:@window-color;
@@ -277,7 +277,7 @@
         
         // Color Dark //////////////////////////////////////////////////////////////////////////////////////////////////
         &{
-            @name:~'color2';
+            @name:~'hover-alt';
             @bgcolor:darken(@window-bg,1%);
             @hovercolor:@window-hover;
             @font-color:@window-color;
@@ -289,7 +289,7 @@
         
         // Color Component-Select //////////////////////////////////////////////////////////////////////////////////////////////////
         &.component-select when (@component-select = true){
-            @name:~'color1';
+            @name:~'hover';
             @bgcolor:@select-bgcolor;
             @hovercolor:@select-hovercolor;
             @font-color:@select-color;
@@ -301,7 +301,7 @@
 
         // Color Component-Select //////////////////////////////////////////////////////////////////////////////////////////////////
         &.component-select when (@component-select = true){
-            @name:~'color2';
+            @name:~'hover-alt';
             @bgcolor:@select-bgcolor;
             @hovercolor:@select-hovercolor;
             @font-color:@select-color;
@@ -313,7 +313,7 @@
 
         // Color Component-Select Cell //////////////////////////////////////////////////////////////////////////////////////////////////
         &.component-select.forpanel when (@component-select = true){
-            @name:~'color1';
+            @name:~'hover';
             @bgcolor:@select-panel-bgcolor;
             @hovercolor:@select-panel-hovercolor;
             @font-color:#ffffff;
@@ -325,7 +325,7 @@
 
         // Color Component-Select Cell //////////////////////////////////////////////////////////////////////////////////////////////////
         &.component-select.forpanel when (@component-select = true){
-            @name:~'color2';
+            @name:~'hover-alt';
             @bgcolor:@select-panel-bgcolor;
             @hovercolor:@select-panel-hovercolor;
             @font-color:@select-panel-color;

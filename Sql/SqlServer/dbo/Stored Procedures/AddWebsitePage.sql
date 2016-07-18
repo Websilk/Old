@@ -40,17 +40,15 @@ BEGIN
 		SET @bg = @background
 		IF @bg = 'null' BEGIN SET @bg = NULL END
 
-		INSERT INTO Pages (pageId, ownerId, parentid, themeId, websiteId, schemeId, title, path, pathIds,
+		INSERT INTO Pages (pageId, ownerId, parentid, themeId, websiteId, schemeId, title, [path], pathIds,
 		datecreated, datemodified, datepublished, security, usersonly, published,
 		rating, ratingtotal, ratedcount, background, description, enabled, deleted) 
-		VALUES(@pageId, @websiteOwnerId, @parentid, @newThemeId, @websiteId, @schemeId, @websiteTitle + ' - ' + @title, '', '',
+		VALUES(@pageId, @websiteOwnerId, @parentid, @newThemeId, @websiteId, @schemeId, @title, '', '',
 		@datenow, @datenow, @datenow, @security, @usersonly, 0, 
 		0, 0, 0, @bg, @description, @enabled, 0)
 
 		/* update page heirarchy paths for title & ids */
-		IF @parentId > 0 BEGIN
-			UPDATE pages SET path=dbo.GetPagePath(@pageId), pathIds=dbo.GetPagePathIds(@pageId) WHERE pageid=@pageid
-		END
+		UPDATE pages SET path=dbo.GetPagePath(@pageId), pathIds=dbo.GetPagePathIds(@pageId) WHERE pageid=@pageid
 		
 		SELECT TOP 1 p.pageid, p.datecreated, p.datemodified, p.themeId, l.userId AS themeowner FROM Pages p, Themes l WHERE p.ownerId=@websiteOwnerId AND p.websiteId=@websiteId AND l.themeId=p.themeid ORDER BY p.datecreated DESC
 	END

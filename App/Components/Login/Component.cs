@@ -54,8 +54,8 @@
                         "if(data.d == ''){" +
                             "$S('c" + id + "').innerHTML = '" + htm.Replace("'", "\\'") + "';" + "alert('incorrect email or password');}" + 
                         "else{" +
-                            "$S('c" + id + "').innerHTML = '<div style=\"padding-top:20px; width:100%; text-align:center;\">Login successful. Loading dashboard...</div>';" + 
-                            "S.ajax.post('/api/App/Url', { url: data.d }, S.ajax.callback.pageRequest);" + 
+                            "$S('c" + id + "').innerHTML = '<div style=\"padding-top:20px; width:100%; text-align:center;\">Login successful. Loading dashboard...</div>';" +
+                            "location.href = '/dashboard';" + 
                         "}" + 
                     "};";
                 S.Page.RegisterJS("login" + id, myJs);

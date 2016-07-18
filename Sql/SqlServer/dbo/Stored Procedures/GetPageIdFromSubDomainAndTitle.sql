@@ -11,10 +11,9 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-   SELECT p.pageid FROM pages p LEFT JOIN websites ws 
-	ON ws.websiteid=p.websiteid 
+   SELECT p.pageid FROM pages p
 	WHERE p.websiteid=(
 		SELECT w.websiteid FROM websitesubdomains w WHERE w.domain = @domainname AND w.subdomain=@subdomain
 	) 
-	AND p.title=ws.title + ' - ' + @pagetitle AND p.deleted =0
+	AND p.[path]=@pagetitle AND p.deleted =0
 END

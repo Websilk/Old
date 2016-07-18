@@ -41,7 +41,7 @@ namespace Websilk.SqlClasses
                         sql += "ORDER BY usersonly DESC, datecreated ASC";
                         break;
                 }
-                sql += ") AS rownum, p.pageid, p.title, p.datecreated, p.datemodified, p.favorite, p.security, p.published, p.ratingtotal, p.ratedcount, p.description";
+                sql += ") AS rownum, p.pageid, p.title, p.path, p.pathids, p.datecreated, p.datemodified, p.favorite, p.security, p.published, p.ratingtotal, p.ratedcount, p.description";
                 sql += ", (SELECT COUNT(*) FROM pages WHERE websiteid=" + websiteId + " AND parentid=p.pageid) AS haschildren ";
                 sql += "FROM pages p WHERE p.websiteid=" + websiteId + " AND p.ownerid=" + ownerId + " AND p.deleted=0 AND p.enabled=1";
                 if (!string.IsNullOrEmpty(search))

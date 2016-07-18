@@ -100,12 +100,12 @@ namespace Websilk.SqlClasses
             return reader;
         }
 
-        public SqlReader GetParentTitle(int parentId, int websiteId)
+        public SqlReader GetPageTitle(int parentId, int websiteId)
         {
             SqlReader reader = new SqlReader();
             if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT p.title, p.parentid, r.title AS parenttitle FROM pages p LEFT JOIN pages r ON r.pageid=p.parentid WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT p.title, p.parentid, p.path, p.pathids, (SELECT title FROM pages WHERE pageid=p.parentId) AS parenttitle FROM pages p WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
             }
             return reader;
         }
@@ -168,6 +168,16 @@ namespace Websilk.SqlClasses
                 reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT DISTINCT websiteid FROM websitesecurity WHERE userid=" + userId));
             }
             return reader;
+        }
+
+        public bool HasUserSecurityForWebsite(int userId, int websiteId)
+        {
+            SqlReader reader = new SqlReader();
+            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
+            {
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT DISTINCT websiteid FROM websitesecurity WHERE userid=" + userId + " AND websiteId=" + websiteId));
+            }
+            return reader.Rows.Count > 0;
         }
 
         public SqlReader GetUserSecurityForWebsite(int websiteId, int userId)

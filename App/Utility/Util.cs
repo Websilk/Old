@@ -7,6 +7,7 @@
         public Str Str;
         public Xml Xml;
         public Serializer Serializer;
+        public Security Secure;
 
         public Util(Core WebsilkCore)
         {
@@ -14,6 +15,7 @@
             Str = new Str(S);
             Xml = new Xml();
             Serializer = new Serializer(S);
+            Secure = new Security(S);
         }
 
         #region "Validation"

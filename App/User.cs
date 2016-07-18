@@ -49,7 +49,7 @@ namespace Websilk
         public bool LogIn(string authId)
         {
             //IHttpConnectionFeature ip = S.Context.GetFeature<IHttpConnectionFeature>();
-            SqlReader reader = S.Page.SqlPage.AuthLogin(authId);
+            SqlReader reader = S.Page.Sql.AuthLogin(authId);
             if (reader.Rows.Count > 0)
             {
                 reader.Read();
@@ -62,16 +62,23 @@ namespace Websilk
                 defaultPageId = reader.GetInt("defaultcp");
                 viewerId = userId;
 
-                //get all security for this user (for all sites the user belongs to)
-                SqlReader reader2 = S.Page.SqlPage.GetUserSecurity(userId);
+
+                //get user security for current website (mostly because the user might have access to over 100 websites)
                 List<int> sites = new List<int>();
-                if (reader2.Rows.Count > 0)
-                {
-                    while (reader2.Read() != false)
-                    {
-                        sites.Add(reader2.GetInt("websiteid"));
-                    }
+                if (S.Page.Sql.HasUserSecurityForWebsite(userId, S.Page.websiteId) == true){
+                    sites.Add(S.Page.websiteId);
                 }
+
+                //get all security for this user (for all sites the user belongs to)
+                //SqlReader reader2 = S.Page.Sql.GetUserSecurity(userId);
+                //if (reader2.Rows.Count > 0)
+                //{
+                //    while (reader2.Read() != false)
+                //    {
+                //        sites.Add(reader2.GetInt("websiteid"));
+                //    }
+                //}
+                //
 
                 foreach (int s in sites)
                 {
@@ -81,7 +88,7 @@ namespace Websilk
                 if (S.Page.ownerId == userId)
                 {
                     //add full control security (of this website) for the user
-                    reader2 = S.Page.SqlPage.GetUserSecurtyForWebsitesOwned(userId);
+                    SqlReader reader2 = S.Page.Sql.GetUserSecurtyForWebsitesOwned(userId);
                     if (reader2.Rows.Count > 0)
                     {
                         while (reader2.Read() != false)
@@ -95,7 +102,7 @@ namespace Websilk
                         S.User.AddSecurity(s, "full", User.enumSecurity.readwrite);
                     }
 
-                    //check for Websilk Platform administrator
+                    //check for Websilk Platform administrator (very unsafe)
                     switch (userId)
                     {
                         case 1:
@@ -105,7 +112,7 @@ namespace Websilk
                 }
 
                 //update database
-                S.Page.SqlPage.SaveLoginTime(userId);
+                S.Page.Sql.SaveLoginTime(userId);
                 return true;
             }
             else
@@ -191,7 +198,7 @@ namespace Websilk
 
         public void GetSecurityForWebsite(int websiteId, int userId)
         {
-            SqlReader reader = S.Page.SqlPage.GetUserSecurityForWebsite(websiteId, userId);
+            SqlReader reader = S.Page.Sql.GetUserSecurityForWebsite(websiteId, userId);
             if (reader.Rows.Count > 0)
             {
                 while (reader.Read() != false)
@@ -275,7 +282,7 @@ namespace Websilk
             if (ownerId == 0)
             {
                 //get ownerId
-                ownerId = myUser.S.Page.SqlPage.GetUserSecurtyOwnerForWebsite(websiteId);
+                ownerId = myUser.S.Page.Sql.GetUserSecurtyOwnerForWebsite(websiteId);
             }
             if (ownerId == myUser.userId & nofull == false)
                 return true;

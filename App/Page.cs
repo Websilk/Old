@@ -45,6 +45,7 @@ namespace Websilk
         public string pageFacebook = "";
         public int websiteId = 0;
         public string websiteTitle = "";
+        public string websiteTitleSeparator = " - ";
         public int websiteType = 0;
         public bool websiteTrial = false;
         public int websitePageAccessDenied = 0;
@@ -90,7 +91,7 @@ namespace Websilk
         [JsonIgnore]
         private string pageEditorTitle = ""; //beginning of title (in edit-mode)
         [JsonIgnore]
-        private string pageEditorTitleEnd = " - Websilk Page Editor"; //end of title (in edit-mode)
+        private string pageEditorTitleEnd = " - Websilk Editor"; //end of title (in edit-mode)
 
         //Request Url Info
         public struct structUrl
@@ -116,7 +117,7 @@ namespace Websilk
 
         //SQL
         [JsonIgnore]
-        public SqlClasses.Page SqlPage;
+        public SqlClasses.Page Sql;
 
         //initialize class
         public Page()
@@ -126,7 +127,7 @@ namespace Websilk
         public void Load(Core WebsilkCore)
         {
             S = WebsilkCore;
-            SqlPage = (SqlClasses.Page)S.Sql.Class["Page"];
+            Sql = (SqlClasses.Page)S.Sql.Class["Page"];
         }
         #endregion
 
@@ -135,16 +136,16 @@ namespace Websilk
         public void GetPageUrl()
         {
             Url.query = "";
-            string path = S.Request.Path.ToString().ToLower().Replace(" ", "+");
+            string path = S.Request.Path.ToString().ToLower().Replace(" ", "-");
             string[] arr = null;
             if(path.Substring(0,1) == "/") { path = path.Substring(1); }
             if(path != "")
             {
-                arr = path.Split(new char[] { '/' });
+                arr = path.Split(new char[] { '+' });
                 Url.path = arr[0].Replace("-", " ");
                 if(arr.Length > 1)
                 {
-                    Url.query = path.Split(new char[] { '/' }, 2)[1]; ;
+                    Url.query = path.Split(new char[] { '+' }, 2)[1]; ;
                 }
             }else
             {
@@ -153,16 +154,7 @@ namespace Websilk
 
             //get host
             Url.host = S.Request.Host.ToString();
-            int start = 0;
-            start = Url.host.IndexOf("//");
-            if (start >= 0)
-            {
-                start = Url.host.IndexOf('/', start + 3);
-                if (start >= 0)
-                {
-                    Url.host = Url.host.Substring(0, start);
-                }
-            }
+            if(Url.host.Substring(Url.host.Length - 1) != "/") { Url.host += "/"; }
         }
 
         public void GetPageId(bool skipDomain = false)
@@ -199,19 +191,19 @@ namespace Websilk
                     if (pagetitle == "websilk")
                     {
                         //get pageid from web site home page
-                        pid = SqlPage.GetHomePageIdFromDomain(Domain);
+                        pid = Sql.GetHomePageIdFromDomain(Domain);
                     }
                     else
                     {
                         if (string.IsNullOrEmpty(subDomain))
                         {
                             //get pageid from web site domain name & page title
-                            pid = SqlPage.GetPageIdFromDomainAndTitle(Domain, pagetitle);
+                            pid = Sql.GetPageIdFromDomainAndTitle(Domain, pagetitle);
                         }
                         else
                         {
                             //get pageid from web site domain & sub domain & page title
-                            pid = SqlPage.GetPageIdFromSubDomainAndTitle(Domain, subDomain, pagetitle);
+                            pid = Sql.GetPageIdFromSubDomainAndTitle(Domain, subDomain, pagetitle);
                         }
                     }
 
@@ -221,12 +213,12 @@ namespace Websilk
                     if (string.IsNullOrEmpty(subDomain))
                     {
                         //get pageid from web site home page
-                        pid = SqlPage.GetHomePageIdFromDomain(Domain);
+                        pid = Sql.GetHomePageIdFromDomain(Domain);
                     }
                     else
                     {
                         //get pageid from web site sub domain home page
-                        pid = SqlPage.GetHomePageIdFromSubDomain(Domain, subDomain);
+                        pid = Sql.GetHomePageIdFromSubDomain(Domain, subDomain);
 
                     }
                 }
@@ -250,7 +242,7 @@ namespace Websilk
                 subDomain = domains[0];
                 if (string.IsNullOrEmpty(Domain)) { Domain = domainName; }
                 string title = pagetitle;
-                if(title.ToLower() == "dashboard") {
+                if(title.ToLower().IndexOf("dashboard") == 0) {
                     if(S.User.userId == 0)
                     {
                         title = "login";
@@ -267,19 +259,19 @@ namespace Websilk
                     if (title == "websilk")
                     {
                         //get pageid from web site home page
-                        return SqlPage.GetPageInfoFromDomain(Domain);
+                        return Sql.GetPageInfoFromDomain(Domain);
                     }
                     else
                     {
                         if (string.IsNullOrEmpty(subDomain))
                         {
                             //get pageid from web site domain name & page title
-                            return SqlPage.GetPageInfoFromDomainAndTitle(Domain, title);
+                            return Sql.GetPageInfoFromDomainAndTitle(Domain, title);
                         }
                         else
                         {
                             //get pageid from web site domain & sub domain & page title
-                            return SqlPage.GetPageInfoFromSubDomainAndTitle(Domain, subDomain, title);
+                            return Sql.GetPageInfoFromSubDomainAndTitle(Domain, subDomain, title);
                         }
                     }
 
@@ -289,12 +281,12 @@ namespace Websilk
                     if (string.IsNullOrEmpty(subDomain))
                     {
                         //get pageid from web site home page
-                        return SqlPage.GetPageInfoFromDomain(Domain);
+                        return Sql.GetPageInfoFromDomain(Domain);
                     }
                     else
                     {
                         //get pageid from web site sub domain home page
-                        return SqlPage.GetPageInfoFromSubDomain(Domain, subDomain);
+                        return Sql.GetPageInfoFromSubDomain(Domain, subDomain);
                     }
                 }
             }
@@ -302,7 +294,7 @@ namespace Websilk
 
         public SqlReader GetPageInfoByPageId()
         {
-            return SqlPage.GetPageInfoFromPageId(pageId);
+            return Sql.GetPageInfoFromPageId(pageId);
         }
 
         public SqlReader GetPageInfoFromUrlPath()
@@ -323,7 +315,7 @@ namespace Websilk
         public void LoadPageInfo(int pId)
         {
             if(pId <= 0) { return; }
-            LoadPageInfo(SqlPage.GetPageInfoFromPageId(pId));
+            LoadPageInfo(Sql.GetPageInfoFromPageId(pId));
         }
 
         public void LoadPageInfo(SqlReader reader)
@@ -384,8 +376,8 @@ namespace Websilk
                 {
                     pageFacebook = "<meta id=\"metafbimg\" property=\"og:image\" content=\"" + Url.host + reader.Get("photo") + "\" />";
                 }
-                pageFacebook += "<meta id=\"metafbtitle\" property=\"og:title\" content=\"" + S.Util.Str.GetPageTitle(pageTitle) + "\" />" +
-                                "<meta id=\"metafbsite\" property=\"og:site_name\" content=\"" + S.Util.Str.GetWebsiteTitle(pageTitle) + "\" />";
+                pageFacebook += "<meta id=\"metafbtitle\" property=\"og:title\" content=\"" + pageTitle + "\" />" +
+                                "<meta id=\"metafbsite\" property=\"og:site_name\" content=\"" + websiteTitle + "\" />";
             }
 
             if (pageId <= 0)
@@ -455,7 +447,7 @@ namespace Websilk
                 if (!string.IsNullOrEmpty(S.Request.Query["a"]) & S.User.viewerId < 1)
                 {
                     //authenticate login for taking a screenshot
-                    if (S.Page.SqlPage.AuthLoginForScreenshot(S.Request.Query["a"], websiteId, (S.Request.Query["ak"] == "0" ? 0 : 1)) == "pass")
+                    if (S.Page.Sql.AuthLoginForScreenshot(S.Request.Query["a"], websiteId, (S.Request.Query["ak"] == "0" ? 0 : 1)) == "pass")
                     {
                         S.User.viewerId = ownerId;
                         S.User.userId = ownerId;
@@ -471,7 +463,10 @@ namespace Websilk
 
                 if (isEditable == true || isDemo == true)
                 {
-                    PageTitleForBrowserTab = pageEditorTitle + websiteTitle + pageEditorTitleEnd;
+                    PageTitleForBrowserTab = pageEditorTitle + websiteTitle + websiteTitleSeparator + pageTitle + pageEditorTitleEnd;
+                }else
+                {
+                    PageTitleForBrowserTab = websiteTitle + websiteTitleSeparator + pageTitle;
                 }
 
                 if (themeFolder == "")
@@ -774,16 +769,13 @@ namespace Websilk
                 PageRequest.pageId = pid;
 
                 //setup page title
-                string pt = S.Util.Str.GetPageTitle(pageTitle).Replace("-", " ");
-                string wt = S.Util.Str.GetWebsiteTitle(pageTitle);
                 pageId = pid;
                 pageFolder = pFolder;
-                pageTitle = wt + " - " + pt;
-                Url.path = pt.Trim().ToLower();
-                myJs += "S.website.title = \"" + wt + "\"; S.website.id=" + websiteId + ";";
+                Url.path = pageTitle.Trim().ToLower();
+                myJs += "S.website.title = \"" + websiteTitle + "\"; S.website.id=" + websiteId + ";";
                 if(S.isWebService == false)
                 {
-                    myJs += "S.page.title = \"" + pt.ToLower() + "\"; S.page.id=" + pageId + ";";
+                    myJs += "S.page.title = \"" + pageTitle.ToLower() + "\"; S.page.id=" + pageId + ";";
                 }
 
                 //hide page loading div
@@ -798,7 +790,7 @@ namespace Websilk
                 }
                 else
                 {
-                    S.App.scaffold.Data["title"] = pageTitle;
+                    S.App.scaffold.Data["title"] = PageTitleForBrowserTab;
                 }
 
             }
@@ -873,17 +865,17 @@ namespace Websilk
             }
 
             //reset JS layers cache
-            myJs += "S.layers.cache = [];S.layers.add(" + pid + ",'" + pageTitle.Split(new char[] { '-', ' ', '\"' })[1] + "'," + ptype + ");";
+            myJs += "S.layers.cache = [];S.layers.add(" + pid + ",'" + pageTitle + "'," + ptype + ");";
 
             //////////////////////////////////////////////////////
             //add page to the list of layers
             if (saveInterface == true)
             {
-                string newtitle = pageTitle.Split(new char[] { '-', ' ', '\"' })[1];
+                string newtitle = pageTitle;
                 if (string.IsNullOrEmpty(pname) & ptype == 2 & isEditable == true)
                 {
                     //get the lost layer name
-                    newtitle = S.Sql.ExecuteScalar("SELECT title from pageinterfaces WHERE interfaceid=" + pid).ToString().Split(new char[] { '-', ' ', '\"' })[1];
+                    newtitle = (string)S.Sql.ExecuteScalar("SELECT title from pageinterfaces WHERE interfaceid=" + pid);
                 }
                 else if (!string.IsNullOrEmpty(pname) & ptype == 2)
                 {
@@ -1011,9 +1003,11 @@ namespace Websilk
             switch (pageName)
             {
                 case "Access Denied":
+                    //TODO: load page
                     break;
 
                 case "404":
+                    //TODO: load page
                     break;
             }
         }

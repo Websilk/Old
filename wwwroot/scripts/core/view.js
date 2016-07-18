@@ -8,43 +8,34 @@ var S = {
     },
 
     window: {
-        w: 0, h: 0, scrollx: 0, scrolly: 0, z: 0, absolute: { w: 0, h: 0 }, changed: true,
+        w: 0, h: 0, scrollx: 0, scrolly: 0, z: 0, changed: true,
 
         pos: function () {
             if (this.changed == false && arguments[0] == null) { return this; } else {
                 this.changed = false;
                 //cross-browser compatible window dimensions
-                this.scrollx = window.scrollX;
-                this.scrolly = window.scrollY;
+                var w = window,
+                d = document,
+                e = d.documentElement,
+                b = d.body;
+                this.scrollx = w.scrollX;
+                this.scrolly = w.scrollY;
                 if (typeof this.scrollx == 'undefined') {
-                    this.scrollx = document.body.scrollLeft;
-                    this.scrolly = document.body.scrollTop;
+                    this.scrollx = b.scrollLeft;
+                    this.scrolly = b.scrollTop;
                     if (typeof this.scrollx == 'undefined') {
-                        this.scrollx = window.pageXOffset;
-                        this.scrolly = window.pageYOffset;
+                        this.scrollx = w.pageXOffset;
+                        this.scrolly = w.pageYOffset;
                         if (typeof this.scrollx == 'undefined') {
                             this.z = GetZoomFactor();
-                            this.scrollx = Math.round(document.documentElement.scrollLeft / this.z);
-                            this.scrolly = Math.round(document.documentElement.scrollTop / this.z);
+                            this.scrollx = Math.round(e.scrollLeft / this.z);
+                            this.scrolly = Math.round(e.scrollTop / this.z);
                         }
                     }
                 }
                 if (arguments[0] == 1) { return this; }
-
-                if (document.documentElement) {
-                    this.w = document.documentElement.clientWidth;
-                    this.h = document.documentElement.clientHeight;
-                }
-                if (S.browser.isNS) {
-                    this.w = window.innerWidth;
-                    this.h = window.innerHeight;
-                }
-
-                var bod = $('.body')[0];
-                if (bod != null) {
-                    this.absolute.w = S.elem.width(bod);
-                    this.absolute.h = this.h;
-                }
+                this.w = w.innerWidth || e.clientWidth || b.clientWidth;
+                this.h = w.innerHeight || e.clientHeight || b.clientHeight;
                 return this;
             }
         }
@@ -152,7 +143,7 @@ var S = {
 
         isInnerPanel(elem) {
             if (!elem.className) { return false; }
-            if (elem.className.indexOf('inner-panel') >= 0) { return true; }
+            if (elem.className.toString().indexOf('inner-panel') >= 0) { return true; }
             return false;
         }
 
@@ -407,7 +398,11 @@ var S = {
                 go: function () {
                     S.window.changed = true; S.window.pos();
                     if (this.timer.started == false) { return; }
-                    S.viewport.getLevel();
+                    this.callback.execute('onGo');
+                    if (S.viewport.getLevel() == true) {
+                        this.callback.execute('onLevelChange');
+                    }
+                    
 
                     if (new Date() - this.timer.date > this.timer.timeout) {
                         this.stop();
@@ -419,7 +414,10 @@ var S = {
                 stop: function () {
                     if (this.timer.started == false) { return; }
                     this.timer.started = false;
-                    S.viewport.getLevel();
+                    if (S.viewport.getLevel() == true) {
+                        this.callback.execute('onLevelChange');
+                    }
+                    this.callback.execute('onStop');
                 },
 
                 callback: {
@@ -636,24 +634,25 @@ var S = {
             inject: function (data) {
                 if (data.type == 'Websilk.Inject') {
                     //load new content from web service
-                    var elem = $(data.d.element);
-                    if (elem.length > 0 && data.d.html != '') {
-                        switch (data.d.inject) {
-                            case 0: //replace
-                                elem.html(data.d.html);
-                                break;
-                            case 1: //append
-                                elem.append(data.d.html);
-                                break;
-                            case 2: //before
-                                elem.before(data.d.html);
-                                break;
-                            case 3: //after
-                                elem.after(data.d.html);
-                                break;
+                    if (data.d.element != '') {
+                        var elem = $(data.d.element);
+                        if (elem.length > 0 && data.d.html != '') {
+                            switch (data.d.inject) {
+                                case 0: //replace
+                                    elem.html(data.d.html);
+                                    break;
+                                case 1: //append
+                                    elem.append(data.d.html);
+                                    break;
+                                case 2: //before
+                                    elem.before(data.d.html);
+                                    break;
+                                case 3: //after
+                                    elem.after(data.d.html);
+                                    break;
+                            }
                         }
                     }
-
                     //add any CSS to the page
                     if (data.d.css != null && data.d.css != '') {
                         S.css.add(data.d.cssid, data.d.css);
@@ -783,16 +782,17 @@ var S = {
                 return;
             }
             //first, check for a special url
-            var u = url;
+            var u = url.split('+')[0];;
             var urls = u.split('/');
             var words = S.url.special.words;
             if (words.length > 0) {
                 for (var x in words) {
                     if (urls[0].toLowerCase() == words[x].word.toLowerCase()) {
                         //found special url, skip ajax post
-                        if (arguments.length < 2) {
-                            S.url.push(S.website.title + ' - ' + u.replace('/', ' '), u);
+                        if (arguments.length == 2) {
+                            S.url.last = url;
                         }
+                        S.url.push(u, url);
                         S.url.nopush = true;
                         words[x].callback(u);
                         setTimeout(function () { S.url.nopush = false; }, 1000);
@@ -801,7 +801,8 @@ var S = {
                 }
             }
             //post page request via Ajax
-            S.ajax.post('/api/App/Url', { url: u }, S.ajax.callback.pageRequest);
+            S.ajax.post('/api/App/Url', { url: url }, S.ajax.callback.pageRequest);
+
             return false;
         },
 
@@ -811,7 +812,10 @@ var S = {
                 return;
             }
             if (S.url.nopush == true) { return; }
-            if (S.url.last == url) { return; }
+            if (S.url.last == url) {
+                history.replaceState(url, title, '/' + url);
+                return;
+            }
             history.pushState(url, title, '/' + url);
             S.url.last = url;
         },
@@ -837,7 +841,12 @@ var S = {
                 return;
             }
             var anchors = $('a').filter(function () {
-                if (this.getAttribute('href').indexOf('/') == 0) { return true; } return false;
+                if (this.getAttribute('href').indexOf('/') == 0) {
+                    if (!this.getAttribute('target')) {
+                        return true;
+                    }
+                }
+                return false;
             }).each(function () {
                 this.setAttribute('onclick', 'S.url.fromAnchor(this);return false;');
             });

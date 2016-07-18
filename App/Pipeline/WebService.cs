@@ -62,24 +62,7 @@ namespace Websilk.Pipeline
                         }
                         else
                         {
-                            //convert value into integer or float
-                            if (IsNumeric(val))
-                            {
-                                if (val.IndexOf('.') >= 0)
-                                {
-                                    parms[x] = float.Parse(val);
-                                }
-                                else
-                                {
-                                    parms[x] = Int32.Parse(val);
-                                }
-
-                            }
-                            else
-                            {
-                                parms[x] = item.Value;
-                            }
-
+                            parms[x] = item.Value.ToString();
                             x = x + 1;
                         }
                     }
@@ -124,6 +107,38 @@ namespace Websilk.Pipeline
 
             //execute method from service class
             MethodInfo method = type.GetMethod(methodName);
+
+            //try to cast params to correct types
+            ParameterInfo[] methodParams = method.GetParameters();
+            if(parms.Length < methodParams.Length)
+            {
+                //add missing parameters
+                var tlen = parms.Length;
+                Array.Resize(ref parms, methodParams.Length);
+                for(var x = tlen; x < methodParams.Length; x++)
+                {
+                    parms[x] = "";
+                }
+            }
+            for(var x = 0; x < methodParams.Length; x++)
+            {
+                //cast params to correct (supported) types
+                switch (methodParams[x].ParameterType.Name.ToLower())
+                {
+                    case "int32":
+                        parms[x] = Int32.Parse((string)parms[x]);
+                        break;
+
+                    case "boolean":
+                        parms[x] = parms[x].ToString().ToLower() == "true" || (string)parms[x] == "1" ? true : false;
+                        break;
+
+                    case "double":
+                        parms[x] = double.Parse((string)parms[x]);
+                        break;
+                }
+            }
+
             object result = method.Invoke(service, parms);
             if(result != null)
             {

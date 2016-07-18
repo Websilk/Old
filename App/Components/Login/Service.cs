@@ -258,7 +258,7 @@ namespace Websilk.Services.Components
                 host = "https://" + S.Page.Url.host;
             }
             //IHttpConnectionFeature ip = S.Context.GetFeature<IHttpConnectionFeature>();
-            S.Page.SqlPage.SaveLoginForAuth(salt, email, loginid);
+            S.Page.Sql.SaveLoginForAuth(salt, email, loginid);
             scaffold.Data["script"] += "setTimeout(function(){parent.postMessage(\"login|" + loginid + "\",\"" + host + "\");},10);";
 
             //finally, scaffold login HTML

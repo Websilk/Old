@@ -1,4 +1,15 @@
-﻿.editor(){
+﻿////////////////////////////////////////////
+// Editor Defaults
+////////////////////////////////////////////
+@purple:#C100F5;
+@blue:#0046E5;
+@turqoise:#00E9E2;
+@green:#00E044;
+@yellow:#FFE000;
+@orange:#FF7E00;
+@red:#FF0000;
+
+.editor(){
     .webpage > .grid-leftside{background-color:@bg-color;}
     .webpage > .grid-rightside{background-color:@bg-color;}
 
@@ -22,10 +33,10 @@
             &:active use{color:@svg-link !important;}
             &:visited use{color:@svg-link !important;}
         }
-        .bg{background-color:@tools-bg;}
+        .bg{background-color:@bg-color;}
         .tab{color:@color; background-color:@bg-color;}
 
-        .font-faded{color:@tools-color-faded;}
+        .font-faded{color:@color-faded;}
     
         a:link use{color:@svg-link;}
         a:hover use{color:@svg-hover;}
@@ -34,7 +45,12 @@
     }
 }
 
-.getInterface(dark){
+////////////////////////////////////////////
+// Editor Interfaces
+////////////////////////////////////////////
+
+//setup color calculations for a dark & light interface
+.setupInterface(dark){
     //setup an interface that uses a dark background color
 
     @perc-light:0%; //lighten
@@ -45,19 +61,16 @@
     @perc-hov-dark:27%;  //hover darken
     @perc-hov-desat:30%;  //hover desaturate
 
-    @perc-field-light:15%; //input field lighten
+    @perc-field-light:10%; //input field lighten
     @perc-field-dark:0%; //input field darken
 
     @perc-button-light:10%; //button lighten
     @perc-button-dark:0%; //button darken
 
-    @purple:#C100F5;
-    @blue:#0046E5;
-    @turqoise:#00E9E2;
-    @green:#00E044;
-    @yellow:#FFE000;
-    @orange:#FF7E00;
-    @red:#FF0000;
+    @color-light:50%; //lighten
+    @color-dark:0%; //darken
+    @color-hov-light:70%; //lighten
+    @color-hov-dark:0%; //darken
 
     @color-purple:  desaturate(darken(lighten(@purple,@perc-light),@perc-dark),@perc-desat);
     @color-blue:    desaturate(darken(lighten(@blue,@perc-light),@perc-dark),@perc-desat);
@@ -74,33 +87,29 @@
     @color-yellow-hover:  desaturate(darken(lighten(@yellow,@perc-hov-light),@perc-hov-desat),@perc-hov-dark - 5);
     @color-orange-hover:  desaturate(darken(lighten(@orange,@perc-hov-light),@perc-hov-desat),@perc-hov-dark - 3);
     @color-red-hover:     desaturate(darken(lighten(@red,@perc-hov-light),@perc-hov-desat),@perc-hov-dark);
-    .interface();
 }
 
-.getInterface(light){
+.setupInterface(light){
     //setup an interface that uses a light background color
 
     @perc-light:45%; //lighten
     @perc-dark:5%; //darken
     @perc-desat:50%; //desaturate
 
-    @perc-hov-light:30%;  //hover lighten
+    @perc-hov-light:35%;  //hover lighten
     @perc-hov-dark:30%;  //hover darken
     @perc-hov-desat:50%;  //hover desaturate
 
-    @perc-field-light:0%; //input field lighten
-    @perc-field-dark:15%; //input field darken
+    @perc-field-light:20%; //input field lighten
+    @perc-field-dark:0%; //input field darken
 
     @perc-button-light:0%; //button lighten
     @perc-button-dark:10%; //button darken
 
-    @purple:#C100F5;
-    @blue:#0046E5;
-    @turqoise:#00E9E2;
-    @green:#00E044;
-    @yellow:#FFE000;
-    @orange:#FF7E00;
-    @red:#FF0000;
+    @color-light:0%; //lighten
+    @color-dark:50%; //darken
+    @color-hov-light:0%; //lighten
+    @color-hov-dark:70%; //darken
 
     @color-purple:  desaturate(darken(lighten(@purple,@perc-light),@perc-dark),@perc-desat);
     @color-blue:    desaturate(darken(lighten(@blue,@perc-light),@perc-dark),@perc-desat);
@@ -111,22 +120,23 @@
     @color-red:     desaturate(darken(lighten(@red,@perc-light),@perc-dark),@perc-desat);
 
     @color-purple-hover:  desaturate(lighten(@purple,@perc-hov-light),@perc-hov-desat);
-    @color-blue-hover:    desaturate(lighten(@blue,@perc-hov-light),@perc-hov-desat);
-    @color-turqoise-hover:desaturate(lighten(@turqoise,@perc-hov-light),@perc-hov-desat);
+    @color-blue-hover:    desaturate(lighten(@blue,@perc-hov-light),@perc-hov-desat - 10);
+    @color-turqoise-hover:desaturate(lighten(@turqoise,@perc-hov-light),@perc-hov-desat - 10);
     @color-green-hover:   desaturate(lighten(@green,@perc-hov-light),@perc-hov-desat);
-    @color-yellow-hover:  desaturate(lighten(@yellow,@perc-hov-light),@perc-hov-desat);
-    @color-orange-hover:  desaturate(lighten(@orange,@perc-hov-light),@perc-hov-desat);
-    @color-red-hover:     desaturate(lighten(@red,@perc-hov-light),@perc-hov-desat);
-
-    .interface();
+    @color-yellow-hover:  desaturate(lighten(@yellow,@perc-hov-light),@perc-hov-desat - 20);
+    @color-orange-hover:  desaturate(lighten(@orange,@perc-hov-light),@perc-hov-desat - 10);
+    @color-red-hover:     desaturate(lighten(@red,@perc-hov-light),@perc-hov-desat - 5);
 }
 
-.interface(){
+//render all colors for an interface
+.renderInterface(@light-or-dark){
+    .setupInterface(@light-or-dark);
+
     background-color:@window-bg; 
 
     .grip{background-color:@window-grip;}
     .title{color:@window-title;}
-    .close a:hover{color:@window-close !important;}
+    .close a:hover use{color:@window-close !important;}
     &.arrow-top:after{border-bottom-color:@window-bg;}
     .section-info{background-color:@window-header;}
     .row.header{background-color:@window-header;}
@@ -148,100 +158,26 @@
 
     @border:2%; 
 
-    .colors(){
-        //function to generate colored rows, columns, & tables
-
-        //setup offset colors
-        @label-bg:lighten(@bgcolor,@lighten-label);
-        @label-hover:saturate(lighten(@hovercolor,@lighten-hover),15%);
-        @input-bg:@bgcolor;
-        @input-hover:@hovercolor;
-        @field-bg:darken(lighten(@bgcolor, @perc-field-light), @perc-field-dark);
-        @field-hover:darken(lighten(@bgcolor, @perc-field-light), @perc-field-dark);
-        @field-focus:darken(lighten(@bgcolor, @perc-field-light * 1.8), @perc-field-dark * 1.8);
-        @field-color:fade(@font-color, @font-alpha + 20%);
-        @field-hovercolor:@font-color;
-
-        //font colors
-        color:@font-color;
-
-        a:link{color:@a-link;}
-        a:hover{color:@a-hover;}
-        a:active{color:@a-active;}
-        a:visited{color:@a-visited;}
-
-        a:link use{color:@svg2-link;}
-        a:hover use{color:@svg2-hover;}
-        a:active use{color:@svg2-active;}
-        a:visited use{color:@svg2-visited;}
-
-        //row colors
-        div.@{name}{.row-colors();}
-        tr.@{name}{.tr-colors();}
-
-        //row hover colors
-        .row.@{name}:hover{.row-hover();}
-        .row:hover > div.@{name}{.row-hover();}
-        tr.@{name}:hover{.tr-hover();}
-
-        //input field colors
-        & when (@has-fields = true){
-            .@{name} input, 
-            .@{name} textarea, 
-            .@{name} select{color:@field-color; background-color:@field-bg;}
-            .@{name}:hover input, 
-            .@{name}:hover textarea, 
-            .@{name}:hover select{color:@field-hovercolor; background-color:@field-hover;}
-            .@{name} input:focus, 
-            .@{name} textarea:focus, 
-            .@{name} select:focus{background-color:@field-focus;}
-        }
-
-        //button colors
-        & when (@has-buttons = true){
-            .button{color:@button-color; background-color:@button-bg;}
-            .button:hover{color:@button-color; background-color:darken(lighten(@button-bg, @perc-button-light), @perc-button-dark);}
-            .button.apply{color:@button-apply-color; background-color:@button-apply-bg;}
-            .button.apply:hover{color:@button-apply-color; background-color:darken(lighten(@button-apply-bg, @perc-button-light), @perc-button-dark);}
-            .button.cancel{color:@button-cancel-color; background-color:@button-cancel-bg;}
-            .button.cancel:hover{color:@button-cancel-color; background-color:darken(lighten(@button-cancel-bg, @perc-button-light), @perc-button-dark);}
-            .button.outline{color:@button-outline-color; border-color:fade(@button-outline-bg, 30%);}
-            .button.outline:hover{color:@button-outline-color; border-color:fade(darken(lighten(@button-outline-bg, @perc-button-light), @perc-button-dark), 70%);}
-        }
-
-        //color sub-functions
-        .row-colors(){
-            @label-border:darken(@label-bg,@border);
-            @input-border:darken(@input-bg,@border);
-            background-color:@bgcolor;
-            > .column-label, .column-icon{color:fade(@font-color, @font-alpha); background-color:@label-bg; border-bottom:1px solid @label-border;}
-            > .column, > .column-input, > .empty, .column-button{background-color:@input-bg; border-bottom:1px solid @input-border;}
-        }
-
-        .row-hover(){
-            @label-border:darken(@label-hover,@border + 1);
-            @input-border:darken(@input-hover,@border + 1);
-            background-color:@input-hover;
-                > .column-label, .column-icon{color:@font-color; background-color:@label-hover; border-bottom:1px solid @label-border;}
-                > .column, > .column-input, > .empty, .column-button{background-color:@input-hover; border-bottom:1px solid @input-border;}
-        }
-
-        .tr-colors(){
-            @label-border:darken(@label-bg,@border);
-            td{background-color:@label-bg; border-bottom:1px solid @label-border;}
-        }
-
-        .tr-hover(){
-            @label-border:darken(@label-hover,@border);
-            @input-border:darken(@input-hover,@border);
-            td{background-color:@input-hover; border-bottom:1px solid @input-border;}
-            td:hover{background-color:@label-hover; border-bottom:1px solid @label-border;}
-        }
+    .renderColor(@color-name, @color-hover){
+        @name:~'hover';
+        @bgcolor:@color-name;
+        @hovercolor:@color-hover;
+        @font-color:darken(lighten(@color-name,calc(@color-light * 2)),calc(@color-dark * 2));
+        @svg2-link:saturate(darken(lighten(@color-name,@color-light),@color-dark), @perc-desat - 10);
+        @svg2-hover:saturate(darken(lighten(@color-name,calc(@color-light * 3)),calc(@color-dark * 3)), @perc-hov-desat - 10);
+        @svg2-active:@svg2-hover;
+        @svg2-visited:@svg2-link;
+        @lighten-label: 3%;
+        @lighten-hover: 2%;
+        @font-alpha:80%;
+        @has-buttons:false;
+        @has-fields:false;
+        .colors();
     }
 
     // Color Default //////////////////////////////////////////////////////////////////////////////////////////////////
     &{
-        @name:~'color1';
+        @name:~'hover';
         @bgcolor:@window-bg;
         @hovercolor:@window-hover;
         @font-color:@window-color;
@@ -253,7 +189,7 @@
         
     // Color Dark //////////////////////////////////////////////////////////////////////////////////////////////////
     &{
-        @name:~'color2';
+        @name:~'hover-alt';
         @bgcolor:darken(@window-bg,1%);
         @hovercolor:@window-hover;
         @font-color:@window-color;
@@ -262,143 +198,217 @@
         @font-alpha:70%;
         .colors();
     }
-        
-    // Color Component-Select //////////////////////////////////////////////////////////////////////////////////////////////////
-    &.component-select when (@component-select = true){
-        @name:~'color1';
-        @bgcolor:@select-bgcolor;
-        @hovercolor:@select-hovercolor;
-        @font-color:@select-color;
-        @lighten-label: 3%;
-        @lighten-hover: 3%;
-        @font-alpha:70%;
-        .colors();
-    }
-
-    // Color Component-Select //////////////////////////////////////////////////////////////////////////////////////////////////
-    &.component-select when (@component-select = true){
-        @name:~'color2';
-        @bgcolor:@select-bgcolor;
-        @hovercolor:@select-hovercolor;
-        @font-color:@select-color;
-        @lighten-label: 3%;
-        @lighten-hover: 3%;
-        @font-alpha:70%;
-        .colors();
-    }
-
-    // Color Component-Select Cell //////////////////////////////////////////////////////////////////////////////////////////////////
-    &.component-select.forpanel when (@component-select = true){
-        @name:~'color1';
-        @bgcolor:@select-panel-bgcolor;
-        @hovercolor:@select-panel-hovercolor;
-        @font-color:#ffffff;
-        @lighten-label: 3%;
-        @lighten-hover: 0%;
-        @font-alpha:100%;
-        .colors();
-    }
-
-    // Color Component-Select Cell //////////////////////////////////////////////////////////////////////////////////////////////////
-    &.component-select.forpanel when (@component-select = true){
-        @name:~'color2';
-        @bgcolor:@select-panel-bgcolor;
-        @hovercolor:@select-panel-hovercolor;
-        @font-color:@select-panel-color;
-        @lighten-label: 3%;
-        @lighten-hover: 0%;
-        @font-alpha:100%;
-        .colors();
-    }
 
     // Color Purple //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'purple';
-        @bgcolor:@color-purple;
-        @hovercolor:@color-purple-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .purple when (@has-colors = true){
+        .renderColor(@color-purple, @color-purple-hover);
     }
 
     // Color Blue //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'blue';
-        @bgcolor:@color-blue;
-        @hovercolor:@color-blue-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .blue when (@has-colors = true){
+        .renderColor(@color-blue, @color-blue-hover);
     }
 
     // Color Turqoise //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'turqoise';
-        @bgcolor:@color-turqoise;
-        @hovercolor:@color-turqoise-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .turqoise when (@has-colors = true){
+        .renderColor(@color-turqoise, @color-turqoise-hover);
     }
 
     // Color Green //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'green';
-        @bgcolor:@color-green;
-        @hovercolor:@color-green-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .green when (@has-colors = true){
+        .renderColor(@color-green, @color-green-hover);
     }
 
     // Color Yellow //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'yellow';
-        @bgcolor:@color-yellow;
-        @hovercolor:@color-yellow-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .yellow when (@has-colors = true){
+        .renderColor(@color-yellow, @color-yellow-hover);
     }
 
     // Color Orange //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'orange';
-        @bgcolor:@color-orange;
-        @hovercolor:@color-orange-hover;
-        @font-color:@window-color;
-        @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
-        .colors();
+    & .orange when (@has-colors = true){
+        .renderColor(@color-orange, @color-orange-hover);
     }
 
     // Color Red //////////////////////////////////////////////////////////////////////////////////////////////////
-    & when (@has-colors = true){
-        @name:~'red';
-        @bgcolor:@color-red;
-        @hovercolor:@color-red-hover;
+    & .red when (@has-colors = true){
+        .renderColor(@color-red, @color-red-hover);
+    }
+}
+
+//set colors for part of an interface
+.colors(){
+    //function to generate colored rows, columns, & tables
+
+    //setup offset colors
+    @label-bg:lighten(@bgcolor,@lighten-label);
+    @label-hover:lighten(@hovercolor,@lighten-hover);
+    @input-bg:@bgcolor;
+    @input-hover:@hovercolor;
+    @field-bg:darken(lighten(@bgcolor, @perc-field-light), @perc-field-dark);
+    @field-hover:darken(lighten(@bgcolor, @perc-field-light), @perc-field-dark);
+    @field-focus:darken(lighten(@bgcolor, @perc-field-light * 1.8), @perc-field-dark * 1.8);
+    @field-color:fade(@font-color, @font-alpha + 20%);
+    @field-hovercolor:@font-color;
+
+    //font colors
+    color:@font-color;
+
+    a:link{color:@a-link;}
+    a:hover{color:@a-hover;}
+    a:active{color:@a-active;}
+    a:visited{color:@a-visited;}
+
+    //svg icon colors
+    a:link use{color:@svg2-link;}
+    a:hover use{color:@svg2-hover;}
+    a:active use{color:@svg2-active;}
+    a:visited use{color:@svg2-visited;}
+    .icon use{color:@svg2-link;}
+
+    //row colors
+    div.row.@{name}, div.item.@{name}{.row-colors();}
+    tr.@{name}{.tr-colors();}
+    .bg{background-color:@bgcolor;}
+
+    //row hover colors
+    .row.@{name}:hover, 
+    .row:hover > div.@{name},
+    .item.@{name}:hover{.row-hover();}
+    tr.@{name}:hover{.tr-hover();}
+
+    //input field colors
+    & when (@has-fields = true){
+        .@{name} input, 
+        .@{name} textarea, 
+        .@{name} select{color:@field-color; background-color:@field-bg;}
+        .@{name}:hover input, 
+        .@{name}:hover textarea, 
+        .@{name}:hover select{color:@field-hovercolor; background-color:@field-hover;}
+        .@{name} input:focus, 
+        .@{name} textarea:focus, 
+        .@{name} select:focus{background-color:@field-focus;}
+    }
+
+    //button colors
+    & when (@has-buttons = true){
+        .button{color:@button-color; background-color:@button-bg;}
+        .button:hover{color:@button-color; background-color:darken(lighten(@button-bg, @perc-button-light), @perc-button-dark);}
+        .button.apply{color:@button-apply-color; background-color:@button-apply-bg;}
+        .button.apply:hover{color:@button-apply-color; background-color:darken(lighten(@button-apply-bg, @perc-button-light), @perc-button-dark);}
+        .button.cancel{color:@button-cancel-color; background-color:@button-cancel-bg;}
+        .button.cancel:hover{color:@button-cancel-color; background-color:darken(lighten(@button-cancel-bg, @perc-button-light), @perc-button-dark);}
+        .button.outline{color:@button-outline-color; border-color:fade(@button-outline-bg, 30%);}
+        .button.outline:hover{color:@button-outline-color; border-color:fade(darken(lighten(@button-outline-bg, @perc-button-light), @perc-button-dark), 70%);}
+    }
+
+    //list items
+    .list-item{background-color:@label-bg;}
+    .list-item:hover{background-color:@label-hover;}
+
+    //color sub-functions
+    .row-colors(){
+        @label-border:darken(@label-bg,@border);
+        @input-border:darken(@input-bg,@border);
+        background-color:@bgcolor;
+        > .column-label, .column-icon{color:fade(@font-color, @font-alpha); background-color:@label-bg; border-bottom:1px solid @label-border;}
+        > .column, > .column-input, > .empty, .column-button{background-color:@input-bg; border-bottom:1px solid @input-border;}
+    }
+
+    .row-hover(){
+        @label-border:darken(@label-hover,@border + 1);
+        @input-border:darken(@input-hover,@border + 1);
+        background-color:@input-hover;
+            > .column-label, .column-icon{color:@font-color; background-color:@label-hover; border-bottom:1px solid @label-border;}
+            > .column, > .column-input, > .empty, .column-button{background-color:@input-hover; border-bottom:1px solid @input-border;}
+    }
+
+    .tr-colors(){
+        @label-border:darken(@label-bg,@border);
+        td{background-color:@label-bg; border-bottom:1px solid @label-border;}
+    }
+
+    .tr-hover(){
+        @label-border:darken(@label-hover,@border);
+        @input-border:darken(@input-hover,@border);
+        td{background-color:@input-hover; border-bottom:1px solid @input-border;}
+        td:hover{background-color:@label-hover; border-bottom:1px solid @label-border;}
+    }
+}
+
+////////////////////////////////////////////
+// Editor Tools
+////////////////////////////////////////////
+.tools .skin
+{
+    background-color:@tools-bg;
+    color:@tools-color;
+    a:link{color:@tools-link}
+    a:hover{color:@tools-hover}
+    a:active{color:@tools-active}
+    a:visited{color:@tools-visited}
+    a:link use{color:@tools-svg-link;}
+    a:hover use{color:@tools-svg-hover;}
+    a:active use{color:@tools-svg-active;}
+    a:visited use{color:@tools-svg-visited;}
+    a.selected:link use{color:@tools-svg-selected;}
+    a.selected:visited use{color:@tools-svg-selected;}
+
+}
+
+////////////////////////////////////////////
+// Component Select Box
+////////////////////////////////////////////
+.componentBox(@light-or-dark){
+    .setupInterface(@light-or-dark);
+    @box-corner-color: @window-bg;
+    @glass:fade(@window-bg, 30%);
+
+    color:@window-color;
+    background-color:@glass;
+
+    a:link{color:@a-link;}
+    a:hover{color:@a-hover;}
+    a:active{color:@a-active;}
+    a:visited{color:@a-visited;}
+
+    .resize-side{background-color:@window-bg;}
+    .resize-corner{background-color:@box-corner-color;}
+    .arrow-down{background-color:@window-bg; color:@svg2-link;}
+    .arrow-down:hover{background-color:@svg2-hover; color:@svg2-hover;}
+    .arrow-top:after{border-bottom-color:@window-bg;}
+    .arrow-right:after{border-left-color:@window-bg;}
+    .menu, .submenu{
+        .item{background-color:@window-bg; color:@window-color;}
+        > .item:hover{background-color:@window-hover;}
+        .item .item:hover{background-color:@window-hover;}
+        > .item:hover > div > svg{color:@svg2-hover !important;}
+        .item .item:hover > div > svg{color:@svg2-hover !important;}
+    }
+    .submenu, .bg {background-color:@window-bg;}
+    .properties > .box{background-color:@window-bg;}
+    .quickmenu-item{background-color:@window-bg;}
+
+    &{
+        @name:~'hover';
+        @bgcolor:@window-bg;
+        @hovercolor:@window-hover;
         @font-color:@window-color;
         @lighten-label: 3%;
-        @lighten-hover: 2%;
-        @font-alpha:80%;
-        @has-buttons:false;
+        @lighten-hover: 3%;
+        @font-alpha:70%;
+        .setupInterface(@light-or-dark);
+        .colors();
+    }
+
+    &{
+        @name:~'hover-alt';
+        @bgcolor:@window-bg;
+        @hovercolor:@window-hover;
+        @font-color:@window-color;
+        @lighten-label: 3%;
+        @lighten-hover: 3%;
+        @font-alpha:70%;
+        .setupInterface(@light-or-dark);
         .colors();
     }
 }

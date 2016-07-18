@@ -249,8 +249,8 @@ namespace Websilk.Services.Dashboard
             SqlClasses.Dashboard sqlDash = new SqlClasses.Dashboard(S);
             SqlReader reader = sqlDash.GetPhotoFolders(S.Page.websiteId);
             htm += "<div class=\"folder-column\">";
-            htm += "<div class=\"row color1\"><div class=\"column-row item\">[All Photos]</div></div>";
-            htm += "<div class=\"row color2\"><div class=\"column-row item\">[Unorganized Photos]</div></div>";
+            htm += "<div class=\"row hover\"><div class=\"column-row item\">[All Photos]</div></div>";
+            htm += "<div class=\"row hover-alt\"><div class=\"column-row item\">[Unorganized Photos]</div></div>";
             while (reader.Read() == true)
             {
                 i = (i == 2 ? 1 : 2);

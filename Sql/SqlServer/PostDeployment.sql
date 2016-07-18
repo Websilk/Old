@@ -1,11 +1,26 @@
-﻿/* Clear initial data (if you so desire) 
+﻿/* Clear initial data (if you so desire) */
 DELETE FROM websites
 DELETE FROM pages
 DELETE FROM users
 DELETE FROM themes
 DELETE FROM websitedomains
 DELETE FROM components
-*/
+
+ALTER SEQUENCE SequenceUsers
+RESTART
+
+ALTER SEQUENCE SequencePages
+RESTART
+
+ALTER SEQUENCE SequencePhotoFolders
+RESTART
+
+ALTER SEQUENCE SequenceThemes
+RESTART
+
+ALTER SEQUENCE SequenceWebsites
+RESTART
+
 
 /* Only Add initial data once */
 IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
@@ -20,8 +35,8 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	(userId, firstname, lastname, email, [password], displayname, photo, gender, bday, zipcode, city, 
 	[state], country, twitter, lastlogin, datecreated, [status], signupip, referrer, [activation], deleted, tutorial) 
 	VALUES 
-	(1,'','','admin@localhost','EE44732CF1DEA4F780AF96C7F81BC11E','admin','',0,GETDATE(),'89103','Las Vegas',
-	'NV','US','', GETDATE(), GETDATE(), 1, '', '', '', 0, 0)
+	(1,'','','admin@localhost','EE44732CF1DEA4F780AF96C7F81BC11E','admin','',0,GETDATE(),'98122','Seattle',
+	'WA','US','', GETDATE(), GETDATE(), 1, '', '', '', 0, 0)
 
 
 	/* Setup Default Website Theme */
@@ -48,7 +63,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(1, 1, 1, 1, null, null, 1, @websiteTitle + ' - Home', '', '', '', GETDATE(),
+	(1, 1, 1, 1, null, null, 1, 'Home', 'Home', '1', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -58,7 +73,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(2, 1, 1, 1, null, null, 1, @websiteTitle + ' - Login', '', '', '', GETDATE(),
+	(2, 1, 1, 1, null, null, 1, 'Login', 'Login', '2', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -68,7 +83,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(3, 1, 1, 1, null, null, 1, @websiteTitle + ' - About', '', '', '', GETDATE(),
+	(3, 1, 1, 1, null, null, 1, 'About', 'About', '3', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -78,7 +93,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(4, 1, 1, 1, null, null, 1, @websiteTitle + ' - Contact', '', '', '', GETDATE(),
+	(4, 1, 1, 1, null, null, 1, 'Contact', 'Contact', '4', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -88,7 +103,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(5, 1, 1, 1, null, null, 1, @websiteTitle + ' - Error 404', '', '', '', GETDATE(),
+	(5, 1, 1, 1, null, null, 1, 'Error 404', 'Error 404', '5', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -98,7 +113,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
 	rating, ratingtotal, ratedcount, background, [description])
 	VALUES
-	(6, 1, 1, 1, null, null, 1, @websiteTitle + ' - Access Denied', '', '', '', GETDATE(),
+	(6, 1, 1, 1, null, null, 1, 'Access Denied', 'Access Denied', '6', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
 	0, 0, 0, '', @pageDescription)
 
@@ -112,7 +127,7 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	VALUES ('textbox', 1, 'Text', 1, 'Write formatted text directly onto your web page.', GETDATE(), 1)
 
 	INSERT INTO components (componentId, userId, title, category, [description], datecreated, orderindex)
-	VALUES ('panel', 1, 'Panel', 1, 'Drag & drop component into one or more panel cells or slideshow slides.', GETDATE(), 2)
+	VALUES ('panel', 1, 'Panel', 1, 'Add content to a grid or slideshow.', GETDATE(), 2)
 
 	INSERT INTO components (componentId, userId, title, category, [description], datecreated, orderindex)
 	VALUES ('photo', 1, 'Photo', 1, 'Upload an image from your computer to display and resize on the page', GETDATE(), 3)

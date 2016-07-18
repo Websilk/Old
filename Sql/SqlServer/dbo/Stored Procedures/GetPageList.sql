@@ -23,13 +23,9 @@ BEGIN
 	IF @subonly = 1 AND @parentid > 0 BEGIN
 		-- get parent page title
 		SELECT @parentTitle = title FROM pages WHERE pageid=@parentid
-		SELECT @parentTitle = value FROM dbo.SplitArray(@parentTitle,' - ') WHERE Position=2
-		SET @parentTitle = @parentTitle
 	END ELSE IF @subonly = 1 BEGIN
 		-- get parent page title
 		SELECT @parentTitle = title FROM pages WHERE pageid=@pageid
-		SELECT @parentTitle = value FROM dbo.SplitArray(@parentTitle,' - ') WHERE Position=2
-		SET @parentTitle = @parentTitle
 	END
 
     -- Insert statements for procedure here

@@ -20,7 +20,6 @@ S.editor = {
 
         //init component select custom menus
         S.editor.components.menu.items.addRule('textbox', '.menu-options');
-        
 
         //add special words for URL
         S.url.special.add('dashboard', S.editor.dashboard.callback.url);
@@ -164,13 +163,8 @@ S.editor = {
         callback: {
             resize: function () {
                 var pos = S.elem.pos($('.winDashboardInterface .dash-body')[0]);
-                $('.window.interface.dashboard:not(.winDashboardInterface)').css({ top: 50, left: pos.x, width: pos.w, height: S.window.absolute.h - 50 }).find('.grip').hide();
-                $('.dash-menu').css({ minHeight: S.window.absolute.h - 50 });
-                $('ul.columns-first').each(function () {
-                    this.style.width = '';
-                    var pos = S.elem.offset($(this).find('li:last-child')[0]);
-                    this.style.width = (pos.x + pos.w) + 'px';
-                });
+                $('.window.interface.dashboard:not(.winDashboardInterface)').css({ top: 50, left: pos.x, width: pos.w, height: S.window.h - 50 }).find('.grip').hide();
+                $('.dash-menu').css({ height: S.window.h - 50 });
             },
 
             url: function (url) {
@@ -254,17 +248,30 @@ S.editor = {
             }
 
             if (win.length > 0) {
+                //window already exists
                 div = win[0];
                 if (autoHide == true && win[0].style.display != 'none') {
                     win.hide();
+                    if (a.dialog == true) {
+                        $('.dialog-bg').hide();
+                    }
                 } else {
                     S.editor.window.hidePopUps();
                     if (S.editor.dashboard.visible == true) {
-                        if (win.hasClass('dashboard') == false) { win.addClass('dashboard'); }
-                        S.editor.dashboard.hideAllWindows();
-                        S.editor.dashboard.callback.resize();
+                        if (a.noDashboard != true) {
+                            if (win.hasClass('dashboard') == false) {
+                                win.addClass('dashboard');
+                            }
+                            S.editor.dashboard.hideAllWindows();
+                            S.editor.dashboard.callback.resize();
+                        }
                     }
                     win.show();
+                    if (a.dialog == true) {
+                        win.style.zIndex = 4510;
+                        $('.dialog-bg').show();
+                    }
+                    S.editor.window.callback.resize(a);
                 }
             } else {
                 //create new window
@@ -272,7 +279,7 @@ S.editor = {
                 var item = {
                     title: name, name: name.replace(/ /g, ''), x: 0, y: 50, w: 320, h: 240, maxh: 0, r: null, target: null,
                     align: null, arrow: null, spacing: 0, toolbar: true, classes: '', addResize: false, resizable: false,
-                    popup: false, visible: true, zIndex: 0, resizealign: 'minimize', noDashboard: false, url: ''
+                    popup: false, dialog: false, visible: true, zIndex: 0, resizealign: 'minimize', noDashboard: false, url: ''
                 };
 
                 //setup options
@@ -284,13 +291,14 @@ S.editor = {
                     if (options.maxh != null) { item.maxh = options.maxh; }
                     if (options.r != null) { item.r = options.r; }
                     if (options.title != null) { item.title = options.title; }
-                    if (options.target != null) { item.target = options.target; }
+                    if (options.target != null) { item.target = options.target; item.addResize = true; }
                     if (options.align != null) { item.align = options.align; }
                     if (options.arrow != null) { item.arrow = options.arrow; }
                     if (options.spacing != null) { item.spacing = options.spacing; }
                     if (options.toolbar != null) { item.toolbar = options.toolbar; }
                     if (options.classes != null) { item.classes += ' ' + options.classes; }
-                    if (options.popup != null) { item.popup = options.popup; item.classes += ' popup' }
+                    if (options.popup != null) { item.popup = options.popup; if (item.popup == true) { item.classes += ' popup' } }
+                    if (options.dialog != null) { item.dialog = options.dialog; if (item.dialog == true) { item.classes += ' dialog' } }
                     if (options.autoHide != null) { item.autoHide = options.autoHide; }
                     if (options.postOnce != null) { item.postOnce = options.postOnce; item.pageId = S.page.id; }
                     if (options.visible != null) { item.visible = options.visible; }
@@ -334,11 +342,11 @@ S.editor = {
                 div.style.top = (item.y + item.spacing) + 'px';
 
                 if (item.h.toString().indexOf('%') < 0) { div.style.minHeight = item.h + 'px'; } else {
-                    div.style.minHeight = (((S.window.absolute.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
+                    div.style.minHeight = (((S.window.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
                     item.addResize = true;
                 }
                 if (item.w.toString().indexOf('%') < 0) { div.style.width = item.w + 'px'; } else {
-                    div.style.width = (((S.window.absolute.w - item.x) / 100) * parseInt(item.w.replace('%', ''))) + 'px';
+                    div.style.width = (((S.window.w - item.x) / 100) * parseInt(item.w.replace('%', ''))) + 'px';
                     item.addResize = true;
                 }
                 if (item.maxh > 0) { div.style.maxHeight = item.maxh + 'px' }
@@ -380,6 +388,11 @@ S.editor = {
 
                 this.windows[item.name] = item;
                 a = item;
+
+                if (item.dialog == true) {
+                    div.style.zIndex = 4510;
+                    $('.dialog-bg').show();
+                }
 
                 if (item.addResize == true) {
                     S.events.doc.resize.callback.add(div, this.windows[item.name], null,
@@ -449,7 +462,7 @@ S.editor = {
                         item.y = targ.pos.y + targ.pos.h + targ.spacing;
                         break;
                     case 'center':
-                        item.x = (win.absolute.w / 2) - (item.w / 2);
+                        item.x = (win.w / 2) - (item.w / 2);
                 }
             }
             return item;
@@ -474,10 +487,11 @@ S.editor = {
             },
 
             resize: function (item) {
+                if(item.elem.style.display == 'none'){return;}
                 item = S.editor.window.reposition(item);
                 var pos = S.elem.pos(item.elem);
                 if (item.resizealign == 'minimize') {
-                    item.x = pos.x;
+                    if (item.target == null) { item.x = pos.x; }
                     if (item.w.toString().indexOf('%') < 0) { item.w = pos.w; }
                     if (item.h.toString().indexOf('%') < 0) { item.h = pos.h; }
                 }
@@ -490,11 +504,11 @@ S.editor = {
                     $(item.elem).css({ left: item.x });
                 }
                 if (item.h.toString().indexOf('%') > -1) {
-                    item.elem.style.minHeight = (((S.window.absolute.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
+                    item.elem.style.minHeight = (((S.window.h - item.y) / 100) * parseInt(item.h.replace('%', ''))) + 'px';
                 }
 
                 if (item.w.toString().indexOf('%') > -1) {
-                    item.elem.style.width = (((S.window.absolute.w - item.x) / 100) * parseInt(item.w.replace('%', ''))) + 'px';
+                    item.elem.style.width = (((S.window.w - item.x) / 100) * parseInt(item.w.replace('%', ''))) + 'px';
                 }
 
                 S.editor.window.resize.callback.execute(null, 'onResize');
@@ -534,8 +548,8 @@ S.editor = {
             },
 
             windowResize: function () {
-                $('.editor .window > .content').css({ maxHeight: S.window.absolute.h - 80 });
-                $('.editor .window.dashboard > .content').css({ maxHeight: S.window.absolute.h - 50 });
+                $('.editor .window > .content').css({ maxHeight: S.window.h - 80 });
+                $('.editor .window.dashboard > .content').css({ maxHeight: S.window.h - 50 });
                 S.editor.window.resize.callback.execute(null, 'onResize');
             }
         },
@@ -582,8 +596,8 @@ S.editor = {
         draggable: function () {
             $(".editor .windows > .window").draggable({
                 handle: '.grip', scroll: false, snap: ".editor .window:not(.popup)", snapMode: "outer", drag: function (e, ui) {
-                    if (ui.position.left >= S.window.absolute.w - $(this).width()) { ui.position.left = S.window.absolute.w - $(this).width(); }
-                    if (ui.position.top >= S.window.absolute.h - $(this).height()) { ui.position.top = S.window.absolute.h - $(this).height(); }
+                    if (ui.position.left >= S.window.w - $(this).width()) { ui.position.left = S.window.w - $(this).width(); }
+                    if (ui.position.top >= S.window.h - $(this).height()) { ui.position.top = S.window.h - $(this).height(); }
                     if (ui.position.top <= 50) { ui.position.top = 50; }
                     if (ui.position.left < 0) { ui.position.left = 0; }
                 }
@@ -596,7 +610,7 @@ S.editor = {
                     item = S.editor.window.windows[name];
                 if (item.resizealign == 'minimize') { item.curPos = S.elem.pos(window[0]); }
                 item.resizealign = 'leftside';
-                window.css({ left: 0, top: 50, width: S.window.absolute.w / 2, height: S.window.absolute.h - 50 });
+                window.css({ left: 0, top: 50, width: S.window.w / 2, height: S.window.h - 50 });
                 window.find('.resize-leftside').hide();
                 window.find('.resize-minimize, .resize-maximize, .resize-rightside').show();
                 S.editor.window.windows[name] = item;
@@ -608,7 +622,7 @@ S.editor = {
                     item = S.editor.window.windows[name];
                 if (item.resizealign == 'minimize') { item.curPos = S.elem.pos(window[0]); }
                 item.resizealign = 'rightside';
-                window.css({ left: S.window.absolute.w / 2, top: 50, width: S.window.absolute.w / 2, height: S.window.absolute.h - 50 });
+                window.css({ left: S.window.w / 2, top: 50, width: S.window.w / 2, height: S.window.h - 50 });
                 window.find('.resize-rightside').hide();
                 window.find('.resize-minimize, .resize-leftside, .resize-maximize').show();
                 S.editor.window.windows[name] = item;
@@ -620,7 +634,7 @@ S.editor = {
                     item = S.editor.window.windows[name];
                 if (item.resizealign == 'minimize') { item.curPos = S.elem.pos(window[0]); }
                 item.resizealign = 'maximize';
-                window.css({ left: 0, top: 50, width: S.window.absolute.w, height: S.window.absolute.h - 50 });
+                window.css({ left: 0, top: 50, width: S.window.w, height: S.window.h - 50 });
                 window.find('.resize-maximize').hide();
                 window.find('.resize-minimize, .resize-leftside, .resize-rightside').show();
                 S.editor.window.windows[name] = item;
@@ -639,7 +653,7 @@ S.editor = {
             },
 
             callback: {
-                //register & execute callbacks when the window resizes
+                //register & execute callbacks for when the editor window resizes
                 items: [],
 
                 add: function (elem, vars, onResize) {
@@ -657,8 +671,10 @@ S.editor = {
                         switch (type) {
                             case '': case null: case 'onResize':
                                 for (var x = 0; x < this.items.length; x++) {
-                                    if (typeof this.items[x].onResize == 'function' && (this.items[x].elem == elem || elem == null)) {
-                                        this.items[x].onResize();
+                                    if (this.items[x].elem == elem || elem == null) {
+                                        if (typeof this.items[x].onResize == 'function') {
+                                            this.items[x].onResize();
+                                        }
                                     }
                                 } break;
                         }
@@ -667,18 +683,37 @@ S.editor = {
             }
         },
 
+        getItem(div) {
+            console.log(div);
+            for (var item in this.windows) {
+                console.log(this.windows[item].elem);
+                if (this.windows[item].elem == div) { return this.windows[item]; }
+            }
+        },
+
         hide: function (e) {
             var c = null;
+            //get window div
             if (typeof e.target != 'undefined') {
                 c = $(e.target);
             } else {
                 c = e;
             }
-            if (c.hasClass('window') == true) {
-                c.hide();
-            } else {
-                c.parents('.window').hide();
+            if (c.hasClass('window') == false) {
+                c = $(c.parents('.window'));
             }
+
+            //get window info
+            var item = S.editor.window.getItem(c[0]);
+
+            //check for dialog
+            if (item.dialog == true) {
+                $('.dialog-bg').hide();
+            }
+
+            //finally, hide window
+            c.hide();
+
         },
 
         hidePopUps: function () {
@@ -1005,8 +1040,8 @@ S.editor = {
                     //create barrier on page
                     var div = document.createElement('div');
                     div.className = 'barrier';
-                    div.style.width = S.window.absolute.w + 'px';
-                    div.style.height = S.window.absolute.h + 'px';
+                    div.style.width = S.window.w + 'px';
+                    div.style.height = S.window.h + 'px';
                     $('.editor').append(div);
 
                     //start paint timer
@@ -1278,8 +1313,8 @@ S.editor = {
                 //create barrier on page
                 var div = document.createElement('div');
                 div.className = 'barrier';
-                div.style.width = S.window.absolute.w + 'px';
-                div.style.height = S.window.absolute.h + 'px';
+                div.style.width = S.window.w + 'px';
+                div.style.height = S.window.h + 'px';
                 $('.editor').append(div);
 
                 //bind document mouse events
@@ -2144,10 +2179,10 @@ S.editor = {
             var menuPos = S.elem.offset(menu[0]);
 
             //check padding for window edges
-            if (cPos.x + cPos.w + border + menuPos.w >= S.window.absolute.w) {
+            if (cPos.x + cPos.w + border + menuPos.w >= S.window.w) {
                 //right edge
-                if (cPos.x + cPos.w + border >= S.window.absolute.w) {
-                    pad.right = 0 - ((cPos.x + cPos.w) - S.window.absolute.w);
+                if (cPos.x + cPos.w + border >= S.window.w) {
+                    pad.right = 0 - ((cPos.x + cPos.w) - S.window.w);
                 } else {
                     pad.right = 12;
                 }
@@ -2216,10 +2251,10 @@ S.editor = {
             var bh = S.elem.height($('.component-select .menu, .component-select .properties > .box').get());
             $('.component-select .properties > .barrier').css({ top: menuy + bh });
             //reposition duplicate button
-            if (cPos.y + cPos.h - 70 > S.window.absolute.h + S.window.scrolly) {
+            if (cPos.y + cPos.h - 70 > S.window.h + S.window.scrolly) {
                 $('.component-select .btn-duplicate').css({
                     left: (inner.right == true ? cPos.w - 45 : cPos.w) - 62,
-                    top: cPos.h - ((cPos.y + cPos.h) - (S.window.absolute.h + S.window.scrolly)) - 62
+                    top: cPos.h - ((cPos.y + cPos.h) - (S.window.h + S.window.scrolly)) - 62
                 });
             } else {
                 $('.component-select .btn-duplicate').css({
@@ -2700,7 +2735,7 @@ S.editor = {
             $('.tools .texteditor-toolbar').css({ top: tPos.y, left: tPos.x - 12 }).show();
 
             pos = S.elem.pos(t);
-            if (pos.x + pos.w + 60 > S.window.absolute.w) { pos.x -= (40); }
+            if (pos.x + pos.w + 60 > S.window.w) { pos.x -= (40); }
             if (pos.y - S.window.scrolly < 105) { pos.y += pos.h - 12; }
             $('.tools .texteditor-btnselect').css({ top: pos.y - 12, left: pos.x + pos.w + 10 }).show();
         },
@@ -3371,7 +3406,6 @@ S.editor = {
 
             add: function (pageId, title) {
                 S.editor.pages.tree.items.push({ pageId: pageId, title: title });
-                S.editor.pages.tree.updateTitle();
             },
 
             remove: function (pageId) {
@@ -3380,7 +3414,6 @@ S.editor = {
                     if (S.editor.pages.tree.items[x].pageId == pageId) { found = true; break; }
                 }
                 S.editor.pages.tree.items.splice(x - 1, 1);
-                S.editor.pages.tree.updateTitle();
             },
 
             updateTitle: function () {
@@ -3390,28 +3423,28 @@ S.editor = {
                     htm += S.editor.pages.tree.items[x].title;
                 }
                 //if (htm == '') { htm = 'root';}
-                $('.winWebPages .pages-title .page-title')[0].innerHTML = '/' + htm;
+                //$('.winWebPages .pages-title .page-title')[0].innerHTML = '/' + htm;
             }
         },
 
         add: {
             item: { parentId: 0, title: '', description: '' },
-            show: function (parentId) {
+            show: function (parentId, path) {
                 S.editor.pages.add.item = { parentId: parentId, title: '', description: '' };
-                S.editor.window.load('NewPage', 'Editor/NewPage', { parentId: parentId || 0, title: S.website.title },
-                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, noDashboard: true, title: 'New Web Page' });
+                S.editor.window.load('NewPage', 'Editor/NewPage', { parentId: parentId || 0, path: path },
+                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', dialog:true, spacing: 50, loadOnce: true, noDashboard: true, title: 'New Web Page' });
             },
 
-            typeTitle: function (e) {
+            typeTitle: function () {
                 var title = $('#newPageTitle').val(), err = false;
                 if (err == false) { if (title == '') { err = true; } }
                 if (err == false) { err = S.util.str.isAlphaNumeric(title, true); }
                 if (err == false) { err = S.util.str.hasCurseWords(title); }
                 title = title.replace(/ /g, '-');
                 if (err == true) {
-                    $('#newpage-url').html('<div class="font-error" style="text-decoration:line-through">' + S.editor.pages.add.item.url + title + '</div>');
+                    $('#newpage-url').html('<div class="font-error" style="text-decoration:line-through">' + S.editor.pages.add.item.url + '/' + title + '</div>');
                 } else {
-                    $('#newpage-url').html(S.editor.pages.add.item.url + title);
+                    $('#newpage-url').html(S.editor.pages.add.item.url + '/' + title);
                 }
 
             },
@@ -4546,6 +4579,7 @@ S.editor = {
     }
 }
 
+//Hot Keys (editor-specific) ////////////////////////////////////////////////////////////////////////
 S.hotkeys = {
     keyhold: '',
     keydown: function (e) {

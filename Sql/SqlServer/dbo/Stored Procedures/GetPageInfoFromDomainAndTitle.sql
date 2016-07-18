@@ -10,12 +10,11 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE @pId int
-	SELECT @pId = p.pageid FROM pages p LEFT JOIN websites ws 
-	ON ws.websiteid=p.websiteid 
+	SELECT @pId = p.pageid FROM pages p
 	WHERE p.websiteid=(
 		SELECT w.websiteid FROM websitedomains w WHERE w.domain = @domain
 	) 
-	AND p.title=ws.title + ' - ' + @title AND p.deleted =0
+	AND p.[path]=@title AND p.deleted =0
 
     EXEC GetPageInfoFromPageId @pageId=@pId
 

@@ -5,10 +5,12 @@
 *.suo
 *.user
 *.sln.docstates
-!/wwwroot/content/themes/default
+/wwwroot/content/themes/default
 /wwwroot/content/websites/
 /wwwroot/images/screenshots
 /wwwroot/images/workflow
+
+/Content/websites
 
 *.bak
 

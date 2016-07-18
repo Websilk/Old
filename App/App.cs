@@ -16,7 +16,7 @@ namespace Websilk.Services
             if (S.isSessionLost() == true) { return lostPageRequest(); } //check session
 
             S.Page.Url.path = title.Replace("-", " ");
-            S.Page.pageTitle = S.Util.Str.GetWebsiteTitle(S.Page.pageTitle) + " - " + title;
+            S.Page.pageTitle = title;
             S.Page.GetPageId();
             S.Page.LoadPageFromId(S.Page.pageId);
             S.Page.Render();
@@ -42,7 +42,7 @@ namespace Websilk.Services
                 if ((S.Page.isEditorLoaded == false & url.ToLower().IndexOf("dashboard") == 0) | url.ToLower().IndexOf("dashboard") < 0)
                 {
                     S.Page.Url.path = pageName.ToLower().Replace("-", " ");
-                    S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + pageName.Replace("-", " ");
+                    S.Page.pageTitle = pageName.Replace("-", " ");
                     S.Page.GetPageId();
                     S.Page.LoadPageFromId(S.Page.pageId);
                 }
@@ -50,7 +50,7 @@ namespace Websilk.Services
                 if (url.ToLower().IndexOf("dashboard") == 0)
                 {
                     S.Page.RegisterJS("dashload", "setTimeout(function(){if(S.editor.dashboard){S.editor.dashboard.show('" + url + "');}},1000);");
-                    S.Page.PageRequest.pageTitle = S.Page.websiteTitle + " - Dashboard";
+                    S.Page.PageRequest.pageTitle = S.Page.websiteTitle +  S.Page.websiteTitleSeparator + "Dashboard";
                 }
                 S.Page.Render();
                 Console.WriteLine("Load page from no url");
@@ -64,7 +64,7 @@ namespace Websilk.Services
             {
                 //found page with no query in url
                 S.Page.Url.path = arrUrl[0].Replace("-", " ");
-                S.Page.pageTitle = S.Page.pageTitle.Split(new char[] { '-', ' ', '\"' })[0] + " - " + arrUrl[0].Replace("-", " ");
+                S.Page.pageTitle = arrUrl[0].Replace("-", " ");
                 S.Page.GetPageId();
                 S.Page.LoadPageFromId(S.Page.pageId);
                 S.Page.Render();

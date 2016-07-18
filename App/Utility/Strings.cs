@@ -238,16 +238,6 @@ namespace Websilk.Utility
             return new string[] { "", subdomain };
         }
 
-        public string GetPageTitle(string title)
-        {
-            return title.Split(new string[] { " - " },0)[1];
-        }
-
-        public string GetWebsiteTitle(string title)
-        {
-            return title.Split(new string[] { " - " },0)[0];
-        }
-
         #endregion
 
         #region "Generation"
