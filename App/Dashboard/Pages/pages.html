@@ -1,13 +1,15 @@
 ﻿<div class="dash-only row header">
-    <div class="left title-icon">
+    <div class="col icon">
         <svg viewBox="0 0 36 36" style="width:26px; height:26px;">
             <use xlink:href="#icon-pages" x="0" y="0" width="36" height="36" />
         </svg>
     </div>
-    <div class="left title-label">
+    <div class="col title with-icon">
         <h4>Web Pages</h4>
     </div>
 </div>
 <div class="row empty"></div>
+<div class="message error" id="pagesError" style="display:none;"></div>
+<div class="message alert" id="pagesAlert" style="display:none;"></div>
 <div class="pages-list">{{page-list}}</div>
 {{help}}

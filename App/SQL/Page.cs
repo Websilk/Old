@@ -105,20 +105,9 @@ namespace Websilk.SqlClasses
             SqlReader reader = new SqlReader();
             if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
             {
-                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT p.title, p.parentid, p.path, p.pathids, (SELECT title FROM pages WHERE pageid=p.parentId) AS parenttitle FROM pages p WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
+                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT p.title, p.parentid, p.path, p.pathids, (SELECT title FROM pages WHERE pageid=p.parentId) AS parenttitle, p.security FROM pages p WHERE p.pageid=" + parentId + " AND p.websiteid=" + websiteId));
             }
             return reader;
-        }
-
-        public SqlReader GetParentInfo(int pageId)
-        {
-            SqlReader reader = new SqlReader();
-            if (S.Sql.dataType == enumSqlDataTypes.SqlClient)
-            {
-                reader.ReadFromSqlClient(S.Sql.ExecuteReader("SELECT TOP 1 p2.title AS parenttitle, p.title, p.security, p.description FROM pages p LEFT JOIN pages p2 ON p2.pageid=p.parentid WHERE p.pageid=" + pageId));
-            }
-            return reader;
-            //
         }
         #endregion
 

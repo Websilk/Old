@@ -29,7 +29,7 @@ namespace Websilk.Services.Components
             websiteId = int.Parse(S.Request.Query["w"]);
             themeFolder = "/content/themes/" + S.Request.Query["l"] + "/";
             websiteFolder = "/content/websites/" + websiteId + "/";
-            scaffold.Data["head"] = "<link rel=\"Stylesheet\" type=\"text/css\" href=\"/css/websilk.css\"/>" +
+            scaffold.Data["head"] = "<link rel=\"Stylesheet\" type=\"text/css\" href=\"/css/platform.css\"/>" +
                                "<link rel=\"Stylesheet\" type=\"text/css\" href=\"" + themeFolder + "style.css\"/>" +
                                "<link rel=\"Stylesheet\" type=\"text/css\" href=\"" + websiteFolder + "website.css\"/>";
 

@@ -16,8 +16,7 @@ BEGIN
     p.usersonly, p.title, (CASE WHEN p.parentid IS NOT NULL THEN (SELECT title FROM pages WHERE pageid=p.parentid) ELSE NULL END) AS parenttitle,
 	 p.photo, p.description, p.datecreated, p.themeid, 
     (SELECT userid FROM themes WHERE themeid=p.themeid) AS themeowner, 
-    (SELECT TOP 1 googlewebpropertyid FROM websitedomains WHERE websiteid=@websiteId ORDER BY datecreated ASC) AS googlewebpropertyid,
-	w.background, p.background AS pagebackground
+    (SELECT TOP 1 googlewebpropertyid FROM websitedomains WHERE websiteid=@websiteId ORDER BY datecreated ASC) AS googlewebpropertyid
     FROM pages p LEFT JOIN websites w ON w.websiteid=@websiteId WHERE p.pageid=@pageId
 END
 

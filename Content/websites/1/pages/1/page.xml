@@ -1,2 +1,37 @@
-<theme>
-</theme>
+<layout pageid="1">
+  <panel name="head">
+    <component name="panel" id="HbJ" index="1">
+      <position><![CDATA[c,0,0,t,0,,350,win,240,px,20px 20px 20px 20px|c,0,0,t,0,,700,win,220,px,20px 20px 20px 20px||c,0,0,t,0,,1440,win,140,px,20px 20px 20px 20px|c,0,0,t,0,,100,win,153,px,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Panel,panel,]]></content>
+      <design><![CDATA[rows|a,150,0]]></design>
+    </component>
+    <component name="photo" id="NxY" index="2">
+      <position><![CDATA[||||c,0,0,t,0,,893,px,506,auto,0px 0px 0px 0px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[Screenshots/bnqqjay.png||1920|1080||||||||||||]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="pUl" index="3">
+      <position><![CDATA[|||c,0,0,t,0,,374,px,520,auto,20px 20px 20px 20px|c,0,0,t,0,,380,px,520,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div>I see you in my thoughts and dreams,</div><div>When I awake, how real it seems.</div><div>You aren't here to comfort me,</div><div>But, soon I hope you will be.</div><div><br></div><div>No one truly knows or understands,</div><div>You have my heart in your hands.</div><div>My love is what you truly own,</div><div>Come soon and make our house a home.</div><div><br></div><div>Inside those walls you are doing your time,</div><div>Not being here with me is your only true crime.</div><div>Others in your life will come and go,</div><div>But my love is true, and I'm sure you know.</div><div><br></div><div>I may not be rich or the prettiest one,</div><div>But I love you so much, you are my sun.</div><div>You light up my life every time you call,&nbsp;</div><div>When the time is up I begin to fall.</div><div><br></div><div>You are my stars, you are my moon,</div><div>Being with you will come very soon.</div><div>So when you sleep, take this to heart,</div><div>No one or nothing will keep us apart.</div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <panel name="HbJPanel">
+    <component name="textbox" id="tWb" index="1">
+      <position><![CDATA[||||c,0,0,t,0,,336,px,95,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<span class="fontsize-40" style="font-size: 40px">Forever Loved</span>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+    <component name="textbox" id="cnn" index="2">
+      <position><![CDATA[||||c,0,0,t,0,,312,px,95,auto,20px 20px 20px 20px]]></position>
+      <css><![CDATA[]]></css>
+      <content><![CDATA[<div><span class="fontsize-40" style="font-size: 40px">Young &amp; Wise</span></div>]]></content>
+      <design><![CDATA[]]></design>
+    </component>
+  </panel>
+  <layers />
+</layout>

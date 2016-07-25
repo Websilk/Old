@@ -94,10 +94,15 @@ namespace Websilk.Pipeline
 
                         //show dashboard
                         string path = S.Request.Path.ToString().ToLower().Replace(" ", "+");
+                        string query = "{}";
+                        if(S.Request.QueryString.ToString().Length > 3)
+                        {
+                            query = "{'" + S.Request.QueryString.ToString().Replace("?", "").Replace("&", "','").Replace("=", "':'") + "'}";
+                        }
                         if (path.Substring(0, 1) == "/") { path = path.Substring(1); }
                         if (path.IndexOf("dashboard") == 0)
                         {
-                            S.Page.RegisterJS("dash", "S.editor.dashboard.show('" + path.ToLower() + "');");
+                            S.Page.RegisterJS("dash", "S.editor.dashboard.show('" + path.ToLower() + "', " + query + ");");
                         }
                     }
 

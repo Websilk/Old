@@ -1,28 +1,52 @@
-﻿<div class="row hover">
-    <div class="column-label"></div>
-    <div class="column-input label">{{url}}</div>
+﻿<div class="row header">
+    <div class="col title">Settings for "{{page-path}}"</div>
 </div>
-<div class="row hover-alt">
-    <div class="column-label">Title</div>
-    <div class="column-input label">{{page-title}}</div>
-</div>
-<div class="row hover">
-    <div class="column-label">Description</div>
-    <div class="column-input"><textarea type="text" id="pageSettingsDescription" rows="7">{{description}}</textarea></div>
-</div>
-<div class="row hover-alt">
-    <div class="column-row"><input type="checkbox" id="pageSettingsSecure" checked="{{secure}}" /><label for="pageSettingsSecure">Private web page</label></div>
-</div>
-{{page-type}}
-    <div class="row hover-alt">
-        <div class="column-label">Type</div>
-        <div class="column-input label">{{type}}</div>
+<div class="form">
+    <div class="row hover">
+        <div class="col three label"></div>
+        <div class="col nine label"><a href="{{url}}" target="_blank">{{url}}</a></div>
     </div>
-{{/page-type}}
+    <div class="row hover-alt">
+        <div class="col three label">Title</div>
+        <div class="col nine label">{{page-title}}</div>
+    </div>
+    <div class="row hover">
+        <div class="col three label">Description</div>
+        <div class="col nine input"><textarea type="text" id="pageSettingsDescription" rows="7">{{description}}</textarea></div>
+    </div>
+    <div class="row hover-alt">
+        <div class="col label"><input type="checkbox" id="pageSettingsSecure" checked="{{secure}}" /><label for="pageSettingsSecure">Private web page</label></div>
+    </div>
+    {{page-type}}
+    <div class="row hover-alt">
+        <div class="col three label">Type</div>
+        <div class="col nine label">{{type}}</div>
+    </div>
+    {{/page-type}}
 
-<div class="message-error" id="pageSettingsError" style="display:none;"></div>
-<div class="message-alert" id="pageSettingsAlert" style="display:none;"></div>
+    <div class="message error" id="pageSettingsError" style="display:none;"></div>
+    <div class="message alert" id="pageSettingsAlert" style="display:none;"></div>
 
-<div class="buttons">
-    <div class="button" onclick="S.editor.pages.settings.submit()">Update</div>
+    <div class="row buttons">
+        <div class="button" onclick="S.editor.pages.settings.submit()">Update</div>
+        <div class="button cancel" onclick="S.url.goBack()">Cancel</div>
+    </div>
 </div>
+<div class="row empty pad-top"></div>
+
+<div class="row header">
+    <div class="col title">History for "{{page-path}}"</div>
+</div>
+<div class="row empty"></div>
+<div class="form">
+    <div class="spreadsheet pad">
+        <div class="row hover head">
+            <div class="col one label">Version</div>
+            <div class="col nine label">Date Created</div>
+            <div class="col two label"></div>
+        </div>
+        {{page-history}}
+    </div>
+</div>
+
+

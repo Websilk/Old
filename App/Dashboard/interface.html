@@ -1,10 +1,10 @@
 ﻿<div class="dash-content">
     <div class="dash-menu">
         <div class="row header">
-            <div class="left title-label">
+            <div class="col ten pad-top-xxs">
                 <h4>{{website-title}}</h4>
             </div>
-            <div class="right title-icon-small">
+            <div class="col two icon text-right">
                 <a href="javascript:" onclick="S.editor.pages.add.show()" title="Add a new web page to the website ">
                     <svg viewBox="0 0 15 15" style="width:15px; height:15px;">
                         <use xlink:href="#icon-add" x="0" y="0" width="15" height="15"></use>
@@ -13,80 +13,93 @@
             </div>
         </div>
 
-        <div class="section-icon-menu">
-            <div class="row menu hover round4" onclick="S.editor.window.open.timeline()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-timeline" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+        <div class="container">
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.timeline()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-timeline" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Timeline</h5></div>
                 </div>
-                <div class="column-label"><h5>Timeline</h5></div>
             </div>
             {{menu-pages}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.pages()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-pages" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.pages()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-pages" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Pages</h5></div>
                 </div>
-                <div class="column-label"><h5>Pages</h5></div>
             </div>
             {{/menu-pages}}
             {{menu-photos}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.photoLibrary('dashboard')">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-photos" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.photoLibrary('dashboard')">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-photos" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Photos</h5></div>
                 </div>
-                <div class="column-label"><h5>Photos</h5></div>
             </div>
             {{/menu-photos}}
             {{menu-analytics}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.analytics()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-analytics" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.analytics()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-analytics" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Analytics</h5></div>
                 </div>
-                <div class="column-label"><h5>Analytics</h5></div>
             </div>
             {{/menu-analytics}}
             {{menu-users}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.users()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-users" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.users()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-users" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Users</h5></div>
                 </div>
-                <div class="column-label"><h5>Users</h5></div>
             </div>
             {{/menu-users}}
             {{menu-apps}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.apps()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-apps" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.apps()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-apps" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Apps</h5></div>
                 </div>
-                <div class="column-label"><h5>Apps</h5></div>
             </div>
             {{/menu-apps}}
             <div id="dashMenuAppList">{{apps-list}}</div>
             {{menu-settings}}
-            <div class="row menu hover round4" onclick="S.editor.window.open.websiteSettings()">
-                <div class="column-icon">
-                    <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
-                        <use xlink:href="#icon-settings" x="0" y="0" width="36" height="36"></use>
-                    </svg>
+            <div class="margin">
+                <div class="row hover round7 menu" onclick="S.editor.window.open.websiteSettings()">
+                    <div class="col two icon">
+                        <svg viewBox="0 0 36 36" style="width:25px; height:25px;">
+                            <use xlink:href="#icon-settings" x="0" y="0" width="36" height="36"></use>
+                        </svg>
+                    </div>
+                    <div class="col ten label"><h5>Settings</h5></div>
                 </div>
-                <div class="column-label"><h5>Settings</h5></div>
             </div>
             {{/menu-settings}}
         </div>
     </div>
 
     <div class="dash-body"></div>
-    <div class="clear"></div>
 </div>
 

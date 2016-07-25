@@ -1,4 +1,4 @@
-<layout>
+<layout pageid="4">
   <panel name="body">
     <component name="textbox" id="BWA" index="1">
       <position><![CDATA[||||c,0,,t,0,,200,px,200,auto,20px 20px 20px 20px]]></position>

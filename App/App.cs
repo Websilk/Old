@@ -91,6 +91,8 @@ namespace Websilk.Services
 
         public string KeepAlive(string save = "")
         {
+            //save = json object representing the contents of a web page
+
             if (S.isSessionLost() == true) { return "lost"; } //check session
 
             if (!string.IsNullOrEmpty(save))
@@ -102,6 +104,7 @@ namespace Websilk.Services
 
         public void SaveWebPage(string save = "")
         {
+            //update existing components with json data changes, then save the page to memory & disk
             Console.WriteLine("Save Web Page: " + save);
             JArray data = JsonConvert.DeserializeObject<JArray>(save);
             if(data != null)
@@ -117,94 +120,102 @@ namespace Websilk.Services
                     //get component info
                     id = (string)item["id"];
                     type = (string)item["type"];
+
                     //find componentView match
+                    matched = false;
                     for (int x = 0; x < S.Page.ComponentViews.Count; x++)
                     {
-                        if (S.Page.ComponentViews[x].id == id) { index = x; break; }
+                        if (S.Page.ComponentViews[x].id == id) { index = x; matched = true; break; }
                     }
-                    switch (type)
+                    if(matched == true)
                     {
-                        case "position":
-                            //update position data for a component
-                            S.Page.ComponentViews[index].positionField = (string)item["data"];
-                            break;
-                        case "data":
-                            //update data field for a component
-                            S.Page.ComponentViews[index].dataField = (string)item["data"];
-                            break;
-                        case "arrangement":
-                            //rearrange components within a panel
-                            List<ComponentView> views = new List<ComponentView>();
-                            List<string> comps = new List<string>();
-                            foreach(string comp in item["data"])
-                            {
-                                comps.Add(comp);
-                            }
-                            int step = 0;
-                            for(var i = 0; i < S.Page.ComponentViews.Count; i++)
-                            {
-                                if (step == 0)
-                                { 
-                                    //find first matching component
-                                    for (var e = 0; e < comps.Count; e++)
-                                    {
-                                        if (comps[e] == S.Page.ComponentViews[i].id)
-                                        {
-                                            step = 1;
-                                            break;
-                                        }
-                                    }
+                        switch (type)
+                        {
+                            case "position":
+                                //update position data for a component
+                                S.Page.ComponentViews[index].positionField = (string)item["data"];
+                                break;
+                            case "data":
+                                //update data field for a component
+                                S.Page.ComponentViews[index].dataField = (string)item["data"];
+                                break;
+                            case "arrangement":
+                                //rearrange components within a panel
+                                List<ComponentView> views = new List<ComponentView>();
+                                List<string> comps = new List<string>();
+                                foreach (string comp in item["data"])
+                                {
+                                    comps.Add(comp);
+                                }
+                                int step = 0;
+                                for (var i = 0; i < S.Page.ComponentViews.Count; i++)
+                                {
                                     if (step == 0)
                                     {
-                                        //add view to new array
-                                        views.Add(S.Page.ComponentViews[i]);
-                                    }
-                                }
-
-                                if (step == 1)
-                                {  
-                                    //find matching component views and add to new array
-                                    for (var e = 0; e < comps.Count; e++)
-                                    {
-                                        for (var u = 0; u < S.Page.ComponentViews.Count; u++)
+                                        //find first matching component
+                                        for (var e = 0; e < comps.Count; e++)
                                         {
-                                            if (S.Page.ComponentViews[u].id == comps[e])
+                                            if (comps[e] == S.Page.ComponentViews[i].id)
                                             {
-                                                views.Add(S.Page.ComponentViews[u]);
+                                                step = 1;
                                                 break;
                                             }
                                         }
-                                    }
-                                    step = 2;
-                                }
-
-                                if(step == 2)
-                                {
-                                    //add rest of component views to new array
-                                    matched = false;
-                                    for (var e = 0; e < comps.Count; e++)
-                                    {
-                                        if (comps[e] == S.Page.ComponentViews[i].id)
+                                        if (step == 0)
                                         {
-                                            matched = true;
-                                            break;
+                                            //add view to new array
+                                            views.Add(S.Page.ComponentViews[i]);
                                         }
                                     }
-                                    if (matched == false)
-                                    {
-                                        views.Add(S.Page.ComponentViews[i]);
-                                    }
-                                }
-                                
-                            }
 
-                            S.Page.ComponentViews = views;
-                            break;
+                                    if (step == 1)
+                                    {
+                                        //find matching component views and add to new array
+                                        for (var e = 0; e < comps.Count; e++)
+                                        {
+                                            for (var u = 0; u < S.Page.ComponentViews.Count; u++)
+                                            {
+                                                if (S.Page.ComponentViews[u].id == comps[e])
+                                                {
+                                                    views.Add(S.Page.ComponentViews[u]);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        step = 2;
+                                    }
+
+                                    if (step == 2)
+                                    {
+                                        //add rest of component views to new array
+                                        matched = false;
+                                        for (var e = 0; e < comps.Count; e++)
+                                        {
+                                            if (comps[e] == S.Page.ComponentViews[i].id)
+                                            {
+                                                matched = true;
+                                                break;
+                                            }
+                                        }
+                                        if (matched == false)
+                                        {
+                                            views.Add(S.Page.ComponentViews[i]);
+                                        }
+                                    }
+
+                                }
+
+                                S.Page.ComponentViews = views;
+                                break;
+                        }
                     }
+                    
                 }
 
                 //save page
-                S.Page.Save(true);
+                string version = (int)S.Sql.ExecuteScalar("SELECT version FROM pages WHERE pageid=" + S.Page.pageId + " AND websiteid=" + S.Page.websiteId) + 
+                                    "_" + string.Format("{0:dd-HH-mm}", DateTime.Now);
+                S.Page.Save(version, true);
             }
         }
     }

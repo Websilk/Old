@@ -262,7 +262,7 @@ namespace Websilk.Services.Dashboard
                     htm += "</div><div class=\"folder-column\">";
                 }
 
-                htm += "<div class=\"row color" + i + "\"><div class=\"column-row item\">" + reader.Get("name") + 
+                htm += "<div class=\"row hover" + i + "\"><div class=\"column-row item\">" + reader.Get("name") + 
                     "<div class=\"right hover-only icon-close\" style=\"padding-top:3px;\"><a href=\"javascript:\">" +
                     "<svg viewBox=\"0 0 15 15\" style=\"width:12px;\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg>" + 
                     "</a></div></div></div>";

@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{f550c6ac-987e-4c40-88da-9bcf2cd734cb}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -179,6 +179,7 @@
     <Build Include="dbo\Stored Procedures\GetComponents.sql" />
     <Build Include="dbo\Stored Procedures\GetComponentCategories.sql" />
     <Build Include="dbo\Stored Procedures\GetPageInfoFromDomainAndTitle.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateWebsitePageModified.sql" />
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\110\SqlSchemas\master.dacpac">

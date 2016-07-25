@@ -104,7 +104,7 @@ S.editor = {
     dashboard: { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         visible: false, init: false,
 
-        show: function (url) {
+        show: function (url, query) {
             $('.webpage, .window').hide();
             $('body').addClass('dashboard');
             S.window.changed = true;
@@ -130,7 +130,7 @@ S.editor = {
                 $('.winDashboardInterface').addClass('dashboard').show();
                 
             }
-            S.editor.dashboard.loadFromUrl(url.toLowerCase());
+            S.editor.dashboard.loadFromUrl(url.toLowerCase(), query);
             
 
             S.events.doc.resize.callback.add('dashboardresize', null, null, S.editor.dashboard.callback.resize, S.editor.dashboard.callback.resize);
@@ -180,7 +180,7 @@ S.editor = {
             }
         },
 
-        loadFromUrl: function (url) {
+        loadFromUrl: function (url, query) {
             if (url.indexOf('dashboard/') == 0) {
                 var arrurl = url.split('/');
                 switch (arrurl[1]) {
@@ -193,7 +193,7 @@ S.editor = {
                         break;
 
                     case 'page-settings':
-                        S.editor.window.open.pageSettings(arrurl[2], S.website.title);
+                        S.editor.window.open.pageSettings(query.id.toString());
                         break;
 
                     case 'photos':
@@ -264,6 +264,19 @@ S.editor = {
                             }
                             S.editor.dashboard.hideAllWindows();
                             S.editor.dashboard.callback.resize();
+                        }
+
+                        //change url link
+                        if (options.url != '') {
+                            a.url = options.url;
+                        }
+                        if(a.url != ''){
+                            var t = S.util.str.Capitalize(a.url.replace('-', ' ')).replace(' ', '-');
+                            var u = 'Dashboard/' + t;
+                            document.title = S.website.title + ' - ' + t + ' - Dashboard';
+                            if (location.href.indexOf(S.url.domain() + u) < 0) {
+                                S.url.push(S.website.title + ' - ' + t, u);
+                            }
                         }
                     }
                     win.show();
@@ -564,8 +577,7 @@ S.editor = {
             },
 
             pageSettings: function (pageId) {
-                S.editor.window.load('PageSettings', 'Dashboard/Pages/LoadSettings', { pageId: pageId },
-                    { x: 0, align: 'center', y: 0, w: 400, h: 400, spacing: 50, postOnce: 'pageid', title: 'Page Settings for \'' + S.website.title + '\'', url: 'page-settings' });
+                S.editor.pages.settings.show(pageId);
             },
 
             photoLibrary: function (type) {
@@ -684,9 +696,7 @@ S.editor = {
         },
 
         getItem(div) {
-            console.log(div);
             for (var item in this.windows) {
-                console.log(this.windows[item].elem);
                 if (this.windows[item].elem == div) { return this.windows[item]; }
             }
         },
@@ -697,7 +707,7 @@ S.editor = {
             if (typeof e.target != 'undefined') {
                 c = $(e.target);
             } else {
-                c = e;
+                c = $(e);
             }
             if (c.hasClass('window') == false) {
                 c = $(c.parents('.window'));
@@ -2646,7 +2656,7 @@ S.editor = {
 
             //render buttons
             for (x = 0; x < buttons.length; x++) {
-                htm += '<div class="buttons b' + (x + 1) + ' skin"' + (x > 0 ? ' style="display:block;"' : '') + '>';
+                htm += '<div class="buttons b' + (x + 1) + ' skin"' + (x == 0 ? ' style="display:block;"' : '') + '>';
                 for (y = 0; y < buttons[x].length; y++) {
                     if (buttons[x][y].html) {
                         htm += '<div class="button ' + buttons[x][y].cssName + (buttons[x][y].classes ? ' ' + buttons[x][y].classes : '') +
@@ -3431,14 +3441,14 @@ S.editor = {
             item: { parentId: 0, title: '', description: '' },
             show: function (parentId, path) {
                 S.editor.pages.add.item = { parentId: parentId, title: '', description: '' };
-                S.editor.window.load('NewPage', 'Editor/NewPage', { parentId: parentId || 0, path: path },
+                S.editor.window.load('NewPage', 'Dashboard/Pages/NewPage', { parentId: parentId || 0, path: path },
                     { x: 'center', y: 0, w: 400, h: 200, align: 'center', dialog:true, spacing: 50, loadOnce: true, noDashboard: true, title: 'New Web Page' });
             },
 
             typeTitle: function () {
                 var title = $('#newPageTitle').val(), err = false;
                 if (err == false) { if (title == '') { err = true; } }
-                if (err == false) { err = S.util.str.isAlphaNumeric(title, true); }
+                if (err == false) { err = S.util.str.isAlphaNumeric(title, true, '.'); }
                 if (err == false) { err = S.util.str.hasCurseWords(title); }
                 title = title.replace(/ /g, '-');
                 if (err == true) {
@@ -3457,7 +3467,7 @@ S.editor = {
                     }
                 }
                 if (err == false) {
-                    err = S.util.str.isAlphaNumeric(title, true);
+                    err = S.util.str.isAlphaNumeric(title, true, '.');
                     if (err == true) {
                         S.util.message.show($('#newPageError'), 'Remove special characters from the page title.'); return false;
                     }
@@ -3491,8 +3501,8 @@ S.editor = {
             item: { pageId: 0 },
             show: function (pageId) {
                 S.editor.pages.settings.item = { pageId: pageId };
-                S.editor.window.load('PageSettings', 'Editor/PageSettings', { pageId: pageId },
-                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, title: 'Web Page Settings', url: 'page-settings' });
+                S.editor.window.load('PageSettings', 'Dashboard/Pages/PageSettings', { pageId: pageId },
+                    { x: 'center', y: 0, w: 400, h: 200, align: 'center', spacing: 50, loadOnce: true, title: 'Web Page Settings', url: 'page-settings?id=' + pageId });
             },
 
             submit: function () {
@@ -3517,9 +3527,11 @@ S.editor = {
         },
 
         remove: function (pageId) {
-            if (confirm('Do you really want to delete this web page? This cannot be undone.') == true) {
-                S.ajax.post('/api/Dashboard/Pages/Remove', { pageId: pageId }, S.ajax.callback.inject);
-            }
+            S.ajax.post('/api/Dashboard/Pages/Remove', { pageId: pageId }, S.ajax.callback.inject);
+        },
+
+        undoRemove: function(pageId){
+            S.ajax.post('/api/Dashboard/Pages/UndoRemove', { pageId: pageId }, S.ajax.callback.inject);
         },
 
         load: function (pageId, title, updown) {
@@ -3566,10 +3578,10 @@ S.editor = {
                 rowTitle = layers[l].title;
                 if (layers[l].pageType == 1) { rowTitle = 'Page'; }
                 itemId = rowTitle.replace(/ /g, '') + 'Layer';
-                htm += '<div class="row color' + i[0] + ' page-layer-row item-' + itemId + '">' +
+                htm += '<div class="row hover' + (i[0] == 2 ? '-alt' : '') + ' page-layer-row item-' + itemId + '">' +
                         '<div class="expander purple"><div class="column right icon icon-expand"><a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a></div></div>' +
                         '<div class="column left icon"><svg viewBox="0 0 36 36" style="width:20px; height:20px;"><use xlink:href="#icon-layers" x="0" y="0" width="36" height="36" /></svg></div>' +
-                        '<div class="column left title">' + rowTitle + ' Layer</div><div class="clear"></div>';
+                        '<div class="column left title">' + rowTitle + ' Layer</div>';
                 pageId = layers[l].pageId;
 
                 i[1] = 2;
@@ -3589,7 +3601,7 @@ S.editor = {
                     rowTitle = S.util.str.Capitalize(p[0].className.split(' ')[0].replace('panel', '')) + ' Area';
                     itemId = rowTitle.replace(/ /g, '');
                     htm += '<div class="sub" style="display:none;">' +
-                        '<div class="row color' + i[1] + ' page-panel-row item-' + itemId + '">' +
+                        '<div class="row hover' + (i[1] == 2 ? '-alt' : '') + ' page-panel-row item-' + itemId + '">' +
                         '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
 
                     if (hasSubs == true) {
@@ -3597,7 +3609,7 @@ S.editor = {
                     }
 
                     htm += '</div></div><div class="column left icon"><svg viewBox="0 0 36 36" style="width:20px; height:20px;"><use xlink:href="#icon-panel" x="0" y="0" width="36" height="36"></use></svg></div>' +
-                        '<div class="column left title">' + rowTitle + '</div><div class="clear"></div>';
+                        '<div class="column left title">' + rowTitle + '</div>';
 
                     if (hasSubs == true) {
                         i[2] = 2;
@@ -3614,7 +3626,7 @@ S.editor = {
                             itemId = comps[c].id;
 
                             htm += '<div class="sub" style="display:none;">' +
-                                '<div class="row color' + i[1] + ' component-row item-' + itemId + '">' +
+                                '<div class="row hover' + (i[1] == 2 ? '-alt' : '') + ' component-row item-' + itemId + '">' +
                                 '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
 
                             if (hasSubs == true) {
@@ -3622,7 +3634,7 @@ S.editor = {
                             }
                             img = S.components.cache[comps[c].id].type;
                             htm += '</div></div><div class="column left icon-img"><img src="/components/' + img + '/iconsm.png"/></div>' +
-                                '<div class="column left title">' + rowTitle + '</div><div class="clear"></div>';
+                                '<div class="column left title">' + rowTitle + '</div>';
 
                             if (hasSubs == true) {
                                 i[3] = 2;
@@ -3645,10 +3657,10 @@ S.editor = {
                                         rowColor = 'green';
                                         itemId = panels[s2].id;
                                         htm += '<div class="sub" style="display:none;">' +
-                                            '<div class="row color' + i[2] + ' panel-cell-row item-' + itemId + '">' +
+                                            '<div class="row hover' + (i[2] == 2 ? '-alt' : '') + ' panel-cell-row item-' + itemId + '">' +
                                             '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand"><a href="javascript:" onclick="S.editor.layers.expand(\'' + itemId + '\')"><svg viewBox="0 0 15 15" style="width:15px; height:15px;"><use xlink:href="#icon-expand" x="0" y="0" width="15" height="15"></use></svg></a></div></div>' +
                                             '<div class="column left icon"><svg viewBox="0 0 36 36" style="width:20px; height:20px;"><use xlink:href="#icon-panel" x="0" y="0" width="36" height="36"></use></svg></div>' +
-                                            '<div class="column left title">' + rowTitle + '</div><div class="clear"></div>';
+                                            '<div class="column left title">' + rowTitle + '</div>';
 
                                         comps2 = p2.find('.component');
                                         i[4] = 2;
@@ -3665,7 +3677,7 @@ S.editor = {
                                             itemId = comps2[c2].id;
 
                                             htm += '<div class="sub" style="display:none;">' +
-                                                '<div class="row color' + i[1] + ' component-row item-' + itemId + '">' +
+                                                '<div class="row hover' + (i[1] == 2 ? '-alt' : '') + ' component-row item-' + itemId + '">' +
                                                 '<div class="expander ' + rowColor + '"><div class="column right icon icon-expand">';
 
                                             img = S.components.cache[comps2[c2].id].type;
@@ -4908,7 +4920,7 @@ S.util.str = {
 
     isAlphaNumeric: function (str, spaces, exchars) {
         var ex = [], chr, sub, err = false;
-        if (exchars) { if (exchars.length > 0) { ex.concat(exchars); } }
+        if (exchars) { if (exchars.length > 0) { ex = exchars.split(''); } }
         for (x = 0; x < str.length; x++) {
             sub = str.substr(x, 1);
             chr = str.charCodeAt(x);
@@ -4955,10 +4967,11 @@ S.util.array = {
 }
 
 S.util.message = {
-    show: function (div, msg) {
+    show: function (div, msg, time) {
         $(div).css({ opacity: 0, height: 'auto' }).show().html(msg);
         var h = S.elem.height($(div)[0]);
-        $(div).css({ height: 0, overflow: 'hidden' }).show().animate({ height: h - 9, opacity: 1 }, 1000).delay(10000).animate({ opacity: 0, height: 0 }, 1000, function () { $(this).hide(); });
+        if (arguments.length < 3) { time = 10;}
+        $(div).css({ height: 0, overflow: 'hidden' }).stop().animate({ height: h, opacity: 1 }, 1000).delay(time * 1000).animate({ opacity: 0, height: 0 }, 1000, function () { $(this).hide(); });
     }
 }
 

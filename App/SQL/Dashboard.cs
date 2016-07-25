@@ -75,6 +75,16 @@ namespace Websilk.SqlClasses
             }
             return reader;
         }
+        
+        public void DeletePage(int websiteId, int pageId, int ownerId)
+        {
+            S.Sql.ExecuteNonQuery("UPDATE pages SET deleted=1 WHERE pageid=" + pageId + " AND websiteid=" + websiteId + " AND ownerid=" + ownerId);
+        }
+
+        public void RestorePage(int websiteId, int pageId, int ownerId)
+        {
+            S.Sql.ExecuteNonQuery("UPDATE pages SET deleted=0 WHERE pageid=" + pageId + " AND websiteid=" + websiteId + " AND ownerid=" + ownerId);
+        }
         #endregion
 
         #region "Photos"

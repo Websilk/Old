@@ -779,6 +779,7 @@ var S = {
         load: function (url) {
             if (!history) {
                 //browser doesn't support history API
+                location.href = url;
                 return;
             }
             //first, check for a special url
@@ -804,6 +805,10 @@ var S = {
             S.ajax.post('/api/App/Url', { url: url }, S.ajax.callback.pageRequest);
 
             return false;
+        },
+
+        goBack: function(){
+            window.history.back();
         },
 
         push: function (title, url) {

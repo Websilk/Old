@@ -17,7 +17,6 @@ CREATE PROCEDURE [dbo].[AddWebsite]
 	@googleprofileId varchar(20) = '',
 	@googlewebpropertyId varchar(20) = '',
 	@statustype int = 1,
-	@background nvarchar(250) = '',
 	@platformDomain nvarchar(100) = 'websilk.com'
 AS
 BEGIN
@@ -36,10 +35,10 @@ BEGIN
     
     -- first create the web site
     INSERT INTO WebSites (websiteid, ownerId, title, pagetemplate, pagehome, 
-	themeId, dateCreated, enabled, deleted, statustype, background, 
+	themeId, dateCreated, enabled, deleted, statustype, 
 	websitetype, license, licensetype, price) 
 	VALUES(NEXT VALUE FOR SequenceWebsites, @ownerId, @title, @templateId, 0, 
-	@themeId, @myDate, @enabled, 0, @statustype, @background, 0,0,0,0)
+	@themeId, @myDate, @enabled, 0, @statustype, 0,0,0,0)
     
     SELECT TOP 1 @websiteId = websiteId FROM WebSites WHERE ownerId=@ownerId ORDER BY websiteId DESC
     

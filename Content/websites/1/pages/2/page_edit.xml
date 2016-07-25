@@ -1,4 +1,4 @@
-<layout>
+<layout pageid="2">
   <panel name="body">
     <component name="login" id="ah2" index="1">
       <position><![CDATA[||c,0,0,t,0,,886,px,154,auto,50px 20px 20px 20px|c,0,0,t,0,,422,px,224,auto,50px 20px 20px 20px|c,0,0,t,0,,424,px,224,auto,50px 20px 20px 20px]]></position>

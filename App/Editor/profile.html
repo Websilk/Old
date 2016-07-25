@@ -1,58 +1,56 @@
-﻿<div class="menu-list">
-    <div class="item hover">
-        <div class="icon">
-            <a href="/dashboard" target="_blank">
-                <svg viewBox="0 0 15 15">
-                    <use xlink:href="#icon-dashboard" x="0" y="0" width="15" height="15" />
-                </svg>
-            </a>
-        </div>
-        <div class="label">
-            <a href="/dashboard" target="_blank">Dashboard</a>
-        </div>
-    </div>
-    {{websites}}
-    <div class="item hover-alt" onclick="S.editor.window.load('Websites','Editor/Websites/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
-        <div class="icon">
+﻿<div class="row hover link">
+    <div class="col icon-xs">
+        <a href="/dashboard" target="_blank">
             <svg viewBox="0 0 15 15">
-                <use xlink:href="#icon-websites" x="0" y="0" width="15" height="15" />
+                <use xlink:href="#icon-dashboard" x="0" y="0" width="15" height="15" />
             </svg>
-        </div>
-        <div class="label">
-            Websites
-        </div>
+        </a>
     </div>
-    {{/websites}}
-    {{admin}}
-    <div class="item hover" onclick="S.editor.window.load('Admin','Editor/Admin/Admin', {}, {title:'Websilk Administration', x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
-        <div class="icon">
-            <svg viewBox="0 0 15 15">
-                <use xlink:href="#icon-admin" x="0" y="0" width="15" height="15" />
-            </svg>
-        </div>
-        <div class="label">
-            Admin
-        </div>
+    <div class="col label">
+        <a href="/dashboard" target="_blank">Dashboard</a>
     </div>
-    {{/admin}}
-    <div class="item hover" onclick="S.editor.window.load('Account','Editor/Account/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
-        <div class="icon">
-            <svg viewBox="0 0 15 15">
-                <use xlink:href="#icon-account" x="0" y="0" width="15" height="15" />
-            </svg>
-        </div>
-        <div class="label">
-            Account
-        </div>
+</div>
+{{websites}}
+<div class="row hover-alt link" onclick="S.editor.window.load('Websites','Editor/Websites/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="col icon-xs">
+        <svg viewBox="0 0 15 15">
+            <use xlink:href="#icon-websites" x="0" y="0" width="15" height="15" />
+        </svg>
     </div>
-    <div class="item hover-alt" onclick="S.hash.ghost('home');S.ajax.post('Core/LogOut',{},S.hash.callback)">
-        <div class="icon">
-            <svg viewBox="0 0 15 15">
-                <use xlink:href="#icon-logout" x="0" y="0" width="15" height="15" />
-            </svg>
-        </div>
-        <div class="label">
-            Log Out
-        </div>
+    <div class="col label">
+        Websites
+    </div>
+</div>
+{{/websites}}
+{{admin}}
+<div class="row hover link" onclick="S.editor.window.load('Admin','Editor/Admin/Admin', {}, {title:'Websilk Administration', x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="col icon-xs">
+        <svg viewBox="0 0 15 15">
+            <use xlink:href="#icon-admin" x="0" y="0" width="15" height="15" />
+        </svg>
+    </div>
+    <div class="col label">
+        Admin
+    </div>
+</div>
+{{/admin}}
+<div class="row hover link" onclick="S.editor.window.load('Account','Editor/Account/Load', {}, {x:0, align:'center',y:0,w:400,h:300, spacing:50, postOnce:true})">
+    <div class="col icon-xs">
+        <svg viewBox="0 0 15 15">
+            <use xlink:href="#icon-account" x="0" y="0" width="15" height="15" />
+        </svg>
+    </div>
+    <div class="col label">
+        Account
+    </div>
+</div>
+<div class="row hover-alt link" onclick="S.ajax.post('Core/LogOut',{},S.hash.callback)">
+    <div class="col icon-xs">
+        <svg viewBox="0 0 15 15">
+            <use xlink:href="#icon-logout" x="0" y="0" width="15" height="15" />
+        </svg>
+    </div>
+    <div class="col label">
+        Log Out
     </div>
 </div>

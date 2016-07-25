@@ -43,6 +43,8 @@
         a:active use{color:@svg-active;}
         a:visited use{color:@svg-visited;}
     }
+
+    .empty .bg{background-color:transparent !important;}
 }
 
 ////////////////////////////////////////////
@@ -156,6 +158,20 @@
     .column-help > div:after {border-right-color:darken(@window-bg,5%);}
     .column-help .row.color:hover{color:darken(saturate(@window-color-help,20%),2%); background-color:darken(@window-bg,8%);}
 
+    & when(@has-colors = true){
+        .message.alert{background-color:@msg-alert-bg; color:@msg-alert-color;}
+        .message.alert a:link {color: @msg-alert-alink;}
+        .message.alert a:visited {color: @msg-alert-avisited;}
+        .message.alert a:hover {color: @msg-alert-ahover;}
+        .message.alert a:active {color: @msg-alert-aactive;}
+        .message.error{background-color:@msg-err-bg; color:@msg-err-color;}
+        .message.error a:link {color: @msg-err-alink;}
+        .message.error a:visited {color: @msg-err-avisited;}
+        .message.error a:hover {color: @msg-err-ahover;}
+        .message.error a:active {color: @msg-err-aactive;}
+    }
+    
+
     @border:2%; 
 
     .renderColor(@color-name, @color-hover){
@@ -170,6 +186,7 @@
         @lighten-label: 3%;
         @lighten-hover: 2%;
         @font-alpha:80%;
+        @name-only:false;
         @has-buttons:false;
         @has-fields:false;
         .colors();
@@ -184,6 +201,7 @@
         @lighten-label: 3%;
         @lighten-hover: 3%;
         @font-alpha:70%;
+        @name-only:false;
         .colors();
     }
         
@@ -196,6 +214,7 @@
         @lighten-label: 3%;
         @lighten-hover: 3%;
         @font-alpha:70%;
+        @name-only:true;
         .colors();
     }
 
@@ -250,31 +269,74 @@
     @field-color:fade(@font-color, @font-alpha + 20%);
     @field-hovercolor:@font-color;
 
-    //font colors
-    color:@font-color;
 
-    a:link{color:@a-link;}
-    a:hover{color:@a-hover;}
-    a:active{color:@a-active;}
-    a:visited{color:@a-visited;}
+    & when (@name-only = false){
+        //font colors
+        color:@font-color;
 
-    //svg icon colors
-    a:link use{color:@svg2-link;}
-    a:hover use{color:@svg2-hover;}
-    a:active use{color:@svg2-active;}
-    a:visited use{color:@svg2-visited;}
-    .icon use{color:@svg2-link;}
+        a:link{color:@a-link;}
+        a:visited{color:@a-visited;}
+        a:hover{color:@a-hover;}
+        a:active{color:@a-active;}
+        .row, .col{
+            &.link a:link, &.link a:visited, &.link a:hover, &.link a:active{color:@font-color} 
+        }
+
+        //svg icon colors
+        a:link use{color:@svg2-link;}
+        a:visited use{color:@svg2-visited;}
+        a:hover use{color:@svg2-hover;}
+        a:active use{color:@svg2-active;}
+        .icon use{color:@svg2-link;}
+    
+        .bg{background-color:@bgcolor;}
+        .bg.dark{background-color:@hovercolor;}
+
+        //list items
+        .list-item{background-color:@label-bg;}
+        .list-item:hover{background-color:@label-hover;}
+    }
+
+    & when (@name-only = true){
+        //font colors
+        .@{name}{color:@font-color;}
+
+        .@{name} a:link{color:@a-link;}
+        .@{name} a:visited{color:@a-visited;}
+        .@{name} a:hover{color:@a-hover;}
+        .@{name} a:active{color:@a-active;}
+        .row.@{name} , .row.@{name} .col{
+            &.link a:link, &.link a:visited, &.link a:hover, &.link a:active{color:@font-color} 
+        }
+
+        //svg icon colors
+        .@{name} a:link use{color:@svg2-link;}
+        .@{name} a:visited use{color:@svg2-visited;}
+        .@{name} a:hover use{color:@svg2-hover;}
+        .@{name} a:active use{color:@svg2-active;}
+        .@{name} .icon use{color:@svg2-link;}
+    
+        .@{name} .bg{background-color:@bgcolor;}
+        .@{name} .bg.dark{background-color:@hovercolor;} 
+
+        //list items
+        .@{name} .list-item{background-color:@label-bg;}
+        .@{name} .list-item:hover{background-color:@label-hover;}
+    }
 
     //row colors
     div.row.@{name}, div.item.@{name}{.row-colors();}
     tr.@{name}{.tr-colors();}
-    .bg{background-color:@bgcolor;}
 
     //row hover colors
     .row.@{name}:hover, 
-    .row:hover > div.@{name},
+    .row:hover > .col.@{name},
     .item.@{name}:hover{.row-hover();}
     tr.@{name}:hover{.tr-hover();}
+
+    .spreadsheet{
+        .row.@{name}.head{background:darken(lighten(@hovercolor,@color-light / 10),@color-dark / 10);}
+    }
 
     //input field colors
     & when (@has-fields = true){
@@ -300,10 +362,6 @@
         .button.outline{color:@button-outline-color; border-color:fade(@button-outline-bg, 30%);}
         .button.outline:hover{color:@button-outline-color; border-color:fade(darken(lighten(@button-outline-bg, @perc-button-light), @perc-button-dark), 70%);}
     }
-
-    //list items
-    .list-item{background-color:@label-bg;}
-    .list-item:hover{background-color:@label-hover;}
 
     //color sub-functions
     .row-colors(){
@@ -396,6 +454,7 @@
         @lighten-label: 3%;
         @lighten-hover: 3%;
         @font-alpha:70%;
+        @name-only:false;
         .setupInterface(@light-or-dark);
         .colors();
     }
@@ -408,6 +467,7 @@
         @lighten-label: 3%;
         @lighten-hover: 3%;
         @font-alpha:70%;
+        @name-only:false;
         .setupInterface(@light-or-dark);
         .colors();
     }

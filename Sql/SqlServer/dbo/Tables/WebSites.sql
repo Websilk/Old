@@ -22,7 +22,6 @@
     [enabled]      BIT            NULL,
     [deleted]      BIT            NULL,
     [statustype]        INT            NULL,
-    [background]   NVARCHAR (250) NULL,
     CONSTRAINT [PK_WebSites] PRIMARY KEY ([websiteId])
 );
 

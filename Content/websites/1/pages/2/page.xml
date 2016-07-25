@@ -1,4 +1,4 @@
-<layout>
+<layout pageid="2">
   <panel name="body">
     <component name="login" id="ah2">
 	  <css><![CDATA[||||]]></css>

@@ -38,12 +38,12 @@ namespace Websilk
             if (S.isFirstLoad == true)
             {//first load
                 S.App.scaffold.Data["editor-css"] = 
-                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"/css/websilk-edit.css?v=" + S.Version + "\"/>" +
+                    "<link type=\"text/css\" rel=\"stylesheet\" href=\"/css/editor.css?v=" + S.Version + "\"/>" +
                     "<link type=\"text/css\" rel=\"stylesheet\" href=\"/css/colors/" + S.User.editorColor + ".css?v=" + S.Version + "\"/>";
             }
             else
             {//web service
-                js += "$('head').append('<link rel=\"stylesheet\" href=\"/css/websilk-edit.css?v=" + S.Version + "\" type=\"text/css\" />');" +
+                js += "$('head').append('<link rel=\"stylesheet\" href=\"/css/editor.css?v=" + S.Version + "\" type=\"text/css\" />');" +
                       "$('head').append('<link rel=\"stylesheet\" href=\"/css/colors/" + S.User.editorColor + ".css?v=" + S.Version + "\" type=\"text/css\" />');";
 
                 if (S.isLocal == true)
@@ -136,69 +136,6 @@ namespace Websilk.Services
             Scaffold scaffold = new Scaffold(S, "/app/editor/profile.html", "", new string[]
             { "websites", "admin" });
             if (S.User.userId == 1) { scaffold.Data["admin"] = "true"; }
-
-            //finally, scaffold Websilk platform HTML
-            response.html = scaffold.Render();
-            response.js = CompileJs();
-            return response;
-        }
-
-        public structResponse NewPage(int parentId, string path)
-        {
-            if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
-            response.window = "NewPage";
-            //check security
-            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
-
-            //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/newpage.html", "", new string[] { "url", "data-page", "data-pagename" });
-            scaffold.Data["url"] = S.Page.Url.host.Replace("http://", "").Replace("https://", "") + path;
-            scaffold.Data["data-page"] = "";
-            scaffold.Data["data-pagename"] = "";
-
-            S.Page.RegisterJS("newpage", "S.editor.pages.add.item.url = '" + scaffold.Data["url"] + "';");
-
-            //finally, scaffold Websilk platform HTML
-            response.html = scaffold.Render();
-            response.js = CompileJs();
-            return response;
-        }
-
-        public structResponse PageSettings(int pageId)
-        {
-            if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
-            response.window = "PageSettings";
-            //check security
-            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
-
-            //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/pagesettings.html", "",
-                new string[] { "url", "page-title", "description", "secure", "page-type", "type" });
-
-            string parentTitle = "";
-            SqlReader reader = S.Page.Sql.GetParentInfo(pageId);
-            if (reader.Rows.Count > 0)
-            {
-                reader.Read();
-                parentTitle = reader.Get("parenttitle");
-                scaffold.Data["page-title"] =reader.Get("title");
-                if (reader.GetBool("security") == true)
-                {
-                    scaffold.Data["secure"] = "true";
-                }
-                scaffold.Data["description"] = reader.Get("description");
-            }
-
-            scaffold.Data["url"] = S.Page.Url.host.Replace("http://", "").Replace("https://", "") + scaffold.Data["page-title"].Replace(" ", "-") + "/";
-
-            if (!string.IsNullOrEmpty(parentTitle))
-            {
-                parentTitle = parentTitle;
-                scaffold.Data["page-type"] = "true";
-                scaffold.Data["type"] = "A sub-page for \"" + parentTitle + "\"";
-            }
 
             //finally, scaffold Websilk platform HTML
             response.html = scaffold.Render();

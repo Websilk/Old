@@ -1,4 +1,4 @@
-﻿/* Clear initial data (if you so desire) */
+﻿/* Clear initial data (if you so desire)
 DELETE FROM websites
 DELETE FROM pages
 DELETE FROM users
@@ -20,7 +20,7 @@ RESTART
 
 ALTER SEQUENCE SequenceWebsites
 RESTART
-
+ */
 
 /* Only Add initial data once */
 IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
@@ -51,71 +51,71 @@ IF (SELECT COUNT(*) FROM Users WHERE userId=1) = 0 BEGIN
 	INSERT INTO WebSites
 	(websiteId, ownerId, themeId, designId, schemeId, title, icon, pagetemplate, pagehome, pagelogin, pageabout, 
 	pagecontact, pagesupport, page404, pagedenied, datecreated, websitetype, license, licensetype, price, [enabled], 
-	deleted, statustype, background)
+	deleted, statustype)
 	VALUES
 	(1, 1, 1, null, null, @websiteTitle, 1, null, 1, 2, 3, 
 	4, null, 5, 6, GETDATE(), 1, 0, 0, 0, 1,
-	0, 1, '')
+	0, 1)
 
 	/* Create Home Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(1, 1, 1, 1, null, null, 1, 'Home', 'Home', '1', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create Login Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(2, 1, 1, 1, null, null, 1, 'Login', 'Login', '2', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create About Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(3, 1, 1, 1, null, null, 1, 'About', 'About', '3', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create Contact Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(4, 1, 1, 1, null, null, 1, 'Contact', 'Contact', '4', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create 404 Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(5, 1, 1, 1, null, null, 1, 'Error 404', 'Error 404', '5', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create Access Denied Page */
 	INSERT INTO Pages
 	(pageId, ownerId, themeId, websiteId, parentId, schemeId, pagetype, title, [path], [pathIds], photo, datecreated,
 	datemodified, datefirstpublished, datepublished, favorite, [security], usersonly, published, [enabled], deleted,
-	rating, ratingtotal, ratedcount, background, [description])
+	rating, ratingtotal, ratedcount, [description])
 	VALUES
 	(6, 1, 1, 1, null, null, 1, 'Access Denied', 'Access Denied', '6', '', GETDATE(),
 	GETDATE(), GETDATE(), GETDATE(), 0, 0, 0, 1, 1, 0,
-	0, 0, 0, '', @pageDescription)
+	0, 0, 0, @pageDescription)
 
 	/* Create Default Domain */
 	INSERT INTO WebsiteDomains

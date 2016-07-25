@@ -37,9 +37,10 @@ namespace Websilk
         public string pageDescription = "";
         public string pageFavIcon = "";
         public DateTime pageCreated;
+        public DateTime pageModified;
         public int pageSecurity = 0;
         public int pageUsersOnly = 0;
-        public string pageVersion = ""; //either empty or an A/B Test id
+        public string pageVersion = ""; //either empty or a history stamp
         public bool pageLoaded = false;
         public string pageBackground = "";
         public string pageFacebook = "";
@@ -627,9 +628,14 @@ namespace Websilk
             if (pid <= 0) { return null; }
             XmlDocument myXmlPage = new XmlDocument();
             string pageName = "page";
+            string psubFolder = "";
             if (!string.IsNullOrEmpty(pageVersion))
+            {
                 pageName = "page_" + pageVersion;
-            string pageFilePath = pFolder + pageName + ".xml";
+                psubFolder = "history/";
+            }
+                
+            string pageFilePath = pFolder + psubFolder + pageName + ".xml";
 
             if ((pageLoadedXml == null) == false)
             {
@@ -639,6 +645,7 @@ namespace Websilk
             {
                 if (File.Exists(S.Server.path(pageFilePath)) == false & File.Exists(S.Server.path(pFolder + "page.xml")) == true)
                 {
+                    //copy original published page file to the requested page file path
                     File.Copy(S.Server.path(pFolder + "page.xml"), S.Server.path(pageFilePath));
                 }
 
@@ -649,15 +656,15 @@ namespace Websilk
                     if (S.Server.Cache.ContainsKey(pFolder + pageName + "_edit.xml"))
                     {
                         //load from memory
-                        myXmlPage =(XmlDocument)S.Server.Cache[pFolder + pageName + "_edit.xml"];
+                        myXmlPage =(XmlDocument)S.Server.Cache[pFolder + psubFolder + pageName + "_edit.xml"];
                     }
                     else
                     {
-                        if (File.Exists(S.Server.path(pFolder + pageName + "_edit.xml")) == true)
+                        if (File.Exists(S.Server.path(pFolder + psubFolder + pageName + "_edit.xml")) == true)
                         {
                             //load from disc
-                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + pageName + "_edit.xml")));
-                            S.Server.Cache[pFolder + pageName + "_edit.xml"] = myXmlPage;
+                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + psubFolder + pageName + "_edit.xml")));
+                            S.Server.Cache[pFolder + psubFolder + pageName + "_edit.xml"] = myXmlPage;
                         }
                         else
                         {
@@ -674,7 +681,6 @@ namespace Websilk
                                     myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pageFilePath)));
                                     S.Server.Cache[pageFilePath] = myXmlPage;
                                 }
-
                             }
                         }
                     }
@@ -799,15 +805,12 @@ namespace Websilk
             //initialize page editor (rare occurance)
             if (isEditable == true)
             {
-                if (isEditorLoaded == false)
+                if (isEditorLoaded == false && S.isWebService == true)
                 {
-                    if (S.isWebService == true)
-                    {
-                        Editor editor = new Editor(S);
-                        string[] result = editor.LoadEditor();
-                        PageRequest.editor = result[0];
-                        PageRequest.js += result[1];
-                    }
+                    Editor editor = new Editor(S);
+                    string[] result = editor.LoadEditor();
+                    PageRequest.editor = result[0];
+                    PageRequest.js += result[1];
                 }
             }
 
@@ -845,21 +848,6 @@ namespace Websilk
                     {
                         RegisterCSS("pageCss", myCSS);
                     }
-
-                }
-
-                //reset undo redo engine
-                if (isEditable == true)
-                {
-                    //myJs &= "undoRedo = [];AddUndoRedoAction('','all');"
-                    //ClearUndoRedo()
-                }
-
-                if (S.isFirstLoad == true) {
-                    
-                }
-                else
-                {
 
                 }
             }
@@ -1240,7 +1228,7 @@ namespace Websilk
                         newCss + "', '" +
                         component.contentName + "'" +
                         (component.instanceLimit > 0 ? "," + component.instanceLimit : ",null") +
-                        (component.jsDuplicate != "" ? "," + component.jsDuplicate : "") +
+                        (isEditable == true ? (component.jsDuplicate != "" ? "," + component.jsDuplicate : "") : "") +
                         ");");
 
             //finish loading component
@@ -1534,8 +1522,18 @@ namespace Websilk
             return themeHtml;
         }
 
-        public void Save(bool saveToDisk = false)
+        public void Save(string historyVersion = "", bool saveToDisk = false)
         {
+            // historyHersion = version to push into history before overriding new save
+
+            //check security first
+            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return; }
+
+            if (pageVersion != "") {
+                //don't save over the current version of the page if viewing a specific version of the page
+                return;
+            }
+            
             XmlDocument xml;
             XmlNode nodeLayout;
             XmlNode nodePanel;
@@ -1547,17 +1545,17 @@ namespace Websilk
             XmlCDataSection cdata;
             string pageName = "";
             string pagePath = "";
+            string xmlHistory = "";
             int pageType = 1;
             bool added = false;
-
-            //check security first
-            if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return; }
+            bool diff = false;
 
             //go through each layer & save components to XML
             foreach(Layer layer in Layers)
             {
                 xml = new XmlDocument();
                 nodeLayout = xml.CreateElement("layout");
+                S.Util.Xml.SetAttribute("pageid", layer.Id.ToString(), nodeLayout, xml);
 
                 //save each panel that belongs to this layer
                 foreach(PanelView panel in PanelViews)
@@ -1632,6 +1630,9 @@ namespace Websilk
 
                 xml.AppendChild(nodeLayout);
 
+                //append xml to compiled page history content
+                xmlHistory += xml.OuterXml + "\n\n";
+
                 //setup page information
                 pageName = "page";
                 if(pageVersion != ""){ pageName += "_" + pageVersion; }
@@ -1640,34 +1641,58 @@ namespace Websilk
                 //setup page folder
                 if(pageType == 1)
                 {
-                    pagePath = "/content/websites/" + websiteId + "/pages/" + layer.Id.ToString() + "/";
+                    pagePath = "/content/websites/" + websiteId + "/pages/" + layer.Id + "/";
                 }
                 else if(pageType == 2)
                 {
-                    pagePath = "/content/websites/" + websiteId + "/layers/" + layer.Id.ToString() + "/";
+                    pagePath = "/content/websites/" + websiteId + "/layers/" + layer.Id + "/";
                 }
 
-                //save xml to memory
-                if (S.Server.Cache.ContainsKey(pagePath + pageName + "_edit.xml") == false)
+                if(xml.OuterXml != File.ReadAllText(S.Server.MapPath(pagePath + pageName + "_edit.xml")))
                 {
-                    S.Server.Cache.Add(pagePath + pageName + "_edit.xml", xml);
-                }
-                else
-                {
-                    S.Server.Cache[pagePath + pageName + "_edit.xml"] = xml;
+                    diff = true;
                 }
 
-                //save xml to disk
-                if (saveToDisk == true)
+                if(diff == true)
                 {
-                    if (Directory.Exists(S.Server.MapPath(pagePath)) == false)
+                    //new content is different from saved content
+                    //save xml to memory
+                    if (S.Server.Cache.ContainsKey(pagePath + pageName + "_edit.xml") == false)
                     {
-                        Directory.CreateDirectory(S.Server.MapPath(pagePath));
+                        S.Server.Cache.Add(pagePath + pageName + "_edit.xml", xml);
                     }
-                    FileStream fs = new FileStream(S.Server.MapPath(pagePath + pageName + "_edit.xml"), FileMode.Create);
-                    xml.Save(fs);
-                    fs.Flush();
-                    fs.Dispose();
+                    else
+                    {
+                        S.Server.Cache[pagePath + pageName + "_edit.xml"] = xml;
+                    }
+
+                    //save xml to disk
+                    if (saveToDisk == true)
+                    {
+                        if (Directory.Exists(S.Server.MapPath(pagePath)) == false)
+                        {
+                            Directory.CreateDirectory(S.Server.MapPath(pagePath));
+                        }
+                        File.WriteAllText(S.Server.MapPath(pagePath + pageName + "_edit.xml"), xml.OuterXml);
+                    }
+
+                    //create compiled page in history folder
+                    if (historyVersion != "")
+                    {
+                        int year = DateTime.Now.Year;
+                        int month = DateTime.Now.Month;
+                        if (Directory.Exists(S.Server.MapPath(pagePath + "history/" + year + "/" + month)) == false)
+                        {
+                            Directory.CreateDirectory(S.Server.MapPath(pagePath + "history/" + year + "/" + month));
+                        }
+                        File.WriteAllText(S.Server.MapPath(pagePath + "history/" + year + "/" + month + "/" + historyVersion + ".xml"), xmlHistory);
+                    }
+
+                    if (pageType == 1)
+                    {
+                        //update page info in database
+                        S.Sql.ExecuteNonQuery("UpdateWebsitePageModified @websiteid=" + websiteId + ", @pageid=" + layer.Id);
+                    }
                 }
             }
 
