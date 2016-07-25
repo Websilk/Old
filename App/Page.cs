@@ -343,10 +343,7 @@ namespace Websilk
                 websitePageAccessDenied = reader.GetInt("pagedenied");
                 websitePage404 = reader.GetInt("page404");
                 pageDescription = S.Sql.Decode(reader.Get("description"));
-                //websiteTrial = reader.GetBool("statustype");
                 googleWebPropertyId = reader.Get("googlewebpropertyid");
-                //LoadBackground(reader.Get("pagebackground"])); //page
-                //else LoadBackground(reader.Get("background"])); //website
                 pageParentId = reader.GetInt("parentid");
                 if (pageParentId < 0) { pageParentId = 0; }
                 parentTitle = reader.Get("parenttitle");
@@ -385,6 +382,7 @@ namespace Websilk
             {
                 //no page loaded, show 404
                 LoadPage("404");
+                return;
             }
 
             if (reader.Rows.Count > 0)
@@ -503,6 +501,34 @@ namespace Websilk
 
                 //setup work folder
                 workFolder = pageFolder;
+
+                //check if this page is loading version history
+                if(S.Request.Query["history"].ToString() != "" && isEditable == true)
+                {
+                    var hist = S.Request.Query["history"].ToString();
+                    if(hist.IndexOf("-") > 0)
+                    {
+                        string[] history = S.Request.Query["history"].ToString().Split('-');
+                        var histPath = S.Server.MapPath(pageFolder + "history/" + history[1] + "/" + history[2]);
+                        if (Directory.Exists(histPath))
+                        {
+                            var files = Directory.GetFiles(histPath);
+                            string fname = "";
+                            string[] fs;
+                            string[] fparts;
+                            foreach (var f in files)
+                            {
+                                fs = f.Split('\\');
+                                fname = fs[fs.Length - 1];
+                                if (fname.IndexOf(history[0].Replace("v","") + "_") == 0)
+                                {
+                                    //found file associated with version history querystring
+                                    pageVersion = history[1] + "/" + history[2] + "/" + fname.Replace(".xml", "");
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
         }
@@ -629,10 +655,12 @@ namespace Websilk
             XmlDocument myXmlPage = new XmlDocument();
             string pageName = "page";
             string psubFolder = "";
+            string pageType = "_edit";
             if (!string.IsNullOrEmpty(pageVersion))
             {
-                pageName = "page_" + pageVersion;
+                pageName = pageVersion;
                 psubFolder = "history/";
+                pageType = "";
             }
                 
             string pageFilePath = pFolder + psubFolder + pageName + ".xml";
@@ -656,15 +684,15 @@ namespace Websilk
                     if (S.Server.Cache.ContainsKey(pFolder + pageName + "_edit.xml"))
                     {
                         //load from memory
-                        myXmlPage =(XmlDocument)S.Server.Cache[pFolder + psubFolder + pageName + "_edit.xml"];
+                        myXmlPage =(XmlDocument)S.Server.Cache[pFolder + psubFolder + pageName + pageType + ".xml"];
                     }
                     else
                     {
                         if (File.Exists(S.Server.path(pFolder + psubFolder + pageName + "_edit.xml")) == true)
                         {
                             //load from disc
-                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + psubFolder + pageName + "_edit.xml")));
-                            S.Server.Cache[pFolder + psubFolder + pageName + "_edit.xml"] = myXmlPage;
+                            myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + psubFolder + pageName + pageType + ".xml")));
+                            S.Server.Cache[pFolder + psubFolder + pageName + pageType + ".xml"] = myXmlPage;
                         }
                         else
                         {

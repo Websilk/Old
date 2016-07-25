@@ -402,7 +402,7 @@ namespace Websilk.Services.Dashboard
                                         "<div class=\"row hover" + hov + "\">" +
                                             "<div class=\"col one pad-sm\">" + fileparts[0] + "</div>" +
                                             "<div class=\"col nine pad-sm\">" + date.ToString("MMMM d, yyyy") + " at " + date.ToString("h:mm tt") + " </div>" +
-                                            "<div class=\"col two pad-sm text-right\"><a href=\"/" + pagePath + "?history=v" + fileparts[0] + "-" + yr[yr.Length - 1] + "-" + mnth[mnth.Length - 1] + "\">View</a></div>" +
+                                            "<div class=\"col two pad-sm text-right\"><a href=\"/" + pagePath + "?history=v" + fileparts[0] + "-" + yr[yr.Length - 1] + "-" + mnth[mnth.Length - 1] + "\" target=\"_blank\">View</a></div>" +
                                         "</div>"
                                         );
 
