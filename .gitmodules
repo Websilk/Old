@@ -1,3 +1,5 @@
 [submodule "wwwroot/css/tapestry"]
 	path = CSS/tapestry
 	url = http://www.github.com/websilk/tapestry
+[submodule "CSS/tapestry"]
+	ignore = untracked
