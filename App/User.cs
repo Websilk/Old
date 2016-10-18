@@ -31,7 +31,7 @@ namespace Websilk
         public DateTime signupDate;
         public string displayName = "";
         public int defaultPageId = 0;
-        public string editorColor = "pearl";
+        public string editorColor = "modern";
 
         public List<structSecurity> security;
         public List<WebsiteSecurity> websiteSecurity = new List<WebsiteSecurity>();

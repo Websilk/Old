@@ -4,7 +4,7 @@ namespace Websilk.Services.Dashboard
 {
     public class Timeline : Service
     {
-        public Timeline(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Timeline(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Websilk.Services.Dashboard
             response.element = ".winDashboardTimeline > .content";
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/timeline.html", "", new string[] { "test" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/timeline.html");
             scaffold.Data["test"] = S.Page.websiteTitle;
 
             //finally, scaffold Websilk platform HTML

@@ -11,7 +11,7 @@ namespace Websilk.Services.Components
         private string websiteFolder;
         private Scaffold scaffold;
 
-        public Login(Core WebsilkCore, string[] paths):base(WebsilkCore, paths)
+        public Login(Core WebsilkCore):base(WebsilkCore)
 		{
 		}
 
@@ -20,7 +20,7 @@ namespace Websilk.Services.Components
             host = S.Page.Url.host;
 
             //setup scaffolding variables
-            scaffold  = new Scaffold(S, "/app/components/login/login.html", "", new string[] { "head", "action", "body", "foot", "script" });
+            scaffold  = new Scaffold(S, "/app/components/login/login.html");
 
             //get Website properties from Request.Query
             content = S.Request.Query["s"].ToString().Split(',');
@@ -44,22 +44,17 @@ namespace Websilk.Services.Components
 
             //setup scaffold parameters
             scaffold.Data["script"] = "this.isNotKeepAlive=1; S.ajax.viewstateId = '" + S.ViewStateId + "';";
-
-            if (S.isLocal == true)
+            var min = "";
+            if (S.isLocal == false)
             {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.4.min.js\" noasync></script>\n" +
-                                   "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
-                                   "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n";
+                min = ".min";
             }
-            else
-            {
-                scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\" noasync></script>\n";
-            }
+            scaffold.Data["foot"] = "<script type=\"text/javascript\" src=\"/js/platform" + min + ".js?v=" + S.Version + "\" ></script>\n";
         }
 
         public WebRequest LoadForm()
         {
-            WebRequest wr = new WebRequest();
+            var wr = new WebRequest();
             string htm = "";
 
             SetupWebRequest();

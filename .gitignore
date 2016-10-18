@@ -5,6 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
+/wwwroot/css
+/wwwroot/js
 /wwwroot/content/themes/default
 /wwwroot/content/websites/
 /wwwroot/images/screenshots

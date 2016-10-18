@@ -7,7 +7,7 @@ namespace Websilk.Services
 {
     public class App: Service
     {
-        public App(Core WebsilkCore, string[] paths):base(WebsilkCore, paths)
+        public App(Core WebsilkCore):base(WebsilkCore)
         {
         }
 

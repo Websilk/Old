@@ -57,16 +57,14 @@ namespace Websilk
     public class Service
     {
         protected Core S;
-        protected string[] Paths;
         public Dictionary<string, string> Form = new Dictionary<string, string>();
         public IFormFileCollection Files;
 
-        public Service(Core WebsilkCore, string[] paths) {
+        public Service(Core WebsilkCore) {
             S = WebsilkCore;
-            Paths = paths;
         }
 
-        public struct structResponse
+        public struct Response
         {
             public string html;
             public string css;
@@ -74,10 +72,10 @@ namespace Websilk
             public string window;
         }
 
-        protected structResponse lostResponse()
+        protected Response lostResponse()
         {
             //if session is lost, reload the page
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.js = "S.lostSession();";
             return response;
         }

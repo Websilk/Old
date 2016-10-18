@@ -27,47 +27,45 @@ namespace Websilk
             get { return scaffold.arguments; }
         }
 
-        public Scaffold(Core WebsilkCore, string file, string name, string[] vars = null)
+        public Scaffold(Core WebsilkCore, string file = "", string html = "", string section = "")
         {
             S = WebsilkCore;
-            if (vars == null)
-            {
-                Data = new Dictionary<string, string>();
-            }
-            else
-            {
-                Setup(vars);
-            }
+            Data = new Dictionary<string, string>();
 
-            if (S.Server.Scaffold.ContainsKey(file + '/' + name) == false)
+            if (S.Server.Scaffold.ContainsKey(file + '/' + section) == false)
             {
                 scaffold = new structScaffoldElement();
                 scaffold.parts = new List<structScaffold>();
                 scaffold.arguments = new Dictionary<string, string>();
 
-                //first, load file from disk or cache
-                var htm = "";
-                if (S.Server.Cache.ContainsKey(file) == false)
+                //first, check if html is already provided
+                var htm = html;
+                if(htm == "")
                 {
-                    htm = File.ReadAllText(S.Server.MapPath(file));
+                    //try loading file from disk or cache next
+                    if (S.Server.Cache.ContainsKey(file) == false)
+                    {
+                        htm = File.ReadAllText(S.Server.MapPath(file));
+                    }
+                    else
+                    {
+                        htm = (string)S.Server.Cache[file];
+                    }
                 }
-                else
-                {
-                    htm = (string)S.Server.Cache[file];
-                }
+                
 
                 //next, find the group of code matching the scaffold name
-                if(name != "")
+                if(section != "")
                 {
                     int[] e = new int[3];
                     string s = "";
                     e[0] = -1;
                     while(e[0] < 0) { 
                         //find starting tag (optionally with arguments)
-                        e[0] = htm.IndexOf("{{" + name);
+                        e[0] = htm.IndexOf("{{" + section);
                         if(e[0] >= 0)
                         {
-                            e[1] = e[0] + 2 + name.Length;
+                            e[1] = e[0] + 2 + section.Length;
                             s = htm.Substring(e[1], 1);
                             switch (s)
                             {
@@ -100,10 +98,10 @@ namespace Websilk
                         } else { break; }
                         
                     }
-                    e[1] = htm.IndexOf("{{/" + name + "}}");
+                    e[1] = htm.IndexOf("{{/" + section + "}}");
                     if (e[0] >= 0 & e[1] > e[0])
                     {
-                        e[2] = e[0] + 4 + name.Length;
+                        e[2] = e[0] + 4 + section.Length;
                         htm = htm.Substring(e[2], e[1] - e[2]);
                     }
                 }
@@ -127,29 +125,26 @@ namespace Websilk
                     }
                     scaffold.parts.Add(scaff);
                 }
-                if(S.isLocal == false){ S.Server.Scaffold.Add(file + '/' + name, scaffold); }
+                if(S.isLocal == false){ S.Server.Scaffold.Add(file + '/' + section, scaffold); }
             }
             else
             {
                 //get scaffold object from memory
-                scaffold = S.Server.Scaffold[file + '/' + name];
-            }
-        }
-
-        public void Setup(string[] vars)
-        {
-            Data = new Dictionary<string, string>();
-            for (var x = 0; x < vars.Length; x++)
-            {
-                Data.Add(vars[x], "");
+                scaffold = S.Server.Scaffold[file + '/' + section];
             }
         }
 
         public string Render()
         {
+            return Render(Data);
+        }
+
+        public string Render(Dictionary<string, string> nData, bool replaceData = false)
+        {
+            if (replaceData == true) { Data = nData; }
             if (scaffold.parts.Count > 0)
             {
-                //render scaffold with paired Data data
+                //render scaffold with paired nData data
                 List<string> scaff = new List<string>(); string s = "";
                 bool useScaffold = false; List<List<string>> closing = new List<List<string>>();
 
@@ -169,11 +164,11 @@ namespace Websilk
                                 closed.Add(x.ToString());
                                 closed.Add(y.ToString());
 
-                                if (Data.ContainsKey(scaffold.parts[x].name) == true)
+                                if (nData.ContainsKey(scaffold.parts[x].name) == true)
                                 {
                                     //check if user wants to include HTML 
                                     //that is between start & closing tag   
-                                    s = Data[scaffold.parts[x].name];
+                                    s = nData[scaffold.parts[x].name];
                                     if (string.IsNullOrEmpty(s) == true) { s = ""; }
                                     if (s == "true" | s == "1")
                                     {
@@ -231,11 +226,11 @@ namespace Websilk
                     }
                     else { useScaffold = false; }
 
-                    if ((Data.ContainsKey(scaffold.parts[x].name) == true
+                    if ((nData.ContainsKey(scaffold.parts[x].name) == true
                     || scaffold.parts[x].name.IndexOf('/') == 0) & useScaffold == true)
                     {
                         //inject string into scaffold variable
-                        s = Data[scaffold.parts[x].name.Replace("/", "")];
+                        s = nData[scaffold.parts[x].name.Replace("/", "")];
                         if (string.IsNullOrEmpty(s) == true) { s = ""; }
                         scaff.Add(s + scaffold.parts[x].htm);
                     }

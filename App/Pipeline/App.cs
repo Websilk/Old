@@ -18,9 +18,7 @@ namespace Websilk.Pipeline
             S.isFirstLoad = true;
 
             //setup scaffolding variables
-            scaffold = new Scaffold(S, "/app/pipeline/app.html", "", new string[]
-            { "title", "description", "facebook", "theme-css", "website-css", "editor-css", "head-css", "favicon", "font-faces", "body-class",
-              "background", "editor","webpage-class", "body-sides","body", "scripts", "https-url", "http-url"});
+            scaffold = new Scaffold(S, "/app/pipeline/app.html");
 
             //default favicon
             scaffold.Data["favicon"] = "/images/favicon.gif";
@@ -110,34 +108,22 @@ namespace Websilk.Pipeline
 
                     //setup scripts
                     string scripts;
-                    if(S.isLocal == true)
+                    string min = "";
+                    if(S.isLocal == false)
                     {
-                        scripts = "<script type=\"text/javascript\" src=\"/scripts/core/jquery-2.1.4.min.js\"></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/core/view.js\" noasync></script>\n" +
-                            "<script type=\"text/javascript\" src=\"/scripts/core/global.js\" noasync></script>\n";
-                        if (S.Page.isEditable == true)
-                        {
-                            scripts +=
-                                "<script type=\"text/javascript\" src=\"/scripts/editor/utility.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/editor/editor.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/editor/rangy.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" src=\"/scripts/editor/dropzone.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
-                        }
+                        min = ".min";
                     }
-                    else
+
+                    scripts = "<script type=\"text/javascript\" src=\"/js/platform" + min + ".js\"></script>\n";
+                    if (S.Page.isEditable == true)
                     {
-                        scripts = "<script type=\"text/javascript\" src=\"/scripts/websilk.js?v=" + S.Version + "\" noasync></script>\n";
-                        if (S.Page.isEditable == true)
-                        {
-                            scripts += "<script type=\"text/javascript\" src=\"/scripts/editor.js?v=" + S.Version + "\" noasync></script>\n" +
-                                "<script type=\"text/javascript\" noasync>S.editor.load();</script>\n";
-                        }
+                        scripts +=
+                            "<script type=\"text/javascript\" src=\"/js/editor" + min + ".js?v=" + S.Version + "\"></script>\n";
                     }
-                    
+
                     //render web page
                     scaffold.Data["body"] = S.Page.Render();
-                    scaffold.Data["scripts"] = scripts + "\n" + "<script type=\"text/javascript\" noasync>" + S.Page.postJS + "</script>";
+                    scaffold.Data["scripts"] = scripts + "\n" + "<script type=\"text/javascript\">" + S.Page.postJS + "</script>";
                 }
             }
 

@@ -665,6 +665,12 @@ namespace Websilk
                 
             string pageFilePath = pFolder + psubFolder + pageName + ".xml";
 
+            if(Directory.Exists(S.Server.MapPath(pFolder + psubFolder)) == false)
+            {
+                //create folder for web page if it doesn't exist yet
+                Directory.CreateDirectory(S.Server.MapPath(pFolder + psubFolder));
+            }
+
             if ((pageLoadedXml == null) == false)
             {
                 myXmlPage = pageLoadedXml;
@@ -681,16 +687,16 @@ namespace Websilk
                 if (ownerId == S.User.userId | S.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == true)
                 {
                     //attempt to load the unpublished version of this page
-                    if (S.Server.Cache.ContainsKey(pFolder + pageName + "_edit.xml"))
+                    if (S.Server.Cache.ContainsKey(pFolder + pageName + pageType + ".xml"))
                     {
-                        //load from memory
+                        //load edit page from memory
                         myXmlPage =(XmlDocument)S.Server.Cache[pFolder + psubFolder + pageName + pageType + ".xml"];
                     }
                     else
                     {
-                        if (File.Exists(S.Server.path(pFolder + psubFolder + pageName + "_edit.xml")) == true)
+                        if (File.Exists(S.Server.path(pFolder + psubFolder + pageName + pageType + ".xml")) == true)
                         {
-                            //load from disc
+                            //load edit page from disc
                             myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pFolder + psubFolder + pageName + pageType + ".xml")));
                             S.Server.Cache[pFolder + psubFolder + pageName + pageType + ".xml"] = myXmlPage;
                         }
@@ -698,12 +704,12 @@ namespace Websilk
                         {
                             if (S.Server.Cache.ContainsKey(pageFilePath))
                             {
-                                //load from memory
+                                //load page from memory in place of edit page
                                 myXmlPage =(XmlDocument)S.Server.Cache[pageFilePath];
                             }
                             else
                             {
-                                //load from disc
+                                //load page from disc in place of edit page
                                 if (File.Exists(S.Server.path(pageFilePath)) == true)
                                 {
                                     myXmlPage.LoadXml(File.ReadAllText(S.Server.path(pageFilePath)));
@@ -717,12 +723,12 @@ namespace Websilk
                 {
                     if (S.Server.Cache.ContainsKey(pageFilePath))
                     {
-                        //load from memory
+                        //load page from memory
                         myXmlPage = (XmlDocument)S.Server.Cache[pageFilePath];
                     }
                     else
                     {
-                        //load from disc
+                        //load page from disc
                         if (File.Exists(S.Server.path(pageFilePath)) == false)
                         {
                             //create new page
@@ -1676,10 +1682,20 @@ namespace Websilk
                     pagePath = "/content/websites/" + websiteId + "/layers/" + layer.Id + "/";
                 }
 
-                if(xml.OuterXml != File.ReadAllText(S.Server.MapPath(pagePath + pageName + "_edit.xml")))
+                if (Directory.Exists(S.Server.MapPath(pagePath)))
                 {
-                    diff = true;
+                    if(File.Exists(S.Server.MapPath(pagePath + pageName + "_edit.xml"))){
+                        if (xml.OuterXml != File.ReadAllText(S.Server.MapPath(pagePath + pageName + "_edit.xml")))
+                        {
+                            diff = true;
+                        }
+                    }
+                }else
+                {
+                    //page path doesn't exist yet
+                    Directory.CreateDirectory(S.Server.MapPath(pagePath));
                 }
+                
 
                 if(diff == true)
                 {

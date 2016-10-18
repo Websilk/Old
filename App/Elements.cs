@@ -69,7 +69,7 @@ namespace Websilk.Element
         public Element(Core WebsilkCore, string path, string name = "")
         {
             S = WebsilkCore;
-            scaffold = new Scaffold(S, path, name);
+            scaffold = new Scaffold(S, path, "", name);
         }
 
         public Dictionary<string, string> Data

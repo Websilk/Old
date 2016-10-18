@@ -8,7 +8,7 @@ namespace Websilk.Services.Dashboard
 {
     public class Photos : Service
     {
-        public Photos(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Photos(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 

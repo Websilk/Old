@@ -87,7 +87,7 @@ namespace Websilk.Pipeline
             string methodName = paths[2];
             if(paths.Length == 4) { className += "." + paths[2]; methodName = paths[3]; }
             Type type =Type.GetType(className);
-            Service service = (Service)Activator.CreateInstance(type, new object[] { S, paths });
+            Service service = (Service)Activator.CreateInstance(type, new object[] { S });
 
             if (dataType == 1)
             {
@@ -130,7 +130,7 @@ namespace Websilk.Pipeline
                         break;
 
                     case "boolean":
-                        parms[x] = parms[x].ToString().ToLower() == "true" || (string)parms[x] == "1" ? true : false;
+                        parms[x] = parms[x].ToString().ToLower() == "true" ? true : false;
                         break;
 
                     case "double":

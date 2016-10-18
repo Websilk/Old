@@ -6,7 +6,7 @@ namespace Websilk.Services.Components
     public class Panel : Service
     {
 
-        public Panel(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Panel(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 

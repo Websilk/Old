@@ -4,7 +4,7 @@ namespace Websilk.Services.Dashboard
 {
     public class Users : Service
     {
-        public Users(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Users(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Websilk.Services.Dashboard
 
             //setup scaffolding variables
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/users.html", "", new string[] { "test" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/users.html");
             scaffold.Data["test"] = S.Page.websiteTitle;
 
             //finally, scaffold Websilk platform HTML

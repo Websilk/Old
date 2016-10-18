@@ -49,8 +49,7 @@ namespace Websilk.Components.Properties
             if(data[1] == "") { js += "$('.winProperties .remove-hover-photo').hide();"; }
 
             S.Page.RegisterJS("photoprops", js);
-
-            scaffold.Setup(new string[] { "preview-photo", "helpicon-hover", "helpicon-link", "helpicon-alt", "helpicon-window" });
+            
             Data["preview-photo"] = photo;
             Data["helpicon-hover"] = "";
             Data["helpicon-link"] = "";

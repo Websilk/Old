@@ -5,7 +5,7 @@ namespace Websilk.Services
 {
     public class Debug:Service
     {
-        public Debug(Core WebsilkCore, string[] path):base(WebsilkCore, path)
+        public Debug(Core WebsilkCore):base(WebsilkCore)
         {
         }
 

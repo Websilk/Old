@@ -1,8 +1,8 @@
 ﻿{
   "data": {
     "active": "SqlServerTrusted",
-    "SqlServerDev": "server=DESOLATION\\SQL2014; database=WebsilkDev; user=WebsilkDev; password=development",
-    "SqlServerTrusted": "server=DESOLATION\\SQL2014; database=WebsilkDev; Trusted_Connection=true"
+    "SqlServerDev": "server=SABIN\\SQL2014; database=WebsilkDev; user=WebsilkDev; password=development",
+    "SqlServerTrusted": "server=SABIN\\SQL2014; database=WebsilkDev; Trusted_Connection=true"
   },
 
   "platform": "windows"

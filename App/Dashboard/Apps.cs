@@ -4,7 +4,7 @@ namespace Websilk.Services.Dashboard
 {
     public class Apps : Service
     {
-        public Apps(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Apps(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 
@@ -20,7 +20,7 @@ namespace Websilk.Services.Dashboard
             response.element = ".winDashboardApps > .content";
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/apps.html", "", new string[] { "test" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/apps.html");
             scaffold.Data["test"] = S.Page.websiteTitle;
 
             //finally, scaffold Websilk platform HTML

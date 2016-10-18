@@ -8,7 +8,7 @@ namespace Websilk.Services.Dashboard
 {
     public class Pages : Service
     {
-        public Pages(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Pages(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Websilk.Services.Dashboard
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffold
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/pages.html", "", new string[] { "page-title", "page-list", "help" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/pages.html");
             scaffold.Data["page-title"] = "";
             scaffold.Data["page-list"] = LoadPagesList();
             //scaffold.Data["help"] = RenderHelpColumn("/App/Help/dashboard/pages.html");
@@ -183,21 +183,21 @@ namespace Websilk.Services.Dashboard
                     if (secureDelete == true & hasDelete == true)
                     {
                         //remove link
-                        options += "<div class=\"col icon-xs right\"><a href=\"javascript:\" onclick=\"S.editor.pages.remove('" + subpageId + "');return false\" title=\"Permanently delete the page '" + subpageTitle + "' and all of its sub-pages\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"col icon small right pad-right\"><a href=\"javascript:\" onclick=\"S.editor.pages.remove('" + subpageId + "');return false\" title=\"Permanently delete the page '" + subpageTitle + "' and all of its sub-pages\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-close\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureSettings == true)
                     {
                         //settings link
-                        options += "<div class=\"col icon-xs right\"><a href=\"javascript:\" onclick=\"S.editor.pages.settings.show('" + subpageId + "');return false\" title=\"Page Settings for '" + subpageTitle + "'\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
+                        options += "<div class=\"col icon small right pad-right\"><a href=\"javascript:\" onclick=\"S.editor.pages.settings.show('" + subpageId + "');return false\" title=\"Page Settings for '" + subpageTitle + "'\"><svg viewBox=\"0 0 36 36\"><use xlink:href=\"#icon-settings\" x=\"0\" y=\"0\" width=\"36\" height=\"36\" /></svg></a></div>";
                     }
                     if (secureCreate == true & hasCreate == true)
                     {
                         //add sub-page link
-                        options += "<div class=\"col icon-xs right\"><a href=\"javascript:\" onclick=\"S.editor.pages.add.show('" + subpageId + "','" + pagePath + "');return false\" title=\"Create a new Sub-Page for '" + subpageTitle + "'\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
+                        options += "<div class=\"col icon small right pad-right\"><a href=\"javascript:\" onclick=\"S.editor.pages.add.show('" + subpageId + "','" + pagePath + "');return false\" title=\"Create a new Sub-Page for '" + subpageTitle + "'\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-add\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
                     }
 
                     //page link
-                    options += "<div class=\"col icon-xs right\"><a href=\"" + pageLink + "\" title=\"View Web Page\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-openwindow\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
+                    options += "<div class=\"col icon small right pad-right\"><a href=\"" + pageLink + "\" title=\"View Web Page\"><svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-openwindow\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg></a></div>";
 
                     htm.Add("<li>" + LoadPageColumn(i, color, subpageId, subpageTitle, subpageTitle, options, hasChildren > 0, "View a list of sub-pages for '" + subpageTitle + "'") + "</li>");
                 }
@@ -210,17 +210,17 @@ namespace Websilk.Services.Dashboard
         private string LoadPageColumn(string columnName, string color, int pageId, string pageTitle, string label, string options, bool onclick = false, string folderTooltip = "")
         {
             return "<div class=\"row hover" + columnName + " item page-" + pageId + "\">" +
-                        "<div class=\"color-tag " + color + "\"><div class=\"bg dark\">&nbsp;</div></div><div class=\"color-contents clear\">" +
+                        "<div class=\"color-tag " + color + "\"><div class=\"bg dark\">&nbsp;</div></div><div class=\"col color-contents pad-sm clear\">" +
                             "<div class=\"col" + (onclick == true ? " has-folder\" onclick=\"S.editor.pages.load(" + pageId + ",'" + pageTitle + "','down')\" style=\"cursor:pointer\"" : "\"") + ">" +
-                                "<div class=\"col icon-xs\">" +
+                                "<div class=\"col icon small\">" +
                                     (onclick == true ?
                                     "<a href=\"javascript:\" title=\"" + folderTooltip + "\">" +
                                         "<svg viewBox=\"0 0 15 15\"><use xlink:href=\"#icon-folder\" x=\"0\" y=\"0\" width=\"15\" height=\"15\" /></svg>" +
                                     "</a>" : " ") +
                                 "</div>" +
-                                "<div class=\"col label file-label\">" + label + "</div>" +
+                                "<div class=\"col label\">" + label + "</div>" +
                             "</div>" +
-                            "<div class=\"col hover-only right pad-right\">" + options + "</div>" +
+                            "<div class=\"col hover-only right\">" + options + "</div>" +
                         "</div>" +
                     "</div>";
         }
@@ -282,16 +282,16 @@ namespace Websilk.Services.Dashboard
         #endregion
 
         #region "Interfaces"
-        public structResponse NewPage(int parentId, string path)
+        public Response NewPage(int parentId, string path)
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "NewPage";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/newpage.html", "", new string[] { "url", "data-page", "data-pagename" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/newpage.html");
             scaffold.Data["url"] = S.Page.Url.host.Replace("http://", "").Replace("https://", "") + path;
             scaffold.Data["data-page"] = "";
             scaffold.Data["data-pagename"] = "";
@@ -304,17 +304,16 @@ namespace Websilk.Services.Dashboard
             return response;
         }
 
-        public structResponse PageSettings(int pageId)
+        public Response PageSettings(int pageId)
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "PageSettings";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/pagesettings.html", "",
-                new string[] { "url", "page-title", "description", "secure", "page-type", "type" });
+            Scaffold scaffold = new Scaffold(S, "/app/dashboard/pages/pagesettings.html");
 
             string parentTitle = "";
             SqlReader reader = S.Page.Sql.GetPageTitle(pageId, S.Page.websiteId);

@@ -7,6 +7,7 @@ use:not(.svg-nocolor):hover{color:currentColor}
 use:not(.svg-nocolor):active{color:currentColor}
 </style>
 
+
 <defs>
 <g id="icon_account_0_Layer1_0_FILL">
 <path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
@@ -947,6 +948,22 @@ M 21 1
 L 21 5 22 5 22 0 17 0 17 1 21 1
 M 22 19
 L 22 14 21 14 21 18 17 18 17 19 22 19 Z"/>
+</g>
+
+<g id="icon_publish_0_Layer1_0_FILL">
+<path fill="#FFFFFF" stroke="none" d="
+M 15 15
+L 15 13 10 15 15 15
+M 7 3
+L 0 3 0 15 7 15 7 3
+M 15 12
+L 15 0 8 3 8 15 15 12 Z"/>
+</g>
+
+<g id="icon_publish_0_Layer0_0_FILL">
+<path fill="#FFFFFF" fill-opacity="0" stroke="none" d="
+M 15 0
+L 0 0 0 15 15 15 15 0 Z"/>
 </g>
 
 <g id="iconRemove_0_Layer1_0_FILL">
@@ -2296,6 +2313,18 @@ L 1 13 1 1 7 1 7 13 Z"/>
 <g transform="matrix( 1, 0, 0, 1, 0,0) ">
 <g transform="matrix( 1, 0, 0, 1, 0,0) ">
 <use xlink:href="#icon_position_0_Layer0_0_FILL"/>
+</g>
+</g>
+</symbol><symbol id="icon-publish" viewBox="0 0 15 15">
+
+
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#icon_publish_0_Layer1_0_FILL"/>
+</g>
+
+<g transform="matrix( 1, 0, 0, 1, 0,0) ">
+<use xlink:href="#icon_publish_0_Layer0_0_FILL"/>
 </g>
 </g>
 </symbol><symbol id="icon-remove" viewBox="0 0 25 25">

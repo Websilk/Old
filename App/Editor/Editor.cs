@@ -16,7 +16,7 @@ namespace Websilk
         {
             string htm = "";
             string js = "$('.svgicons').load('/images/editor/icons.svg');";
-            Scaffold Scaffold = new Scaffold(S, "/app/editor/editor.html", "", new string[] { "photo" });
+            Scaffold Scaffold = new Scaffold(S, "/app/editor/editor.html");
 
             //setup scaffolding variables
             if(S.User.photo == "")
@@ -45,23 +45,18 @@ namespace Websilk
             {//web service
                 js += "$('head').append('<link rel=\"stylesheet\" href=\"/css/editor.css?v=" + S.Version + "\" type=\"text/css\" />');" +
                       "$('head').append('<link rel=\"stylesheet\" href=\"/css/colors/" + S.User.editorColor + ".css?v=" + S.Version + "\" type=\"text/css\" />');";
-
+                var min = "";
+                var v = S.Version;
                 if (S.isLocal == true)
                 {
                     Random rnd = new Random();
-                    int ran = rnd.Next(1, 9999);
-                    js += "$.when(" +
-                        "$.getScript('/scripts/editor/utility.js?v=" + ran + "')," +
-                        "$.getScript('/scripts/editor/editor.js?v=" + ran + "')," +
-                        "$.getScript('/scripts/editor/rangy.js?v=" + ran + "')," +
-                        "$.getScript('/scripts/editor/dropzone.js?v=" + ran + "')," + 
-                        "$.Deferred(function(deferred){$(deferred.resolve);})" + 
-                        ").done(function(){ S.editor.load(); });";
+                    v = rnd.Next(1, 9999).ToString();
                 }else
                 {
-                    js += "$.getScript('/scripts/editor.js?v=" + S.Version + "', function(){S.editor.load();});";
+                    min = ".min";
                 }
-                
+                js += "$.getScript('/js/editor" + min + ".js?v=" + v + "', function(){S.editor.load();});";
+
             }
 
             //finally, scaffold Editor HTML
@@ -78,21 +73,20 @@ namespace Websilk.Services
 {
     public class Editor : Service
     {
-        public Editor(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Editor(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 
-        public structResponse Dashboard()
+        public Response Dashboard()
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "Dashboard";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/editor/dashboard.html", "",
-                new string[] { "website-title", "page-title", "pageid" });
+            Scaffold scaffold = new Scaffold(S, "/app/editor/dashboard.html");
             scaffold.Data["website-title"] = S.Page.websiteTitle;
             scaffold.Data["page-title"] = S.Page.pageTitle;
             scaffold.Data["pageid"] = S.Page.pageId.ToString();
@@ -103,17 +97,16 @@ namespace Websilk.Services
             return response;
         }
 
-        public structResponse Options()
+        public Response Options()
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "Options";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/editor/options.html", "", new string[]
-            { "helpicon-grid", "helpicon-dragfrompanel", "helpicon-guidelines" });
+            Scaffold scaffold = new Scaffold(S, "/app/editor/options.html");
             scaffold.Data["helpicon-grid"] = "";
             scaffold.Data["helpicon-dragfrompanel"] = "";
             scaffold.Data["helpicon-guidelines"] = "";
@@ -124,17 +117,16 @@ namespace Websilk.Services
             return response;
         }
 
-        public structResponse Profile()
+        public Response Profile()
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "Profile";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/editor/profile.html", "", new string[]
-            { "websites", "admin" });
+            Scaffold scaffold = new Scaffold(S, "/app/editor/profile.html");
             if (S.User.userId == 1) { scaffold.Data["admin"] = "true"; }
 
             //finally, scaffold Websilk platform HTML
@@ -143,16 +135,16 @@ namespace Websilk.Services
             return response;
         }
 
-        public structResponse Layers()
+        public Response Layers()
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "Layers";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/editor/layers.html", "", new string[] { });
+            Scaffold scaffold = new Scaffold(S, "/app/editor/layers.html");
 
             S.Page.RegisterJS("layers", "S.editor.layers.refresh();");
 
@@ -163,16 +155,16 @@ namespace Websilk.Services
         }
 
         #region "Components"
-        public structResponse Components()
+        public Response Components()
         {
             if (S.isSessionLost() == true) { return lostResponse(); }
-            structResponse response = new structResponse();
+            Response response = new Response();
             response.window = "Components";
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return response; }
 
             //setup scaffolding variables
-            Scaffold scaffold = new Scaffold(S, "/app/editor/components.html", "", new string[] { "components", "categories" });
+            Scaffold scaffold = new Scaffold(S, "/app/editor/components.html");
 
             //get a list of components
             scaffold.Data["components"] = GetComponentsList();

@@ -3,7 +3,7 @@
     public class Photo : Service
     {
 
-        public Photo(Core WebsilkCore, string[] paths) : base(WebsilkCore, paths)
+        public Photo(Core WebsilkCore) : base(WebsilkCore)
         {
         }
 

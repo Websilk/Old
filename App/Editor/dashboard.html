@@ -1,5 +1,17 @@
 ﻿<div class="section-info">
     <div class="left"><h5>{{page-title}}</h5></div>
+    <div class="right publish-button">
+        <div class="button-container orange">
+            <div class="button circle">
+                <a href="javascript:" onclick="S.editor.pages.publish()" title="Publish changes for '{{page-title}}' to the world">
+                    <svg viewBox="0 0 15 15" style="width:15px; height:15px;">
+                        <use xlink:href="#icon-publish" x="0" y="0" width="15" height="15"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+    </div>
     <div class="right" style="padding-top:3px;">
         <a href="javascript:" onclick="S.editor.pages.add.show({{pageid}})" title="Add a new sub-page to '{{page-title}}'">
             <svg viewBox="0 0 15 15" style="width:15px; height:15px;">

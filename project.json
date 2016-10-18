@@ -6,7 +6,7 @@
   "projectUrl": "http://www.github.com/Websilk/Home",
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
+    "web": "Microsoft.AspNet.Server.Kestrel --server.urls=http://localhost:7770;"
   },
 
   "frameworks": {
