@@ -7,7 +7,7 @@
     [url]         NVARCHAR (255) NULL,
     [photo]       NVARCHAR (255) NULL,
     [summary]     NVARCHAR (MAX) NULL, 
-    CONSTRAINT [PK_Timeline] PRIMARY KEY ([datecreated])
+    CONSTRAINT [PK_Timeline] PRIMARY KEY ([timelineId])
 );
 
 

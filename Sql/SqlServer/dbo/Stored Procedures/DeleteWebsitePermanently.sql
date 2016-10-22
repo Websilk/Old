@@ -20,7 +20,6 @@ BEGIN
 		DELETE FROM Pages WHERE websiteid=@websiteid
 		DELETE FROM WebsiteSubDomains WHERE websiteid=@websiteid
 		DELETE FROM WebsiteDomains WHERE websiteid=@websiteid
-		DELETE FROM ApplicationsPages WHERE websiteid=@websiteid
 		DELETE FROM ApplicationsOwned WHERE websiteid=@websiteid
 
 		--application tables next

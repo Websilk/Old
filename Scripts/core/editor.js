@@ -49,7 +49,7 @@ S.editor = {
         $('.editor > .tab').hide();
         $('.body').css({ top: S.editor.toolbar.height });
         $('body').addClass('editing');
-        this.enabled = true;
+        this.enabled = true; 
         S.editor.components.hideSelect();
         if (dashboard === true) {
             S.editor.dashboard.show('dashboard');

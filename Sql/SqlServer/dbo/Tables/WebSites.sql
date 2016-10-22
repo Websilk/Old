@@ -1,12 +1,12 @@
 ﻿CREATE TABLE [dbo].[WebSites] (
     [websiteId]    INT            NOT NULL,
     [ownerId]      INT            NOT NULL,
-    [themeId]     INT            NOT NULL,
-    [designId]     INT            NULL,
-    [schemeId]     INT            NULL,
     [title]        NVARCHAR (100) NOT NULL,
-    [icon]         BIT            NULL,
+    [theme]        NVARCHAR (25)  NOT NULL,
+    [colors]       NVARCHAR (25)  NOT NULL,
+    [datecreated]  DATETIME       NOT NULL,
     [pagetemplate] INT            NULL,
+	[pagedash]	   INT			  NOT NULL,
     [pagehome]     INT            NOT NULL,
     [pagelogin]    INT            NOT NULL,
     [pageabout]    INT            NULL,
@@ -14,14 +14,10 @@
     [pagesupport]  INT            NULL,
     [page404]      INT            NULL,
     [pagedenied]   INT            NULL,
-    [datecreated]  DATETIME       NOT NULL,
-    [websitetype]  SMALLINT       NOT NULL,
-    [license]      BIT            NULL,
-    [licensetype]  SMALLINT       NULL,
-    [price]        FLOAT (53)     NULL,
+    [status]	   INT            NULL,
+    [icon]         BIT            NULL,
     [enabled]      BIT            NULL,
     [deleted]      BIT            NULL,
-    [statustype]        INT            NULL,
     CONSTRAINT [PK_WebSites] PRIMARY KEY ([websiteId])
 );
 

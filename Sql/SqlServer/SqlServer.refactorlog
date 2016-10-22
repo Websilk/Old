@@ -147,4 +147,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="websiteId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="98e0b5c7-7739-4101-8674-4fa86724057e" ChangeDateTime="10/21/2016 01:29:41">
+    <Property Name="ElementName" Value="[dbo].[Pages].[ratedcount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Pages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ratingcount" />
+  </Operation>
 </Operations>

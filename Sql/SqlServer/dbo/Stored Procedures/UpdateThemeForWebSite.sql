@@ -5,9 +5,8 @@
 -- =============================================
 CREATE PROCEDURE UpdateThemeForWebSite 
 	@websiteId int = 0, 
-	@themeId int = 0
+	@theme nvarchar(25) = ''
 AS
 BEGIN
-	UPDATE WebSites SET themeId=@themeId WHERE websiteId=@websiteId
-	UPDATE Pages SET themeId=@themeId WHERE websiteId=@websiteId 
+	UPDATE WebSites SET theme=@theme WHERE websiteId=@websiteId
 END

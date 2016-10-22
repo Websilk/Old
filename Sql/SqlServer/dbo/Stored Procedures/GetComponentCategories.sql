@@ -11,11 +11,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM (
-		SELECT DISTINCT a.title, a.name, a.description, a.componentcategory, 
-		a.orderindex, a.applicationid
+		SELECT DISTINCT a.title, a.name, a.description, a.applicationid
 		FROM applicationsowned o 
 		LEFT JOIN applications a 
 		ON a.applicationid=o.applicationid 
-		WHERE o.ownerid=@ownerId AND o.websiteid=@websiteId
-	) AS tbl ORDER BY applicationid ASC, orderindex ASC
+		WHERE o.websiteid=@websiteId
+	) AS tbl ORDER BY title ASC
 END

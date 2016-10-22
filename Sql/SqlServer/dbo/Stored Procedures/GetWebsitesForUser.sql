@@ -12,26 +12,18 @@ CREATE PROCEDURE [dbo].[GetWebsitesForUser]
 AS
 BEGIN
 	SET NOCOUNT ON;
-	SELECT websiteId, ownerId, title, pagetemplate, pagehome,
-	themeId, dateCreated, datemodified, 
-	security, description, published  
-	FROM (SELECT ROW_NUMBER() 
-	OVER (ORDER BY
-	CASE WHEN @orderby = 0 THEN w.datecreated END DESC,
-	CASE WHEN @orderby = 1 THEN p.datemodified END DESC,
-	CASE WHEN @orderby = 2 THEN w.title END ASC
-) as rownum, 
-	w.websiteId, w.ownerId, w.title, w.pagetemplate, w.pagehome,
-	w.themeId, w.dateCreated, p.datemodified, p.description, 
-	p.published, p.[security]
-	FROM WebSites AS w LEFT JOIN Pages AS p ON p.pageid=w.pagehome
-	WHERE w.ownerId = @userId
-	AND w.websitetype <> 2 -- 2 = template web site for a design
-	AND w.deleted=0
-	AND w.enabled=1
-	AND (
-		w.title LIKE CASE WHEN @search <> '' THEN '%' + @search + '%' ELSE p.title END
-		OR p.description LIKE CASE WHEN @search <> '' THEN '%' + @search + '%' ELSE p.description END
-	)) as myTable
+	SELECT * 
+	FROM (
+		SELECT ROW_NUMBER() 
+		OVER (ORDER BY
+		CASE WHEN @orderby = 0 THEN w.datecreated END DESC,
+		CASE WHEN @orderby = 1 THEN w.title END ASC) 
+		AS rownum, w.*
+		FROM WebSites AS w
+		WHERE w.ownerId = @userId
+		AND w.deleted=0
+		AND w.enabled=1
+		AND w.title LIKE CASE WHEN @search <> '' THEN '%' + @search + '%' ELSE w.title END
+	) AS tbl
 	WHERE rownum >= @start AND  rownum <= @start + @length
 END

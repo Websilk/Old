@@ -71,18 +71,14 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ErrorLog.sql" />
-    <Build Include="dbo\Tables\ColorSchemes.sql" />
-    <Build Include="dbo\Tables\Feedback.sql" />
     <Build Include="dbo\Tables\WebsiteSubDomains.sql" />
     <Build Include="dbo\Tables\WebSites.sql" />
     <Build Include="dbo\Tables\Log.sql" />
     <Build Include="dbo\Tables\LogAnalytics.sql" />
     <Build Include="dbo\Tables\PasswordReset.sql" />
-    <Build Include="dbo\Tables\Backgrounds.sql" />
     <Build Include="dbo\Tables\Login.sql" />
     <Build Include="dbo\Tables\WebsiteSecurity.sql" />
     <Build Include="dbo\Tables\Timeline.sql" />
-    <Build Include="dbo\Tables\Screenshots.sql" />
     <Build Include="dbo\Tables\WebsiteDomains.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Pages.sql" />
@@ -96,7 +92,6 @@
     <Build Include="dbo\Functions\FindInStoredProc.sql" />
     <Build Include="dbo\Stored Procedures\AddWebsitePage.sql" />
     <Build Include="dbo\Stored Procedures\AddWebsite.sql" />
-    <Build Include="dbo\Stored Procedures\UpdateColorScheme.sql" />
     <Build Include="dbo\Stored Procedures\GetPageParents.sql" />
     <Build Include="dbo\Stored Procedures\GetPageList.sql" />
     <Build Include="dbo\Stored Procedures\GetLogAnalytics.sql" />
@@ -104,13 +99,11 @@
     <Build Include="dbo\Stored Procedures\PasswordForgot.sql" />
     <Build Include="dbo\Stored Procedures\UpdateAccountInfo.sql" />
     <Build Include="dbo\Stored Procedures\PasswordSecureReset.sql" />
-    <Build Include="dbo\Stored Procedures\GetBackgrounds.sql" />
     <Build Include="dbo\Stored Procedures\SaveLogin.sql" />
     <Build Include="dbo\Stored Procedures\AuthenticateLogin.sql" />
     <Build Include="dbo\Stored Procedures\GetSecurityForFeature.sql" />
     <Build Include="dbo\Stored Procedures\UpdateWebsiteSecurity.sql" />
     <Build Include="dbo\Stored Procedures\GetSecurityForWebsite.sql" />
-    <Build Include="dbo\Stored Procedures\AuthenticateScreenshot.sql" />
     <Build Include="dbo\Stored Procedures\GetLogResultsForSqlQueries.sql" />
     <Build Include="dbo\Stored Procedures\PublishPage.sql" />
     <Build Include="dbo\Stored Procedures\GetApplicationsOwned.sql" />
@@ -118,7 +111,6 @@
     <Build Include="dbo\Stored Procedures\LogError.sql" />
     <Build Include="dbo\Stored Procedures\UpdateWebsiteTitle.sql" />
     <Build Include="dbo\Stored Procedures\GetWebsitesForAdmin.sql" />
-    <Build Include="dbo\Stored Procedures\GetWebsites.sql" />
     <Build Include="dbo\Stored Procedures\GetWebsite.sql" />
     <Build Include="dbo\Stored Procedures\GetPagesForWebsite.sql" />
     <Build Include="dbo\Stored Procedures\UpdateWebsiteOwnership.sql" />
@@ -127,11 +119,7 @@
     <Build Include="dbo\Stored Procedures\GetPageIdFromSubDomainAndTitle.sql" />
     <Build Include="dbo\Stored Procedures\GetPageIdFromDomainAndTitle.sql" />
     <Build Include="dbo\Stored Procedures\UpdateWebsiteStatus.sql" />
-    <Build Include="dbo\Stored Procedures\GetWebsiteTemplatesForFree.sql" />
-    <Build Include="dbo\Stored Procedures\GetWebsiteTemplatesForDesign.sql" />
     <Build Include="dbo\Stored Procedures\DeleteWebsitePermanently.sql" />
-    <Build Include="dbo\Stored Procedures\AddColorScheme.sql" />
-    <Build Include="dbo\Stored Procedures\GetColorSchemes.sql" />
     <Build Include="dbo\Stored Procedures\DeleteWebsite.sql" />
     <Build Include="dbo\Sequences\SequencePages.sql" />
     <Build Include="dbo\Sequences\SequenceUsers.sql" />
@@ -139,10 +127,7 @@
     <Build Include="dbo\Stored Procedures\AddWebsiteLayer.sql" />
     <Build Include="dbo\Tables\Applications.sql" />
     <Build Include="dbo\Tables\ApplicationsOwned.sql" />
-    <Build Include="dbo\Tables\ApplicationsPages.sql" />
     <Build Include="dbo\Tables\Components.sql" />
-    <Build Include="dbo\Tables\Themes.sql" />
-    <Build Include="dbo\Tables\ThemesOwned.sql" />
     <Build Include="dbo\Tables\PageLayers.sql" />
     <Build Include="dbo\Stored Procedures\AddUser.sql" />
     <Build Include="dbo\Stored Procedures\DisableUserAccount.sql" />
@@ -151,19 +136,8 @@
     <Build Include="dbo\Stored Procedures\GetUsers.sql" />
     <Build Include="dbo\Stored Procedures\GetUsersForAdmin.sql" />
     <Build Include="dbo\Stored Procedures\GetWebsitesForUser.sql" />
-    <Build Include="dbo\Stored Procedures\GetWebsiteTemplatesForUser.sql" />
     <Build Include="dbo\Tables\Photos.sql" />
-    <Build Include="dbo\Stored Procedures\AddTheme.sql" />
-    <Build Include="dbo\Stored Procedures\DisableTheme.sql" />
-    <Build Include="dbo\Stored Procedures\EnableTheme.sql" />
-    <Build Include="dbo\Stored Procedures\GetAvailableThemes.sql" />
-    <Build Include="dbo\Stored Procedures\GetThemesForAdmin.sql" />
-    <Build Include="dbo\Stored Procedures\GetThemesForFree.sql" />
-    <Build Include="dbo\Stored Procedures\GetThemesPurchased.sql" />
-    <Build Include="dbo\Stored Procedures\GetThemesUploaded.sql" />
     <Build Include="dbo\Stored Procedures\UpdateThemeForWebSite.sql" />
-    <Build Include="dbo\Stored Procedures\UpdateThemeLicense.sql" />
-    <Build Include="dbo\Sequences\SequenceThemes.sql" />
     <Build Include="dbo\Stored Procedures\GetPageInfoFromDomain.sql" />
     <Build Include="dbo\Stored Procedures\AddPhoto.sql" />
     <Build Include="dbo\Stored Procedures\DeletePhoto.sql" />
@@ -201,5 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlServer.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment.sql" />
   </ItemGroup>
 </Project>

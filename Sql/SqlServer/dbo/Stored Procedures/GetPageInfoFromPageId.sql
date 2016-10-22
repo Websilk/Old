@@ -11,13 +11,12 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT p.pageid, p.websiteid, w.title AS websitetitle, p.parentid, w.pagedenied, w.page404, w.websitetype, w.statustype, w.icon, p.ownerId, p.security,
-    p.usersonly, p.title, (CASE WHEN p.parentid IS NOT NULL THEN (SELECT title FROM pages WHERE pageid=p.parentid) ELSE NULL END) AS parenttitle,
-	p.photo, p.description, p.datecreated, p.themeid, 
-    t.userid AS themeowner, t.name AS themename,
+    SELECT p.websiteid, p.pageid, p.parentid, p.ownerId, w.title AS websitetitle, p.title, 
+	(CASE WHEN p.parentid IS NOT NULL THEN (SELECT title FROM pages WHERE pageid=p.parentid) ELSE NULL END) AS parenttitle, 
+	w.theme, w.colors, p.description, w.pagedenied, w.page404, w.status, w.icon, p.security,
+	p.datecreated,
     (SELECT TOP 1 d.googlewebpropertyid FROM websitedomains d WHERE d.websiteid=p.websiteId ORDER BY d.datecreated ASC) AS googlewebpropertyid
     FROM pages p 
 	LEFT JOIN websites w ON w.websiteid=p.websiteId
-	LEFT JOIN themes t ON t.themeid=p.themeid
 	WHERE p.pageid=@pageId
 END

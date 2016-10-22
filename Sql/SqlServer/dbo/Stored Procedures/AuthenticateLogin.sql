@@ -10,7 +10,6 @@ BEGIN
 	SET NOCOUNT ON;
 	DECLARE @logindate datetime,
 	@hash nvarchar(100),
-	@loginip nvarchar(36),
 	@email nvarchar(100)
 	
 	SELECT @logindate=datecreated, @hash=hash, @email=email FROM Login WHERE loginid=@loginId
@@ -18,8 +17,6 @@ BEGIN
 	
 	IF DATEDIFF(SECOND,@logindate, GETDATE()) < 15
 	BEGIN
-		SELECT userid, displayname, firstname + ' ' + lastname AS fullname, photo, 
-		email, lastlogin, datecreated, [status], tutorial
-		FROM users WHERE email=@email AND password COLLATE Latin1_General_CS_AS = @hash AND status = 1
+		SELECT * FROM users WHERE email=@email AND password COLLATE Latin1_General_CS_AS = @hash AND status = 1
 	END
 END
