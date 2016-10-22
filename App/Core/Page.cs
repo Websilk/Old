@@ -191,19 +191,19 @@ namespace Websilk
                 {
                     if (pagetitle == "websilk")
                     {
-                        //get pageid from web site home page
+                        //get pageid from website home page
                         pid = Sql.GetHomePageIdFromDomain(Domain);
                     }
                     else
                     {
                         if (string.IsNullOrEmpty(subDomain))
                         {
-                            //get pageid from web site domain name & page title
+                            //get pageid from website domain name & page title
                             pid = Sql.GetPageIdFromDomainAndTitle(Domain, pagetitle);
                         }
                         else
                         {
-                            //get pageid from web site domain & sub domain & page title
+                            //get pageid from website domain & sub domain & page title
                             pid = Sql.GetPageIdFromSubDomainAndTitle(Domain, subDomain, pagetitle);
                         }
                     }
@@ -213,12 +213,12 @@ namespace Websilk
                 {
                     if (string.IsNullOrEmpty(subDomain))
                     {
-                        //get pageid from web site home page
+                        //get pageid from website home page
                         pid = Sql.GetHomePageIdFromDomain(Domain);
                     }
                     else
                     {
-                        //get pageid from web site sub domain home page
+                        //get pageid from website sub domain home page
                         pid = Sql.GetHomePageIdFromSubDomain(Domain, subDomain);
 
                     }
@@ -259,19 +259,19 @@ namespace Websilk
                 {
                     if (title == "websilk")
                     {
-                        //get pageid from web site home page
+                        //get pageid from website home page
                         return Sql.GetPageInfoFromDomain(Domain);
                     }
                     else
                     {
                         if (string.IsNullOrEmpty(subDomain))
                         {
-                            //get pageid from web site domain name & page title
+                            //get pageid from website domain name & page title
                             return Sql.GetPageInfoFromDomainAndTitle(Domain, title);
                         }
                         else
                         {
-                            //get pageid from web site domain & sub domain & page title
+                            //get pageid from website domain & sub domain & page title
                             return Sql.GetPageInfoFromSubDomainAndTitle(Domain, subDomain, title);
                         }
                     }
@@ -281,12 +281,12 @@ namespace Websilk
                 {
                     if (string.IsNullOrEmpty(subDomain))
                     {
-                        //get pageid from web site home page
+                        //get pageid from website home page
                         return Sql.GetPageInfoFromDomain(Domain);
                     }
                     else
                     {
-                        //get pageid from web site sub domain home page
+                        //get pageid from website sub domain home page
                         return Sql.GetPageInfoFromSubDomain(Domain, subDomain);
                     }
                 }
@@ -349,7 +349,7 @@ namespace Websilk
                 parentTitle = reader.Get("parenttitle");
 
                 string pageCss = "";
-                //get CSS for whole web site
+                //get CSS for whole website
                 if (isPageLoaded == false | pageCssChanged == true)
                 {
                     pageCss = reader.Get("websitecss");
@@ -758,7 +758,7 @@ namespace Websilk
 
             if (pageUsersOnly == 1 & S.User.userId > 1 & ptype == 1)
             {
-                //check to see if this user is a user of the web site
+                //check to see if this user is a user of the website
                 if (S.User.Website(websiteId).getWebsiteSecurityItem("dashboard/pages", 4) == false)
                 {
                     //user doesn't have permission

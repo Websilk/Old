@@ -460,7 +460,7 @@ namespace Websilk.Services.Dashboard
 
             if (myTitle.Replace(" ", "").Length == 0)
             {
-                err = "Please specify a title for your web site.";
+                err = "Please specify a title for your website.";
                 goto skipCreate;
             }
 
@@ -492,7 +492,7 @@ namespace Websilk.Services.Dashboard
 
             if (myDescription.Replace(" ", "").Length == 0)
             {
-                err = "Please write a small description for your web site.";
+                err = "Please write a small description for your website.";
                 goto skipCreate;
             }
 
@@ -515,7 +515,7 @@ namespace Websilk.Services.Dashboard
             int p = (int)S.Sql.ExecuteScalar("SELECT COUNT(*) FROM pages WHERE websiteid=" + S.Page.websiteId + " AND path='" + parentPath + myTitle + "'");
             if (p > 0)
             {
-                err = "There is already a page titled '" + title + "' within your web site.";
+                err = "There is already a page titled '" + title + "' within your website.";
                 goto skipCreate;
             }
 

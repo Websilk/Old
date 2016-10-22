@@ -341,7 +341,7 @@ namespace Websilk
                 myUser.GetSecurityForWebsite(websiteId, myUser.userId);
                 if (ownerId == myUser.userId)
                 {
-                    //user is owner of web site and has full access
+                    //user is owner of website and has full access
                     myUser.AddSecurity(websiteId, "full", Websilk.User.enumSecurity.readwrite);
                 }
                 return getWebsiteSecurityItem(feature, index, false);

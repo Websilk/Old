@@ -4,8 +4,8 @@ A powerful web development platform built with ASP.net Core
 ### The App Folder
 All of the core C# namespaces for Websilk can be found here within the App folder. Learn how Websilk handles page requests & Web API calls, what components & applications are, and how the dashboard is rendered.
 
-#### Page Requests
-Websilk runs on the Kestrel web server, which initializes an asyncronous task within `/Startup.cs`, listening for incoming page requests. When a user requests a web page from their web browser, the async task creates a new instance of the `Websilk.Pipeline.App` class, which in turn initializes a new instance of `Websilk.Page` where the page request is processed and the content of the page is rendered.
+#### Initial Page Request
+Websilk runs on the Kestrel web server, which starts an asyncronous task within `/Startup.cs`, listening for incoming page requests. When a user first loads a web page from their web browser, the async task creates a new instance of the `Websilk.Pipeline.App` class, which in turn initializes a new instance of `Websilk.Page` that loads the requested page from the database and renders the contents of the page as HTML. The web browser finally (20 ms later) loads the web page along with `/js/platform.js` and a few CSS files.
 
 #### Web API calls for Page Requests
 When a user clicks on an anchor link and is redirected to the next web page, the web browser reloads Javascript, CSS, & image resources. Websilk overrides the anchor link functionality and executes a Web API call via AJAX instead, masks the URL in the user's address bar using a Javascript History API, and replaces part of the web page with new content. The AJAX request sends a POST to the url */App/Url*, which accesses a new instance of the `Websilk.Pipeline.WebService` C# class, and the page request tries to match the POST parameter *url* to a page path in the database.
