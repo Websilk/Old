@@ -20,7 +20,7 @@ namespace Websilk
         public Elements(Core WebsilkCore, string path)
         {
             S = WebsilkCore;
-            Path = path;
+            Path = path; //path to the theme folder
         }
 
         public Element.Element Load(ElementType type, string name, string path = "")

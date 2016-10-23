@@ -34,7 +34,7 @@ Websilk is (almost) running on Linux using Oracle Virtualbox within Windows 7. A
 3. Git GUI https://git-scm.com/download/win
 
 ### Git clone Websilk
-1. Using Git bash, clone the websilk repository, `git clone https://github.com/Websilk/Home.git`
+1. Using Git bash, clone the websilk repository, `git clone https://github.com/Websilk/Old.git`
 
 ### Setup Vagrant
 1. Create folder for project, then download, clone, or fork Vagrant repository for Websilk `https://github.com/Websilk/Vagrant`

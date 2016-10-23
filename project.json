@@ -3,7 +3,7 @@
   "version": "0.1.2-alpha",
   "authors": [ "Mark Entingh" ],
   "description": "Websilk is a powerful drag & drop web development CMS platform built for Windows, Linux, & Mac OSX",
-  "projectUrl": "http://www.github.com/Websilk/Home",
+  "projectUrl": "http://www.github.com/Websilk/Old",
 
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel --server.urls=http://localhost:7770;"

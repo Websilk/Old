@@ -12,7 +12,7 @@ namespace Websilk.Services.Components
 
         public Inject DuplicateCell(string id, string aboveId, int duplicate)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id + " > div:last-child";
             response.inject = enumInjectTypes.after;
@@ -90,7 +90,7 @@ namespace Websilk.Services.Components
 
         public Inject RemoveCell(string id, string panelId)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id + " > div:last-child";
             response.inject = enumInjectTypes.after;
@@ -135,7 +135,7 @@ namespace Websilk.Services.Components
 
         public string Arrangement(string id)
         {
-            if (S.isSessionLost() == true) { return "lost"; }
+            if (S.isSessionLost()) { return "lost"; }
 
             //check security
             if (S.User.Website(S.Page.websiteId).getWebsiteSecurityItem("dashboard/pages", 0) == false) { return ""; }

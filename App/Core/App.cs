@@ -11,44 +11,31 @@ namespace Websilk.Services
         {
         }
 
-        public PageRequest LoadPage(string title)
-        {
-            if (S.isSessionLost() == true) { return lostPageRequest(); } //check session
-
-            S.Page.Url.path = title.Replace("-", " ");
-            S.Page.pageTitle = title;
-            S.Page.GetPageId();
-            S.Page.LoadPageFromId(S.Page.pageId);
-            S.Page.Render();
-            return S.Page.PageRequest;
-        }
-
         public PageRequest Url(string url)
         {
-            if(S.isSessionLost() == true) { return lostPageRequest(); } //check session
-            Console.WriteLine("Parse Url: " + url);
-            return ParseUrl(url);
-        }
+            //load a web page
+            if (S.isSessionLost()) { return lostPageRequest(); } //check session
 
-        private PageRequest ParseUrl(string url, bool again = false)
-        {
             string pageName = "";
             if (string.IsNullOrEmpty(url))
             {
                 //load home page (no url)
                 pageName = "Home";
-            }else if(url.ToLower().IndexOf("dashboard") == 0)
+            }
+            else if (url.ToLower().IndexOf("dashboard") == 0)
             {
                 //load dashboard
-                if (S.User.userId < 1) {
+                if (S.User.userId < 1)
+                {
                     pageName = "Login";
-                }else
+                }
+                else
                 {
                     pageName = "Dashboard";
                 }
             }
 
-            if(pageName != "")
+            if (pageName != "")
             {
                 //load either home page or dashboard
                 S.Page.PageRequest = new PageRequest();
@@ -83,7 +70,7 @@ namespace Websilk.Services
                 S.Page.LoadPageFromId(S.Page.pageId);
                 S.Page.Render();
                 Console.WriteLine("Load page: " + S.Page.pageTitle);
-                if(S.Page.PageRequest == null)
+                if (S.Page.PageRequest == null)
                 {
                     S.Page.PageRequest = new PageRequest();
                     S.Page.PageRequest.components = new List<PageComponent>();
@@ -107,7 +94,7 @@ namespace Websilk.Services
         {
             //save = json object representing the contents of a web page
 
-            if (S.isSessionLost() == true) { return "lost"; } //check session
+            if (S.isSessionLost()) { return "lost"; } //check session
 
             if (!string.IsNullOrEmpty(save))
             { 

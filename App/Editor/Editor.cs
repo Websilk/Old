@@ -79,7 +79,7 @@ namespace Websilk.Services
 
         public Response Dashboard()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Dashboard";
             //check security
@@ -99,7 +99,7 @@ namespace Websilk.Services
 
         public Response Options()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Options";
             //check security
@@ -119,7 +119,7 @@ namespace Websilk.Services
 
         public Response Profile()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Profile";
             //check security
@@ -137,7 +137,7 @@ namespace Websilk.Services
 
         public Response Layers()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Layers";
             //check security
@@ -157,7 +157,7 @@ namespace Websilk.Services
         #region "Components"
         public Response Components()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Components";
             //check security
@@ -180,7 +180,7 @@ namespace Websilk.Services
 
         public Inject ComponentsFromCategory(int category)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#component-list";
             //check security
@@ -238,7 +238,7 @@ namespace Websilk.Services
 
         public Inject NewComponent(string componentId, string panelId, string selector, string aboveId, string duplicate)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -292,7 +292,7 @@ namespace Websilk.Services
 
         public Inject RemoveComponent(string componentId)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -314,7 +314,7 @@ namespace Websilk.Services
 
         public Inject ComponentProperties(string id, string section)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = ".winProperties .props-content";
 

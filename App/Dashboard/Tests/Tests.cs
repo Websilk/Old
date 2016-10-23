@@ -15,7 +15,7 @@ namespace Websilk.Services.Dashboard
 
         public Response ui()
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "Tests";
             //check security

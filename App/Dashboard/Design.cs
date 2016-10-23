@@ -10,7 +10,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject Load()
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security

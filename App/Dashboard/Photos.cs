@@ -14,7 +14,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPhotos()
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -32,7 +32,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPhotoList(int start, string folder, string search, int orderby)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -99,7 +99,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadFolders(string type)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -117,7 +117,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject AddFolder(string name)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -140,7 +140,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject MoveTo(string folder, string files)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -199,7 +199,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject Remove(string files)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -221,7 +221,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject RemoveFolder(string folder)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -347,7 +347,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject Save(string folder)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             return LoadPhotoList(1, folder, "", 1);
         }
     }

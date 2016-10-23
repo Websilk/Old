@@ -9,7 +9,7 @@
 
         public Inject UpdatePhoto(string id, string photo, int type)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;
@@ -95,7 +95,7 @@
 
         public Inject SaveProperties(string id, string url, string alt, string target, string win)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;
@@ -139,7 +139,7 @@
 
         public Inject RemoveHover(string id)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
             response.element = "#c" + id;
             response.inject = enumInjectTypes.replace;

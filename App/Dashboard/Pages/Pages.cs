@@ -16,7 +16,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadPages()
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -38,7 +38,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject LoadSubPages(int parentId)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -284,7 +284,7 @@ namespace Websilk.Services.Dashboard
         #region "Interfaces"
         public Response NewPage(int parentId, string path)
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "NewPage";
             //check security
@@ -306,7 +306,7 @@ namespace Websilk.Services.Dashboard
 
         public Response PageSettings(int pageId)
         {
-            if (S.isSessionLost() == true) { return lostResponse(); }
+            if (S.isSessionLost()) { return lostResponse(); }
             Response response = new Response();
             response.window = "PageSettings";
             //check security
@@ -424,7 +424,7 @@ namespace Websilk.Services.Dashboard
         #region "Manage Pages"
         public Inject Create(string title, string description, int parentId, bool isSecure, bool isDataPage)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -593,7 +593,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject Remove(int pageId)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
@@ -635,7 +635,7 @@ namespace Websilk.Services.Dashboard
 
         public Inject UndoRemove(int pageId)
         {
-            if (S.isSessionLost() == true) { return lostInject(); }
+            if (S.isSessionLost()) { return lostInject(); }
             Inject response = new Inject();
 
             //check security
